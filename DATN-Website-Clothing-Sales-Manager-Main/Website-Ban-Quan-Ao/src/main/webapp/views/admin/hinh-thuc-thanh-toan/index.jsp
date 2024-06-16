@@ -144,6 +144,11 @@
         });
     });
 
+    $(document).ready(function () {
+        hideErrorMessage();
+        hideErrorMessage2();
+    });
+
     function hideErrorMessage() {
         // Sử dụng jQuery để ẩn thông báo sau 5 giây
         setTimeout(function () {
@@ -157,5 +162,6 @@
             $('.alert-success').fadeOut('slow');
         }, 1000);
     }
+
 </script>
 

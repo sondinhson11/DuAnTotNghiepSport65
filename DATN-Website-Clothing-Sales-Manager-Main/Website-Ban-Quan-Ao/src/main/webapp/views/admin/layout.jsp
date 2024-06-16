@@ -228,6 +228,8 @@
             document.body.classList.add('sb-sidenav-toggled');
         }
     });
+
+
 </script>
 </body>
 </html>
