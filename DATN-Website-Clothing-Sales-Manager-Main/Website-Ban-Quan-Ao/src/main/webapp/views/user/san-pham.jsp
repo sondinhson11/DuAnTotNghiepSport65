@@ -1,0 +1,185 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<section class="container pt-5">
+    <div class="row text-center my-4">
+        <!-- Static "Tất cả" link with additional styling -->
+        <div class="col-md-auto col-sm-12 mb-3 mb-md-0">
+            <a class="link-dark text-decoration-none fw-bold py-2 px-3 rounded d-block" href="/san-pham">
+                Tất cả
+            </a>
+        </div>
+        <!-- Dynamic category links with enhanced styling and layout -->
+        <c:forEach items="${listLoai}" var="loai">
+            <div class="col-md-auto col-sm-12 mb-3 mb-md-0">
+                <a class="link-dark text-decoration-none py-2 px-3 rounded d-block" href="/san-pham/${loai.id}">
+                        ${loai.ten}
+                </a>
+            </div>
+        </c:forEach>
+    </div>
+
+    <style>
+        .discount-percentage {
+            position: absolute; /* Vị trí tuyệt đối */
+            top: 0; /* Đặt ở đỉnh */
+            left: 0; /* Đặt ở bên trái */
+            background-color: red; /* Màu nền đỏ */
+            color: white; /* Màu chữ trắng */
+            padding: 5px; /* Khoảng cách nội dung từ viền */
+            font-weight: bold; /* In đậm */
+        }
+        .link-dark {
+            transition: all 0.3s ease;
+        }
+        .link-dark:hover {
+            background-color: #f8f9fa; /* Light gray background on hover */
+            color: #007bff; /* Blue text color on hover */
+            text-decoration: underline; /* Underline on hover */
+        }
+        .rounded {
+            border-radius: 0.25rem; /* Rounded corners */
+        }
+        @media (max-width: 767.98px) { /* For small screens */
+            .col-md-auto {
+                text-align: center;
+            }
+        }
+    </style>
+
+    <div class="float-end mt-3">
+        <select id="sort" class=" form-select" aria-label="Default select example">
+            <option selected>Sắp xếp theo</option>
+            <option value="1">Giá: thấp đến cao</option>
+            <option value="2">Giá: cao đến thấp</option>
+        </select>
+        <script>
+            document.getElementById("sort").onchange = function () {
+                var selectedValue = this.value; // Lấy giá trị được chọn trong thẻ select
+                var idLoai = '${idLoai}';
+                // Chuyển hướng đến liên kết tương ứng với giá trị đã chọn
+                if (selectedValue === "1") {
+                    if (idLoai == -1)
+                        window.location.href = "/san-pham?sort=asc";
+                    else {
+                        window.location.href = "/san-pham/${idLoai}?sort=asc";
+                    }
+                } else if (selectedValue === "2") {
+                    if (idLoai == -1)
+                        window.location.href = "/san-pham?sort=desc";
+                    else {
+                        window.location.href = "/san-pham/${idLoai}?sort=desc";
+                    }
+                }
+            };
+        </script>
+    </div>
+    <div class="product px-5 mt-5">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            <c:forEach items="${listSanPham}" var="sanPham">
+                <div class="col">
+                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}" class="text-decoration-none text-dark">
+                        <div class="card product-card border-0">
+                            <img src="${sanPham.anh}" class="card-img-top product-image" alt="${sanPham.ten}">
+                            <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
+                            <div class="card-body text-center">
+                                <p class="product-name">${sanPham.ten}</p>
+                                <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
+                                <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        var idSanPham = '${sanPham.id}';
+                        $.ajax({
+                            url: "/so-phan-tram-giam/" + idSanPham,
+                            method: "GET",
+                            success: function (data) {
+                                var span = $("#so-phan-tram-giam_" + idSanPham);
+                                var giaSpan = $("#gia-san-pham_" + idSanPham);
+                                var giaCu = giaSpan.html();
+
+                                if (data != null) {
+                                    if (data > 0) {
+                                        span.show();
+                                        span.html(data + "% off");
+                                    } else {
+                                        span.hide();
+                                    }
+                                    var giaSanPham = ${sanPham.gia};
+                                    var soPhanTramGiam = data;
+                                    var giaSauGiam = giaSanPham - (giaSanPham * soPhanTramGiam / 100);
+                                    giaSauGiam = Math.floor(giaSauGiam);
+                                    giaSpan.hide();
+                                    if (data > 0) {
+                                        giaSpan.after('<p class="fw-bold new-price">' + giaSauGiam.toLocaleString('en-US') + ' vnđ</p>');
+                                        giaSpan.after('<p class="fw-bold old-price" style="text-decoration: line-through;">' + giaCu + '</p>');
+                                    } else {
+                                        giaSpan.show();
+                                    }
+                                }
+                            },
+                            error: function () {
+                                // Xử lý lỗi nếu có
+                            }
+                        });
+                    });
+                </script>
+            </c:forEach>
+        </div>
+    </div>
+
+    <style>
+        .product-card {
+            width: 15rem; /* Smaller card size */
+            margin: auto; /* Center the card */
+            transition: transform 0.2s; /* Smooth hover effect */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+        .product-card:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+        .product-image {
+            width: 15rem; /* Match card size */
+            height: 15rem; /* Maintain aspect ratio */
+            object-fit: cover; /* Cover to ensure it fills the card */
+            border-radius: 10px 10px 0 0;
+        }
+        .product-name {
+            font-size: 0.9rem; /* Smaller text size */
+            margin: 0.5rem 0;
+        }
+        .product-price {
+            font-size: 1rem;
+            color: #ff5733; /* Different color for better visibility */
+        }
+        .discount-percentage {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff0000;
+            color: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+        .old-price {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .new-price {
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+        .card-body {
+            padding: 1rem; /* Added padding for better spacing */
+        }
+    </style>
+
+
+    <h5 class="text-center">Bạn đã xem hết!</h5>
+</section>
