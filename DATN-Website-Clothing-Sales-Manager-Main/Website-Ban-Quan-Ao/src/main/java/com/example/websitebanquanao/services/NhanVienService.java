@@ -74,7 +74,8 @@ public class NhanVienService {
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
         nhanVien.setNgayVaoLam(date);
-
+        nhanVien.setNgayTao(date);
+        nhanVien.setNgaySua(date);
         nhanVienRepository.save(nhanVien);
 
         System.out.println("NhanVienService.add: " + nhanVien.getHoVaTen());
@@ -92,7 +93,9 @@ public class NhanVienService {
             nhanVien.setTinhThanhPho(nhanVienRequest.getTinhThanhPho());
             nhanVien.setChucVu(nhanVienRequest.getChucVu());
             nhanVien.setTrangThai(nhanVienRequest.getTrangThai());
-
+            long millis = System.currentTimeMillis();
+            java.sql.Date date = new java.sql.Date(millis);
+            nhanVien.setNgaySua(date);
             nhanVienRepository.save(nhanVien);
 
             System.out.println("NhanVienService.update: " + nhanVien.getHoVaTen());

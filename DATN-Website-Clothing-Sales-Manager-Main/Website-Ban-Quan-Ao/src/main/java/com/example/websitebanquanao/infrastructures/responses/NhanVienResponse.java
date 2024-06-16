@@ -24,6 +24,8 @@ public class NhanVienResponse {
     private String tinhThanhPho;
     private Date ngayVaoLam;
     private Integer chucVu;
+    private Date ngayTao;
+    private Date ngaySua;
     private Integer trangThai;
 
 }

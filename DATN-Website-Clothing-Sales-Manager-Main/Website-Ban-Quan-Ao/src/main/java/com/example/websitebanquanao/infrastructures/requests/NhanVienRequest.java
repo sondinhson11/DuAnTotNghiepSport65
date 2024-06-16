@@ -1,11 +1,14 @@
 package com.example.websitebanquanao.infrastructures.requests;
 
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -26,5 +29,8 @@ public class NhanVienRequest {
     private String quanHuyen;
     private String tinhThanhPho;
     private Integer chucVu;
+    private Date ngayTao;
+    private Date ngaySua;
     private Integer trangThai;
+
 }

@@ -65,6 +65,12 @@ public class NhanVien {
     @Column(name = "chuc_vu")
     private Integer chucVu;
 
+    @Column(name = "ngay_tao")
+    private Date ngayTao;
+    @Column(name = "ngay_sua")
+    private Date ngaySua;
+
+
     @OneToMany(mappedBy = "idNhanVien")
     private Set<GioHang> gioHangs = new LinkedHashSet<>();
 
