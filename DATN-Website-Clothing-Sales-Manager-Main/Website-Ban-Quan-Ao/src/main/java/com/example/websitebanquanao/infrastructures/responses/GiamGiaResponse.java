@@ -23,7 +23,7 @@ public class GiamGiaResponse {
     private Integer soLuong;
     private LocalDate ngayBatDau;
     private LocalDate ngayKetThuc;
-    private java.sql.Date ngay_tao;
+    private Date ngay_tao;
     private Date ngay_sua;
     private Integer trang_thai;
 }

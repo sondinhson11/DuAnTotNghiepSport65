@@ -130,6 +130,8 @@
                    href="/admin/khuyen-mai/index">Khuyến mãi</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
                    href="/admin/thong-ke/index">Thống kê</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3"
+                   href="/admin/hinh-thuc-thanh-toan/index">Hình Thức Thanh Toán</a>
 
             </c:if>
             <c:if test="${admin.chucVu == 1}">

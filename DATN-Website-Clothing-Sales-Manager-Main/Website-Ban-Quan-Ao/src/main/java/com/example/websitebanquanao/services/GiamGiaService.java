@@ -37,15 +37,13 @@ public class GiamGiaService {
             giamGia.setNgayBatDau(giamGiaRequest.getNgayBatDau());
             giamGia.setNgayKetThuc(giamGiaRequest.getNgayKetThuc());
             giamGia.setTrang_thai(1);
-             java.util.Date currentDate = new java.util.Date();
-
-        if (giamGiaRequest.getNgay_tao() == null) {
-            giamGia.setNgay_tao(new java.sql.Date(currentDate.getTime()));
-        } else {
-            giamGia.setNgay_tao(giamGiaRequest.getNgay_tao());
-        }
-
-        giamGia.setNgay_sua(new java.sql.Date(currentDate.getTime()));
+            java.util.Date currentDate = new java.util.Date();
+            if (giamGiaRequest.getNgay_tao() == null) {
+                giamGia.setNgay_tao(new java.sql.Date(currentDate.getTime()));
+            } else {
+                giamGia.setNgay_tao(giamGiaRequest.getNgay_tao());
+            }
+            giamGia.setNgay_sua(new java.sql.Date(currentDate.getTime()));
             giamGiaRepository.save(giamGia);
             System.out.println("GiamGiaService.add: " + giamGia.getMa());
     }
