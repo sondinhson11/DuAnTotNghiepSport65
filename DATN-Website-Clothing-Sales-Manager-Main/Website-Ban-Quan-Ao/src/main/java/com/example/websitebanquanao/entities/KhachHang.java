@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
+import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -35,21 +36,18 @@ public class KhachHang {
     @Column(name = "mat_khau", length = 50)
     private String matKhau;
 
-    @Nationalized
-    @Column(name = "dia_chi", length = 100)
-    private String diaChi;
+    @Column(name = "ngay_tao")
+    private Date ngayTao;
 
-    @Nationalized
-    @Column(name = "xa_phuong", length = 80)
-    private String xaPhuong;
+    @Column(name = "ngay_sua")
+    private Date ngaySua;
 
-    @Nationalized
-    @Column(name = "quan_huyen", length = 80)
-    private String quanHuyen;
+    @Column(name = "trang_thai")
+    private Integer trangThai;
 
-    @Nationalized
-    @Column(name = "tinh_thanh_pho", length = 80)
-    private String tinhThanhPho;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_dia_chi")
+    private DiaChi diaChi;
 
     @OneToMany(mappedBy = "idKhachHang")
     private Set<GioHang> gioHangs = new LinkedHashSet<>();

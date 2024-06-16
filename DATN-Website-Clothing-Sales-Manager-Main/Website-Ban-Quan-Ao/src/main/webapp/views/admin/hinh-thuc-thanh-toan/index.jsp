@@ -14,7 +14,7 @@
     <div class="row mt-3">
         <div class="col-6">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Thêm Giảm Giá
+                Thêm Hình Thức Thanh Toán
             </button>
         </div>
     </div>
@@ -65,7 +65,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thêm Hình Thức Thanh Toán</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Hình Thức Thanh Toán</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
