@@ -1,6 +1,7 @@
 package com.example.websitebanquanao.services;
 
 import com.example.websitebanquanao.entities.AnhSanPham;
+import com.example.websitebanquanao.entities.SanPham;
 import com.example.websitebanquanao.entities.SanPhamChiTiet;
 import com.example.websitebanquanao.infrastructures.requests.AnhSanPhamRequest;
 import com.example.websitebanquanao.infrastructures.responses.AnhSanPhamResponse;
@@ -22,14 +23,14 @@ public class AnhSanPhamService {
         return anhSanPhamRepository.getAll(id);
     }
 
-    public void add(SanPhamChiTiet sanPhamChiTiet, List<String> duongDan) {
+    public void add(SanPham sanPham, List<String> duongDan) {
         for (String string : duongDan) {
             AnhSanPham anhSanPham = new AnhSanPham();
             anhSanPham.setDuongDan(string);
-            anhSanPham.setIdSanPhamChiTiet(sanPhamChiTiet);
+            anhSanPham.setIdSanPham(sanPham);
             anhSanPhamRepository.save(anhSanPham);
         }
-        System.out.println("AnhSanPhamService.add: " + sanPhamChiTiet.getId());
+        System.out.println("AnhSanPhamService.add: " + sanPham.getId());
     }
 
     public void update(AnhSanPhamRequest anhSanPhamRequest, UUID id) {
@@ -53,12 +54,12 @@ public class AnhSanPhamService {
     }
 
     // user
-    public List<AnhSanPhamResponse> getListAnhByIdSanPhamAndIdMauSac(UUID idSanPham, Integer idMauSac){
-        return anhSanPhamRepository.getListAnhByIdSanPhamAndIdMauSac(idSanPham, idMauSac);
-    }
+//    public List<AnhSanPhamResponse> getListAnhByIdSanPhamAndIdMauSac(UUID idSanPham, Integer idMauSac){
+//        return anhSanPhamRepository.getListAnhByIdSanPhamAndIdMauSac(idSanPham, idMauSac);
+//    }
 
-    public List<AnhSanPhamResponse> getListAnhByIdSanPhamChiTiet(UUID idSanPham){
-        return anhSanPhamRepository.getListAnhByIdSanPhamChiTiet(idSanPham);
+    public List<AnhSanPhamResponse> getListAnhByIdSanPham(UUID idSanPham){
+        return anhSanPhamRepository.getListAnhByIdSanPham(idSanPham);
     }
 
 }

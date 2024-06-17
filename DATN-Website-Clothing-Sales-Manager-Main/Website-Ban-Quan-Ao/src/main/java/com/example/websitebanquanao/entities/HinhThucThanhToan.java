@@ -1,5 +1,6 @@
 package com.example.websitebanquanao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -35,5 +37,8 @@ public class HinhThucThanhToan {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "hinhThucThanhToan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<HoaDon> HoaDonsList;
 
 }

@@ -1,6 +1,6 @@
 package com.example.websitebanquanao.infrastructures.requests;
 
-import com.example.websitebanquanao.entities.DiaChi;
+import com.example.websitebanquanao.entities.HinhThucThanhToan;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +19,6 @@ public class FormThanhToan {
     private String diaChi;
     private String soDienThoai;
     private String email;
-    private int hinhThucThanhToan;
+    private HinhThucThanhToan hinhThucThanhToan;
     private String ghiChu;
 }

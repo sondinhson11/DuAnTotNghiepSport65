@@ -56,9 +56,6 @@ public class SanPhamChiTiet {
     private Date ngay_sua;
 
     @OneToMany(mappedBy = "idSanPhamChiTiet")
-    private Set<AnhSanPham> anhSanPhams = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "idSanPhamChiTiet")
     private Set<GioHangChiTiet> gioHangChiTiets = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idSanPhamChiTiet")

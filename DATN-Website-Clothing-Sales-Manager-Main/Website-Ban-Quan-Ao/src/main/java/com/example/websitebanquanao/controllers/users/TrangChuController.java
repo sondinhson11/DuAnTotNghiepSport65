@@ -120,7 +120,7 @@ public class TrangChuController {
         model.addAttribute("sanPham", sanPhamService.getByIdSanPham(idSanPham));
         model.addAttribute("listMauSac", mauSacService.getListMauSacByIdSanPham(idSanPham));
         model.addAttribute("listKichCo", kichCoService.getListKichCoByIdSanPhamAndMauSac(idSanPham, idMauSac));
-        model.addAttribute("listAnh", anhSanPhamService.getListAnhByIdSanPhamAndIdMauSac(idSanPham, idMauSac));
+        model.addAttribute("listAnh", anhSanPhamService.getListAnhByIdSanPham(idSanPham));
         model.addAttribute("idMauSac", idMauSac);
         model.addAttribute("viewContent", "/views/user/san-pham-chi-tiet.jsp");
         return "user/layout";

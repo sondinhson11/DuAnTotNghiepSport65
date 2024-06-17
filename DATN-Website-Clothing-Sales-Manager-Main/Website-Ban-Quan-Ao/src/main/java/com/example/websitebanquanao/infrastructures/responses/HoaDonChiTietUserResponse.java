@@ -1,5 +1,6 @@
 package com.example.websitebanquanao.infrastructures.responses;
 
+import com.example.websitebanquanao.entities.HinhThucThanhToan;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.time.Instant;
 public class HoaDonChiTietUserResponse {
     private String ma;
     private Integer trangThai;
-    private Integer hinhThucThanhToan;
+    private HinhThucThanhToan hinhThucThanhToan;
     private Instant ngayTao;
     private Instant ngayThanhToan;
     private Instant ngayVanChuyen;

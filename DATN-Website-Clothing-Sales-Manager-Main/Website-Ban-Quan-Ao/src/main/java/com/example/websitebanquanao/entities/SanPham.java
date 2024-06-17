@@ -51,6 +51,9 @@ public class SanPham {
     private ThuongHieu idThuongHieu;
 
     @OneToMany(mappedBy = "idSanPham")
+    private Set<AnhSanPham> anhSanPhams = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "idSanPham")
     private Set<SanPhamChiTiet> sanPhamChiTiets = new LinkedHashSet<>();
 
 }

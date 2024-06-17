@@ -25,7 +25,8 @@ import java.util.UUID;
 public class SanPhamService {
     @Autowired
     private SanPhamRepository sanPhamRepository;
-
+    @Autowired
+    private AnhSanPhamService anhSanPhamService;
     @Autowired
     private KhuyenMaiChiTietService khuyenMaiChiTietService;
 
@@ -85,6 +86,8 @@ public class SanPhamService {
 
             sanPham.setTrang_thai(sanPhamRequest.getTrang_thai());
             sanPhamRepository.save(sanPham);
+            System.out.println(sanPhamRequest.getDuongDan());
+            anhSanPhamService.add(sanPham, sanPhamRequest.getDuongDan());
 
             System.out.println("SanPhamService.add: " + sanPham.getTen());
         } catch (IOException e) {

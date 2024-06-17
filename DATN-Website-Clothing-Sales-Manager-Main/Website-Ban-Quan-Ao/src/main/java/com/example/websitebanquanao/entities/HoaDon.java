@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
@@ -25,9 +26,6 @@ public class HoaDon {
     @Column(name = "ma", nullable = false, length = 50)
     private String ma;
 
-    @Column(name = "ngay_tao")
-    private Instant ngayTao;
-
     @Column(name = "ngay_thanh_toan")
     private Instant ngayThanhToan;
 
@@ -40,6 +38,12 @@ public class HoaDon {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_khach_hang")
     private KhachHang idKhachHang;
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_hinh_thuc_thanh_toan",referencedColumnName = "id")
+    private HinhThucThanhToan hinhThucThanhToan;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_nhan_vien")
@@ -54,20 +58,16 @@ public class HoaDon {
     private String nguoiNhan;
 
     @Nationalized
+    @Column(name = "dia_chi", length = 100)
+    private String diaChi;
+
+    @Nationalized
     @Column(name = "email", length = 50)
     private String email;
 
     @Nationalized
     @Column(name = "so_dien_thoai", length = 15)
     private String soDienThoai;
-
-    @Column(name = "hinh_thuc_thanh_toan")
-    private Integer hinhThucThanhToan;
-
-    @JoinColumn(name = "dia_chi")
-    private String diaChi;
-
-
     @Nationalized
     @Column(name = "xa_phuong", length = 80)
     private String xaPhuong;
@@ -79,9 +79,6 @@ public class HoaDon {
     @Nationalized
     @Column(name = "tinh_thanh_pho", length = 80)
     private String tinhThanhPho;
-
-    @Column(name = "trang_thai")
-    private Integer trangThai;
 
     @Column(name = "loai_hoa_don")
     private Integer loaiHoaDon;
@@ -103,5 +100,15 @@ public class HoaDon {
 
     @OneToMany(mappedBy = "idHoaDon")
     private Set<HoaDonChiTiet> hoaDonChiTiets = new LinkedHashSet<>();
+
+
+    @Column(name = "trang_thai")
+    private Integer trangThai;
+
+    @Column(name = "ngay_tao")
+    private Instant ngayTao;
+
+    @Column(name = "ngay_sua")
+    private Date ngaySua;
 
 }

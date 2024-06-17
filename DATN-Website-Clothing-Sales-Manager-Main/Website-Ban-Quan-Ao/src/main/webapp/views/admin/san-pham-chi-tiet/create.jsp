@@ -185,25 +185,25 @@
                                    value="${sanPhamChiTiet.moTa}"/>
                 </div>
                 <%-- nếu là edit thì ẩn đi  --%>
-                <c:if test="${sanPhamChiTiet.id == null} ">
-                    <div class="mt-3">
-                        <label class="form-label">Ảnh sản phẩm</label>
-                        <div>
-                            <c:forEach var="i" begin="0" end="2">
-                                <label for="imageInput${i}" class="image-preview-container">
-                                    <img id="imageDisplay${i}" class="image-preview" src="" alt="Image ${i + 1}">
-                                    <span class="image-placeholder" id="placeholder${i}">+</span>
-                                </label>
-                                <input type="file" id="imageInput${i}" class="image-input" accept="image/*"
-                                       onchange="displayImage(${i}, 'imageDisplay${i}', 'placeholder${i}'); convertImageToBase64(${i});"/>
-                                <label class="image-input-label selected" for="imageInput${i}">Chọn ảnh</label>
+<%--                <c:if test="${sanPhamChiTiet.id == null} ">--%>
+<%--                    <div class="mt-3">--%>
+<%--                        <label class="form-label">Ảnh sản phẩm</label>--%>
+<%--                        <div>--%>
+<%--                            <c:forEach var="i" begin="0" end="2">--%>
+<%--                                <label for="imageInput${i}" class="image-preview-container">--%>
+<%--                                    <img id="imageDisplay${i}" class="image-preview" src="" alt="Image ${i + 1}">--%>
+<%--                                    <span class="image-placeholder" id="placeholder${i}">+</span>--%>
+<%--                                </label>--%>
+<%--                                <input type="file" id="imageInput${i}" class="image-input" accept="image/*"--%>
+<%--                                       onchange="displayImage(${i}, 'imageDisplay${i}', 'placeholder${i}'); convertImageToBase64(${i});"/>--%>
+<%--                                <label class="image-input-label selected" for="imageInput${i}">Chọn ảnh</label>--%>
 
-                                <!-- Thêm hidden input để lưu trữ giá trị base64Images -->
-                                <form:input path="duongDan[${i}]" type="hidden" id="base64Images${i}"/>
-                            </c:forEach>
-                        </div>
-                    </div>
-                </c:if>
+<%--                                <!-- Thêm hidden input để lưu trữ giá trị base64Images -->--%>
+<%--                                <form:input path="duongDan[${i}]" type="hidden" id="base64Images${i}"/>--%>
+<%--                            </c:forEach>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
                 <div class="mt-3">
                     <label for="trangThai" class="form-label">Trạng thái</label>
                     <form:select path="trangThai" id="trangThai" class="form-select">

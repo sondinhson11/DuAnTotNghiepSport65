@@ -60,7 +60,7 @@ public class CheckoutController {
         Instant instant = Instant.now();
         hoaDon.setNgayThanhToan(instant);
         hoaDon.setLoaiHoaDon(0);
-        hoaDon.setHinhThucThanhToan(0);
+        hoaDon.setHinhThucThanhToan(hoaDon.getHinhThucThanhToan());
         hoaDonService.update(hoaDon,idHoaDon);
         return "redirect:/admin/ban-hang";
     }

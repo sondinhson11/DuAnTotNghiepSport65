@@ -23,8 +23,7 @@ import java.util.UUID;
 public class SanPhamChiTietService {
     @Autowired
     private SanPhamChiTietRepository sanPhamChiTietRepository;
-    @Autowired
-    private AnhSanPhamService anhSanPhamService;
+
     @Autowired
     private QRCodeGenerator qrCodeGenerator;
 

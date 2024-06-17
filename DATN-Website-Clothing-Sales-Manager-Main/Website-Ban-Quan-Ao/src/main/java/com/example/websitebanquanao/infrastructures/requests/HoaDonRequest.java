@@ -36,7 +36,7 @@ public class HoaDonRequest {
 
     private String soDienThoai;
 
-    private Integer hinhThucThanhToan;
+    private HinhThucThanhToan hinhThucThanhToan;
 
     private String diaChi;
 

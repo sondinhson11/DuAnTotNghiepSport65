@@ -59,10 +59,6 @@ public class KhachHang {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "khachHang", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<DiaChi> diaChiList;
-
     @OneToMany(mappedBy = "idKhachHang")
     private Set<GioHang> gioHangs = new LinkedHashSet<>();
 

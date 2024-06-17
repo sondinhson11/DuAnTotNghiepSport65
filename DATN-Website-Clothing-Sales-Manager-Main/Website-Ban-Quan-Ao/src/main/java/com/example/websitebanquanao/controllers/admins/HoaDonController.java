@@ -1,5 +1,6 @@
 package com.example.websitebanquanao.controllers.admins;
 
+import com.example.websitebanquanao.entities.HinhThucThanhToan;
 import com.example.websitebanquanao.entities.HoaDon;
 import com.example.websitebanquanao.entities.HoaDonChiTiet;
 import com.example.websitebanquanao.entities.NhanVien;
@@ -131,7 +132,7 @@ public class HoaDonController {
 
     @PostMapping("/admin/hoa-don/xac-nhan-thanh-toan/{id}")
     public String xacNhanThanhToan(@PathVariable("id") UUID id, @RequestParam("trangThai") Integer trangThai, @RequestParam("ghiChu") String ghiChu
-            , @RequestParam(value = "httt", required = false) Integer hinhThucThanhToan
+            , @RequestParam(value = "httt", required = false) HinhThucThanhToan hinhThucThanhToan
             , Model model) {
 
         if (hinhThucThanhToan == null) {

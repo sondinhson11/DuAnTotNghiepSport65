@@ -220,7 +220,7 @@ public class BanHangController {
     }
 
     @PostMapping("/thanh-toan/{idHoaDon}")
-    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") Integer hinhThucThanhToan, @RequestParam("ghiChu") String ghiChu,
+    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam("ghiChu") String ghiChu,
                             @RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
         if (hinhThucThanhToan == null || ghiChu.isEmpty()) {
             session.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin");

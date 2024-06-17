@@ -18,8 +18,8 @@ public class AnhSanPham {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_san_pham_chi_tiet")
-    private SanPhamChiTiet idSanPhamChiTiet;
+    @JoinColumn(name = "id_san_pham")
+    private SanPham idSanPham;
 
     @Nationalized
     @Lob

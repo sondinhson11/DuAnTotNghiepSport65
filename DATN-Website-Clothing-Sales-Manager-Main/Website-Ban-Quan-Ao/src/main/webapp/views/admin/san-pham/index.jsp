@@ -183,7 +183,7 @@
 
                         <!-- Ảnh sản phẩm -->
                         <div class="mt-3 text-center">
-                            <label class="form-label">Ảnh sản phẩm</label>
+                            <label class="form-label">Ảnh bìa sản phẩm</label>
                             <div class="text-center">
                                 <label for="imageInput" class="image-preview-container">
                                     <img id="imageDisplay" class="image-preview" src="" alt="Image">
@@ -193,7 +193,25 @@
                                             onchange="displayImage()"/>
                             </div>
                         </div>
+<%--                        <c:if test="${sp.id == null} ">--%>
+                            <div class="mt-3">
+                                <label class="form-label">Ảnh sản phẩm</label>
+                                <div>
+                                    <c:forEach var="i" begin="0" end="2">
+                                        <label for="imageInput${i}" class="image-preview-container">
+                                            <img id="imageDisplay${i}" class="image-preview" src="" alt="Image ${i + 1}">
+                                            <span class="image-placeholder" id="placeholder${i}">+</span>
+                                        </label>
+                                        <input type="file" id="imageInput${i}" class="image-input" accept="image/*"
+                                               onchange="displayImage2(${i}, 'imageDisplay${i}', 'placeholder${i}'); convertImageToBase642(${i});"/>
+                                        <label class="image-input-label selected" for="imageInput${i}">Chọn ảnh</label>
 
+                                        <!-- Thêm hidden input để lưu trữ giá trị base64Images -->
+                                        <form:input path="duongDan[${i}]" type="hidden" id="base64Images${i}"/>
+                                    </c:forEach>
+                                </div>
+                            </div>
+<%--                        </c:if>--%>
                         <!-- Nút submit -->
                         <div class="mt-4 text-center">
                             <button type="submit" class="btn btn-primary">Lưu</button>
@@ -354,6 +372,47 @@
             placeholder.style.display = 'block';
         }
     }
+
+
+    function displayImage2(index, imageId, placeholderId) {
+        var input = document.getElementById("imageInput" + index);
+        var imageDisplay = document.getElementById(imageId);
+        var placeholder = document.getElementById(placeholderId);
+        var base64ImagesInput = document.getElementById("base64Images" + index);
+
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var base64Image = e.target.result;
+            imageDisplay.style.display = "block";
+            imageDisplay.src = base64Image;
+            placeholder.style.display = "none";
+
+            // Update the hidden input field with base64 data
+            base64ImagesInput.value = base64Image;
+            console.log(base64Image);
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    function convertImageToBase642(index) {
+        var input = document.getElementById("imageInput" + index);
+        var base64ImagesInput = document.getElementById("base64Images" + index);
+
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var base64Image = e.target.result;
+            // Update the hidden input field with base64 data
+            base64ImagesInput.value = base64Image;
+        };
+
+        reader.readAsDataURL(file);
+    }
+
 
     function convertToBase64(file, callback) {
         var reader = new FileReader();

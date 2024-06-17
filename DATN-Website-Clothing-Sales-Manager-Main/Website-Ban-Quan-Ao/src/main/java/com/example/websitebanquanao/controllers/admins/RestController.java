@@ -55,7 +55,7 @@ public class RestController {
     @GetMapping("/get-anh-san-pham/{idCtsp}")
     @ResponseBody
     public List<AnhSanPhamResponse> getAnhSanPhamByCtspId(@PathVariable("idCtsp") UUID idCtsp) {
-        List<AnhSanPhamResponse> listAnh = anhSanPhamService.getListAnhByIdSanPhamChiTiet(idCtsp);
+        List<AnhSanPhamResponse> listAnh = anhSanPhamService.getListAnhByIdSanPham(idCtsp);
         return listAnh;
     }
 
