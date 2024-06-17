@@ -42,7 +42,7 @@ public class KhachHangService {
         khachHang.setQuanHuyen(khachHangRequest.getQuanHuyen());
         khachHang.setTinhThanhPho(khachHangRequest.getTinhThanhPho());
 
-        khachHangRepository.save(khachHang);
+         khachHangRepository.save(khachHang);
 
         System.out.println("KhachHangService.add: " + khachHang.getHoVaTen());
     }

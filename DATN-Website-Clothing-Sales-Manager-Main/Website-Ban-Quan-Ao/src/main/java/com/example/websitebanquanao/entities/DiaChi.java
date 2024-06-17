@@ -46,10 +46,8 @@ public class DiaChi {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @OneToMany(mappedBy = "diaChi")
-    private Set<HoaDon> hoaDons = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "diaChi")
-    private Set<KhachHang> khachHang = new LinkedHashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "id_khach_hang",referencedColumnName = "id")
+    private KhachHang khachHang;
 
 }

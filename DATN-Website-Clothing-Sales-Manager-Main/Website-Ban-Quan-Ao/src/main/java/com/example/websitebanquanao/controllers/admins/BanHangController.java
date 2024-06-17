@@ -270,7 +270,7 @@ public class BanHangController {
                              @RequestParam("anh") MultipartFile anh
     ) {
         // validate full trường và session tồn tại 3s
-        if (nguoiNhan.isEmpty() || sdt.isEmpty() || diaChi.isEmpty() || ghiChu.isEmpty() || xaPhuong.isEmpty() || quanHuyen.isEmpty() || tinhThanh.isEmpty() || phiVanChuyen == null || maVanChuyen.isEmpty() || tenDonViVanChuyen.isEmpty()) {
+        if (nguoiNhan.isEmpty() || sdt.isEmpty() || ghiChu.isEmpty() || xaPhuong.isEmpty() || quanHuyen.isEmpty() || tinhThanh.isEmpty() || phiVanChuyen == null || maVanChuyen.isEmpty() || tenDonViVanChuyen.isEmpty()) {
             session.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin");
             return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
         }

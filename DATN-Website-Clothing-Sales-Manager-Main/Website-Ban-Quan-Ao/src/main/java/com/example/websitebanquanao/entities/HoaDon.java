@@ -64,9 +64,8 @@ public class HoaDon {
     @Column(name = "hinh_thuc_thanh_toan")
     private Integer hinhThucThanhToan;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dia_chi")
-    private DiaChi diaChi;
+    private String diaChi;
 
 
     @Nationalized

@@ -1,5 +1,6 @@
 package com.example.websitebanquanao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.Nationalized;
 
 import java.sql.Date;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,6 +38,18 @@ public class KhachHang {
     @Column(name = "mat_khau", length = 50)
     private String matKhau;
 
+    @Column(name = "xa_phuong")
+    private String xaPhuong;
+
+    @Column(name = "quan_huyen")
+    private String quanHuyen;
+
+    @Column(name = "tinh_thanh_pho")
+    private String tinhThanhPho;
+
+    @Column(name = "dia_chi")
+    private String diaChi;
+
     @Column(name = "ngay_tao")
     private Date ngayTao;
 
@@ -45,9 +59,9 @@ public class KhachHang {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_dia_chi")
-    private DiaChi diaChi;
+    @JsonIgnore
+    @OneToMany(mappedBy = "khachHang", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DiaChi> diaChiList;
 
     @OneToMany(mappedBy = "idKhachHang")
     private Set<GioHang> gioHangs = new LinkedHashSet<>();

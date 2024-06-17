@@ -1,5 +1,6 @@
 package com.example.websitebanquanao.infrastructures.responses;
 
+import com.example.websitebanquanao.entities.DiaChi;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
