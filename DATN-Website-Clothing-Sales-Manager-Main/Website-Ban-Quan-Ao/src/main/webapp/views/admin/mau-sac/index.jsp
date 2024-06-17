@@ -58,7 +58,11 @@
             <form:form id="edit-form" modelAttribute="ms" method="post" action="/admin/mau-sac/store">
                 <div class="form-group text-center">
                     <label for="ten" class="form-label">Tên Màu</label>
-                    <form:input type="text" path="ten" id="ten" class="form-control"/>
+                    <form:input type="text" path="ten" id="ten" class="form-control"/> <br>
+                    <form:select path="trang_thai" id="trang_thai" class="form-select form-select-sm" aria-label="Small select example" >
+                        <option value="1">Còn hàng</option>
+                        <option value="0">Hết hàng</option>
+                    </form:select>
                     <button type="submit" class="btn btn-success mt-3">Lưu</button>
                 </div>
             </form:form>

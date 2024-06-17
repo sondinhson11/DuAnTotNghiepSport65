@@ -8,6 +8,7 @@
         width: auto; /* Để ảnh tự động điều chỉnh chiều rộng */
     }
 
+
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -154,44 +155,63 @@
                             </c:forEach>
                         </form:select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="quantity">
                             <div class="title">
                                 <p>Số lượng:</p>
                             </div>
-                            <div class="input-group">
-                                <button class="btn btn-outline-dark" type="button"
-                                        onclick="decrement()">-
-                                </button>
-                                <form:input path="soLuong" type="number" class="form-control text-center w-50"
-                                            id="quantity" name="quantity"
-                                            value="1" min="1" readonly="true"/>
-                                <button class="btn btn-outline-dark" type="button"
-                                        onclick="increment()">+
-                                </button>
+                            <div class="input-group d-flex align-items-center">
+                                <button class="btn btn-outline-dark me-2" type="button" onclick="decrement()">-</button>
+                                <form:input path="soLuong" type="text" class="form-control text-center w-35"
+                                            id="quantity" name="quantity" value="1" min="1"/>
+                                <button class="btn btn-outline-dark ms-2" type="button" onclick="increment()">+</button>
                             </div>
-                            <script>
-                                function decrement() {
-                                    var quantityInput = document.getElementById("quantity");
-                                    var currentValue = parseInt(quantityInput.value);
-                                    var max = parseInt(quantityInput.getAttribute('max'));
-                                    if (currentValue > 1) {
-                                        quantityInput.value = currentValue - 1;
-                                    }
-                                }
-
-                                function increment() {
-                                    var quantityInput = document.getElementById("quantity");
-                                    var currentValue = parseInt(quantityInput.value);
-                                    var max = parseInt(quantityInput.getAttribute('max'));
-                                    if (currentValue < max) {
-                                        quantityInput.value = currentValue + 1;
-                                    }
-                                }
-
-                            </script>
                         </div>
                     </div>
+
+                    <script>
+                        // Function to decrement the quantity
+                        function decrement() {
+                            var quantityInput = document.getElementById("quantity");
+                            var currentValue = parseInt(quantityInput.value) || 0; // Default to 0 if input is not a number
+                            if (currentValue > 1) { // Ensure the quantity doesn't go below 1
+                                quantityInput.value = currentValue - 1;
+                            }
+                        }
+
+                        // Function to increment the quantity
+                        function increment() {
+                            var quantityInput = document.getElementById("quantity");
+                            var currentValue = parseInt(quantityInput.value) || 0; // Default to 0 if input is not a number
+                            var max = parseInt(quantityInput.getAttribute('max')); // Get the max value allowed
+                            if (!isNaN(max) && currentValue < max) { // Only increment if current value is less than max
+                                quantityInput.value = currentValue + 1;
+                            } else if (isNaN(max)) { // If max is not defined, allow unlimited increment
+                                quantityInput.value = currentValue + 1;
+                            }
+                        }
+
+                        // Function to validate and correct the quantity input
+                        function validateQuantity() {
+                            var quantityInput = document.getElementById("quantity");
+                            var value = parseInt(quantityInput.value) || 0; // Default to 0 if input is not a number
+                            var min = parseInt(quantityInput.getAttribute('min')) || 1; // Default to 1 if min is not set
+                            var max = parseInt(quantityInput.getAttribute('max')); // Get the max value allowed
+
+                            // Correct the value if it's out of bounds
+                            if (value < min) {
+                                quantityInput.value = min;
+                            } else if (!isNaN(max) && value > max) {
+                                quantityInput.value = max;
+                            } else {
+                                quantityInput.value = value;
+                            }
+                        }
+
+                        // Add event listener to validate quantity on input change
+                        document.getElementById("quantity").addEventListener("input", validateQuantity);
+                    </script>
+
                     <div id="soLuongSanPham" class="mt-3"></div>
 
                     <script>
