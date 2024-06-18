@@ -42,6 +42,8 @@ public class BanHangController {
     @Autowired
     private MauSacService mauSacService;
     @Autowired
+    private HinhThucThanhToanService hinhThucThanhToanService;
+    @Autowired
     private KhachHangService khachHangService;
     @Autowired
     private CreatePDF createPDF;
@@ -55,6 +57,7 @@ public class BanHangController {
         List<KhachHangResponse> listKhachHang = khachHangService.getAll();
         model.addAttribute("listSize", kichCoService.getAll());
         model.addAttribute("listMauSac", mauSacService.getAll());
+        model.addAttribute("listHTTT", hinhThucThanhToanService.getAll());
         model.addAttribute("listProduct", listProduct);
         model.addAttribute("listHoaDon", hoaDonService.getAllHoaDonChuaThanhToan());
         model.addAttribute("listKhachHang", listKhachHang);

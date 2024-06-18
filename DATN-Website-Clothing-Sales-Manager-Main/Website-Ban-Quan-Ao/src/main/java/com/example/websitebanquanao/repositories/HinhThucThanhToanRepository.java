@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -17,6 +18,9 @@ public interface HinhThucThanhToanRepository extends JpaRepository<HinhThucThanh
     // admin
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai)from HinhThucThanhToan g ORDER BY CASE WHEN g.trangThai = 1 THEN 0 ELSE 1 END, g.ma")
     public Page<HinhThucThanhToanResponse> getPage(Pageable pageable);
+
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai)from HinhThucThanhToan g ORDER BY CASE WHEN g.trangThai = 1 THEN 0 ELSE 1 END, g.ma")
+    public List<HinhThucThanhToanResponse> getALL();
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai) from HinhThucThanhToan g where g.id = :id")
     public HinhThucThanhToanResponse getByIdResponse(@Param("id") UUID id);

@@ -3,6 +3,7 @@ package com.example.websitebanquanao.services;
 import com.example.websitebanquanao.entities.HinhThucThanhToan;
 import com.example.websitebanquanao.infrastructures.requests.HinhThucThanhToanRequest;
 import com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse;
+import com.example.websitebanquanao.infrastructures.responses.KichCoResponse;
 import com.example.websitebanquanao.repositories.HinhThucThanhToanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,6 +21,10 @@ import java.util.UUID;
 public class HinhThucThanhToanService {
     @Autowired
     private HinhThucThanhToanRepository hinhThucThanhToanRepository;
+
+    public List<HinhThucThanhToanResponse> getAll() {
+        return hinhThucThanhToanRepository.getALL();
+    }
 
     // admin
     public Page<HinhThucThanhToanResponse> getPage(int page, int pageSize) {
