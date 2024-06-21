@@ -122,7 +122,7 @@
             </div>
             <div class="col-md-5 col-12">
                 <div class="d-flex mb-2">
-                    <div class="text-sm font-weight-bold mr-1">Địa chỉ:</div>
+                    <div class="text-sm font-weight-bold mr-1">Địa chỉ: </div>
                     <div class="text-sm flex-fill"> Tiền Yên -Hoài Đức- Hà Nội</div>
                 </div>
                 <div class="d-flex mb-2">

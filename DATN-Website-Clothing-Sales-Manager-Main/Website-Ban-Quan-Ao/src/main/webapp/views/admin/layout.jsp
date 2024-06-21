@@ -19,6 +19,7 @@
         border-radius: 50%;
     }
 
+
     .custom-sidebar {
         background-color: #fff;
         border-right: 1px solid #dee2e6;
@@ -99,7 +100,10 @@
             <c:if test="${admin.chucVu == 1}">
                 <h3>Nhân viên</h3>
             </c:if>
-<%--            <img src="/../views/admin/css/logo.png" alt="" class="img-fluid" style="width: 150px">--%> Logo
+            <a href="/admin">
+                <img src="/../views/admin/css/Summer.png" alt="" class="img-fluid" style="width: 150px" >
+            </a>
+
         </div>
         <div class="list-group list-group-flush">
             <c:if test="${admin.chucVu == 0}">
@@ -165,7 +169,12 @@
         <!-- Top navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
             <div class="container-fluid">
-                <button class="btn btn-primary" id="sidebarToggle">Menu</button>
+                    <a  id="sidebarToggle"  style="border: none; color: #212529"  >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                        </svg>
+                    </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
