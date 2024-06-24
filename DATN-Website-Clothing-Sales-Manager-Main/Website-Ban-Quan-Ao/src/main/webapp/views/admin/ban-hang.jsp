@@ -209,6 +209,7 @@
         }, 3000);
     </script>
 </c:if>
+
 <div class="card border rounded">
     <div class="card-header text-black">
         <h3 class="mb-0">Bán hàng tại quầy</h3>
