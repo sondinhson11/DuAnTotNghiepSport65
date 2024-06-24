@@ -6,17 +6,7 @@ import com.example.websitebanquanao.infrastructures.requests.FormThanhToan;
 import com.example.websitebanquanao.infrastructures.requests.GioHangUserRequest;
 import com.example.websitebanquanao.infrastructures.requests.KhachHangRequest;
 import com.example.websitebanquanao.infrastructures.responses.*;
-import com.example.websitebanquanao.services.AnhSanPhamService;
-import com.example.websitebanquanao.services.GiamGiaService;
-import com.example.websitebanquanao.services.GioHangChiTietService;
-import com.example.websitebanquanao.services.GioHangService;
-import com.example.websitebanquanao.services.HoaDonChiTietService;
-import com.example.websitebanquanao.services.HoaDonService;
-import com.example.websitebanquanao.services.KhachHangService;
-import com.example.websitebanquanao.services.KhuyenMaiChiTietService;
-import com.example.websitebanquanao.services.KichCoService;
-import com.example.websitebanquanao.services.MauSacService;
-import com.example.websitebanquanao.services.SanPhamService;
+import com.example.websitebanquanao.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +35,8 @@ public class TrangChuController {
 
     @Autowired
     private KichCoService kichCoService;
+    @Autowired
+    private HinhThucThanhToanService  hinhThucThanhToanService;
 
     @Autowired
     private AnhSanPhamService anhSanPhamService;
@@ -235,6 +227,7 @@ public class TrangChuController {
             model.addAttribute("sumSoLuong", gioHangChiTietService.sumSoLuongByIdKhachHang(khachHangResponse.getId()));
             model.addAttribute("khachHang", khachHangService.getById(khachHangResponse.getId()));
             model.addAttribute("kh", khachHangResponse);
+            model.addAttribute("listHTTT" , hinhThucThanhToanService.getAll());
             model.addAttribute("tongTien", tongTien.intValue());
             if (giamGiaResponse != null) {
                 int soPhanTramGiam = giamGiaResponse.getSoPhanTramGiam();

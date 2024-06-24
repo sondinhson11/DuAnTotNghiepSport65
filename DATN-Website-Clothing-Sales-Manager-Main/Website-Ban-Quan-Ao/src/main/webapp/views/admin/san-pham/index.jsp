@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
     .image-input {
         display: none;
@@ -45,13 +45,6 @@
     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Thêm sản phẩm
     </button>
-
-    <c:if test="${not empty successMessage}">
-        <div class="alert alert-success mt-2">${successMessage}</div>
-    </c:if>
-    <c:if test="${not empty errorMessage}">
-        <div class="alert alert-danger mt-2">${errorMessage}</div>
-    </c:if>
 
     <div class="row">
         <div>
@@ -426,24 +419,29 @@
         };
     }
 
-    $(document).ready(function () {
-        hideErrorMessage();
-        hideErrorMessage2();
+    document.addEventListener("DOMContentLoaded", function () {
+        // Kiểm tra thông báo thành công
+        <c:if test="${not empty successMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '${successMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
+
+        // Kiểm tra thông báo lỗi
+        <c:if test="${not empty errorMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '${errorMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
     });
-
-    function hideErrorMessage() {
-        // Sử dụng jQuery để ẩn thông báo sau 5 giây
-        setTimeout(function () {
-            $('.alert-danger').fadeOut('slow');
-        }, 1000);
-    }
-
-    function hideErrorMessage2() {
-        // Sử dụng jQuery để ẩn thông báo sau 5 giây
-        setTimeout(function () {
-            $('.alert-success').fadeOut('slow');
-        }, 1000);
-    }
 </script>
 </body>
 </html>

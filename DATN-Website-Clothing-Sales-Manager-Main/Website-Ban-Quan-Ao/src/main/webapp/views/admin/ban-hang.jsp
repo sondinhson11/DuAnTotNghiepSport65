@@ -516,12 +516,15 @@
                         </div>
                         <div class="mb-3" id="hinh-thuc-thanh-toan-div">
                             <label class="form-label">Hình thức thanh toán</label>
-                            <select class="form-select" id="hinh-thuc-thanh-toan" name="httt"
-                                    aria-label="Default select example">
-                                <option selected value="0">Chọn hình thức thanh toán</option>
-                                <option value="1">Tiền mặt</option>
-                                <option value="2">Chuyển khoản</option>
+
+                            <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
+                                <!-- Vòng lặp để tạo các tùy chọn từ danh sách `listHTTT` -->
+                                <c:forEach items="${listHTTT}" var="lshttt">
+                                    <option value="${lshttt.ma}">${lshttt.ma == 1 ? "Tiền Mặt" : "Chuyển Khoản" }</option>
+                                </c:forEach>
                             </select>
+
+
                         </div>
                         <div class="mb-3" id="tien-khach-dua-div">
                             <label class="form-label">Tiền khách đưa</label>
@@ -1306,6 +1309,7 @@
             $('#hinh-thuc-thanh-toan').on('change', function () {
                 var selectedValue = $(this).val();
 
+
                 // Kiểm tra giá trị được chọn và thực hiện hành động tương ứng
                 if (selectedValue === '1') {
                     // Tiền mặt - ẩn form
@@ -1316,6 +1320,7 @@
                 }
             });
         });
+
         // Lấy giá trị từ input có id="tong-tien"
         var tongTienInput = document.getElementById('tong-tien');
         var tongTienValue = tongTienInput.value;

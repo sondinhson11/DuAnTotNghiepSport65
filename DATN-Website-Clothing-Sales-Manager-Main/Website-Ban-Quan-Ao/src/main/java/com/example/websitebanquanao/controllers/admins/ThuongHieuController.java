@@ -67,14 +67,14 @@ public class ThuongHieuController {
         }
 
         if (thuongHieuRepository.existsByTen(thuongHieuRequest.getTen())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Thêm mới không thành công -Thương hiệu đã tồn tại");
+            redirectAttributes.addFlashAttribute("errorMessage", "Thương hiệu đã tồn tại");
             return redirect;
         }
 
 
         thuongHieuService.add(thuongHieuRequest);
         // Lưu thông báo thêm thành công vào session
-        redirectAttributes.addFlashAttribute("successMessage", "Thêm thương hiệu thành công");
+        redirectAttributes.addFlashAttribute("successMessage", "Thêm thành công");
         return redirect;
     }
 
@@ -103,7 +103,7 @@ public class ThuongHieuController {
             return "admin/layout";
         }
         if (thuongHieuRepository.existsByTen(updatedTen) && !updatedTen.equals(existingThuongHieu.getTen())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật không thành công - Tên thương hiệu đã tồn tại");
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên thương hiệu đã tồn tại");
             return redirect;
         }
         if (updatedTen.equals(existingThuongHieu.getTen())) {
@@ -112,7 +112,7 @@ public class ThuongHieuController {
 
         // Thực hiện cập nhật
         thuongHieuService.update(thuongHieuRequest, id);
-        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật Thương Hiệu thành công");
+        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật thành công");
         return redirect;
     }
 

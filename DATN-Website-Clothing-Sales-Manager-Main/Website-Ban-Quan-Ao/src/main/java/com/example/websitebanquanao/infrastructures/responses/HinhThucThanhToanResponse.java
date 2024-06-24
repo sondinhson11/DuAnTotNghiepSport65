@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HinhThucThanhToanResponse {
-    private UUID id;
+    private Integer id;
     private String ma;
     private String ten;
     private Date ngayTao;
