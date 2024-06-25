@@ -17,7 +17,6 @@ import java.util.UUID;
 @Table(name = "san_pham_chi_tiet")
 public class SanPhamChiTiet {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
@@ -49,6 +48,7 @@ public class SanPhamChiTiet {
 
     @Column(name = "trang_thai")
     private Integer trangThai;
+
     @Temporal(TemporalType.DATE)
     private Date ngay_tao;
 
@@ -63,5 +63,4 @@ public class SanPhamChiTiet {
 
     @OneToMany(mappedBy = "idSanPhamChiTiet")
     private Set<KhuyenMaiChiTiet> khuyenMaiChiTiets = new LinkedHashSet<>();
-
 }

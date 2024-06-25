@@ -222,4 +222,7 @@ public class SanPhamChiTietService {
     public Integer getSoLuongSanPham(UUID idSanPham, Integer idMauSac, Integer idKichCo) {
         return sanPhamChiTietRepository.getSoLuongSanPham(idSanPham, idMauSac, idKichCo);
     }
+    public List<SanPhamChiTietResponse> searchByTenSanPham(String tenSanPham) {
+        return sanPhamChiTietRepository.getByTenSanPham(tenSanPham);
+    }
 }

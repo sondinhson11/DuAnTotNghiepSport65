@@ -3,6 +3,7 @@ package com.example.websitebanquanao.controllers.admins;
 import com.example.websitebanquanao.entities.SanPhamChiTiet;
 import com.example.websitebanquanao.infrastructures.requests.*;
 import com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse;
+import com.example.websitebanquanao.repositories.SanPhamChiTietRepository;
 import com.example.websitebanquanao.services.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -45,6 +46,8 @@ public class SanPhamChiTietController {
     private SanPhamRequest sanPhamRequest;
     @Autowired
     HttpSession session;
+    @Autowired
+    private SanPhamChiTietRepository sanPhamChiTietRepository;
     @GetMapping("/index")
     public String index(Model model) {
         model.addAttribute("list", sanPhamChiTietService.getAll());
@@ -187,6 +190,22 @@ public class SanPhamChiTietController {
         }
 
         return "redirect:/admin/hoa-don/" + idHoaDon;
+    }
+    // Mapping for searching by name
+//    @GetMapping("/search")
+//    public String searchByName(@RequestParam("name") String tenSanPham, Model model) {
+//        List<SanPhamChiTietResponse> list = sanPhamChiTietService.searchByTenSanPham(tenSanPham);
+//        model.addAttribute("list", list);
+//        return "admin/san-pham-chi-tiet/index"; // Trả về view đúng
+//}
+    @GetMapping("/search")
+    public String searchByName(@RequestParam("name") String tenSanPham, Model model) {
+        List<SanPhamChiTietResponse> list = sanPhamChiTietService.searchByTenSanPham(tenSanPham);
+        model.addAttribute("list", list);
+        model.addAttribute("listMauSac", mauSacService.getAll()); // Thêm danh sách màu sắc
+        model.addAttribute("listKichCo", kichCoService.getAll()); // Thêm danh sách kích cỡ
+        model.addAttribute("view", "/views/admin/san-pham-chi-tiet/index.jsp"); // Đường dẫn view
+        return "admin/layout"; // Trả về layout của admin
     }
 
 }

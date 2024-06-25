@@ -28,6 +28,12 @@
             window.location.href = "/admin/san-pham-chi-tiet/filter-kich-co?tenKichCo=" + selectedSize;
         }
     }
+    function searchByName(event) {
+        if (event.key === "Enter") {
+            var searchQuery = document.getElementById("searchInput").value;
+            window.location.href = "/admin/san-pham-chi-tiet/search?name=" + searchQuery;
+        }
+    }
 </script>
 
 <div>
@@ -37,7 +43,7 @@
     </div>
 
     <div class="row ">
-        <%--    lọc đang bán-ngừng bán--%>
+        <!-- lọc đang bán-ngừng bán -->
         <div class="col-2 ms-1 mt-3">
             <select id="statusSelect" class="form-select" aria-label="Default select example"
                     onchange="filterByStatus()">
@@ -46,7 +52,7 @@
                 <option value="0" ${param.status == '0' ? 'selected' : ''}>Ngừng bán</option>
             </select>
         </div>
-        <%-- lọc theo màu sắc--%>
+        <!-- lọc theo màu sắc -->
         <div class="col-2 ms-1 mt-3">
             <select id="colorSelect" class="form-select" aria-label="Default select example"
                     onchange="filterByColor()">
@@ -58,18 +64,22 @@
                 </c:forEach>
             </select>
         </div>
-            <%-- Lọc theo kích cỡ--%>
+        <!-- Lọc theo kích cỡ -->
         <div class="col-2 ms-1 mt-3">
             <select id="sizeSelect" class="form-select" aria-label="Default select example"
                     onchange="filterBySize()">
                 <option value="" ${param.ten == null ? 'selected' : ''}>Tất cả kích cỡ</option>
                 <c:forEach items="${listKichCo}" var="size">
                     <option value="${size.ten}" ${param.tenKichCo == size.ten ? 'selected' : ''}>
-                        ${size.ten}
+                            ${size.ten}
                     </option>
                 </c:forEach>
             </select>
-</div>
+        </div>
+        <!-- Tìm kiếm theo tên -->
+        <div class="col-4 ms-1 mt-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm theo tên" onkeypress="searchByName(event)">
+        </div>
         <div class="ms-1">
             <table class="table table-bordered text-center mt-3">
                 <thead>
@@ -119,3 +129,4 @@
             </table>
         </div>
     </div>
+</div>
