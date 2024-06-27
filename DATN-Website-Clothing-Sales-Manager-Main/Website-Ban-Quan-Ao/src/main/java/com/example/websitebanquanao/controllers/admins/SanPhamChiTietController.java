@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,6 +59,8 @@ public class SanPhamChiTietController {
     }
     @GetMapping("/create")
     public String create(Model model) {
+        List<SanPhamChiTietResponse> listtam = sanPhamChiTietService.getlisttam();
+        model.addAttribute("listtam",listtam);
         model.addAttribute("listSanPham", sanPhamService.getAll());
         model.addAttribute("listMauSac", mauSacService.getAll());
         model.addAttribute("listKichCo", kichCoService.getAll());
@@ -71,12 +74,23 @@ public class SanPhamChiTietController {
         model.addAttribute("view", "/views/admin/san-pham-chi-tiet/create.jsp");
         return "admin/layout";
     }
+    @GetMapping("addlist")
+    public String addlist(){
+        sanPhamChiTietService.updateList();
+        return "redirect:/admin/san-pham-chi-tiet/index";
+    }
     @PostMapping("/add")
     public String add(@ModelAttribute("sanPhamChiTiet") SanPhamChiTietRequest sanPhamChiTietRequest) {
-
-
+        sanPhamChiTietRequest.setTrangThai(2);
         sanPhamChiTietService.add(sanPhamChiTietRequest);
-        return "redirect:/admin/san-pham-chi-tiet/index";
+        return "redirect:/admin/san-pham-chi-tiet/create";
+    }
+
+
+    @GetMapping("delete/{id}")
+    public String delete(@PathVariable("id") UUID id) {
+        sanPhamChiTietService.delete(id);
+        return "redirect:/admin/san-pham-chi-tiet/create";
     }
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("sanPhamChiTiet") SanPhamChiTietRequest sanPhamChiTietRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
@@ -90,6 +104,59 @@ public class SanPhamChiTietController {
         return "redirect:/admin/san-pham-chi-tiet/index";
     }
 
+    //    @PostMapping("updatetam/{id}")
+//    public String updatetam(@PathVariable("id") UUID id, @Valid @ModelAttribute("sanPhamChiTiet") SanPhamChiTietRequest sanPhamChiTietRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+//        if (result.hasErrors()) {
+//            model.addAttribute("list", sanPhamChiTietService.getAll());
+//            model.addAttribute("view", "/views/admin/san-pham-chi-tiet/create.jsp");
+//            return "admin/layout";
+//        }
+//        sanPhamChiTietService.update(sanPhamChiTietRequest, id);
+//        sanPhamChiTietRequest.setTrangThai(2);
+//        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật chi tiết sản phẩm thành công");
+//        return "redirect:/admin/san-pham-chi-tiet/create";
+//    }
+    @PostMapping("updatetam/{id}")
+    public String updatetam(@PathVariable("id") UUID id, @Valid @ModelAttribute("sanPhamChiTiet") SanPhamChiTietRequest sanPhamChiTietRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("list", sanPhamChiTietService.getAll());
+            model.addAttribute("view", "/views/admin/san-pham-chi-tiet/create.jsp");
+            System.out.println("Validation errors: " + result.getAllErrors());
+            return "admin/layout";
+        }
+
+        try {
+            System.out.println("Updating product details with id: " + id);
+            sanPhamChiTietService.updatetam(sanPhamChiTietRequest, id);
+            sanPhamChiTietRequest.setTrangThai(2);
+            redirectAttributes.addFlashAttribute("successMessage", "Cập nhật chi tiết sản phẩm thành công");
+        } catch (Exception e) {
+            System.err.println("Error updating product details: " + e.getMessage());
+            model.addAttribute("list", sanPhamChiTietService.getAll());
+            model.addAttribute("view", "/views/admin/san-pham-chi-tiet/create.jsp");
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi cập nhật chi tiết sản phẩm.");
+            return "admin/layout";
+        }
+
+        return "redirect:/admin/san-pham-chi-tiet/create";
+    }
+
+
+    @GetMapping("/updatetam/{id}")
+    public String updatetam(@PathVariable("id") SanPhamChiTiet sanPhamChiTiet, Model model) {
+        model.addAttribute("listSanPham", sanPhamService.getAll());
+        model.addAttribute("listMauSac", mauSacService.getAll());
+        model.addAttribute("listKichCo", kichCoService.getAll());
+
+        model.addAttribute("list", sanPhamChiTietService.getAll());
+
+        model.addAttribute("sanPhamChiTiet", sanPhamChiTiet);
+        model.addAttribute("action", "/admin/san-pham-chi-tiet/updatetam/" + sanPhamChiTiet.getId());
+        model.addAttribute("view", "/views/admin/san-pham-chi-tiet/updatetam.jsp");
+        return "admin/layout";
+    }
+
+
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") SanPhamChiTiet sanPhamChiTiet, Model model) {
         model.addAttribute("listSanPham", sanPhamService.getAll());
@@ -100,7 +167,7 @@ public class SanPhamChiTietController {
 
         model.addAttribute("sanPhamChiTiet", sanPhamChiTiet);
         model.addAttribute("action", "/admin/san-pham-chi-tiet/update/" + sanPhamChiTiet.getId());
-        model.addAttribute("view", "/views/admin/san-pham-chi-tiet/create.jsp");
+        model.addAttribute("view", "/views/admin/san-pham-chi-tiet/update.jsp");
         return "admin/layout";
     }
     @GetMapping("/get-anh/{id}")
@@ -207,5 +274,9 @@ public class SanPhamChiTietController {
         model.addAttribute("view", "/views/admin/san-pham-chi-tiet/index.jsp"); // Đường dẫn view
         return "admin/layout"; // Trả về layout của admin
     }
+
+
+
+
 
 }

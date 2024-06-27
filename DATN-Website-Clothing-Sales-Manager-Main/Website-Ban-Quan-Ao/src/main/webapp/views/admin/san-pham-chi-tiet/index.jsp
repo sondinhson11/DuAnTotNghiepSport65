@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     function filterByStatus() {
         var selectedStatus = document.getElementById("statusSelect").value;
@@ -50,6 +51,7 @@
                 <option value="" ${param.status == null ? 'selected' : ''}>Tất cả</option>
                 <option value="1" ${param.status == '1' ? 'selected' : ''}>Đang bán</option>
                 <option value="0" ${param.status == '0' ? 'selected' : ''}>Ngừng bán</option>
+
             </select>
         </div>
         <!-- lọc theo màu sắc -->
@@ -114,6 +116,9 @@
                             </c:if>
                             <c:if test="${sanPhamChiTiet.trangThai == 0}">
                                 <span class="badge bg-danger">Ngừng bán</span>
+                            </c:if>
+                            <c:if test="${sanPhamChiTiet.trangThai == 2}">
+                                <span class="badge bg-danger">Tạm thời</span>
                             </c:if>
                         </td>
                         <td>

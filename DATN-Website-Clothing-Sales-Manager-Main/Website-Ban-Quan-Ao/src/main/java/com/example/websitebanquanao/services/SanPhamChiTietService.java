@@ -33,10 +33,14 @@ public class SanPhamChiTietService {
     public List<SanPhamChiTietResponse> getAll() {
         return sanPhamChiTietRepository.getAll();
     }
+    public List<SanPhamChiTietResponse> getlisttam() {
+        return sanPhamChiTietRepository.Getlisttam();
+    }
 
     public List<BanHangTaiQuayResponse> findAllCtsp() {
         return sanPhamChiTietRepository.findAllCtsp();
     }
+
 
     // mã sp tự tăng :
     public String maSPCount() {
@@ -135,6 +139,39 @@ public class SanPhamChiTietService {
             sanPhamChiTiet.setNgay_sua(new Date());
             sanPhamChiTietRepository.save(sanPhamChiTiet);
             System.out.println("SanPhamChiTietService.update: " + sanPhamChiTiet.getId());
+        }
+    }
+    public void updatetam(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id) {
+        // Tìm đối tượng SanPhamChiTiet theo id
+        SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.findById(id).orElse(null);
+
+        // Nếu tìm thấy đối tượng, cập nhật thông tin
+        if (sanPhamChiTiet != null) {
+            // Cập nhật các thuộc tính từ request
+            sanPhamChiTiet.setGia(sanPhamChiTietRequest.getGia());
+            sanPhamChiTiet.setSoLuong(sanPhamChiTietRequest.getSoLuong());
+            sanPhamChiTiet.setMoTa(sanPhamChiTietRequest.getMoTa());
+
+            // Thiết lập trạng thái là 2
+            sanPhamChiTiet.setTrangThai(2);
+
+            // Cập nhật ngày sửa là ngày hiện tại
+            sanPhamChiTiet.setNgay_sua(new Date());
+
+            // Lưu đối tượng vào cơ sở dữ liệu
+            sanPhamChiTietRepository.save(sanPhamChiTiet);
+
+            // In ra log để kiểm tra
+            System.out.println("SanPhamChiTietService.update: " + sanPhamChiTiet.getId());
+        }
+    }
+
+
+    @Transactional
+    public void updateList(){
+        List<SanPhamChiTietResponse> list = sanPhamChiTietRepository.Getlisttam();
+        for (SanPhamChiTietResponse entity : list) {
+            sanPhamChiTietRepository.updateTrangThai(entity.getId(),1);
         }
     }
 
