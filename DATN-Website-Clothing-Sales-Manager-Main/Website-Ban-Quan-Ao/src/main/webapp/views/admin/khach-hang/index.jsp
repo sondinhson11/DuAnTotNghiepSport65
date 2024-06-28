@@ -101,7 +101,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="quanHuyen" class="form-label">Tỉnh/Thành phố</label>
+                                    <label for="tinhThanhPho" class="form-label">Tỉnh/Thành phố</label>
                                     <select id="provinceSelect" class="form-select">
                                         <option value="" disabled selected>Chọn tỉnh/thành phố</option>
                                     </select>
@@ -456,7 +456,6 @@
     </div>
 
 </div>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(".update-button").click(function () {

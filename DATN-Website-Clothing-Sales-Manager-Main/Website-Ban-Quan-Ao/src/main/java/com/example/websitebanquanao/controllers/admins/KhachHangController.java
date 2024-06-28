@@ -80,7 +80,7 @@ public class KhachHangController {
 
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("kh") KhachHangRequest khachHangRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (khachHangRequest.validNull()) {
+        if (khachHangRequest.validUpdate()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
