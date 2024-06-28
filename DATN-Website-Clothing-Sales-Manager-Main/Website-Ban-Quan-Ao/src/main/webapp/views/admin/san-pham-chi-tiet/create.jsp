@@ -219,7 +219,7 @@
                             <th>Kích cỡ</th>
                             <th>Giá</th>
                             <th>Số lượng</th>
-                            <th>Trạng thái</th>
+<%--                            <th>Trạng thái</th>--%>
                             <th colspan="2">Thao tác</th>
                         </tr>
                         </thead>
@@ -235,19 +235,19 @@
                                     <fmt:formatNumber value="${sanPhamChiTiet.gia}" pattern="#,##0 ₫"/>
                                 </td>
                                 <td>${sanPhamChiTiet.soLuong}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${sanPhamChiTiet.trangThai == 1}">
-                                            <span class="badge bg-success">Đang bán</span>
-                                        </c:when>
-                                        <c:when test="${sanPhamChiTiet.trangThai == 0}">
-                                            <span class="badge bg-danger">Ngừng bán</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="badge bg-danger">Tạm</span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
+<%--                                <td>--%>
+<%--                                    <c:choose>--%>
+<%--                                        <c:when test="${sanPhamChiTiet.trangThai == 1}">--%>
+<%--                                            <span class="badge bg-success">Đang bán</span>--%>
+<%--                                        </c:when>--%>
+<%--                                        <c:when test="${sanPhamChiTiet.trangThai == 0}">--%>
+<%--                                            <span class="badge bg-danger">Ngừng bán</span>--%>
+<%--                                        </c:when>--%>
+<%--                                        <c:otherwise>--%>
+<%--                                            <span class="badge bg-danger">Tạm</span>--%>
+<%--                                        </c:otherwise>--%>
+<%--                                    </c:choose>--%>
+<%--                                </td>--%>
                                 <td>
                                     <a href="/admin/san-pham-chi-tiet/updatetam/${sanPhamChiTiet.id}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -264,15 +264,16 @@
                         </c:forEach>
                         </tbody>
                     </table>
+
+                    <div class="mt-3">
+                        <a type="button" href="/admin/san-pham-chi-tiet/addlist" class="btn btn-primary">Lưu</a>
+                    </div>
                 </c:if>
 
-
-                <c:if test="${empty listtam}">
-                    <p class="text-center mt-3">no data</p>
-                </c:if>
-
-                <div class="mt-3">
-                    <a type="button" href="/admin/san-pham-chi-tiet/addlist" class="btn btn-primary">Lưu</a>
+                <div style="display: flex; justify-content: center; align-items: center; text-align: center;">
+                    <c:if test="${empty listtam}">
+                        <img src="/../views/admin/css/NoData.jpg" alt="No Data" class="img-fluid" style="width: 150px;">
+                    </c:if>
                 </div>
 
 
