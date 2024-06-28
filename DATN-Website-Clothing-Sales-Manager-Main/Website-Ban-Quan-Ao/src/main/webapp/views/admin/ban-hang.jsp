@@ -690,7 +690,7 @@
                                 var productRow = '<tr>' +
                                     '<td>' + (index + 1) + '</td>' +
                                     '<td>' +
-                                    '<div id="carouselExampleSlidesOnly_' + product.id + '" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000">' +
+                                    '<div id="carouselExampleSlidesOnly_' + product.idSanPham + '" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000">' +
                                     '<div class="carousel-inner" style="width: 150px; height: 150px"></div>' +
                                     '</div>' +
                                     '</td>' +
@@ -723,7 +723,7 @@
                                 $('#productTableBody').append(productRow);
 
                                 // Load ảnh sản phẩm
-                                loadProductImages(product.id);
+                                loadProductImages(product.idSanPham);
 
                                 // Load discount percentage
                                 getDiscountPercentage(product.id);
