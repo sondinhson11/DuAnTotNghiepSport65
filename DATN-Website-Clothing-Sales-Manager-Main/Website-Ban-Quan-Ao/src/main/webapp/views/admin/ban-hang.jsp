@@ -278,7 +278,7 @@
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                         <script>
                             $(document).ready(function () {
-                                var idSanPham = '${sp.idSanPhamChiTiet}';
+                                var idSanPham = '${sp.idSanPham}';
                                 console.log(idSanPham);
                                 $.ajax({
                                     url: '/get-anh-san-pham/' + idSanPham,
@@ -287,7 +287,7 @@
                                     success: function (data) {
                                         // Xử lý phản hồi từ máy chủ và cập nhật danh sách ảnh
                                         var listAnhSanPham = data;
-                                        var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPhamChiTiet} .carousel-inner');
+                                        var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPham} .carousel-inner');
                                         carouselInner.empty();
 
                                         $.each(listAnhSanPham, function (index, anhSanPham) {
@@ -306,7 +306,7 @@
                         </script>
                         <td>
                             <!-- Ảnh -->
-                            <div id="carouselExampleSlidesOnly_${sp.idSanPhamChiTiet}"
+                            <div id="carouselExampleSlidesOnly_${sp.idSanPham}"
                                  class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                                 <div class="carousel-inner" style="width: 150px; height: 150px">
                                     <c:forEach items="${listAnhSanPham}" var="anhSanPham" varStatus="status">
