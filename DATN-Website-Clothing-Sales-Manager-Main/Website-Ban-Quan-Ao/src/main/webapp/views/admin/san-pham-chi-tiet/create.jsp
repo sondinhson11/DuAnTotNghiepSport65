@@ -268,7 +268,7 @@
 
 
                 <c:if test="${empty listtam}">
-                    <p class="text-center mt-3">NO DATA</p>
+                    <p class="text-center mt-3">no data</p>
                 </c:if>
 
                 <div class="mt-3">
