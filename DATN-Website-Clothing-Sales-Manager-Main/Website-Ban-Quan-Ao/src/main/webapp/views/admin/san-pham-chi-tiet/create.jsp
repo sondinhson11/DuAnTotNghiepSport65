@@ -42,6 +42,10 @@
     .image-input-label.selected {
         display: none;
     }
+    a {
+        display: inline-block;
+        margin-right: 5px; /* Điều chỉnh khoảng cách giữa các phần tử theo nhu cầu */
+    }
 </style>
 <script>
     <%--    ctsp--%>
@@ -200,68 +204,77 @@
 
                 <div class="mt-3">
                     <button type="button" class="btn btn-secondary">Làm Mới</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="submit" class="btn btn-primary">Tạo</button>
                 </div>
-
-                <table class="table table-bordered text-center mt-3">
-                    <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Mã sản phẩm</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Màu Sắc</th>
-                        <th>Kích cỡ</th>
-                        <th>Giá</th>
-                        <th>Số lượng</th>
-                        <th>Trạng thái</th>
-                        <th colspan="2">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${listtam}" var="sanPhamChiTiet" varStatus="status">
+                <!-- Kiểm tra xem danh sách 'listtam' có phần tử nào không -->
+                <c:if test="${not empty listtam}">
+                    <!-- Hiển thị bảng nếu 'listtam' không rỗng -->
+                    <table class="table table-bordered text-center mt-3">
+                        <thead>
                         <tr>
-                            <td>${status.index + 1}</td>
-                            <td>${sanPhamChiTiet.maSanPham}</td>
-                            <td>${sanPhamChiTiet.tenSanPham}</td>
-                            <td>${sanPhamChiTiet.tenMauSac}</td>
-                            <td>${sanPhamChiTiet.tenKichCo}</td>
-                            <td>
-                                <fmt:formatNumber value="${sanPhamChiTiet.gia}" pattern="#,##0 ₫"/>
-                            </td>
-
-                            <td>${sanPhamChiTiet.soLuong}</td>
-                            <td>
-                                <c:if test="${sanPhamChiTiet.trangThai == 1}">
-                                    <span class="badge bg-success">Đang bán</span>
-                                </c:if>
-                                <c:if test="${sanPhamChiTiet.trangThai == 0}">
-                                    <span class="badge bg-danger">Ngừng bán</span>
-                                </c:if>
-                                <c:if test="${sanPhamChiTiet.trangThai == 2}">
-                                    <span class="badge bg-danger">Tạm</span>
-                                </c:if>
-                            </td>
-                            <td>
-                                <a href="/admin/san-pham-chi-tiet/updatetam/${sanPhamChiTiet.id}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-                                    </svg>
-                                </a>
-                                <a href="/admin/san-pham-chi-tiet/delete/${sanPhamChiTiet.id}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-                                    </svg>
-                                </a>
-                            </td>
+                            <th>STT</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Màu Sắc</th>
+                            <th>Kích cỡ</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Trạng thái</th>
+                            <th colspan="2">Thao tác</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${listtam}" var="sanPhamChiTiet" varStatus="status">
+                            <tr>
+                                <td>${status.index + 1}</td>
+                                <td>${sanPhamChiTiet.maSanPham}</td>
+                                <td>${sanPhamChiTiet.tenSanPham}</td>
+                                <td>${sanPhamChiTiet.tenMauSac}</td>
+                                <td>${sanPhamChiTiet.tenKichCo}</td>
+                                <td>
+                                    <fmt:formatNumber value="${sanPhamChiTiet.gia}" pattern="#,##0 ₫"/>
+                                </td>
+                                <td>${sanPhamChiTiet.soLuong}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${sanPhamChiTiet.trangThai == 1}">
+                                            <span class="badge bg-success">Đang bán</span>
+                                        </c:when>
+                                        <c:when test="${sanPhamChiTiet.trangThai == 0}">
+                                            <span class="badge bg-danger">Ngừng bán</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="badge bg-danger">Tạm</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <a href="/admin/san-pham-chi-tiet/updatetam/${sanPhamChiTiet.id}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="/admin/san-pham-chi-tiet/delete/${sanPhamChiTiet.id}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
+
+
+                <c:if test="${empty listtam}">
+                    <p class="text-center mt-3">NO DATA</p>
+                </c:if>
 
                 <div class="mt-3">
                     <a type="button" href="/admin/san-pham-chi-tiet/addlist" class="btn btn-primary">Lưu</a>
-
                 </div>
+
 
             </form:form>
 
