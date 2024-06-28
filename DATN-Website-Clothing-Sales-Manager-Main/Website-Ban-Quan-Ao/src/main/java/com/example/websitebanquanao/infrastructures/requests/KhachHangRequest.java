@@ -53,4 +53,15 @@ public class KhachHangRequest {
                         tinhThanhPho == null;
     }
 
+    public boolean validUpdate() {
+        return
+                StringUtils.isEmpty(hoVaTen) ||
+                        email == null ||
+                        soDienThoai == null ||
+                        diaChi == null ||
+                        xaPhuong == null ||
+                        quanHuyen == null ||
+                        tinhThanhPho == null;
+    }
+
 }
