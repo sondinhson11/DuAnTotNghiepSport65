@@ -19,18 +19,65 @@
         </c:forEach>
     </div>
 
+    <style>
+        .discount-percentage {
+            position: absolute; /* Vị trí tuyệt đối */
+            top: 0; /* Đặt ở đỉnh */
+            left: 0; /* Đặt ở bên trái */
+            background-color: red; /* Màu nền đỏ */
+            color: white; /* Màu chữ trắng */
+            padding: 5px; /* Khoảng cách nội dung từ viền */
+            font-weight: bold; /* In đậm */
+        }
+        .link-dark {
+            transition: all 0.3s ease;
+        }
+        .link-dark:hover {
+            background-color: #f8f9fa; /* Light gray background on hover */
+            color: #007bff; /* Blue text color on hover */
+            text-decoration: underline; /* Underline on hover */
+        }
+        .rounded {
+            border-radius: 0.25rem; /* Rounded corners */
+        }
+        @media (max-width: 767.98px) { /* For small screens */
+            .col-md-auto {
+                text-align: center;
+            }
+        }
+    </style>
+
     <div class="float-end mt-3">
-        <select id="sort" class="form-select" aria-label="Default select example">
+        <select id="sort" class=" form-select" aria-label="Default select example">
             <option selected>Sắp xếp theo</option>
             <option value="1">Giá: thấp đến cao</option>
             <option value="2">Giá: cao đến thấp</option>
         </select>
+        <script>
+            document.getElementById("sort").onchange = function () {
+                var selectedValue = this.value; // Lấy giá trị được chọn trong thẻ select
+                var idLoai = '${idLoai}';
+                // Chuyển hướng đến liên kết tương ứng với giá trị đã chọn
+                if (selectedValue === "1") {
+                    if (idLoai == -1)
+                        window.location.href = "/san-pham?sort=asc";
+                    else {
+                        window.location.href = "/san-pham/${idLoai}?sort=asc";
+                    }
+                } else if (selectedValue === "2") {
+                    if (idLoai == -1)
+                        window.location.href = "/san-pham?sort=desc";
+                    else {
+                        window.location.href = "/san-pham/${idLoai}?sort=desc";
+                    }
+                }
+            };
+        </script>
     </div>
-
     <div class="product px-5 mt-5">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
             <c:forEach items="${listSanPham}" var="sanPham">
-                <div class="col mb-4">
+                <div class="col">
                     <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}" class="text-decoration-none text-dark">
                         <div class="card product-card border-0">
                             <img src="${sanPham.anh}" class="card-img-top product-image" alt="${sanPham.ten}">
@@ -85,60 +132,57 @@
         </div>
     </div>
 
+    <style>
+        .product-card {
+            margin-bottom: 20px; /* Khoảng cách giữa các sản phẩm */
+            transition: transform 0.2s;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .row > .col {
+            margin-bottom: 20px; /* Khoảng cách giữa các hàng sản phẩm */
+        }
+
+        @media (min-width: 992px) { /* Đối với màn hình lớn hơn (desktop) */
+            .product-card {
+                margin-bottom: 30px; /* Khoảng cách lớn hơn giữa các sản phẩm */
+            }
+        }
+        .product-card:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+
+        .product-name {
+            font-size: 0.9rem; /* Smaller text size */
+            margin: 0.5rem 0;
+        }
+        .product-price {
+            font-size: 1rem;
+            color: #ff5733; /* Different color for better visibility */
+        }
+        .discount-percentage {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff0000;
+            color: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+        .old-price {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .new-price {
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+        .card-body {
+            padding: 1rem; /* Added padding for better spacing */
+        }
+    </style>
+
+
     <h5 class="text-center">Bạn đã xem hết!</h5>
 </section>
-
-<style>
-    .product-card {
-        width: 100%; /* Cho phép thẻ card chiếm toàn bộ chiều rộng cột */
-        transition: transform 0.2s;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .product-card:hover {
-        transform: scale(1.05);
-    }
-
-    .product-image {
-        width: 100%; /* Đảm bảo ảnh chiếm toàn bộ chiều rộng thẻ card */
-        height: auto; /* Để ảnh tự động điều chỉnh chiều cao */
-        object-fit: cover;
-        border-radius: 10px 10px 0 0;
-    }
-
-    .product-name {
-        font-size: 0.9rem;
-        margin: 0.5rem 0;
-    }
-
-    .product-price {
-        font-size: 1rem;
-        color: #ff5733;
-    }
-
-    .discount-percentage {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: #ff0000;
-        color: #fff;
-        padding: 0.3rem 0.6rem;
-        border-radius: 50%;
-        font-size: 0.8rem;
-    }
-
-    .old-price {
-        color: #888;
-        font-size: 0.9rem;
-    }
-
-    .new-price {
-        color: #28a745;
-        font-size: 1.1rem;
-    }
-
-    .card-body {
-        padding: 1rem;
-    }
-</style>
