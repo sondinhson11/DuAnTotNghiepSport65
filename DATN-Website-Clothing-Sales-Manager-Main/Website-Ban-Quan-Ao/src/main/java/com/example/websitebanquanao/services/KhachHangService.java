@@ -60,7 +60,6 @@ public class KhachHangService {
             khachHang.setTinhThanhPho(khachHangRequest.getTinhThanhPho());
 
             khachHangRepository.save(khachHang);
-
             System.out.println("KhachHangService.update: " + khachHang.getHoVaTen());
         } else {
             System.out.println("KhachHangService.update: null");
