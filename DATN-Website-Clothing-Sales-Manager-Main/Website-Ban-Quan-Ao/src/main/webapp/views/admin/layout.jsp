@@ -15,17 +15,21 @@
 </head>
 <style>
     <%--    bo tròn hình ảnh--%>
+
     .img-fluid {
         border-radius: 50%;
+        background-color: rgb(46,40,40);
     }
 
 
     .custom-sidebar {
-        background-color: #fff;
+        background-color: rgb(46,40,40);
         border-right: 1px solid #dee2e6;
     }
 
     .custom-sidebar .list-group-item {
+        background-color: rgb(46,40,40);
+        color: #FFFFFF;
         border: none;
     }
 
