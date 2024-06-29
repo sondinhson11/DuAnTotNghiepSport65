@@ -46,6 +46,11 @@ public class LoginController {
             session.setAttribute("error", "Vui lòng nhập đầy đủ thông tin");
             return "admin/login/login";
         }
+        if(nhanVienRequest.getTrangThai()==1){
+            session.setAttribute("error", "Tài khoản của bạn đã bị khóa không thể đăng nhập. Liên hệ Admin để biết thêm...");
+            return "admin/login/login";
+
+        }
         if (nhanVienRequest != null) {
             session.setAttribute("admin", nhanVienRequest);
             return "redirect:/admin";

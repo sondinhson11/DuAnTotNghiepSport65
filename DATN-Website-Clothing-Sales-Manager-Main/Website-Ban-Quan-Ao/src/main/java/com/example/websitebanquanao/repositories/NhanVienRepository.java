@@ -27,4 +27,5 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, UUID> {
 //    check login
     @Query("select nv from NhanVien nv where nv.email = :email and nv.matKhau = :matKhau")
     public NhanVien checkLogin(@Param("email") String email, @Param("matKhau") String matKhau);
+
 }
