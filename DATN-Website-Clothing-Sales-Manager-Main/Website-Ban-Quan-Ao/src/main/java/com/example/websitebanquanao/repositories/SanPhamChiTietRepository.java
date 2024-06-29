@@ -20,7 +20,7 @@ import java.util.UUID;
 @Repository
 public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, UUID> {
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse(s.id, s.maSanPham,s.idSanPham.id, s.idSanPham.ten, s.idMauSac.ten, s.idKichCo.ten, s.gia, s.soLuong, s.moTa, s.trangThai,s.ngay_sua,s.ngay_tao) from SanPhamChiTiet s where s.idSanPham.ten = :tenSanPham")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse(s.id, s.maSanPham, s.idSanPham.id, s.idSanPham.ten, s.idMauSac.ten, s.idKichCo.ten, s.gia, s.soLuong, s.moTa, s.trangThai, s.ngay_sua, s.ngay_tao) from SanPhamChiTiet s where s.idSanPham.ten like %:tenSanPham%")
     public List<SanPhamChiTietResponse> getByTenSanPham(@Param("tenSanPham") String tenSanPham);
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse(s.id, s.maSanPham,s.idSanPham.id, s.idSanPham.ten, s.idMauSac.ten, s.idKichCo.ten, s.gia, s.soLuong, s.moTa, s.trangThai, s.ngay_sua, s.ngay_tao)  from SanPhamChiTiet s where s.trangThai = 1 ORDER BY s.idSanPham.ten")
