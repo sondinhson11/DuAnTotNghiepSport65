@@ -14,42 +14,45 @@
 
 </head>
 <style>
-    <%--    bo tròn hình ảnh--%>
-
+    /* Bo tròn hình ảnh */
     .img-fluid {
         border-radius: 50%;
-        background-color: rgb(46,40,40);
+        background-color: white; /* Đổi màu nền thành trắng */
     }
 
-
+    /* Sidebar tuỳ chỉnh */
     .custom-sidebar {
-        background-color: rgb(46,40,40);
+        background-color: white; /* Đổi màu nền thành trắng */
         border-right: 1px solid #dee2e6;
     }
 
     .custom-sidebar .list-group-item {
-        background-color: rgb(46,40,40);
-        color: #FFFFFF;
+        background-color: white; /* Đổi màu nền thành trắng */
+        color: #0000008C; /* Đổi màu chữ thành đen */
         border: none;
     }
 
     .custom-sidebar .list-group-item:hover {
-        background-color: #f8f9fa;
+        background-color: #f1f1f1; /* Màu xám nhạt khi hover */
     }
 
     .custom-sidebar .list-group-item.active {
-        background-color: #fff;
+        background-color: #e7e7e7; /* Màu xám nhạt cho mục active */
         border-right: 3px solid #007bff;
     }
+
     .custom-sidebar .list-group-item.active:hover {
-        background-color: #fff;
+        background-color: #e7e7e7; /* Giữ màu xám nhạt khi hover */
     }
+
     .custom-sidebar .list-group-item.active i {
-        color: #007bff;
+        color: #007bff; /* Màu xanh dương cho icon khi active */
     }
+
     .custom-sidebar .list-group-item i {
         margin-right: 10px;
     }
+
     .custom-sidebar .sidebar-heading {
         text-align: center;
         padding: 20px 0;
@@ -64,23 +67,28 @@
         font-size: 1.5rem;
         font-weight: 700;
         margin-bottom: 0;
+        color: #000000; /* Đổi màu chữ thành đen */
     }
 
     .custom-sidebar .sidebar-heading p {
         font-size: 0.875rem;
         font-weight: 400;
         margin-bottom: 0;
+        color: #000000; /* Đổi màu chữ thành đen */
     }
+
+    /* Dropdown menu tuỳ chỉnh */
     .dropdown {
         position: relative;
         display: inline-block;
     }
+
     .dropdown:hover .dropdown-menu {
         display: block;
         margin-left: 50px;
     }
 
-    /* Adjusted style to handle mouseout */
+    /* Để giữ menu hiển thị khi hover ra ngoài */
     .dropdown-menu:hover {
         display: block;
     }
@@ -91,8 +99,8 @@
         text-decoration: none;
         color: #212529;
     }
-
 </style>
+
 <body>
 <div class="d-flex " id="wrapper">
     <!-- Sidebar-->
@@ -214,6 +222,7 @@
             </c:if>
         </div>
     </div>
+
     <!-- Page content wrapper-->
     <div id="page-content-wrapper">
         <!-- Top navigation-->
