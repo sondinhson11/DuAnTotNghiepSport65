@@ -9,10 +9,7 @@ import com.example.websitebanquanao.infrastructures.responses.AnhSanPhamResponse
 import com.example.websitebanquanao.infrastructures.responses.BanHangTaiQuayResponse;
 import com.example.websitebanquanao.infrastructures.responses.GioHangResponse;
 import com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse;
-import com.example.websitebanquanao.services.AnhSanPhamService;
-import com.example.websitebanquanao.services.HoaDonChiTietService;
-import com.example.websitebanquanao.services.HoaDonService;
-import com.example.websitebanquanao.services.SanPhamChiTietService;
+import com.example.websitebanquanao.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +33,8 @@ public class HoaDonController {
     private SanPhamChiTietService sanPhamChiTietService;
     @Autowired
     private AnhSanPhamService anhSanPhamService;
+    @Autowired
+    private HinhThucThanhToanService hinhThucThanhToanService;
     @Autowired
     private HttpSession httpSession;
 
@@ -78,7 +77,7 @@ public class HoaDonController {
         model.addAttribute("listHoaDon", hoaDonService.getAll());
         model.addAttribute("idHoaDon", id);
         model.addAttribute("hoaDon", hoaDon); // Truyền giá trị hoaDon vào model
-
+        model.addAttribute("listhttt", hinhThucThanhToanService.getById(UUID.fromString("33763e19-b7f1-4948-a506-3bca19ed3a48")));
         model.addAttribute("listSanPhamTrongGioHang", listSanPhamTrongGioHang);
         model.addAttribute("view", "/views/admin/hoa-don/danh-sach-hoa-don.jsp");
         return "admin/layout";

@@ -27,6 +27,7 @@ public class NhanVienService {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         return nhanVienRepository.getPage(pageable);
     }
+
     // mã NV tự tăng
     public String maNVCount() {
         String code = "";
@@ -57,6 +58,7 @@ public class NhanVienService {
         }
         return code;
     }
+
     public void add(NhanVienRequest nhanVienRequest) {
         NhanVien nhanVien = new NhanVien();
         nhanVien.setMa(maNVCount());
@@ -125,8 +127,10 @@ public class NhanVienService {
             return null;
         }
     }
-//    check login
-    public NhanVienRequest checkLogin(String email, String matKhau) {;
+
+    //    check login
+    public NhanVienRequest checkLogin(String email, String matKhau) {
+        ;
         NhanVien nhanVien = nhanVienRepository.checkLogin(email, matKhau);
         if (nhanVien != null) {
             NhanVienRequest nhanVienRequest = new NhanVienRequest();
@@ -148,5 +152,13 @@ public class NhanVienService {
             System.out.println("NhanVienService.checkLogin: null");
             return null;
         }
+    }
+
+    public boolean isPasswordValid(String password) {
+        return password.matches("^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$");
+    }
+
+    public boolean isSoDienThoai(String soDienThoai) {
+        return soDienThoai.matches("^0[0-9]{9,10}$");
     }
 }

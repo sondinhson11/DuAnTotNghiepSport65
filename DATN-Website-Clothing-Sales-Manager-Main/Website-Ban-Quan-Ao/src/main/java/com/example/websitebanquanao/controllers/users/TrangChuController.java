@@ -38,7 +38,7 @@ public class TrangChuController {
     @Autowired
     private KichCoService kichCoService;
     @Autowired
-    private HinhThucThanhToanService  hinhThucThanhToanService;
+    private HinhThucThanhToanService hinhThucThanhToanService;
 
     @Autowired
     private AnhSanPhamService anhSanPhamService;
@@ -71,11 +71,12 @@ public class TrangChuController {
     private KhachHangRequest khachHangRequest;
 
     private static final String redirect = "redirect:/";
+
     // trang chủ
     @GetMapping("")
-    public String trangChu(Model model) {
+    public String trangChu(Model model, @ModelAttribute("successMessage") String successMessage) {
         List<TrangChuResponse> productList = sanPhamService.getListTrangChu("");
-
+        model.addAttribute("successMessage", successMessage);
         List<TrangChuResponse> firstEightProducts = productList.subList(0, Math.min(productList.size(), 8));
         model.addAttribute("listTrangChu", firstEightProducts);
         model.addAttribute("kh", khachHangRequest);
@@ -240,7 +241,7 @@ public class TrangChuController {
             model.addAttribute("sumSoLuong", gioHangChiTietService.sumSoLuongByIdKhachHang(khachHangResponse.getId()));
             model.addAttribute("khachHang", khachHangService.getById(khachHangResponse.getId()));
             model.addAttribute("kh", khachHangResponse);
-            model.addAttribute("listHTTT" , hinhThucThanhToanService.getAll());
+            model.addAttribute("listHTTT", hinhThucThanhToanService.getAll());
             model.addAttribute("tongTien", tongTien.intValue());
             if (giamGiaResponse != null) {
                 int soPhanTramGiam = giamGiaResponse.getSoPhanTramGiam();
@@ -313,7 +314,7 @@ public class TrangChuController {
         model.addAttribute("listSanPhamTrongHoaDon", hoaDonChiTietService.getListByIdHoaDon(id));
         model.addAttribute("kh", khachHangRequest);
         model.addAttribute("id", id);
-        model.addAttribute("listHTTT" , hinhThucThanhToanService.getAll());
+        model.addAttribute("listHTTT", hinhThucThanhToanService.getAll());
         session.setAttribute("idHoaDon", id);
 
         BigDecimal tongTien = hoaDonService.sumTongTienByIdHoaDon(id);
@@ -422,6 +423,7 @@ public class TrangChuController {
         model.addAttribute("viewContent", "/views/user/chinh-sach-doi-tra.jsp");
         return "user/layout";
     }
+
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("kh") KhachHangRequest khachHangRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (khachHangRequest.validUpdate()) {
@@ -440,7 +442,7 @@ public class TrangChuController {
         }
         khachHangService.update(khachHangRequest, id);
         redirectAttributes.addFlashAttribute("successMessage", "Cập nhật khách hàng thành công");
-        return "redirect:/";
+        return redirect;
     }
 
     @GetMapping("get/{id}")

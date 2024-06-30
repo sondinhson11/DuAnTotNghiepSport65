@@ -382,7 +382,7 @@
             <form action="/admin/hoa-don/xac-nhan-thanh-toan/${hoaDon.id}" method="post">
                 <input type="hidden" name="trangThai" value="1">
                 <c:if test="${hoaDon.trangThai == 4}">
-                    <input type="hidden" name="httt" value="0">
+                    <input type="hidden" name="httt" value=${listhttt.id}>
                 </c:if>
                 <div class="modal-body">
                     <div class="mb-3">
