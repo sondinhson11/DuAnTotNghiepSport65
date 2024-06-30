@@ -61,12 +61,13 @@
                        data-diaChi="${nv.diaChi}" data-xaPhuong="${nv.xaPhuong}" data-quanHuyen="${nv.quanHuyen}"
                        data-tinhThanhPho="${nv.tinhThanhPho}" data-ngayVaoLam="${nv.ngayVaoLam}"
                        data-trangThai="${nv.trangThai}" data-chucVu="${nv.chucVu}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                             class="bi bi-pencil-fill" viewBox="0 0 16 16">
                             <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
                         </svg>
                     </a>
-<%--                    <a href="/admin/nhan-vien/delete/${nv.id}" class="btn btn-danger mt-1 col-10"--%>
-<%--                       onclick="return confirm('Bạn có chắc chắn muốn xoá không?')">Xoá</a>--%>
+                        <%--                    <a href="/admin/nhan-vien/delete/${nv.id}" class="btn btn-danger mt-1 col-10"--%>
+                        <%--                       onclick="return confirm('Bạn có chắc chắn muốn xoá không?')">Xoá</a>--%>
                 </td>
             </tr>
         </c:forEach>
@@ -136,7 +137,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mb-3" id="viewMatKhau">
                             <div class="col">
                                 <div class="form-group">
                                     <label for="matKhau" class="form-label">Mật Khẩu</label>
@@ -150,15 +151,18 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="tinhThanhPho" class="form-label">Tỉnh/Thành phố</label>
+                                    <form:input type="text" path="tinhThanhPho" class="form-control" disabled="true"/>
                                     <select id="provinceSelect" class="form-select">
                                         <option value="" disabled selected>Chọn tỉnh/thành phố</option>
                                     </select>
-                                    <form:input type="hidden" path="tinhThanhPho" id="provinceName" class="form-control" />
+                                    <form:input type="hidden" path="tinhThanhPho" id="provinceName"
+                                                class="form-control"/>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     <label for="quanHuyen" class="form-label">Quận/Huyện</label>
+                                    <form:input type="text" path="quanHuyen" class="form-control" disabled="true"/>
                                     <select id="districtSelect" class="form-select">
                                         <option value="" disabled selected>Chọn quận/huyện</option>
                                     </select>
@@ -178,6 +182,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="xaPhuong" class="form-label">Xã/Phường</label>
+                                    <form:input type="text" path="xaPhuong" class="form-control" disabled="true"/>
                                     <select id="wardSelect" class="form-select">
                                         <option value="" disabled selected>Chọn phường/xã</option>
                                     </select>
@@ -538,24 +543,37 @@
         updateButtons.forEach(function (button) {
             button.addEventListener("click", function () {
                 var modalTitle = document.querySelector(".modal-title");
-                var matKhauInput = document.querySelector("#matKhau");
+                var matKhauInput = document.querySelector("#viewMatKhau");
+                var tinh = document.querySelector("#tinhThanhPho");
+                var quan = document.querySelector("#quanHuyen");
+                var xa = document.querySelector("#xaPhuong");
 
                 // Đặt tiêu đề modal thành "Cập Nhật Nhân Viên"
                 modalTitle.textContent = "Cập Nhật Nhân Viên";
 
                 // Vô hiệu hoá ô input mật khẩu
-                matKhauInput.setAttribute("disabled", "disabled");
+                matKhauInput.setAttribute("Style", "display: none");
+                tinh.setAttribute("Style", "display: block");
+                quan.setAttribute("Style", "display: block");
+                xa.setAttribute("Style", "display: block");
             });
         });
         clickClose.addEventListener("click", function () {
             var modalTitle = document.querySelector(".modal-title");
-            var matKhauInput = document.querySelector("#matKhau");
+            var matKhauInput = document.querySelector("#viewMatKhau");
+            var tinh = document.querySelector("#tinhThanhPho");
+            var quan = document.querySelector("#quanHuyen");
+            var xa = document.querySelector("#xaPhuong");
 
             // Đặt tiêu đề modal thành "Thêm Khách Hàng"
             modalTitle.textContent = "Thêm Nhân Viên";
 
             // Bỏ vô hiệu hoá ô input mật khẩu
-            matKhauInput.removeAttribute("disabled");
+            matKhauInput.removeAttribute("Style");
+            tinh.setAttribute("Style", "display: none");
+            quan.setAttribute("Style", "display: none");
+            xa.setAttribute("Style", "display: none");
+
             // reset form
             $("#edit-form").trigger("reset");
             $("#edit-form").attr("action", "/admin/nhan-vien/store");
