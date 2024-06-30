@@ -50,7 +50,7 @@ public class HinhThucThanhToanService {
             System.out.println("HinhThucThanhToanService.add: " + hinhThucThanhToanRequest.getMa());
     }
 
-    public void update(HinhThucThanhToanRequest hinhThucThanhToanRequest, Integer id) {
+    public void update(HinhThucThanhToanRequest hinhThucThanhToanRequest, UUID id) {
         HinhThucThanhToan hinhThucThanhToan = hinhThucThanhToanRepository.findById(id).orElse(null);
 
         if (hinhThucThanhToan != null) {
@@ -81,7 +81,7 @@ public class HinhThucThanhToanService {
     }
 
 
-    public void delete(Integer id) {
+    public void delete(UUID id) {
         HinhThucThanhToan hinhThucThanhToan = hinhThucThanhToanRepository.findById(id).orElse(null);
         if (hinhThucThanhToan != null) {
             hinhThucThanhToanRepository.deleteById(id);
@@ -92,7 +92,7 @@ public class HinhThucThanhToanService {
         }
     }
 
-    public HinhThucThanhToanResponse getById(Integer id) {
+    public HinhThucThanhToanResponse getById(UUID id) {
         HinhThucThanhToanResponse hinhThucThanhToanResponse = hinhThucThanhToanRepository.getByIdResponse(id);
         if (hinhThucThanhToanResponse != null) {
             System.out.println("HinhThucThanhToanService.findById: " + hinhThucThanhToanResponse.getMa());

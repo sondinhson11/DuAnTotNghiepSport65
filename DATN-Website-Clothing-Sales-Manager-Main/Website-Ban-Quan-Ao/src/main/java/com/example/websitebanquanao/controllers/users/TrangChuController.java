@@ -313,6 +313,7 @@ public class TrangChuController {
         model.addAttribute("listSanPhamTrongHoaDon", hoaDonChiTietService.getListByIdHoaDon(id));
         model.addAttribute("kh", khachHangRequest);
         model.addAttribute("id", id);
+        model.addAttribute("listHTTT" , hinhThucThanhToanService.getAll());
         session.setAttribute("idHoaDon", id);
 
         BigDecimal tongTien = hoaDonService.sumTongTienByIdHoaDon(id);

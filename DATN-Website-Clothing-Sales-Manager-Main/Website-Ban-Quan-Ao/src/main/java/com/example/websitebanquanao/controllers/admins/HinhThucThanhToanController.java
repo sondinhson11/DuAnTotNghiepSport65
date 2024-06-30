@@ -45,7 +45,7 @@ public class HinhThucThanhToanController {
     }
 
     @GetMapping("delete/{id}")
-    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable("id") UUID id, RedirectAttributes redirectAttributes) {
         hinhThucThanhToanService.delete(id);
         // Lưu thông báo xoá thành công vào session
         redirectAttributes.addFlashAttribute("successMessage", "Xoá hình thức thanh toán thành công");
@@ -83,7 +83,7 @@ public class HinhThucThanhToanController {
     }
 
     @PostMapping("update/{id}")
-    public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("gg") HinhThucThanhToanRequest hinhThucThanhToanRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("gg") HinhThucThanhToanRequest hinhThucThanhToanRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (!hinhThucThanhToanService.isMaValid(hinhThucThanhToanRequest.getMa())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Mã toàn khoảng trắng không hợp lệ");
             return redirect;
@@ -108,7 +108,7 @@ public class HinhThucThanhToanController {
 
     @GetMapping("get/{id}")
     @ResponseBody
-    public ResponseEntity<HinhThucThanhToanResponse> getGiamGia(@PathVariable("id") Integer id) {
+    public ResponseEntity<HinhThucThanhToanResponse> getGiamGia(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(hinhThucThanhToanService.getById(id));
     }
 
