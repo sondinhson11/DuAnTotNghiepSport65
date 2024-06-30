@@ -16,7 +16,7 @@ import java.util.UUID;
 @Repository
 public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UUID> {
     // admin
-    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.GioHangResponse(MIN(hdct.id), hdct.idSanPhamChiTiet.id, hdct.idSanPhamChiTiet.maSanPham, hdct.idSanPhamChiTiet.idSanPham.ten, MIN(hdct.idSanPhamChiTiet.idMauSac.ten), MIN(hdct.idSanPhamChiTiet.idKichCo.ten), SUM(hdct.soLuong), min(hdct.gia)) FROM HoaDonChiTiet hdct WHERE hdct.idHoaDon.id = :hoaDonId GROUP BY hdct.idSanPhamChiTiet.id, hdct.idSanPhamChiTiet.maSanPham, hdct.idSanPhamChiTiet.idSanPham.ten, hdct.idSanPhamChiTiet.gia")
+    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.GioHangResponse(MIN(hdct.id), hdct.idSanPhamChiTiet.id, hdct.idSanPhamChiTiet.idSanPham.id, hdct.idSanPhamChiTiet.maSanPham, hdct.idSanPhamChiTiet.idSanPham.ten, MIN(hdct.idSanPhamChiTiet.idMauSac.ten), MIN(hdct.idSanPhamChiTiet.idKichCo.ten), SUM(hdct.soLuong), min(hdct.gia)) FROM HoaDonChiTiet hdct WHERE hdct.idHoaDon.id = :hoaDonId GROUP BY hdct.idSanPhamChiTiet.id,hdct.idSanPhamChiTiet.idSanPham.id, hdct.idSanPhamChiTiet.maSanPham, hdct.idSanPhamChiTiet.idSanPham.ten, hdct.idSanPhamChiTiet.gia")
     List<GioHangResponse> findTotalQuantityByHoaDonId(@Param("hoaDonId") UUID hoaDonId);
 
     @Query("SELECT hdct FROM HoaDonChiTiet hdct WHERE hdct.idHoaDon.id = :idHoaDon AND hdct.idSanPhamChiTiet.id = :idSanPhamChiTiet")

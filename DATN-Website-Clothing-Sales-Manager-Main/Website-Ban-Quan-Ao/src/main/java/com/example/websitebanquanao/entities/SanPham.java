@@ -1,7 +1,6 @@
 package com.example.websitebanquanao.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
@@ -17,7 +16,6 @@ import java.util.UUID;
 @Table(name = "san_pham")
 public class SanPham {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
@@ -25,7 +23,6 @@ public class SanPham {
     @Lob
     @Column(name = "ten", nullable = false)
     private String ten;
-
 
     @Temporal(TemporalType.DATE)
     private Date ngay_tao;
@@ -43,9 +40,11 @@ public class SanPham {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_loai", nullable = false)
     private Loai idLoai;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_cau_lac_bo", nullable = false)
     private CauLacBo idCauLacBo;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_thuong_hieu", nullable = false)
     private ThuongHieu idThuongHieu;
@@ -55,5 +54,4 @@ public class SanPham {
 
     @OneToMany(mappedBy = "idSanPham")
     private Set<SanPhamChiTiet> sanPhamChiTiets = new LinkedHashSet<>();
-
 }

@@ -18,6 +18,7 @@ import java.util.UUID;
 public class SanPhamChiTietResponse {
     private UUID id;
     private String maSanPham;
+    private UUID idSanPham;
     private String tenSanPham;
     private String tenMauSac;
     private String tenKichCo;

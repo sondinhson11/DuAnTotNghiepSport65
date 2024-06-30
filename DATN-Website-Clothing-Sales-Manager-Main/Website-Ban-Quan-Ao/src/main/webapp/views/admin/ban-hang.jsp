@@ -209,6 +209,7 @@
         }, 3000);
     </script>
 </c:if>
+
 <div class="card border rounded">
     <div class="card-header text-black">
         <h3 class="mb-0">Bán hàng tại quầy</h3>
@@ -277,7 +278,7 @@
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                         <script>
                             $(document).ready(function () {
-                                var idSanPham = '${sp.idSanPhamChiTiet}';
+                                var idSanPham = '${sp.idSanPham}';
                                 console.log(idSanPham);
                                 $.ajax({
                                     url: '/get-anh-san-pham/' + idSanPham,
@@ -286,7 +287,7 @@
                                     success: function (data) {
                                         // Xử lý phản hồi từ máy chủ và cập nhật danh sách ảnh
                                         var listAnhSanPham = data;
-                                        var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPhamChiTiet} .carousel-inner');
+                                        var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPham} .carousel-inner');
                                         carouselInner.empty();
 
                                         $.each(listAnhSanPham, function (index, anhSanPham) {
@@ -305,7 +306,7 @@
                         </script>
                         <td>
                             <!-- Ảnh -->
-                            <div id="carouselExampleSlidesOnly_${sp.idSanPhamChiTiet}"
+                            <div id="carouselExampleSlidesOnly_${sp.idSanPham}"
                                  class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                                 <div class="carousel-inner" style="width: 150px; height: 150px">
                                     <c:forEach items="${listAnhSanPham}" var="anhSanPham" varStatus="status">
@@ -516,12 +517,15 @@
                         </div>
                         <div class="mb-3" id="hinh-thuc-thanh-toan-div">
                             <label class="form-label">Hình thức thanh toán</label>
-                            <select class="form-select" id="hinh-thuc-thanh-toan" name="httt"
-                                    aria-label="Default select example">
-                                <option selected value="0">Chọn hình thức thanh toán</option>
-                                <option value="1">Tiền mặt</option>
-                                <option value="2">Chuyển khoản</option>
+
+                            <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
+                                <!-- Vòng lặp để tạo các tùy chọn từ danh sách `listHTTT` -->
+                                <c:forEach items="${listHTTT}" var="lshttt">
+                                    <option value="${lshttt.ma}">${lshttt.ma == 1 ? "Tiền Mặt" : "Chuyển Khoản" }</option>
+                                </c:forEach>
                             </select>
+
+
                         </div>
                         <div class="mb-3" id="tien-khach-dua-div">
                             <label class="form-label">Tiền khách đưa</label>
@@ -686,7 +690,7 @@
                                 var productRow = '<tr>' +
                                     '<td>' + (index + 1) + '</td>' +
                                     '<td>' +
-                                    '<div id="carouselExampleSlidesOnly_' + product.id + '" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000">' +
+                                    '<div id="carouselExampleSlidesOnly_' + product.idSanPham + '" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000">' +
                                     '<div class="carousel-inner" style="width: 150px; height: 150px"></div>' +
                                     '</div>' +
                                     '</td>' +
@@ -719,7 +723,7 @@
                                 $('#productTableBody').append(productRow);
 
                                 // Load ảnh sản phẩm
-                                loadProductImages(product.id);
+                                loadProductImages(product.idSanPham);
 
                                 // Load discount percentage
                                 getDiscountPercentage(product.id);
@@ -1306,6 +1310,7 @@
             $('#hinh-thuc-thanh-toan').on('change', function () {
                 var selectedValue = $(this).val();
 
+
                 // Kiểm tra giá trị được chọn và thực hiện hành động tương ứng
                 if (selectedValue === '1') {
                     // Tiền mặt - ẩn form
@@ -1316,6 +1321,7 @@
                 }
             });
         });
+
         // Lấy giá trị từ input có id="tong-tien"
         var tongTienInput = document.getElementById('tong-tien');
         var tongTienValue = tongTienInput.value;

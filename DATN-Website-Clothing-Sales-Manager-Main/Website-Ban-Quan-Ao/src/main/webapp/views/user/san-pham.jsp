@@ -134,21 +134,24 @@
 
     <style>
         .product-card {
-            width: 15rem; /* Smaller card size */
-            margin: auto; /* Center the card */
-            transition: transform 0.2s; /* Smooth hover effect */
+            margin-bottom: 20px; /* Khoảng cách giữa các sản phẩm */
+            transition: transform 0.2s;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .row > .col {
+            margin-bottom: 20px; /* Khoảng cách giữa các hàng sản phẩm */
+        }
+
+        @media (min-width: 992px) { /* Đối với màn hình lớn hơn (desktop) */
+            .product-card {
+                margin-bottom: 30px; /* Khoảng cách lớn hơn giữa các sản phẩm */
+            }
         }
         .product-card:hover {
             transform: scale(1.05); /* Slightly enlarge on hover */
         }
-        .product-image {
-            width: 15rem; /* Match card size */
-            height: 15rem; /* Maintain aspect ratio */
-            object-fit: cover; /* Cover to ensure it fills the card */
-            border-radius: 10px 10px 0 0;
-        }
+
         .product-name {
             font-size: 0.9rem; /* Smaller text size */
             margin: 0.5rem 0;

@@ -13,6 +13,7 @@ import java.util.UUID;
 public class GioHangResponse {
     private UUID idHoaDonChiTiet;
     private UUID idSanPhamChiTiet;
+    private UUID idSanPham;
     private String maSanPham;
     private String tenSanPham;
     private String tenMau;

@@ -13,7 +13,7 @@ public class ThongKeController {
 
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService;
-
+    private static final String redirect = "redirect:/admin/admin";
     @RequestMapping("/index")
     public String hienThiTongGia(Model model) {
 
@@ -58,7 +58,6 @@ public class ThongKeController {
 //        String SanPhamBanChayNhatTrongTuan = hoaDonChiTietService.SanPhamBanChayNhatTrongTuan();
 
 
-
         //Lay ra thang nam trc :
         String Tru0ThangTruoc = hoaDonChiTietService.Tru0ThangTruoc();
 
@@ -76,16 +75,16 @@ public class ThongKeController {
 
         //Check null doanh thu :
 
-        if(TongDoanhThu == null){
+        if (TongDoanhThu == null) {
             TongDoanhThu = 0.0;
         }
-        if(TongDoanhThuNgayHienTai == null){
+        if (TongDoanhThuNgayHienTai == null) {
             TongDoanhThuNgayHienTai = 0.0;
         }
         if (TongDoanhThuThangHienTai == null) {
             TongDoanhThuThangHienTai = 0.0;
         }
-        if(TongDoanhThuTuanHienTai == null){
+        if (TongDoanhThuTuanHienTai == null) {
             TongDoanhThuTuanHienTai = 0.0;
         }
         if (TongDoanhThuThangHienTaiTru1 == null) {
@@ -117,27 +116,27 @@ public class ThongKeController {
         }
 
         //Doanh thu :
-        model.addAttribute("TongDoanhThu", TongDoanhThu );
+        model.addAttribute("TongDoanhThu", TongDoanhThu);
 
         model.addAttribute("TongDoanhThuNgayHienTai", TongDoanhThuNgayHienTai);
 
-        model.addAttribute("TongDoanhThuTuanHienTai", TongDoanhThuTuanHienTai );
+        model.addAttribute("TongDoanhThuTuanHienTai", TongDoanhThuTuanHienTai);
 
-        model.addAttribute("TongDoanhThuThangHienTai", TongDoanhThuThangHienTai );
+        model.addAttribute("TongDoanhThuThangHienTai", TongDoanhThuThangHienTai);
 
-        model.addAttribute("TongDoanhThuThangHienTaiTru1", TongDoanhThuThangHienTaiTru1 );
+        model.addAttribute("TongDoanhThuThangHienTaiTru1", TongDoanhThuThangHienTaiTru1);
 
-        model.addAttribute("TongDoanhThuThangHienTaiTru2", TongDoanhThuThangHienTaiTru2 );
+        model.addAttribute("TongDoanhThuThangHienTaiTru2", TongDoanhThuThangHienTaiTru2);
 
-        model.addAttribute("TongDoanhThuThangHienTaiTru3", TongDoanhThuThangHienTaiTru3 );
+        model.addAttribute("TongDoanhThuThangHienTaiTru3", TongDoanhThuThangHienTaiTru3);
 
-        model.addAttribute("TongDoanhThuThangHienTaiTru4", TongDoanhThuThangHienTaiTru4 );
+        model.addAttribute("TongDoanhThuThangHienTaiTru4", TongDoanhThuThangHienTaiTru4);
 
-        model.addAttribute("TongDoanhThuThangHienTaiTru5", TongDoanhThuThangHienTaiTru5 );
+        model.addAttribute("TongDoanhThuThangHienTaiTru5", TongDoanhThuThangHienTaiTru5);
 
-        model.addAttribute("TongDoanhThuThangHienTaiTru6", TongDoanhThuThangHienTaiTru6 );
+        model.addAttribute("TongDoanhThuThangHienTaiTru6", TongDoanhThuThangHienTaiTru6);
 
-        model.addAttribute("TongDoanhThuNamHienTai", TongDoanhThuNamHienTai );
+        model.addAttribute("TongDoanhThuNamHienTai", TongDoanhThuNamHienTai);
 
         model.addAttribute("TongDoanhThu6ThangQua", TongDoanhThu6ThangQua);
 
@@ -166,26 +165,31 @@ public class ThongKeController {
         model.addAttribute("tongDonHangDaBan", hoaDonChiTietService.TongDonHang());
         // tổng khách hàng đã mua
         model.addAttribute("tongKhachHangDaMua", hoaDonChiTietService.TongKhachHang());
+
         Object[] nhanVienInfo = (Object[]) hoaDonChiTietService.NhanVienBanDuocNhieuSanPhamNhat();
-        String tenNhanVien = (String) nhanVienInfo[0];
-        Integer soLuongSanPham = (Integer) nhanVienInfo[1];
-        BigDecimal doanhThu = (BigDecimal) nhanVienInfo[2];
+
+        if (nhanVienInfo != null) {
+            String tenNhanVien = (String) nhanVienInfo[0];
+            Integer soLuongSanPham = (Integer) nhanVienInfo[1];
+            BigDecimal doanhThu = (BigDecimal) nhanVienInfo[2];
             model.addAttribute("tenNhanVien", tenNhanVien);
             model.addAttribute("soLuong", soLuongSanPham);
             model.addAttribute("tongTien", doanhThu);
 
             // top 1 sản phẩm bán chạy nhất
-        Object[] sanPhamInfo = (Object[]) hoaDonChiTietService.SanPhamBanChayNhat();
-        String tenSanPham = (String) sanPhamInfo[0];
-        Integer soLuong = (Integer) sanPhamInfo[1];
-        model.addAttribute("tenSanPham", tenSanPham);
-        model.addAttribute("soLuongSanPham", soLuong);
+            Object[] sanPhamInfo = (Object[]) hoaDonChiTietService.SanPhamBanChayNhat();
+            String tenSanPham = (String) sanPhamInfo[0];
+            Integer soLuong = (Integer) sanPhamInfo[1];
+            model.addAttribute("tenSanPham", tenSanPham);
+            model.addAttribute("soLuongSanPham", soLuong);
 
-        model.addAttribute("view", "/views/admin/thong-ke.jsp");
-        return "admin/layout";
+            model.addAttribute("view", "/views/admin/thong-ke.jsp");
+            return "admin/layout";
 
-    }
-
+        } else {
+            return redirect;
+        }
+}
 }
 
 

@@ -85,8 +85,11 @@
             <div class="px-md-5 px-3 py-2 form-check  border-bottom">
                 <div class="form-label ">Phương thức thanh toán (*)</div>
                 <label class="form-check-label text-sm-left fw-bold ">
+                 
                     <form:radiobutton path="hinhThucThanhToan" value="33763e19-b7f1-4948-a506-3bca19ed3a48" name="payment_method"/>
                     THANH TOÁN KHI NHẬN HÀNG
+                    <form:radiobutton path="hinhThucThanhToan" value="${listHTTT.ma}" name="payment_method"/>
+                    value="${listHTTT.ten}"
                 </label>
             </div>
 
@@ -105,6 +108,8 @@
                 <label class="form-check-label text-sm-left fw-bold ">
                     <form:radiobutton path="hinhThucThanhToan" value="90cc1860-5358-4fea-b802-bef61deeaba4" name="payment_method" checked="true"/>
                     THANH TOÁN QUA VNPay
+                    <form:radiobutton path="hinhThucThanhToan" value="${listHTTT.ma}" name="payment_method" checked="true"/>
+                    value="${listHTTT.ten}"
                 </label>
                 <label class="mt-2">Lưu ý: Với thanh toán bằng VnPay quý khách sẽ thanh toán đơn hàng và phí ship sẽ trả
                     khi nhận hàng.</label>

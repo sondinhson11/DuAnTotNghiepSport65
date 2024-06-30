@@ -248,66 +248,7 @@
         </div>
     </div>
 
-    <%--    <div class="card mt-4">--%>
-    <%--        <div class="card-header">--%>
-    <%--            <p class="fw-bold text-uppercase float-start">Lịch sử thanh toán</p>--%>
-    <%--            <c:if test="${hoaDon.trangThai == 1}">--%>
-    <%--                <p class="fw-bold text-success float-end">Đơn hàng đã được thanh toán</p>--%>
-    <%--            </c:if>--%>
-    <%--        </div>--%>
-    <%--        <div class="card-body">--%>
-    <%--            <c:if test="${hoaDon.trangThai == 1}">--%>
-    <%--                <div class="">--%>
-    <%--                    <table class="table text-center">--%>
-    <%--                        <thead>--%>
-    <%--                        <tr>--%>
-    <%--                            <th scope="col">#</th>--%>
-    <%--                            <th scope="col">Số tiền</th>--%>
-    <%--                            <th scope="col">Phương thức thanh toán</th>--%>
-    <%--                            <th scope="col">Nhân viên xác nhận</th>--%>
-    <%--                            <th scope="col">Ghi chú</th>--%>
-    <%--                        </tr>--%>
-    <%--                        </thead>--%>
-    <%--                        <tbody>--%>
-    <%--                        <tr>--%>
-    <%--                            <td>1</td>--%>
-    <%--                            <td id="tong_tien_2">${tongTien}VND</td>--%>
-    <%--                            <script>--%>
-    <%--                                // format giá--%>
-    <%--                                document.addEventListener('DOMContentLoaded', function () {--%>
-    <%--                                    var giaElement = document.getElementById('tong_tien_2');--%>
-    <%--                                    // Lấy giá trị không định dạng từ thẻ p--%>
-    <%--                                    var giaValue = parseFloat(giaElement.textContent.replace(/[^\d.]/g, '')) || 0;--%>
-    <%--                                    // Định dạng lại giá trị và gán lại vào thẻ p--%>
-    <%--                                    giaElement.textContent = giaValue.toLocaleString('en-US');--%>
 
-    <%--                                });--%>
-    <%--                            </script>--%>
-    <%--                            <td>--%>
-    <%--                                <c:if test="${hoaDon.loaiHoaDon == 2}">--%>
-    <%--                                    <span class="text-success">Đã thanh toán trước</span>--%>
-    <%--                                </c:if>--%>
-    <%--                                <c:if test="${hoaDon.loaiHoaDon != 2}">--%>
-    <%--                                    <c:if test="${hoaDon.hinhThucThanhToan == 1}">--%>
-    <%--                                        Tiền mặt--%>
-    <%--                                    </c:if>--%>
-    <%--                                    <c:if test="${hoaDon.hinhThucThanhToan == 0}">--%>
-    <%--                                        Chuyển khoản--%>
-    <%--                                    </c:if>--%>
-    <%--                                    <c:if test="${hoaDon.hinhThucThanhToan == 2}">--%>
-    <%--                                        Thanh toán VNPay--%>
-    <%--                                    </c:if>--%>
-    <%--                                </c:if>--%>
-    <%--                            </td>--%>
-    <%--                            <td>${hoaDon.idNhanVien.hoVaTen}</td>--%>
-    <%--                            <td>${hoaDon.ghiChu}</td>--%>
-    <%--                        </tr>--%>
-    <%--                        </tbody>--%>
-    <%--                    </table>--%>
-    <%--                </div>--%>
-    <%--            </c:if>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
 
     <div class="card mt-4 mb-4">
         <div class="card-header">

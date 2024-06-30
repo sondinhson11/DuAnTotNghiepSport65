@@ -30,6 +30,8 @@ import java.util.UUID;
 @RequestMapping("/admin/ban-hang")
 public class BanHangController {
     @Autowired
+    private HinhThucThanhToanService hinhThucThanhToanService;
+    @Autowired
     private SanPhamChiTietService sanPhamChiTietService;
     @Autowired
     private HoaDonService hoaDonService;
@@ -55,6 +57,7 @@ public class BanHangController {
         List<KhachHangResponse> listKhachHang = khachHangService.getAll();
         model.addAttribute("listSize", kichCoService.getAll());
         model.addAttribute("listMauSac", mauSacService.getAll());
+        model.addAttribute("listHTTT", hinhThucThanhToanService.getAll());
         model.addAttribute("listProduct", listProduct);
         model.addAttribute("listHoaDon", hoaDonService.getAllHoaDonChuaThanhToan());
         model.addAttribute("listKhachHang", listKhachHang);
@@ -170,6 +173,8 @@ public class BanHangController {
         model.addAttribute("listSize", kichCoService.getAll());
         model.addAttribute("listMauSac", mauSacService.getAll());
         model.addAttribute("listHoaDon", hoaDonService.getAllHoaDonChuaThanhToan());
+        model.addAttribute("listHTTT", hinhThucThanhToanService.getAll());
+
         model.addAttribute("idHoaDon", id);
         model.addAttribute("hoaDon", hoaDon); // Truyền giá trị hoaDon vào model
 

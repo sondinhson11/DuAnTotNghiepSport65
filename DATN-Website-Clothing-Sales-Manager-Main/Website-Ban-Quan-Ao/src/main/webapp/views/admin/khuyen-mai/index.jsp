@@ -1,15 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="container mt-3">
     <h1 class="text-center">Quản Lý Khuyến Mãi</h1>
-    <c:if test="${not empty successMessage}">
-        <div class="alert alert-success">${successMessage}</div>
-    </c:if>
-    <c:if test="${not empty errorMessage}">
-        <div class="alert alert-danger">${errorMessage}</div>
-    </c:if>
+
     <div class="row mt-3">
         <div class="col-6">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -47,7 +42,10 @@
                             động</a>
                     </c:if>
                     <c:if test="${km.trangThai == '1'}">
-                        <a class="btn btn-warning">Dừng hoạt động</a>
+                        <a href="/admin/khuyen-mai/update-trang-thai/${km.id}/0" class="btn btn-warning"
+                           onclick="return confirm('Bạn có chắc chắn muốn  hoạt động lại  không?')">
+                            Dừng hoạt động
+                           </a>
                     </c:if>
                 </td>
                 <td>
@@ -63,12 +61,13 @@
                     </a>
 <%--                    <a href="/admin/khuyen-mai/delete/${km.id}" class="btn btn-danger"--%>
 <%--                       onclick="return confirm('Bạn có chắc chắn muốn xoá không?')">Xoá</a>--%>
-
-                        <a href="/admin/khuyen-mai/chi-tiet/${km.id}" >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                            </svg>
-                        </a>
+                        <c:if test="${km.trangThai == 0}">
+                            <a href="/admin/khuyen-mai/chi-tiet/${km.id}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                                </svg>
+                            </a>
+                        </c:if>
                     </div>
                 </td>
             </tr>
@@ -221,4 +220,34 @@
             }
         });
     });
+
+    $(document).ready(function () {
+        hideErrorMessage();
+        hideErrorMessage2();
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Kiểm tra thông báo thành công
+        <c:if test="${not empty successMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '${successMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
+
+        // Kiểm tra thông báo lỗi
+        <c:if test="${not empty errorMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '${errorMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
+    });
+
 </script>

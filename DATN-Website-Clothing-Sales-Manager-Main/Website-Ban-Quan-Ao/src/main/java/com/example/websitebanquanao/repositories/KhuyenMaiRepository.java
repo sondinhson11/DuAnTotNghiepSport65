@@ -15,8 +15,11 @@ import java.util.UUID;
 @Repository
 public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai, UUID> {
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse(km.id, km.ma, km.ten, km.soPhanTramGiam, km.ngayBatDau, km.ngayKetThuc, km.trangThai) from KhuyenMai km ORDER BY CASE WHEN km.trangThai = 1 THEN 0 ELSE 1 END, km.ten ")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse(km.id, km.ma, km.ten, km.soPhanTramGiam, km.ngayBatDau, km.ngayKetThuc, km.trangThai) " +
+            "from KhuyenMai km " +
+            "ORDER BY CASE WHEN km.trangThai = 0 THEN 0 ELSE 1 END, km.ten ASC")
     public Page<KhuyenMaiResponse> getPage(Pageable pageable);
+
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse(km.id, km.ma, km.ten, km.soPhanTramGiam, km.ngayBatDau, km.ngayKetThuc, km.trangThai) from KhuyenMai km where km.id = :id")
     public KhuyenMaiResponse getByIdResponse(@Param("id") UUID id);

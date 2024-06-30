@@ -45,7 +45,7 @@ public class CreatePDF {
                 diaChi =  hoaDon.getDiaChi() + ", " + hoaDon.getXaPhuong() + ", " + hoaDon.getQuanHuyen() + ", " + hoaDon.getTinhThanhPho();
             }
             // thêm logo và căn giữa
-            Image image = Image.getInstance("src/main/java/com/example/websitebanquanao/images/logo.png");
+            Image image = Image.getInstance("src/main/java/com/example/websitebanquanao/images/Summer.png");
             image.setAlignment(Element.ALIGN_CENTER);
             image.scaleAbsolute(100, 100);
             document.add(image);
