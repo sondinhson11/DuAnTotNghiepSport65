@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <html>
 <head>
     <title>Sport65</title>
@@ -377,6 +377,7 @@
         });
     });
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(".update-button").click(function () {
         let id = $(this).data("id");
@@ -420,14 +421,28 @@
             });
         });
     });
-    $(document).ready(function () {
-        hideErrorMessage();
-    });
 
-    function hideErrorMessage() {
-        // Sử dụng jQuery để ẩn thông báo sau 5 giây
-        setTimeout(function () {
-            $('.alert-danger').fadeOut('slow');
-        }, 1000);
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+        // Kiểm tra thông báo thành công
+        <c:if test="${not empty successMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '${successMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
+
+        // Kiểm tra thông báo lỗi
+        <c:if test="${not empty errorMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '${errorMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
+    });
 </script>

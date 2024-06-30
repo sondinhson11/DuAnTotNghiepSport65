@@ -41,6 +41,10 @@ public class KhachHangService {
         khachHang.setXaPhuong(khachHangRequest.getXaPhuong());
         khachHang.setQuanHuyen(khachHangRequest.getQuanHuyen());
         khachHang.setTinhThanhPho(khachHangRequest.getTinhThanhPho());
+        khachHang.setTrangThai(1);
+        java.util.Date currentDate = new java.util.Date();
+        khachHang.setNgayTao(new java.sql.Date(currentDate.getTime()));
+        khachHang.setNgaySua(new java.sql.Date(currentDate.getTime()));
 
          khachHangRepository.save(khachHang);
 
@@ -58,6 +62,8 @@ public class KhachHangService {
             khachHang.setXaPhuong(khachHangRequest.getXaPhuong());
             khachHang.setQuanHuyen(khachHangRequest.getQuanHuyen());
             khachHang.setTinhThanhPho(khachHangRequest.getTinhThanhPho());
+            java.util.Date currentDate = new java.util.Date();
+            khachHang.setNgaySua(new java.sql.Date(currentDate.getTime()));
 
             khachHangRepository.save(khachHang);
             System.out.println("KhachHangService.update: " + khachHang.getHoVaTen());

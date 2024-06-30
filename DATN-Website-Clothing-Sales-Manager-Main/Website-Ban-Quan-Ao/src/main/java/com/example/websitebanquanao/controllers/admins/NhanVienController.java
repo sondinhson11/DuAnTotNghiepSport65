@@ -47,28 +47,55 @@ public class NhanVienController {
 
     @PostMapping("store")
     public String store(@Valid @ModelAttribute("nv") NhanVienRequest nhanVienRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("list", nhanVienService.getAll());
-            model.addAttribute("view", "/views/admin/nhan-vien/index.jsp");
-            return "admin/layout"; // Trả về trang index nếu có lỗi
+        if (nhanVienRequest.validNull()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
+            return redirect;
         }
+
+        if (!nhanVienService.isSoDienThoai(nhanVienRequest.getSoDienThoai())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Số điện thoại không đúng định dạng.");
+            return redirect;
+        }
+
+        if (!nhanVienService.isPasswordValid(nhanVienRequest.getMatKhau())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Mật khẩu phải có ít nhất 6 ký tự và chứa ít nhất một chữ và một số");
+            return redirect;
+        }
+
+        if (nhanVienRequest.getHoVaTen().trim().length() == 0) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Họ và tên không được để trống.");
+            return redirect;
+        }
+
+        if (result.hasErrors()) {
+            model.addAttribute("view", "/views/admin/nhan-vien/index.jsp");
+            return "admin/layout";
+        }
+
         nhanVienService.add(nhanVienRequest);
-        // Lưu thông báo thêm thành công vào session
         redirectAttributes.addFlashAttribute("successMessage", "Thêm nhân viên thành công");
-        return redirect; // Sử dụng redirect để chuyển hướng đến trang danh sách
+        return redirect;
     }
 
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("nv") NhanVienRequest nhanVienRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("list", nhanVienService.getAll());
-            model.addAttribute("view", "/views/admin/nhan-vien/index.jsp");
-            return "admin/layout"; // Trả về trang index nếu có lỗi
+        if (nhanVienRequest.validUpdate()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
+            return redirect;
+        }
+
+        if (!nhanVienService.isSoDienThoai(nhanVienRequest.getSoDienThoai())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Số điện thoại không đúng định dạng.");
+            return redirect;
+        }
+
+        if (nhanVienRequest.getHoVaTen().trim().length() == 0) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Họ và tên không được để trống.");
+            return redirect;
         }
         nhanVienService.update(nhanVienRequest, id);
-        // Lưu thông báo cập nhật thành công vào session
         redirectAttributes.addFlashAttribute("successMessage", "Cập nhật nhân viên thành công");
-        return redirect; // Sử dụng redirect để chuyển hướng đến trang danh sách
+        return "redirect:/admin/khach-hang/index";
     }
 
     @GetMapping("get/{id}")
