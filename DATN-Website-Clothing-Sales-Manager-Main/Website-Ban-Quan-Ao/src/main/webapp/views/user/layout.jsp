@@ -19,7 +19,19 @@
     body {
         padding-top: 70px; /* Adjust this value based on your navbar height */
     }
-
+.update-button{
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
     .custom-nav {
         position: fixed;
         top: 0;
@@ -32,10 +44,12 @@
     .custom-nav.scrolled {
         background-color: #ffffff;
     }
+
     .menu-div-2 {
         display: flex;
         align-items: center;
     }
+
     /* Optional: Add margin to the right of the last item to separate it from the dropdown */
     .menu-div-2 .nav-item.dropdown {
         margin-right: 10px; /* Adjust as needed */
@@ -68,35 +82,42 @@
                     </li>
                 </ul>
                 <div class="menu-div-2 ">
-                  <div class="d-flex">
+                    <div class="d-flex">
 
-                      <li class="nav-item dropdown">
-                          <a class="nav-link" href="/gio-hang" role="button">
-                              <i class="fas fa-shopping-cart" style="color: #ffffff;"></i>
-                          </a>
-                      </li>
-                      <li class="nav-item dropdown">
-                          <a class="nav-link mb-4 ms-4 " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              <i class="fas fa-user" style="color: #ffffff;"></i>
-                          </a>
-                          <ul class="dropdown-menu">
-                              <c:choose>
-                                  <c:when test="${not empty sessionScope.khachHang}">
-                                      <li><a class="update-button" href="#"
-                                             data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                             data-id="${sessionScope.khachHang.id}" data-hoVaTen="${sessionScope.khachHang.hoVaTen}" data-soDienThoai="${sessionScope.khachHang.soDienThoai}"
-                                             data-email="${sessionScope.khachHang.email}" data-diaChi="${sessionScope.khachHang.diaChi}" data-xaPhuong="${sessionScope.khachHang.xaPhuong}"
-                                             data-quanHuyen="${sessionScope.khachHang.quanHuyen}" data-tinhThanhPho="${sessionScope.khachHang.tinhThanhPho}">Thông Tin Tài Khoản</a></li>
-                                      <li><a class="dropdown-item" href="/hoa-don">Đơn hàng của tôi</a></li>
-                                      <li><a class="dropdown-item" href="/dang-xuat">Đăng xuất</a></li>
-                                  </c:when>
-                                  <c:otherwise>
-                                      <li><a class="dropdown-item" href="/dang-nhap">Đăng nhập</a></li>
-                                  </c:otherwise>
-                              </c:choose>
-                          </ul>
-                      </li>
-                  </div>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="/gio-hang" role="button">
+                                <i class="fas fa-shopping-cart" style="color: #ffffff;"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link mb-4 ms-4 " href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <i class="fas fa-user" style="color: #ffffff;"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <c:choose>
+                                    <c:when test="${not empty sessionScope.khachHang}">
+                                        <li><a class="update-button" href="#"
+                                               data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                               data-id="${sessionScope.khachHang.id}"
+                                               data-hoVaTen="${sessionScope.khachHang.hoVaTen}"
+                                               data-soDienThoai="${sessionScope.khachHang.soDienThoai}"
+                                               data-email="${sessionScope.khachHang.email}"
+                                               data-diaChi="${sessionScope.khachHang.diaChi}"
+                                               data-xaPhuong="${sessionScope.khachHang.xaPhuong}"
+                                               data-quanHuyen="${sessionScope.khachHang.quanHuyen}"
+                                               data-tinhThanhPho="${sessionScope.khachHang.tinhThanhPho}">Thông Tin Tài
+                                            Khoản</a></li>
+                                        <li><a class="dropdown-item" href="/hoa-don">Đơn hàng của tôi</a></li>
+                                        <li><a class="dropdown-item" href="/dang-xuat">Đăng xuất</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a class="dropdown-item" href="/dang-nhap">Đăng nhập</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </ul>
+                        </li>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,12 +140,6 @@
                         <a href="/chinh-sach-bao-mat" class="text-decoration-none text-dark">Chính sách bảo mật</a>
                     </div>
                 </div>
-<%--                <div class="d-flex mb-2">--%>
-<%--                    <i class="fas fa-caret-down fa-rotate-270"></i>--%>
-<%--                    <div class="text-sm">--%>
-<%--                        <a href="/chinh-sach-doi-tra" class="text-decoration-none text-dark">Chính sách đổi trả</a>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
             </div>
             <div class="col-md-5 col-12">
                 <div class="d-flex mb-2">
@@ -141,7 +156,8 @@
                     <div class="text-sm">Theo dõi chúng tôi trên mạng xã hội</div>
                 </div>
                 <div class="d-flex mt-3">
-                    <a href="https://www.facebook.com/profile.php?id=100035163965914" class="text-decoration-none text-dark">
+                    <a href="https://www.facebook.com/profile.php?id=100035163965914"
+                       class="text-decoration-none text-dark">
                         <i class="fab fa-facebook-f fa-lg"></i>
                     </a>
                     <a href="https://www.facebook.com/profile.php?id=100035163965914" class="ms-4 text-dark">
@@ -165,94 +181,88 @@
 </body>
 
 </html>
-
-<%--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"--%>
-<%--     data-bs-backdrop="static">--%>
-<%--    <div class="modal-dialog">--%>
-<%--        <div class="modal-content">--%>
-<%--            <div class="modal-header">--%>
-<%--                <h5 class="modal-title" id="exampleModalLabel">Sửa Thông Tin Tài Khoản</h5>--%>
-<%--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
-<%--            </div>--%>
-<%--            <div class="modal-body">--%>
-<%--                <form:form id="edit-form" modelAttribute="kh" method="post" action="/admin/khach-hang/store">--%>
-<%--                    <div class="row mb-3">--%>
-<%--                        <div class="col">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="hoVaTen" class="form-label">Họ và tên</label>--%>
-<%--                                <form:input type="text" path="hoVaTen" id="hoVaTen" class="form-control"/>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="row mb-3">--%>
-<%--                        <div class="col">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="soDienThoai" class="form-label">Số điện thoại</label>--%>
-<%--                                <form:input type="tel" path="soDienThoai" id="soDienThoai" class="form-control"/>--%>
-<%--                                    &lt;%&ndash;                                                required="true"/>&ndash;%&gt;--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="col">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="email" class="form-label">Email</label>--%>
-<%--                                <form:input type="email" path="email" id="email" class="form-control"/>--%>
-<%--                                    &lt;%&ndash;                                                required="true"/>&ndash;%&gt;--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="row mb-3">--%>
-<%--                        <div class="col">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="quanHuyen" class="form-label">Tỉnh/Thành phố</label>--%>
-<%--                                <select id="provinceSelect" class="form-select">--%>
-<%--                                    <option value="" disabled selected>Chọn tỉnh/thành phố</option>--%>
-<%--                                </select>--%>
-<%--                                <form:input type="hidden" path="tinhThanhPho" id="provinceName" class="form-control" />--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="col">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="quanHuyen" class="form-label">Quận/Huyện</label>--%>
-<%--                                <select id="districtSelect" class="form-select">--%>
-<%--                                    <option value="" disabled selected>Chọn quận/huyện</option>--%>
-<%--                                </select>--%>
-<%--                                <form:input type="hidden" path="quanHuyen" id="districtName" class="form-control"/>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="row mb-3">--%>
-<%--                        <div class="col">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="xaPhuong" class="form-label">Xã/Phường</label>--%>
-<%--                                <select id="wardSelect" class="form-select">--%>
-<%--                                    <option value="" disabled selected>Chọn phường/xã</option>--%>
-<%--                                </select>--%>
-<%--                                <form:input type="hidden" path="xaPhuong" id="wardName" class="form-control"/>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="col">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="diaChi" class="form-label">Địa chỉ</label>--%>
-<%--                                <form:input type="text" path="diaChi" id="diaChi" class="form-control"/>--%>
-<%--                                    &lt;%&ndash;                                                required="true"/>&ndash;%&gt;--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="row mb-3">--%>
-<%--                        <div class="col">--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="matKhau" class="form-label">Mật khẩu</label>--%>
-<%--                                <form:input type="password" path="matKhau" id="matKhau" class="form-control"/>--%>
-<%--                                    &lt;%&ndash;                                                required="true"/>&ndash;%&gt;--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <button type="submit" class="btn btn-success mt-3">Lưu</button>--%>
-<%--                </form:form>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm Khách Hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form:form id="edit-form" modelAttribute="kh" method="post" action="/admin/khach-hang/store">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="hoVaTen" class="form-label">Họ và tên</label>
+                                <form:input type="text" path="hoVaTen" id="hoVaTen" class="form-control"/>
+                                    <%--                                                required="true"/>--%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="soDienThoai" class="form-label">Số điện thoại</label>
+                                <form:input type="tel" path="soDienThoai" id="soDienThoai" class="form-control"/>
+                                    <%--                                                required="true"/>--%>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <form:input type="email" path="email" id="email" class="form-control"/>
+                                    <%--                                                required="true"/>--%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="tinhThanhPho" class="form-label">Tỉnh/Thành phố</label>
+                                <form:input type="text" path="tinhThanhPho" class="form-control" disabled="true"/>
+                                <select id="provinceSelect" class="form-select">
+                                    <option value="" disabled selected>Chọn tỉnh/thành phố</option>
+                                </select>
+                                <form:input type="hidden" path="tinhThanhPho" id="provinceName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="quanHuyen" class="form-label">Quận/Huyện</label>
+                                <form:input type="text" path="quanHuyen"  class="form-control" disabled="true"/>
+                                <select id="districtSelect" class="form-select">
+                                    <option value="" disabled selected>Chọn quận/huyện</option>
+                                </select>
+                                <form:input type="hidden" path="quanHuyen" id="districtName" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="xaPhuong" class="form-label">Xã/Phường</label>
+                                <form:input type="text" path="xaPhuong" class="form-control" disabled="true"/>
+                                <select id="wardSelect" class="form-select">
+                                    <option value="" disabled selected>Chọn phường/xã</option>
+                                </select>
+                                <form:input type="hidden" path="xaPhuong" id="wardName" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="diaChi" class="form-label">Địa chỉ</label>
+                                <form:input type="text" path="diaChi" id="diaChi" class="form-control"/>
+                                    <%--                                                required="true"/>--%>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-3">Lưu</button>
+                </form:form>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -373,7 +383,7 @@
 
         // Thực hiện yêu cầu AJAX để lấy dữ liệu khách hàng dựa trên id
         $.ajax({
-            url: "/khach-hang/get/" + id,
+            url: "get/" + id,
             type: "GET",
             success: function (data) {
                 // Đặt giá trị cho các trường trong modal bằng dữ liệu từ yêu cầu AJAX
@@ -384,10 +394,9 @@
                 $("#xaPhuong").val(data.xaPhuong);
                 $("#quanHuyen").val(data.quanHuyen);
                 $("#tinhThanhPho").val(data.tinhThanhPho);
-                $("#matKhau").val(data.matKhau);
 
                 // Đặt action của form trong modal (action cập nhật với ID của khách hàng)
-                $("#edit-form").attr("action", "/khach-hang/update/" + id);
+                $("#edit-form").attr("action", "update/" + id);
             },
             error: function (error) {
                 console.error("Error:", error);

@@ -43,20 +43,20 @@
         </p>
         </p>
     </div>
-    <c:if test="${hoaDon.hinhThucThanhToan == 2}">
+    <c:if test="${hoaDon.hinhThucThanhToan == '90cc1860-5358-4fea-b802-bef61deeaba4' }">
         <div class="row">
             <hr>
             <div class="col-9">
             </div>
             <div class="col-3">
-                <c:if test="${hoaDon.ngayThanhToan == null && hoaDon.hinhThucThanhToan == 2}">
+                <c:if test="${hoaDon.ngayThanhToan == null && hoaDon.hinhThucThanhToan == '90cc1860-5358-4fea-b802-bef61deeaba4'}">
                     <div>
                         <form action="/submit-payment/${id}" method="post">
                             <button type="submit" class="btn btn-success col-12">Xác nhận thanh toán</button>
                         </form>
                     </div>
                 </c:if>
-                <c:if test="${hoaDon.ngayThanhToan != null && hoaDon.hinhThucThanhToan == 2}">
+                <c:if test="${hoaDon.ngayThanhToan != null && hoaDon.hinhThucThanhToan == '90cc1860-5358-4fea-b802-bef61deeaba4'}">
                     <button class="btn btn-success col-12 mb-2" disabled>Đã thanh toán</button>
                 </c:if>
             </div>
@@ -236,10 +236,10 @@
         <div class="row">
             <div class="col-9 d-flex justify-content-end">Phương thức Thanh toán</div>
             <div class="col-3">
-                <c:if test="${hoaDon.hinhThucThanhToan == 1}">
+                <c:if test="${hoaDon.hinhThucThanhToan.id == '33763e19-b7f1-4948-a506-3bca19ed3a48'}">
                     <span>Thanh toán khi nhận hàng</span>
                 </c:if>
-                <c:if test="${hoaDon.hinhThucThanhToan == 2}">
+                <c:if test="${hoaDon.hinhThucThanhToan.id == '90cc1860-5358-4fea-b802-bef61deeaba4'}">
                     <span>Thanh toán bằng VNPay</span>
                 </c:if>
             </div>
@@ -255,7 +255,7 @@
 
                     var giaVanChuyenElement = document.getElementById("phiVanChuyen");
                     var giaVanChuyenText = giaVanChuyenElement.innerText;
-                    var hinhThucThanhToan = '${hoaDon.hinhThucThanhToan}';
+                    var hinhThucThanhToan = '${hoaDon.hinhThucThanhToan.ten}';
 
                     var tong = 0;
                     if (giaVanChuyenText !== 'Chưa tính') {
@@ -263,7 +263,7 @@
                         var giaVanChuyen = parseInt(giaVanChuyenText.replace(/[^\d]/g, ''));
 
                         if (!isNaN(soTienSauKhiGiam) && !isNaN(giaVanChuyen)) {
-                            if (hinhThucThanhToan == 1) {
+                            if (hinhThucThanhToan == 'Thanh toán khi nhận hàng') {
                                 tong = soTienSauKhiGiam + giaVanChuyen;
                             } else {
                                 tong = giaVanChuyen;

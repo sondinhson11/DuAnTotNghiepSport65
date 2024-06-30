@@ -18,10 +18,12 @@ import com.example.websitebanquanao.services.KichCoService;
 import com.example.websitebanquanao.services.MauSacService;
 import com.example.websitebanquanao.services.SanPhamService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,6 +75,10 @@ public class TrangChuController {
     @Autowired
     private HttpSession session;
 
+    @Autowired
+    private KhachHangRequest khachHangRequest;
+
+    private static final String redirect = "redirect:/";
     // trang chủ
     @GetMapping("")
     public String trangChu(Model model) {
@@ -80,6 +86,7 @@ public class TrangChuController {
 
         List<TrangChuResponse> firstEightProducts = productList.subList(0, Math.min(productList.size(), 8));
         model.addAttribute("listTrangChu", firstEightProducts);
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("listBanChay", sanPhamService.getListBanChay(""));
         model.addAttribute("viewBanner", "/views/user/banner.jsp");
         model.addAttribute("viewContent", "/views/user/trang-chu.jsp");
@@ -90,6 +97,7 @@ public class TrangChuController {
     @GetMapping("/san-pham")
     public String sanPham(Model model, @RequestParam(defaultValue = "", name = "sort", required = false) String sort) {
         model.addAttribute("idLoai", -1);
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("listLoai", sanPhamService.getListLoai());
         model.addAttribute("listSanPham", sanPhamService.getListTrangChu(sort));
         model.addAttribute("viewContent", "/views/user/san-pham.jsp");
@@ -102,6 +110,7 @@ public class TrangChuController {
         System.out.println("idLoai: " + idLoai);
         model.addAttribute("listLoai", sanPhamService.getListLoai());
         model.addAttribute("listSanPham", sanPhamService.getListSanPhamByIdLoai(idLoai, sort));
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("idLoai", idLoai);
         model.addAttribute("viewContent", "/views/user/san-pham.jsp");
         return "user/layout";
@@ -118,6 +127,7 @@ public class TrangChuController {
     @GetMapping("/san-pham/{idSanPham}/{idMauSac}")
     public String sanPhamChiTiet(@PathVariable("idSanPham") UUID idSanPham, @PathVariable("idMauSac") Integer idMauSac, Model model) {
         model.addAttribute("sanPham", sanPhamService.getByIdSanPham(idSanPham));
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("listMauSac", mauSacService.getListMauSacByIdSanPham(idSanPham));
         model.addAttribute("listKichCo", kichCoService.getListKichCoByIdSanPhamAndMauSac(idSanPham, idMauSac));
         model.addAttribute("listAnh", anhSanPhamService.getListAnhByIdSanPham(idSanPham));
@@ -130,6 +140,7 @@ public class TrangChuController {
     @GetMapping("/sale")
     public String sanPhamSale(Model model, @RequestParam(defaultValue = "", name = "sort", required = false) String sort) {
         model.addAttribute("listSanPham", sanPhamService.getListSale(sort));
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("viewContent", "/views/user/khuyen-mai.jsp");
         return "user/layout";
     }
@@ -143,6 +154,7 @@ public class TrangChuController {
     @GetMapping("/gio-hang")
     public String gioHang(Model model, @ModelAttribute("thongBaoGiamGia") String thoangBaoGiamGia) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
+        model.addAttribute("kh", khachHangRequest);
         GiamGiaResponse giamGiaResponse = (GiamGiaResponse) session.getAttribute("giamGia");
         if (khachHangResponse == null) {
             return "redirect:/dang-nhap";
@@ -227,6 +239,7 @@ public class TrangChuController {
     public String thanhToan(Model model) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
         GiamGiaResponse giamGiaResponse = (GiamGiaResponse) session.getAttribute("giamGia");
+        model.addAttribute("kh", khachHangRequest);
         if (khachHangResponse == null) {
             return "redirect:/dang-nhap";
         } else {
@@ -284,6 +297,7 @@ public class TrangChuController {
     @GetMapping("/hoa-don")
     public String hoaDon(Model model) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
+        model.addAttribute("kh", khachHangRequest);
         if (khachHangResponse == null) {
             return "redirect:/dang-nhap";
         } else {
@@ -304,7 +318,7 @@ public class TrangChuController {
     public String hoaDonChiTiet(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("hoaDon", hoaDonService.findHoaDonUserResponseById(id));
         model.addAttribute("listSanPhamTrongHoaDon", hoaDonChiTietService.getListByIdHoaDon(id));
-
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("id", id);
         session.setAttribute("idHoaDon", id);
 
@@ -326,6 +340,7 @@ public class TrangChuController {
         model.addAttribute("dangNhap", new DangNhapUserRequest());
         model.addAttribute("dangKy", new DangKyUserRequest());
         model.addAttribute("loginError", loginError);
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("viewContent", "/views/user/dang-nhap.jsp");
         return "user/layout";
     }
@@ -394,6 +409,7 @@ public class TrangChuController {
     // trang giới thiệu
     @GetMapping("/gioi-thieu")
     public String gioiThieu(Model model) {
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("viewContent", "/views/user/gioi-thieu.jsp");
         return "user/layout";
     }
@@ -408,7 +424,34 @@ public class TrangChuController {
     // trang chính sách đổi trả
     @GetMapping("/chinh-sach-doi-tra")
     public String chinhSachDoiTra(Model model) {
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("viewContent", "/views/user/chinh-sach-doi-tra.jsp");
         return "user/layout";
+    }
+    @PostMapping("update/{id}")
+    public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("kh") KhachHangRequest khachHangRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        if (khachHangRequest.validUpdate()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
+            return redirect;
+        }
+
+        if (!khachHangService.isSoDienThoai(khachHangRequest.getSoDienThoai())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Số điện thoại không đúng định dạng.");
+            return redirect;
+        }
+
+        if (khachHangRequest.getHoVaTen().trim().length() == 0) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Họ và tên không được để trống.");
+            return redirect;
+        }
+        khachHangService.update(khachHangRequest, id);
+        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật khách hàng thành công");
+        return "redirect:/";
+    }
+
+    @GetMapping("get/{id}")
+    @ResponseBody
+    public ResponseEntity<KhachHangResponse> getKhachHang(@PathVariable("id") UUID id) {
+        return ResponseEntity.ok(khachHangService.getById(id));
     }
 }
