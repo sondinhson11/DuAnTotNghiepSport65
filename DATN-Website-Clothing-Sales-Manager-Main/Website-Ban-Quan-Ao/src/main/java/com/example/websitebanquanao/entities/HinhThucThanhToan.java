@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.time.LocalDate;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -19,8 +17,8 @@ import java.util.UUID;
 public class HinhThucThanhToan {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "ma", nullable = false)
     private String ma;

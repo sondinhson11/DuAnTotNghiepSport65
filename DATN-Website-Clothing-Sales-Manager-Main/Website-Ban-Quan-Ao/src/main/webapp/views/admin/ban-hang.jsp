@@ -521,7 +521,7 @@
                             <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
                                 <!-- Vòng lặp để tạo các tùy chọn từ danh sách `listHTTT` -->
                                 <c:forEach items="${listHTTT}" var="lshttt">
-                                    <option value="${lshttt.ma}">${lshttt.ma == 1 ? "Tiền Mặt" : "Chuyển Khoản" }</option>
+                                    <option value=${lshttt.id}>${lshttt.id == '33763e19-b7f1-4948-a506-3bca19ed3a48' ? "Tiền Mặt" : "Chuyển Khoản" }</option>
                                 </c:forEach>
                             </select>
 
