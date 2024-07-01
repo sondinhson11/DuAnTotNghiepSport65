@@ -14,16 +14,16 @@ import java.util.UUID;
 
 @Repository
 public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho) from KhachHang kh")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho,kh.trangThai) from KhachHang kh")
     public Page<KhachHangResponse> getPage(Pageable pageable);
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho) from KhachHang kh where kh.id = :id")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho,kh.trangThai) from KhachHang kh where kh.id = :id")
     public KhachHangResponse getByIdResponse(@Param("id") UUID id);
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho) from KhachHang kh where kh.email = :email and kh.matKhau = :matKhau")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho,kh.trangThai) from KhachHang kh where kh.email = :email and kh.matKhau = :matKhau")
     public KhachHangResponse getByEmailAndMatKhau(@Param("email") String email, @Param("matKhau") String matKhau);
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho) from KhachHang kh")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho,kh.trangThai) from KhachHang kh")
     List<KhachHangResponse> findAllKhachHang();
 
     boolean existsByEmail(String email);

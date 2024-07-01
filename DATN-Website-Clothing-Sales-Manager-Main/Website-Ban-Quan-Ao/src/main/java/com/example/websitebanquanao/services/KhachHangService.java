@@ -41,12 +41,12 @@ public class KhachHangService {
         khachHang.setXaPhuong(khachHangRequest.getXaPhuong());
         khachHang.setQuanHuyen(khachHangRequest.getQuanHuyen());
         khachHang.setTinhThanhPho(khachHangRequest.getTinhThanhPho());
-        khachHang.setTrangThai(1);
+        khachHang.setTrangThai(0);
         java.util.Date currentDate = new java.util.Date();
         khachHang.setNgayTao(new java.sql.Date(currentDate.getTime()));
         khachHang.setNgaySua(new java.sql.Date(currentDate.getTime()));
 
-         khachHangRepository.save(khachHang);
+        khachHangRepository.save(khachHang);
 
         System.out.println("KhachHangService.add: " + khachHang.getHoVaTen());
     }
@@ -62,6 +62,7 @@ public class KhachHangService {
             khachHang.setXaPhuong(khachHangRequest.getXaPhuong());
             khachHang.setQuanHuyen(khachHangRequest.getQuanHuyen());
             khachHang.setTinhThanhPho(khachHangRequest.getTinhThanhPho());
+            khachHang.setTrangThai(khachHangRequest.getTrangThai());
             java.util.Date currentDate = new java.util.Date();
             khachHang.setNgaySua(new java.sql.Date(currentDate.getTime()));
 
@@ -112,6 +113,10 @@ public class KhachHangService {
 
     public boolean isSoDienThoai(String soDienThoai) {
         return soDienThoai.matches("^0[0-9]{9,10}$");
+    }
+
+    public boolean isEmail(String email) {
+        return email.matches("^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6})*$");
     }
 
 }

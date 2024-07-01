@@ -121,7 +121,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="email" class="form-label">Email</label>
-                                    <form:input type="text" path="email" id="email" class="form-control"
+                                    <form:input type="email" path="email" id="email" class="form-control"
                                                 required="true"/>
                                     <form:errors path="email" cssClass="text-danger"/>
                                 </div>
@@ -199,8 +199,6 @@
                                     </form:select>
                                 </div>
                             </div>
-
-
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-label">Chức vụ</label>

@@ -20,7 +20,8 @@ public class KhachHangRequest {
     @NotBlank(message = "Họ và tên không được trống")
     private String hoVaTen;
 
-    @Email(message = "Địa chỉ email không hợp lệ")
+    @NotBlank(message = "Email không được trống")
+    @Email(message = " Email không hợp lệ")
     private String email;
 
     @NotBlank(message = "Họ và tên không được trống")
@@ -40,28 +41,29 @@ public class KhachHangRequest {
 
     @NotBlank(message = "Tỉnh/Thành phố không được trống")
     private String tinhThanhPho;
+    private Integer trangThai;
 
     public boolean validNull() {
         return
                 StringUtils.isEmpty(hoVaTen) ||
-                        email == null ||
-                        soDienThoai == null ||
-                        matKhau == null ||
-                        diaChi == null ||
-                        xaPhuong == null ||
-                        quanHuyen == null ||
-                        tinhThanhPho == null;
+                        StringUtils.isEmpty(email) ||
+                        StringUtils.isEmpty(soDienThoai) ||
+                        StringUtils.isEmpty(matKhau) ||
+                        StringUtils.isEmpty(diaChi) ||
+                        StringUtils.isEmpty(tinhThanhPho) ||
+                        StringUtils.isEmpty(xaPhuong) ||
+                        StringUtils.isEmpty(quanHuyen);
     }
 
     public boolean validUpdate() {
         return
                 StringUtils.isEmpty(hoVaTen) ||
-                        email == null ||
-                        soDienThoai == null ||
-                        diaChi == null ||
-                        xaPhuong == null ||
-                        quanHuyen == null ||
-                        tinhThanhPho == null;
+                        StringUtils.isEmpty(email) ||
+                        StringUtils.isEmpty(soDienThoai) ||
+                        StringUtils.isEmpty(diaChi) ||
+                        StringUtils.isEmpty(tinhThanhPho) ||
+                        StringUtils.isEmpty(xaPhuong) ||
+                        StringUtils.isEmpty(quanHuyen);
     }
 
 }

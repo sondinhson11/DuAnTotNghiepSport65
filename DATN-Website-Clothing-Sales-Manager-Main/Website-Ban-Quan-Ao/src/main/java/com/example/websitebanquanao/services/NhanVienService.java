@@ -161,4 +161,9 @@ public class NhanVienService {
     public boolean isSoDienThoai(String soDienThoai) {
         return soDienThoai.matches("^0[0-9]{9,10}$");
     }
+
+    public boolean isEmail(String email) {
+        return email.matches("^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6})*$");
+    }
+
 }
