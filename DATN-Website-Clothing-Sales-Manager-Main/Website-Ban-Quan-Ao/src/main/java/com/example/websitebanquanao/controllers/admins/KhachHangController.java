@@ -52,7 +52,10 @@ public class KhachHangController {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
-
+        if (!khachHangService.isEmail(khachHangRequest.getEmail())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Email chưa đúng định dạng, ví dụ: abc@yahoo.com");
+            return redirect;
+        }
         if (!khachHangService.isSoDienThoai(khachHangRequest.getSoDienThoai())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Số điện thoại không đúng định dạng.");
             return redirect;
@@ -63,10 +66,6 @@ public class KhachHangController {
             return redirect;
         }
 
-        if (khachHangRequest.getHoVaTen().trim().length() == 0) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Họ và tên không được để trống.");
-            return redirect;
-        }
 
         if (result.hasErrors()) {
             model.addAttribute("view", "/views/admin/khach-hang/index.jsp");
@@ -84,16 +83,15 @@ public class KhachHangController {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
-
+        if (!khachHangService.isEmail(khachHangRequest.getEmail())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Email chưa đúng định dạng, ví dụ: abc@yahoo.com");
+            return redirect;
+        }
         if (!khachHangService.isSoDienThoai(khachHangRequest.getSoDienThoai())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Số điện thoại không đúng định dạng.");
             return redirect;
         }
 
-        if (khachHangRequest.getHoVaTen().trim().length() == 0) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Họ và tên không được để trống.");
-            return redirect;
-        }
         khachHangService.update(khachHangRequest, id);
         redirectAttributes.addFlashAttribute("successMessage", "Cập nhật khách hàng thành công");
         return "redirect:/admin/khach-hang/index";

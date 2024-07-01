@@ -20,4 +20,5 @@ public class KhachHangResponse {
     private String xaPhuong;
     private String quanHuyen;
     private String tinhThanhPho;
+    private Integer trangThai;
 }

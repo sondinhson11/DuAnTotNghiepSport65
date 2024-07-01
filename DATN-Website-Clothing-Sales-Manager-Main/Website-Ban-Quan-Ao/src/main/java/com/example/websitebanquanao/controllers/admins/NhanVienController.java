@@ -51,7 +51,10 @@ public class NhanVienController {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
-
+        if (!nhanVienService.isEmail(nhanVienRequest.getEmail())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Email chưa đúng định dạng, ví dụ: abc@yahoo.com");
+            return redirect;
+        }
         if (!nhanVienService.isSoDienThoai(nhanVienRequest.getSoDienThoai())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Số điện thoại không đúng định dạng.");
             return redirect;
@@ -59,11 +62,6 @@ public class NhanVienController {
 
         if (!nhanVienService.isPasswordValid(nhanVienRequest.getMatKhau())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Mật khẩu phải có ít nhất 6 ký tự và chứa ít nhất một chữ và một số");
-            return redirect;
-        }
-
-        if (nhanVienRequest.getHoVaTen().trim().length() == 0) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Họ và tên không được để trống.");
             return redirect;
         }
 
@@ -83,19 +81,17 @@ public class NhanVienController {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
-
+        if (!nhanVienService.isEmail(nhanVienRequest.getEmail())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Email chưa đúng định dạng, ví dụ: abc@yahoo.com");
+            return redirect;
+        }
         if (!nhanVienService.isSoDienThoai(nhanVienRequest.getSoDienThoai())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Số điện thoại không đúng định dạng.");
             return redirect;
         }
-
-        if (nhanVienRequest.getHoVaTen().trim().length() == 0) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Họ và tên không được để trống.");
-            return redirect;
-        }
         nhanVienService.update(nhanVienRequest, id);
         redirectAttributes.addFlashAttribute("successMessage", "Cập nhật nhân viên thành công");
-        return "redirect:/admin/khach-hang/index";
+        return "redirect:/admin/nhan-vien/index";
     }
 
     @GetMapping("get/{id}")

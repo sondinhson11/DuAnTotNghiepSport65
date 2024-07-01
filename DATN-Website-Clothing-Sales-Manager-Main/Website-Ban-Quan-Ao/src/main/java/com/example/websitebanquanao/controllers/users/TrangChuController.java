@@ -352,11 +352,16 @@ public class TrangChuController {
         }
 
         KhachHangResponse khachHangResponse = khachHangService.getByEmailAndMatKhau(email, matKhau);
-
         if (khachHangResponse != null) {
-            session.setAttribute("khachHang", khachHangResponse);
-            gioHangService.checkAndAdd(khachHangResponse.getId());
-            return "redirect:/";
+            if (khachHangResponse.getTrangThai() == 1) {
+                redirectAttributes.addFlashAttribute("loginError", "Tài khoản của bạn đã bị khóa không thể đăng nhập. Liên hệ Shop để biết thêm...");
+                return "redirect:/dang-nhap";
+
+            } else {
+                session.setAttribute("khachHang", khachHangResponse);
+                gioHangService.checkAndAdd(khachHangResponse.getId());
+                return "redirect:/";
+            }
         } else {
             redirectAttributes.addFlashAttribute("loginError", "Tài khoản hoặc mật khẩu không đúng.");
             return "redirect:/dang-nhap";
@@ -372,6 +377,10 @@ public class TrangChuController {
 
         if (hoTen == null || hoTen.isEmpty() || matKhau == null || matKhau.isEmpty() || hoTen == null || hoTen.isEmpty()) {
             redirectAttributes.addFlashAttribute("loginError", "Vui lòng điền đầy đủ thông tin");
+            return "redirect:/dang-nhap#register";
+        }
+        if (!khachHangService.isEmail(email)) {
+            redirectAttributes.addFlashAttribute("loginError", "Email chưa đúng định dạng, ví dụ: abc@yahoo.com");
             return "redirect:/dang-nhap#register";
         }
         if (!khachHangService.isPasswordValid(matKhau)) {
@@ -435,11 +444,7 @@ public class TrangChuController {
             redirectAttributes.addFlashAttribute("errorMessage", "Số điện thoại không đúng định dạng.");
             return redirect;
         }
-
-        if (khachHangRequest.getHoVaTen().trim().length() == 0) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Họ và tên không được để trống.");
-            return redirect;
-        }
+        khachHangRequest.setTrangThai(0);
         khachHangService.update(khachHangRequest, id);
         redirectAttributes.addFlashAttribute("successMessage", "Cập nhật khách hàng thành công");
         return redirect;
