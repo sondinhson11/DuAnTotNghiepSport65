@@ -12,6 +12,12 @@
             padding: 5px; /* Khoảng cách nội dung từ viền */
             font-weight: bold; /* In đậm */
         }
+        .product-image {
+            width: 15rem; /* Match card size */
+            height: 15rem; /* Maintain aspect ratio */
+            object-fit: cover; /* Ensure the image covers the card */
+            border-radius: 10px 10px 0 0; /* Rounded top corners */
+        }
     </style>
 
     <div class="float-end mt-3">
@@ -39,19 +45,13 @@
             <c:forEach items="${listSanPham}" var="sanPham">
                 <div class="col">
                     <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}" class="text-decoration-none text-dark">
-                        <div class="card border-0">
-                            <img src="${sanPham.anh}" class="card-img-top" alt="${sanPham.ten}"style="width: 19rem; height: 19rem;">
+                        <div class="card product-card border-0">
+                            <img src="${sanPham.anh}" class="card-img-top product-image" alt="${sanPham.ten}">
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
                             <div class="card-body text-center">
-                                <p class="text-uppercase">${sanPham.ten}</p>
-                                <p class="fw-bold gia-san-pham" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
-                                <script>
-                                    var giaSanPhamElement = document.getElementById("gia-san-pham_${sanPham.id}");
-                                    var giaSanPhamText = giaSanPhamElement.innerText;
-                                    var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                                    giaSanPhamElement.innerText = formattedGia + " vnđ";
-                                </script>
-                                <p class="fw-bold gia-moi" id="gia-moi_${sanPham.id}"></p>
+                                <p class="product-name">${sanPham.ten}</p>
+                                <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
+                                <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>
                     </a>
@@ -83,8 +83,8 @@
                                     giaSauGiam = Math.floor(giaSauGiam);
                                     giaSpan.hide();
                                     if (data > 0) {
-                                        giaSpan.after('<p class="fw-bold gia-moi">' + giaSauGiam.toLocaleString('en-US') + ' vnđ</p>');
-                                        giaSpan.after('<p class="fw-bold gia-cu " style="text-decoration: line-through;">' + giaCu + '</p>');
+                                        giaSpan.after('<p class="fw-bold new-price">' + giaSauGiam.toLocaleString('en-US') + ' vnđ</p>');
+                                        giaSpan.after('<p class="fw-bold old-price " style="text-decoration: line-through;">' + giaCu + '</p>');
                                     } else {
                                         giaSpan.show();
                                     }
@@ -100,7 +100,56 @@
             </c:forEach>
         </div>
     </div>
+    <style>
+        .product-card {
+            margin-bottom: 20px; /* Khoảng cách giữa các sản phẩm */
+            transition: transform 0.2s;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .row > .col {
+            margin-bottom: 20px; /* Khoảng cách giữa các hàng sản phẩm */
+        }
 
+        @media (min-width: 992px) { /* Đối với màn hình lớn hơn (desktop) */
+            .product-card {
+                margin-bottom: 30px; /* Khoảng cách lớn hơn giữa các sản phẩm */
+            }
+        }
+        .product-card:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+
+        .product-name {
+            font-size: 0.9rem; /* Smaller text size */
+            margin: 0.5rem 0;
+        }
+        .product-price {
+            font-size: 1rem;
+            color: #ff5733; /* Different color for better visibility */
+        }
+        .discount-percentage {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff0000;
+            color: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+        .old-price {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .new-price {
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+        .card-body {
+            padding: 1rem; /* Added padding for better spacing */
+        }
+    </style>
     <h5 class="text-center">Bạn đã xem hết!</h5>
 
 </section>

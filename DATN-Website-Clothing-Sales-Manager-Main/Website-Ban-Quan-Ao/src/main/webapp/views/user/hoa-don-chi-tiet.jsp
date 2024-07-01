@@ -43,20 +43,20 @@
         </p>
         </p>
     </div>
-    <c:if test="${hoaDon.hinhThucThanhToan == '90cc1860-5358-4fea-b802-bef61deeaba4' }">
+    <c:if test="${hoaDon.hinhThucThanhToan.ten == 'Chuyển khoản' }">
         <div class="row">
             <hr>
             <div class="col-9">
             </div>
             <div class="col-3">
-                <c:if test="${hoaDon.ngayThanhToan == null && hoaDon.hinhThucThanhToan == '90cc1860-5358-4fea-b802-bef61deeaba4'}">
+                <c:if test="${hoaDon.ngayThanhToan == null && hoaDon.hinhThucThanhToan.ten == 'Chuyển khoản'}">
                     <div>
                         <form action="/submit-payment/${id}" method="post">
                             <button type="submit" class="btn btn-success col-12">Xác nhận thanh toán</button>
                         </form>
                     </div>
                 </c:if>
-                <c:if test="${hoaDon.ngayThanhToan != null && hoaDon.hinhThucThanhToan == '90cc1860-5358-4fea-b802-bef61deeaba4'}">
+                <c:if test="${hoaDon.ngayThanhToan != null && hoaDon.hinhThucThanhToan.ten == 'Chuyển khoản'}">
                     <button class="btn btn-success col-12 mb-2" disabled>Đã thanh toán</button>
                 </c:if>
             </div>
@@ -236,10 +236,10 @@
         <div class="row">
             <div class="col-9 d-flex justify-content-end">Phương thức Thanh toán</div>
             <div class="col-3">
-                <c:if test="${hoaDon.hinhThucThanhToan.id == '33763e19-b7f1-4948-a506-3bca19ed3a48'}">
+                <c:if test="${hoaDon.hinhThucThanhToan.ten == 'Tiền mặt'}">
                     <span>Thanh toán khi nhận hàng</span>
                 </c:if>
-                <c:if test="${hoaDon.hinhThucThanhToan.id == '90cc1860-5358-4fea-b802-bef61deeaba4'}">
+                <c:if test="${hoaDon.hinhThucThanhToan.ten == 'Chuyển khoản'}">
                     <span>Thanh toán bằng VNPay</span>
                 </c:if>
             </div>

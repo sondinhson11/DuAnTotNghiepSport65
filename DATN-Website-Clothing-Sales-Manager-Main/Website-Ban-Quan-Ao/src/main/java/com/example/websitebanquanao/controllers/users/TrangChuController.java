@@ -239,8 +239,8 @@ public class TrangChuController {
             BigDecimal tongTien = gioHangChiTietService.getTongTienByIdKhachHang(khachHangResponse.getId());
             model.addAttribute("listGioHang", gioHangService.getListByIdKhachHang(khachHangResponse.getId()));
             model.addAttribute("sumSoLuong", gioHangChiTietService.sumSoLuongByIdKhachHang(khachHangResponse.getId()));
+            session.setAttribute("khachHang", khachHangService.getById(khachHangResponse.getId()));
             model.addAttribute("khachHang", khachHangService.getById(khachHangResponse.getId()));
-            model.addAttribute("kh", khachHangResponse);
             model.addAttribute("listHTTT", hinhThucThanhToanService.getAll());
             model.addAttribute("tongTien", tongTien.intValue());
             if (giamGiaResponse != null) {
@@ -271,11 +271,9 @@ public class TrangChuController {
         if (khachHangResponse == null) {
             return "redirect:/dang-nhap";
         } else {
-
             if (diaChiMacDinh == null) {
                 diaChiMacDinh = 0;
             }
-
             if (giamGiaResponse == null) {
                 UUID id = hoaDonService.addHoaDonUser(formThanhToan, khachHangResponse, null, diaChiMacDinh);
                 return "redirect:/hoa-don/" + id;
@@ -446,13 +444,21 @@ public class TrangChuController {
         }
         khachHangRequest.setTrangThai(0);
         khachHangService.update(khachHangRequest, id);
+        session.setAttribute("khachHang", khachHangService.getById(id));
         redirectAttributes.addFlashAttribute("successMessage", "Cập nhật khách hàng thành công");
+
         return redirect;
     }
 
     @GetMapping("get/{id}")
     @ResponseBody
     public ResponseEntity<KhachHangResponse> getKhachHang(@PathVariable("id") UUID id) {
+        return ResponseEntity.ok(khachHangService.getById(id));
+    }
+
+    @GetMapping("hoa-don/get/{id}")
+    @ResponseBody
+    public ResponseEntity<KhachHangResponse> getKhachHang1(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(khachHangService.getById(id));
     }
 }

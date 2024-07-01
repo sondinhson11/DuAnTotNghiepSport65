@@ -45,6 +45,12 @@
                 text-align: center;
             }
         }
+        .product-image {
+            width: 15rem; /* Match card size */
+            height: 15rem; /* Maintain aspect ratio */
+            object-fit: cover; /* Ensure the image covers the card */
+            border-radius: 10px 10px 0 0; /* Rounded top corners */
+        }
     </style>
 
     <div class="float-end mt-3">
