@@ -1,6 +1,8 @@
 package com.example.websitebanquanao.controllers.users;
 
+import com.example.websitebanquanao.infrastructures.requests.KhachHangRequest;
 import com.example.websitebanquanao.infrastructures.responses.HoaDonChiTietUserResponse;
+import com.example.websitebanquanao.infrastructures.responses.KhachHangResponse;
 import com.example.websitebanquanao.services.HoaDonService;
 import com.example.websitebanquanao.services.VnpayService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +29,8 @@ public class VnpayController {
 
     @Autowired
     private HttpSession session;
+    @Autowired
+    private KhachHangRequest khachHangRequest;
 
     @PostMapping("/submit-payment/{id}")
     public String submitPayment(@PathVariable("id") UUID id, HttpServletRequest request) {
@@ -50,6 +54,7 @@ public class VnpayController {
         int paymentStatus = vnPayService.orderReturn(request);
         String maHoaDon = request.getParameter("vnp_TxnRef");
         model.addAttribute("maHoaDon", maHoaDon);
+        model.addAttribute("kh", khachHangRequest);
         if (paymentStatus == 1) {
             Instant instant = Instant.now();
             hoaDonService.updateNgayThanhToanByIdHoaDon(maHoaDon, instant);

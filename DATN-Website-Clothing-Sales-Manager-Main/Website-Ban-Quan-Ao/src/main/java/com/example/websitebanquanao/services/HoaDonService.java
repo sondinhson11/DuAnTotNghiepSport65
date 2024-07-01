@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -107,6 +108,8 @@ public class HoaDonService {
         hoaDon.setTinhThanhPho(hoaDonRequest.getTinhThanhPho());
         hoaDon.setTrangThai(hoaDonRequest.getTrangThai());
         hoaDon.setLoaiHoaDon(hoaDonRequest.getLoaiHoaDon());
+        java.util.Date currentDate = new java.util.Date();
+        hoaDon.setNgaySua(new Date(currentDate.getTime()));
         hoaDonRepository.save(hoaDon);
         System.out.println("HoaDonService.add: " + hoaDon.getMa());
     }
@@ -121,6 +124,8 @@ public class HoaDonService {
 
     public void update(HoaDon hoaDon, UUID idHoaDon) {
         if (hoaDon != null && idHoaDon != null) {
+            java.util.Date currentDate = new java.util.Date();
+            hoaDon.setNgaySua(new Date(currentDate.getTime()));
             hoaDonRepository.save(hoaDon);
         }
     }
@@ -143,8 +148,8 @@ public class HoaDonService {
         hoaDon.setMa(maHDCount());
         Instant currentInstant = Instant.now();
         hoaDon.setNgayTao(currentInstant);
-        hoaDon.setNguoiNhan(formThanhToan.getHoTen());
         if (diaChiMacDinh == 1) {
+            hoaDon.setNguoiNhan(khachHangResponse.getHoVaTen());
             hoaDon.setTinhThanhPho(khachHangResponse.getTinhThanhPho());
             hoaDon.setQuanHuyen(khachHangResponse.getQuanHuyen());
             hoaDon.setXaPhuong(khachHangResponse.getXaPhuong());
@@ -152,6 +157,7 @@ public class HoaDonService {
             hoaDon.setSoDienThoai(khachHangResponse.getSoDienThoai());
             hoaDon.setEmail(khachHangResponse.getEmail());
         } else {
+            hoaDon.setNguoiNhan(formThanhToan.getHoTen());
             hoaDon.setTinhThanhPho(formThanhToan.getTinhThanhPho());
             hoaDon.setQuanHuyen(formThanhToan.getQuanHuyen());
             hoaDon.setXaPhuong(formThanhToan.getXaPhuong());
@@ -163,7 +169,8 @@ public class HoaDonService {
         hoaDon.setGhiChu(formThanhToan.getGhiChu());
         hoaDon.setLoaiHoaDon(1);
         hoaDon.setTrangThai(2);
-
+        java.util.Date currentDate = new java.util.Date();
+        hoaDon.setNgaySua(new Date(currentDate.getTime()));
         KhachHang khachHang = new KhachHang();
         khachHang.setId(khachHangResponse.getId());
 

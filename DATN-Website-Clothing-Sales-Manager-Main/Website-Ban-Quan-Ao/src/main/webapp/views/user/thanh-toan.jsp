@@ -11,33 +11,26 @@
                 Thông tin người nhận
             </div>
             <hr>
-
-            <c:if test="${kh.diaChi =! null}">
-                <input type="checkbox" id="hideInfoCheckbox" name="diaChiMacDinh" class="ms-5"
-                       onchange="updateCheckboxValue(this)">
-                <label class="ms-3" for="hideInfoCheckbox">Sử dụng địa chỉ đã đăng ký</label>
-                <br>
-                <label class="ms-5 mt-3">Tên người nhận: ${khachHang.hoVaTen}</label>
-                <br>
-                <label class="ms-5">Số điện thoại: ${khachHang.soDienThoai}</label>
-                <br>
-                <label class="ms-5">Địa
-                    chỉ: ${khachHang.diaChi}/${khachHang.xaPhuong}/${khachHang.quanHuyen}/${khachHang.tinhThanhPho}</label>
-                <script>
-                    function updateCheckboxValue(checkbox) {
-                        if (checkbox.checked) {
-                            checkbox.value = 1;
-                        } else {
-                            checkbox.value = 0;
-                        }
+            <input type="checkbox" id="hideInfoCheckbox" name="diaChiMacDinh" class="ms-5"
+                   onchange="updateCheckboxValue(this)">
+            <label class="ms-3" for="hideInfoCheckbox">Sử dụng địa chỉ đã đăng ký</label>
+            <br>
+            <label class="ms-5 mt-3">Tên người nhận: ${khachHang.hoVaTen}</label>
+            <br>
+            <label class="ms-5">Số điện thoại: ${khachHang.soDienThoai}</label>
+            <br>
+            <label class="ms-5">Địa
+                chỉ: ${khachHang.diaChi}/${khachHang.xaPhuong}/${khachHang.quanHuyen}/${khachHang.tinhThanhPho}</label>
+            <script>
+                function updateCheckboxValue(checkbox) {
+                    if (checkbox.checked) {
+                        checkbox.value = 1;
+                    } else {
+                        checkbox.value = 0;
                     }
-                </script>
-                <hr>
-            </c:if>
-            <c:if test="${kh.diaChi == null}">
-                <a href="">Thêm địa chỉ mặc định</a>
-                <hr>
-            </c:if>
+                }
+            </script>
+            <hr>
 
             <div id="infoContainer">
                 <div class="px-md-5 px-3 py-2 form-group">
@@ -86,8 +79,8 @@
                 <div class="form-label ">Phương thức thanh toán (*)</div>
                 <label class="form-check-label text-sm-left fw-bold ">
                     <c:forEach items="${listHTTT}" var="lshttt">
-                    <form:radiobutton path="hinhThucThanhToan" value="${lshttt.id}" name="payment_method"/>
-                    ${lshttt.ten}
+                        <form:radiobutton path="hinhThucThanhToan" value="${lshttt.id}" name="payment_method" />
+                        ${lshttt.ten}
                     </c:forEach>
                 </label>
             </div>
@@ -233,7 +226,7 @@
                     const diaChiTextarea = document.getElementById('diaChi');
                     const soDienThoaiInput = document.getElementById('soDienThoai');
                     const emailInput = document.getElementById('email');
-                    const provinceSelect = document.getElementById('provinceSelect');
+                    const provinceSelect = document.getElementById('provinceSelect')
                     const districtSelect = document.getElementById('districtSelect');
                     const wardSelect = document.getElementById('wardSelect');
                     const hideInfoCheckbox = document.getElementById('hideInfoCheckbox');

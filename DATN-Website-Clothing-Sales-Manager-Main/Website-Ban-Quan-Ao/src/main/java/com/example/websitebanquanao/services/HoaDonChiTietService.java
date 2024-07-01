@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,6 +64,8 @@ public class HoaDonChiTietService {
 
     public void update(HoaDonChiTiet hoaDonChiTiet) {
         if (hoaDonChiTiet != null && hoaDonChiTiet.getId() != null) {
+            java.util.Date currentDate = new java.util.Date();
+            hoaDonChiTiet.setNgaySua(new Date(currentDate.getTime()));
             hoaDonChiTietRepository.save(hoaDonChiTiet);
         }
     }
@@ -83,6 +86,10 @@ public class HoaDonChiTietService {
             hoaDonChiTiet.setIdSanPhamChiTiet(sanPhamChiTiet);
             hoaDonChiTiet.setSoLuong(gioHangUserResponse.getSoLuong());
             hoaDonChiTiet.setGia(gioHangUserResponse.getGia());
+            java.util.Date currentDate = new java.util.Date();
+            hoaDonChiTiet.setNgaySua(new Date(currentDate.getTime()));
+            hoaDonChiTiet.setNgayTao(new Date(currentDate.getTime()));
+            hoaDonChiTiet.setTrangThai(1);
             hoaDonChiTietRepository.save(hoaDonChiTiet);
             sanPhamChiTietService.updateSoLuongByIdSanPhamChiTiet(gioHangUserResponse.getIdSanPhamChiTiet(), gioHangUserResponse.getSoLuong());
         }
@@ -90,7 +97,6 @@ public class HoaDonChiTietService {
         gioHangChiTietService.deleteByIdKhachHang(idKhachHang);
         System.out.println("HoaDonChiTietService.addHoaDonChiTietUser: " + hoaDon.getMa());
     }
-
 
 
     public Integer getSoPhanTramGiamByIdHoaDon(UUID id) {
@@ -235,17 +241,20 @@ public class HoaDonChiTietService {
 
 
     // tính tổng sản phẩm đã bán
-    public Integer TongSanPhamDaBan(){
+    public Integer TongSanPhamDaBan() {
         return hoaDonChiTietRepository.TongSanPhamDaBan();
     }
+
     // tổng đơn hàng với trạng thái là 1
-    public Integer TongDonHang(){
+    public Integer TongDonHang() {
         return hoaDonChiTietRepository.TongDonHang();
     }
+
     // tổng khách hàng đã mua hàng
-    public Integer TongKhachHang(){
+    public Integer TongKhachHang() {
         return hoaDonChiTietRepository.TongKhachHang();
     }
+
     //
     public Object NhanVienBanDuocNhieuSanPhamNhat() {
         return hoaDonChiTietRepository.NhanVienBanDuocNhieuSanPhamNhat();
