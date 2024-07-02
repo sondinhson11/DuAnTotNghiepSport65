@@ -21,49 +21,92 @@
 
     <style>
         .discount-percentage {
-            position: absolute; /* Vị trí tuyệt đối */
-            top: 0; /* Đặt ở đỉnh */
-            left: 0; /* Đặt ở bên trái */
-            background-color: red; /* Màu nền đỏ */
-            color: white; /* Màu chữ trắng */
-            padding: 5px; /* Khoảng cách nội dung từ viền */
-            font-weight: bold; /* In đậm */
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: red;
+            color: white;
+            padding: 5px;
+            font-weight: bold;
         }
         .link-dark {
             transition: all 0.3s ease;
         }
         .link-dark:hover {
-            background-color: #f8f9fa; /* Light gray background on hover */
-            color: #007bff; /* Blue text color on hover */
-            text-decoration: underline; /* Underline on hover */
+            background-color: #f8f9fa;
+            color: #007bff;
+            text-decoration: underline;
         }
         .rounded {
-            border-radius: 0.25rem; /* Rounded corners */
+            border-radius: 0.25rem;
         }
         @media (max-width: 767.98px) { /* For small screens */
             .col-md-auto {
                 text-align: center;
             }
         }
+
+        /* Product card styling */
+        .product-card {
+            position: relative; /* To position the discount percentage absolutely */
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+            border-radius: 10px;
+            overflow: hidden; /* Ensure the image doesn't overflow the card */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
         .product-image {
-            width: 15rem; /* Match card size */
-            height: 15rem; /* Maintain aspect ratio */
-            object-fit: cover; /* Ensure the image covers the card */
-            border-radius: 10px 10px 0 0; /* Rounded top corners */
+            width: 100%; /* Make the image cover the entire width of the card */
+            height: 100%; /* Make the image cover the entire height of the card */
+            object-fit: cover; /* Ensure the image covers the card without distortion */
+            border-radius: inherit; /* Maintain card's border radius */
+        }
+        .product-name {
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        .product-price {
+            font-size: 1rem;
+            color: #ff5733;
+        }
+        .discount-percentage {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff0000;
+            color: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+        .old-price {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .new-price {
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+        .card-body {
+            text-align: center;
+            padding: 1rem;
         }
     </style>
 
     <div class="float-end mt-3">
-        <select id="sort" class=" form-select" aria-label="Default select example">
+        <select id="sort" class="form-select" aria-label="Default select example">
             <option selected>Sắp xếp theo</option>
             <option value="1">Giá: thấp đến cao</option>
             <option value="2">Giá: cao đến thấp</option>
         </select>
         <script>
             document.getElementById("sort").onchange = function () {
-                var selectedValue = this.value; // Lấy giá trị được chọn trong thẻ select
+                var selectedValue = this.value;
                 var idLoai = '${idLoai}';
-                // Chuyển hướng đến liên kết tương ứng với giá trị đã chọn
                 if (selectedValue === "1") {
                     if (idLoai == -1)
                         window.location.href = "/san-pham?sort=asc";
@@ -86,9 +129,9 @@
                 <div class="col">
                     <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}" class="text-decoration-none text-dark">
                         <div class="card product-card border-0">
-                            <img src="${sanPham.anh}" class="card-img-top product-image" alt="${sanPham.ten}">
+                            <img src="${sanPham.anh}" class="product-image" alt="${sanPham.ten}">
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
-                            <div class="card-body text-center">
+                            <div class="card-body">
                                 <p class="product-name">${sanPham.ten}</p>
                                 <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
@@ -137,58 +180,6 @@
             </c:forEach>
         </div>
     </div>
-
-    <style>
-        .product-card {
-            margin-bottom: 20px; /* Khoảng cách giữa các sản phẩm */
-            transition: transform 0.2s;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .row > .col {
-            margin-bottom: 20px; /* Khoảng cách giữa các hàng sản phẩm */
-        }
-
-        @media (min-width: 992px) { /* Đối với màn hình lớn hơn (desktop) */
-            .product-card {
-                margin-bottom: 30px; /* Khoảng cách lớn hơn giữa các sản phẩm */
-            }
-        }
-        .product-card:hover {
-            transform: scale(1.05); /* Slightly enlarge on hover */
-        }
-
-        .product-name {
-            font-size: 0.9rem; /* Smaller text size */
-            margin: 0.5rem 0;
-        }
-        .product-price {
-            font-size: 1rem;
-            color: #ff5733; /* Different color for better visibility */
-        }
-        .discount-percentage {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #ff0000;
-            color: #fff;
-            padding: 0.3rem 0.6rem;
-            border-radius: 50%;
-            font-size: 0.8rem;
-        }
-        .old-price {
-            color: #888;
-            font-size: 0.9rem;
-        }
-        .new-price {
-            color: #28a745;
-            font-size: 1.1rem;
-        }
-        .card-body {
-            padding: 1rem; /* Added padding for better spacing */
-        }
-    </style>
-
 
     <h5 class="text-center">Bạn đã xem hết!</h5>
 </section>
