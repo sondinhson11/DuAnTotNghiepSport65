@@ -78,8 +78,8 @@
             <div class="px-md-5 px-3 py-2 form-check  border-bottom">
                 <div class="form-label ">Phương thức thanh toán (*)</div>
                 <label class="form-check-label text-sm-left fw-bold ">
-                    <c:forEach items="${listHTTT}" var="lshttt">
-                        <form:radiobutton path="hinhThucThanhToan" value="${lshttt.id}" name="payment_method" />
+                    <c:forEach items="${listHTTT}" var="lshttt" varStatus="status">
+                        <form:radiobutton path="hinhThucThanhToan" value="${lshttt.id}" name="payment_method" checked= "true" />
                         ${lshttt.ten}
                     </c:forEach>
                 </label>
