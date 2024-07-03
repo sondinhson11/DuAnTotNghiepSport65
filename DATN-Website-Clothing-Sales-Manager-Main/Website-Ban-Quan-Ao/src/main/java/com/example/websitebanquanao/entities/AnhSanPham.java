@@ -26,4 +26,7 @@ public class AnhSanPham {
     @Column(name = "duong_dan", nullable = false)
     private String duongDan;
 
+    @Column(name = "trang_thai")
+    private Integer trangThai;
+
 }
