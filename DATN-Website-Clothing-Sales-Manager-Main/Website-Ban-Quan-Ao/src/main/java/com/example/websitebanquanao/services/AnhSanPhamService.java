@@ -28,6 +28,7 @@ public class AnhSanPhamService {
             AnhSanPham anhSanPham = new AnhSanPham();
             anhSanPham.setDuongDan(string);
             anhSanPham.setIdSanPham(sanPham);
+            anhSanPham.setTrangThai(1);
             anhSanPhamRepository.save(anhSanPham);
         }
         System.out.println("AnhSanPhamService.add: " + sanPham.getId());
@@ -37,7 +38,6 @@ public class AnhSanPhamService {
         AnhSanPham anhSanPham = anhSanPhamRepository.findById(id).orElse(null);
         if (anhSanPham != null) {
             anhSanPham.setDuongDan(anhSanPhamRequest.getDuongDan());
-
             anhSanPhamRepository.save(anhSanPham);
 
             System.out.println("AnhSanPhamService.update: " + id);
@@ -48,7 +48,6 @@ public class AnhSanPhamService {
         AnhSanPham anhSanPham = anhSanPhamRepository.findById(id).orElse(null);
         if (anhSanPham != null) {
             anhSanPhamRepository.deleteById(id);
-
             System.out.println("AnhSanPhamService.delete: " + id);
         }
     }
@@ -58,7 +57,7 @@ public class AnhSanPhamService {
 //        return anhSanPhamRepository.getListAnhByIdSanPhamAndIdMauSac(idSanPham, idMauSac);
 //    }
 
-    public List<AnhSanPhamResponse> getListAnhByIdSanPham(UUID idSanPham){
+    public List<AnhSanPhamResponse> getListAnhByIdSanPham(UUID idSanPham) {
         return anhSanPhamRepository.getListAnhByIdSanPham(idSanPham);
     }
 

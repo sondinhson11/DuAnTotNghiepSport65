@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -60,8 +62,8 @@ public class SanPhamController {
 
     @PostMapping("store")
     public String store(@Valid @ModelAttribute("sp") SanPhamRequest sanPhamRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes, @RequestParam("anh") MultipartFile anh,
-            @RequestParam(name = "page", defaultValue = "1") int page) {
-
+                        @RequestParam("duongDan[0]") String anh1,@RequestParam("duongDan[1]") String anh2,@RequestParam("duongDan[2]") String anh3,
+                        @RequestParam(name = "page", defaultValue = "1") int page) {
         if (result.hasErrors()) {
             model.addAttribute("view", "/views/admin/san-pham/index.jsp");
             return "admin/layout";
@@ -78,6 +80,9 @@ public class SanPhamController {
             return "admin/layout";
         }else {
             redirectAttributes.addFlashAttribute("successMessage", "Thêm mới sản phẩm thành công");
+            List<String> duongDan = new ArrayList<>();
+            duongDan.add(anh1); duongDan.add(anh2); duongDan.add(anh3);
+            sanPhamRequest.setDuongDan(duongDan);
             sanPhamService.add(sanPhamRequest, anh);
             return redirect;
         }
