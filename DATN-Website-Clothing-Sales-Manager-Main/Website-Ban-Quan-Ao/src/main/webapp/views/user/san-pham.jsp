@@ -54,6 +54,19 @@
             border-radius: 10px;
             overflow: hidden; /* Ensure the image doesn't overflow the card */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: 100%; /* Đặt chiều cao cố định cho card */
+        }
+
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%; /* Đặt chiều cao cố định cho phần body của card */
+        }
+
+        .product-name, .product-price, .new-price, .old-price {
+            margin: 0; /* Xóa margin mặc định */
         }
         .product-card:hover {
             transform: scale(1.05);
@@ -71,7 +84,7 @@
         }
         .product-price {
             font-size: 1rem;
-            color: #ff5733;
+            color: #28a745;
         }
         .discount-percentage {
             position: absolute;
@@ -133,7 +146,7 @@
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
                             <div class="card-body">
                                 <p class="product-name">${sanPham.ten}</p>
-                                <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
+                                <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia} vnđ</p>
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>
@@ -181,5 +194,5 @@
         </div>
     </div>
 
-    <h5 class="text-center">Bạn đã xem hết!</h5>
+    <h5 class="text-center" style="margin-top: 50px">Bạn đã xem hết!</h5>
 </section>
