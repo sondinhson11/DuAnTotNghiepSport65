@@ -521,7 +521,7 @@
                             <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
                                 <!-- Vòng lặp để tạo các tùy chọn từ danh sách `listHTTT` -->
                                 <c:forEach items="${listHTTT}" var="lshttt">
-                                    <option value=${lshttt.id}>${lshttt.ten}</option>
+                                    <option value=${lshttt.ma}>${lshttt.ten}</option>
                                 </c:forEach>
                             </select>
 

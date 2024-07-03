@@ -15,6 +15,7 @@ import java.util.UUID;
 public class GioHangUserResponse {
     private UUID id;
     private UUID idSanPhamChiTiet;
+    private UUID idSanPham;
     private String maSanPham;
     private String tenSanPham;
     private Integer idMauSac;
