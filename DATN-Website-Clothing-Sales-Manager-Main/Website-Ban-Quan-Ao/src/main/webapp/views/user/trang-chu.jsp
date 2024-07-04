@@ -29,11 +29,8 @@
 
         .product-price {
             font-size: 1rem;
-<<<<<<< Updated upstream
             color: #ff5733; /* Distinct color for better visibility */
-=======
             color: #28a745; /* Distinct color for better visibility */
->>>>>>> Stashed changes
         }
 
         .discount-percentage {
@@ -65,11 +62,8 @@
     </style>
 
     <div class="container">
-<<<<<<< Updated upstream
         <h3 class="fw-bold text-lg-start mt-4">Sản phẩm mới nhất</h3>
-=======
         <h3 class="fw-bold text-lg-start mt-4" style="margin-bottom: 50px">Sản phẩm mới nhất</h3>
->>>>>>> Stashed changes
         <div class="row row-cols-2 row-cols-md-4 g-4">
             <c:forEach items="${listTrangChu}" var="sanPham">
                 <div class="col">
@@ -79,11 +73,8 @@
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
                             <div class="card-body text-center">
                                 <p class="product-name">${sanPham.ten}</p>
-<<<<<<< Updated upstream
                                 <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
-=======
                                 <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}"></p>
->>>>>>> Stashed changes
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>

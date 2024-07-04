@@ -50,13 +50,12 @@
                 text-align: center;
             }
         }
-<<<<<<< Updated upstream
         .product-image {
             width: 15rem; /* Match card size */
             height: 15rem; /* Maintain aspect ratio */
             object-fit: cover; /* Ensure the image covers the card */
             border-radius: 10px 10px 0 0; /* Rounded top corners */
-=======
+        }
 
         /* Product card styling */
         .product-card {
@@ -126,7 +125,6 @@
         .card-body {
             text-align: center;
             padding: 1rem;
->>>>>>> Stashed changes
         }
     </style>
 
@@ -167,11 +165,8 @@
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
                             <div class="card-body text-center">
                                 <p class="product-name">${sanPham.ten}</p>
-<<<<<<< Updated upstream
                                 <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
-=======
                                 <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}"></p>
->>>>>>> Stashed changes
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>
