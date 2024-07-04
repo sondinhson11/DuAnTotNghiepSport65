@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
     .image-input {
         display: none;
@@ -46,6 +47,56 @@
         display: inline-block;
         margin-right: 5px; /* Điều chỉnh khoảng cách giữa các phần tử theo nhu cầu */
     }
+    /*body {*/
+    /*    font-family: Arial, sans-serif;*/
+    /*    background-color: #f0f0f0;*/
+    /*    display: flex;*/
+    /*    justify-content: center;*/
+    /*    align-items: center;*/
+    /*    height: 100vh;*/
+    /*    margin: 0;*/
+    /*}*/
+
+    .container {
+        border: 2px solid #000;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1 {
+        margin: 0 0 20px 0;
+    }
+
+    .form-fieldset {
+        border: 2px solid #000;
+        padding: 20px;
+        width: 100%;
+    }
+
+    legend {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input, select, textarea, button {
+        margin-bottom: 10px;
+    }
+
+    .mt-3 {
+        margin-top: 1rem;
+    }
+
 </style>
 <script>
     <%--    ctsp--%>
@@ -131,81 +182,72 @@
 </script>
 
 <div class="container mt-3">
-    <h1 class="text-center">Quản lý chi tiết sản phẩm</h1>
-    <div class="row mt-3">
-        <div class="col-12">
-            <form:form action="${action}"
-                       method="post" modelAttribute="sanPhamChiTiet" id="formSP">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="idSanPham" class="form-label">Sản Phẩm</label>
-                        <i class="fas fa-plus-circle" data-bs-toggle="modal" data-bs-target="#modalSanPham"
-                           title="Thêm Sản phẩm"></i>
-                        <form:select path="idSanPham" id="idSanPham" class="form-select">
-                            <c:forEach items="${listSanPham}" var="sanPham">
-                                <option value="${sanPham.id}" ${sanPham.id == sanPhamChiTiet.idSanPham.id ? 'selected' : ''}>${sanPham.ten}</option>
-                            </c:forEach>
-                        </form:select>
-                    </div>
-                    <div class="col-4">
-                        <label for="idMauSac" class="form-label">Màu Sắc</label>
-                        <i class="fas fa-plus-circle" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                           title="Thêm màu sắc"></i>
-                            <%--                        <form:select path="idMauSac" id="idMauSac" class="form-select">--%>
-                            <%--                            <c:forEach items="${listMauSac}" var="mauSac">--%>
-                            <%--                                <option value="${mauSac.id}" ${mauSac.id == sanPhamChiTiet.idMauSac.id ? 'selected' : ''}>${mauSac.ten}</option>--%>
-                            <%--                            </c:forEach>--%>
-                            <%--                        </form:select>--%>
-                        <form:select name="idMauSac" id="idMauSac" path="idMauSac" multiple="true"  >
-                            <c:forEach items="${listMauSac}" var="mauSac">
-                                <option value="${mauSac.id}" ${mauSac.id == sanPhamChiTiet.idMauSac.id ? 'selected' : ''}>${mauSac.ten}</option>
-                            </c:forEach>
-                        </form:select>
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-4">
-                        <label for="idKichCo" class="form-label">Kích Cỡ</label>
-                        <i class="fas fa-plus-circle" data-bs-toggle="modal" data-bs-target="#modalKichCo"
-                           title="Thêm Kích cỡ"></i>
-
-                        <form:select path="idKichCo" id="idKichCo"  name="idMauSac" multiple="true" >
-
-                            <c:forEach items="${listKichCo}" var="kichCo">
-                                <option value="${kichCo.id}"
-                                        label="${kichCo.ten}" ${kichCo.id == sanPhamChiTiet.idKichCo.id ? 'selected' : ''}>${kichCo.ten}</option>
-                            </c:forEach>
-                        </form:select>
-                    </div>
-                    <div class="col-4">
-                        <label for="gia" class="form-label">Giá Bán</label>
-                        <form:input path="gia" id="gia" class="form-control" type="number" value="${sanPhamChiTiet.gia}"/>
-                    </div>
-                    <div class="col-4">
-                        <label for="soLuong" class="form-label">Số lượng</label>
-                        <form:input path="soLuong" id="soLuong" class="form-control" type="number"
-                                    value="${sanPhamChiTiet.soLuong}" />
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <label for="moTa" class="form-label">Mô tả</label>
-                    <form:textarea path="moTa" id="moTa" class="form-control" style="height: 130px"
-                                   value="${sanPhamChiTiet.moTa}"/>
-                </div>
-
-                <%--                <div class="mt-3">--%>
-                <%--                    <label for="trangThai" class="form-label">Trạng thái</label>--%>
-                <%--                    <form:select path="trangThai" id="trangThai" class="form-select">--%>
-                <%--                        <option value="1"  ${sanPhamChiTiet.trangThai == 1 ? 'selected' : ''}>Đang bán</option>--%>
-                <%--                        <option value="0"  ${sanPhamChiTiet.trangThai == 0 ? 'selected' : ''} >Ngừng bán</option>--%>
-                <%--                    </form:select>--%>
-                <%--                </div>--%>
+<div class="content">
+<h1 class="text-center">Tạo mới chi tiết sản phẩm</h1>
+<fieldset class="form-fieldset">
+<legend>Thông tin chi tiết</legend>
+<div class="row mt-3">
+<div class="col-12">
+<form:form action="${action}"
+           method="post" modelAttribute="sanPhamChiTiet" id="formSP">
+    <div class="row">
+        <div class="col-4">
+            <label for="idSanPham" class="form-label">Tên sản phẩm</label>
+            <i class="fas fa-plus-circle" data-bs-toggle="modal" data-bs-target="#modalSanPham"
+               title="Thêm Sản phẩm"></i>
+            <form:select path="idSanPham" id="idSanPham" class="form-select">
+                <c:forEach items="${listSanPham}" var="sanPham">
+                    <option value="${sanPham.id}" ${sanPham.id == sanPhamChiTiet.idSanPham.id ? 'selected' : ''}>${sanPham.ten}</option>
+                </c:forEach>
+            </form:select>
+        </div>
+        <div class="col-4">
+            <label for="idMauSac" class="form-label">Tên màu sắc</label>
+            <i class="fas fa-plus-circle" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+               title="Thêm màu sắc"></i>
+            <form:select name="idMauSac" id="idMauSac" path="idMauSac" multiple="true"  >
+                <c:forEach items="${listMauSac}" var="mauSac">
+                    <option value="${mauSac.id}" ${mauSac.id == sanPhamChiTiet.idMauSac.id ? 'selected' : ''}>${mauSac.ten}</option>
+                </c:forEach>
+            </form:select>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-4">
+            <label for="idKichCo" class="form-label">Loại kích cỡ</label>
+            <i class="fas fa-plus-circle" data-bs-toggle="modal" data-bs-target="#modalKichCo"
+               title="Thêm Kích cỡ"></i>
+            <form:select path="idKichCo" id="idKichCo"  name="idMauSac" multiple="true" >
+                <c:forEach items="${listKichCo}" var="kichCo">
+                    <option value="${kichCo.id}"
+                            label="${kichCo.ten}" ${kichCo.id == sanPhamChiTiet.idKichCo.id ? 'selected' : ''}>${kichCo.ten}</option>
+                </c:forEach>
+            </form:select>
+        </div>
+        <div class="col-4">
+            <label for="gia" class="form-label">Giá Bán</label>
+            <form:input path="gia" id="gia" class="form-control" type="number" value="${sanPhamChiTiet.gia}"/>
+        </div>
+        <div class="col-4">
+            <label for="soLuong" class="form-label">Số lượng sản phẩm</label>
+            <form:input path="soLuong" id="soLuong" class="form-control" type="number"
+                        value="${sanPhamChiTiet.soLuong}" />
+        </div>
+    </div>
+    <div class="mt-3">
+        <label for="moTa" class="form-label">Mô tả sản phẩm</label>
+        <form:textarea path="moTa" id="moTa" class="form-control" style="height: 130px"
+                       value="${sanPhamChiTiet.moTa}"/>
+    </div>
+    <div class="mt-3">
+        <button type="button" class="btn btn-secondary">Làm Mới</button>
+        <button type="submit" class="btn btn-primary">Tạo</button>
+    </div>
+    </form>
+    </div>
+    </div>
 
 
-                <div class="mt-3">
-                    <button type="button" class="btn btn-secondary">Làm Mới</button>
-                    <button type="submit" class="btn btn-primary">Tạo</button>
-                </div>
                 <!-- Kiểm tra xem danh sách 'listtam' có phần tử nào không -->
                 <c:if test="${not empty listtam}">
                     <!-- Hiển thị bảng nếu 'listtam' không rỗng -->
@@ -235,19 +277,7 @@
                                     <fmt:formatNumber value="${sanPhamChiTiet.gia}" pattern="#,##0 ₫"/>
                                 </td>
                                 <td>${sanPhamChiTiet.soLuong}</td>
-<%--                                <td>--%>
-<%--                                    <c:choose>--%>
-<%--                                        <c:when test="${sanPhamChiTiet.trangThai == 1}">--%>
-<%--                                            <span class="badge bg-success">Đang bán</span>--%>
-<%--                                        </c:when>--%>
-<%--                                        <c:when test="${sanPhamChiTiet.trangThai == 0}">--%>
-<%--                                            <span class="badge bg-danger">Ngừng bán</span>--%>
-<%--                                        </c:when>--%>
-<%--                                        <c:otherwise>--%>
-<%--                                            <span class="badge bg-danger">Tạm</span>--%>
-<%--                                        </c:otherwise>--%>
-<%--                                    </c:choose>--%>
-<%--                                </td>--%>
+
                                 <td>
                                     <a href="/admin/san-pham-chi-tiet/updatetam/${sanPhamChiTiet.id}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -277,7 +307,13 @@
                 </div>
 
 
+
+
             </form:form>
+
+</fieldset>
+</div>
+</div>
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
