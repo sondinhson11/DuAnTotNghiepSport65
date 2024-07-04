@@ -167,6 +167,7 @@ CREATE TABLE giam_gia
     id                UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     ma                VARCHAR(10) NOT NULL,
     so_phan_tram_giam INT,
+	 so_phan_tien_giam_toi_thieu INT,
     so_luong          INT,
     ngay_bat_dau      DATE,
     ngay_ket_thuc     DATE,
