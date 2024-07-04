@@ -49,7 +49,7 @@ public class CreatePDF {
             image.setAlignment(Element.ALIGN_CENTER);
             image.scaleAbsolute(100, 100);
             document.add(image);
-            document.add(new Paragraph("Hoá đơn Leninn", font2));
+            document.add(new Paragraph("Hoá đơn Sport65", font2));
             document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
 
             document.add(new Paragraph("Mã hoá đơn: " + hoaDon.getMa(), font));
