@@ -32,17 +32,13 @@ public class CreatePDF {
             PdfWriter.getInstance(document, new FileOutputStream(filePath));
             document.open();
 
-            String tenKhachHang = null;
+            String tenKhachHang = hoaDon.getNguoiNhan();
             if (tenKhachHang == null) {
                 tenKhachHang = "Khách lẻ";
-            }else {
-                tenKhachHang = hoaDon.getIdKhachHang().getHoVaTen();
             }
-            String diaChi = null;
+            String diaChi = hoaDon.getDiaChi() + ", " + hoaDon.getXaPhuong() + ", " + hoaDon.getQuanHuyen() + ", " + hoaDon.getTinhThanhPho();;
             if (diaChi == null) {
                 diaChi = "Khách mua tại cửa hàng";
-            }else {
-                diaChi =  hoaDon.getDiaChi() + ", " + hoaDon.getXaPhuong() + ", " + hoaDon.getQuanHuyen() + ", " + hoaDon.getTinhThanhPho();
             }
             // thêm logo và căn giữa
             Image image = Image.getInstance("src/main/java/com/example/websitebanquanao/images/Summer.png");
