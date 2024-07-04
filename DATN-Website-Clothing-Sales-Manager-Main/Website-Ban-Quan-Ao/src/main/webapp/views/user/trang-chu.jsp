@@ -74,7 +74,7 @@
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
                             <div class="card-body text-center">
                                 <p class="product-name">${sanPham.ten}</p>
-                                <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}"></p>
+                                <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia} vnđ</p>
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>
@@ -109,7 +109,6 @@
                                         giaSpan.after('<p class="fw-bold old-price" style="text-decoration: line-through;">' + giaCu + '</p>');
                                     } else {
                                         giaSpan.after('<p class="fw-bold new-price">' + giaSanPham.toLocaleString('en-US') + ' vnđ</p>');
-                                        giaSpan.show();
                                     }
                                 }
                             },
@@ -132,7 +131,7 @@
                             <span class="discount-percentage" id="so-phan-tram-giam_2_${sanPham.id}"></span>
                             <div class="card-body text-center">
                                 <p class="product-name">${sanPham.ten}</p>
-                                <p class="fw-bold product-price" id="gia-san-pham_2_${sanPham.id}"></p>
+                                <p class="fw-bold product-price" id="gia-san-pham_2_${sanPham.id}">${sanPham.gia} vnđ</p>
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>
@@ -167,7 +166,6 @@
                                         giaSpan.after('<p class="fw-bold old-price" style="text-decoration: line-through;">' + giaCu + '</p>');
                                     } else {
                                         giaSpan.after('<p class="fw-bold new-price">' + giaSanPham.toLocaleString('en-US') + ' vnđ</p>');
-                                        giaSpan.show();
                                     }
                                 }
                             },
