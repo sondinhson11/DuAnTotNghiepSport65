@@ -23,7 +23,7 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
     public HoaDonChiTiet findByHoaDonIdAndSanPhamChiTietId(UUID idHoaDon, UUID idSanPhamChiTiet);
 
     // user
-    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.GioHangUserResponse(sp.id, spct.id, spct.maSanPham, sp.ten, ms.id, ms.ten, kc.ten, hdct.soLuong, spct.soLuong, hdct.gia) FROM HoaDonChiTiet hdct JOIN hdct.idSanPhamChiTiet spct JOIN spct.idSanPham sp LEFT JOIN spct.idMauSac ms LEFT JOIN spct.idKichCo kc WHERE hdct.idHoaDon.id = :idHoaDon")
+    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.GioHangUserResponse(sp.id, spct.id, spct.idSanPham.id, spct.maSanPham, sp.ten, ms.id, ms.ten, kc.ten, hdct.soLuong, spct.soLuong, hdct.gia) FROM HoaDonChiTiet hdct JOIN hdct.idSanPhamChiTiet spct JOIN spct.idSanPham sp LEFT JOIN spct.idMauSac ms LEFT JOIN spct.idKichCo kc WHERE hdct.idHoaDon.id = :idHoaDon")
     public List<GioHangUserResponse> getListByIdHoaDon(@Param("idHoaDon") UUID idHoaDon);
 
     @Query("SELECT SUM(hdct.gia * hdct.soLuong) FROM HoaDonChiTiet hdct WHERE hdct.idHoaDon.id = :idHoaDon")

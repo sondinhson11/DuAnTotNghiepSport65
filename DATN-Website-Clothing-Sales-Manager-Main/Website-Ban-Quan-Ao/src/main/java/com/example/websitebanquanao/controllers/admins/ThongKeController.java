@@ -13,7 +13,7 @@ public class ThongKeController {
 
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService;
-    private static final String redirect = "redirect:/admin/admin";
+    private static final String redirect = "redirect:/admin";
     @RequestMapping("/index")
     public String hienThiTongGia(Model model) {
 

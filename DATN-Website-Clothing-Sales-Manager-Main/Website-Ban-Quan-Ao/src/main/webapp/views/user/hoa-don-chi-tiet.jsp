@@ -67,9 +67,9 @@
         <hr>
         <div class="col-4 border-end">
             <p class="fw-bold text-uppercase">Địa chỉ nhận hàng</p>
-            <p>${hoaDon.nguoiNhan}</p>
-            <p>${hoaDon.soDienThoai}</p>
-            <p>${hoaDon.diaChi} / ${hoaDon.xaPhuong} / ${hoaDon.quanHuyen} / ${hoaDon.tinhThanhPho}</p>
+            <p>Họ và tên : ${hoaDon.nguoiNhan}</p>
+            <p>Số điện thoại : ${hoaDon.soDienThoai}</p>
+            <p>Địa chỉ :${hoaDon.diaChi} / ${hoaDon.xaPhuong} / ${hoaDon.quanHuyen} / ${hoaDon.tinhThanhPho}</p>
         </div>
         <div class="col-4 border-end">
             <c:if test="${hoaDon.ngayTao != null}">
@@ -134,7 +134,7 @@
                 <tr>
                     <td>${status.index + 1}</td>
                     <td>
-                        <div id="carouselExampleSlidesOnly_${sp.idSanPhamChiTiet}"
+                        <div id="carouselExampleSlidesOnly_${sp.idSanPham}"
                              class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                             <div class="carousel-inner" style="width: 150px; height: 150px">
                                 <c:forEach items="${listAnhSanPham}" var="anhSanPham" varStatus="status">
@@ -161,7 +161,7 @@
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script>
                     $(document).ready(function () {
-                        var idSanPham = '${sp.idSanPhamChiTiet}';
+                        var idSanPham = '${sp.idSanPham}';
                         $.ajax({
                             url: '/get-anh-san-pham/' + idSanPham,
                             type: 'GET',
@@ -169,7 +169,7 @@
                             success: function (data) {
                                 // Xử lý phản hồi từ máy chủ và cập nhật danh sách ảnh
                                 var listAnhSanPham = data;
-                                var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPhamChiTiet} .carousel-inner');
+                                var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPham} .carousel-inner');
                                 carouselInner.empty();
 
                                 $.each(listAnhSanPham, function (index, anhSanPham) {

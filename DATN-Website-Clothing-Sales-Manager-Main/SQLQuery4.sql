@@ -446,8 +446,8 @@ VALUES
 -- Insert data into 'hinh_thuc_thanh_toan' table
 INSERT INTO hinh_thuc_thanh_toan (ten, ma, ngay_tao, ngay_sua, trang_thai)
 VALUES 
-    (N'Thanh toán bằng thẻ', 'TTBT', '2024-01-01', '2024-01-01', 1),
-    (N'Thanh toán khi nhận hàng', 'TTKNH', '2024-01-01', '2024-01-01', 1);
+    (N'Tiền mặt', '1', '2024-01-01', '2024-01-01', 1),
+    (N'Chuyển khoản', '2', '2024-01-01', '2024-01-01', 1);
 
 -- Insert data into 'hoa_don' table
 INSERT INTO hoa_don (ma, ngay_thanh_toan, ngay_van_chuyen, ngay_nhan, id_khach_hang, id_nhan_vien, id_giam_gia, id_hinh_thuc_thanh_toan, nguoi_nhan, email, so_dien_thoai, dia_chi, xa_phuong, quan_huyen, tinh_thanh_pho, trang_thai, loai_hoa_don, ma_van_chuyen, ten_don_vi_van_chuyen, phi_van_chuyen, anh_hoa_don_chuyen_khoan, ghi_chu, ngay_tao, ngay_sua)

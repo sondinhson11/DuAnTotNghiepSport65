@@ -29,7 +29,7 @@
             <c:forEach items="${listGioHang}" var="gioHang">
                 <tr>
                     <td>
-                        <div id="carouselExampleSlidesOnly_${gioHang.idSanPhamChiTiet}"
+                        <div id="carouselExampleSlidesOnly_${gioHang.idSanPham}"
                              class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
                             <div class="carousel-inner" style="width: 150px; height: 150px">
                                 <c:forEach items="${listAnhSanPham}" var="anhSanPham" varStatus="status">
@@ -45,7 +45,7 @@
                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                     <script>
                         $(document).ready(function () {
-                            var idSanPham = '${gioHang.idSanPhamChiTiet}';
+                            var idSanPham = '${gioHang.idSanPham}';
                             $.ajax({
                                 url: '/get-anh-san-pham/' + idSanPham,
                                 type: 'GET',
@@ -53,7 +53,7 @@
                                 success: function (data) {
                                     // Xử lý phản hồi từ máy chủ và cập nhật danh sách ảnh
                                     var listAnhSanPham = data;
-                                    var carouselInner = $('#carouselExampleSlidesOnly_${gioHang.idSanPhamChiTiet} .carousel-inner');
+                                    var carouselInner = $('#carouselExampleSlidesOnly_${gioHang.idSanPham} .carousel-inner');
                                     carouselInner.empty();
 
                                     $.each(listAnhSanPham, function (index, anhSanPham) {

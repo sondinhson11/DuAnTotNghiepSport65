@@ -9,6 +9,7 @@
             transition: transform 0.2s; /* Smooth hover effect */
             border-radius: 10px; /* Rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            height: 100%; /* Đảm bảo các thẻ product-card có cùng chiều cao */
         }
 
         .product-card:hover {
@@ -73,7 +74,6 @@
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
                             <div class="card-body text-center">
                                 <p class="product-name">${sanPham.ten}</p>
-                                <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
                                 <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}"></p>
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
@@ -122,7 +122,7 @@
             </c:forEach>
         </div>
 
-        <h3 class="fw-bold text-lg-start mt-4">Sản phẩm bán chạy nhất</h3>
+        <h3 class="fw-bold text-lg-start mt-4" style="margin-bottom: 50px">Sản phẩm bán chạy nhất</h3>
         <div class="row row-cols-2 row-cols-md-4 g-4">
             <c:forEach items="${listBanChay}" var="sanPham">
                 <div class="col">
@@ -181,59 +181,10 @@
         </div>
     </div>
     </div>
-    <style>
-        .product-card {
-            margin-bottom: 20px; /* Khoảng cách giữa các sản phẩm */
-            transition: transform 0.2s;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .row > .col {
-            margin-bottom: 20px; /* Khoảng cách giữa các hàng sản phẩm */
-        }
-
-        @media (min-width: 992px) { /* Đối với màn hình lớn hơn (desktop) */
-            .product-card {
-                margin-bottom: 30px; /* Khoảng cách lớn hơn giữa các sản phẩm */
-            }
-        }
-        .product-card:hover {
-            transform: scale(1.05); /* Slightly enlarge on hover */
-        }
-
-        .product-name {
-            font-size: 0.9rem; /* Smaller text size */
-            margin: 0.5rem 0;
-        }
-        .product-price {
-            font-size: 1rem;
-            color: #ff5733; /* Different color for better visibility */
-        }
-        .discount-percentage {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #ff0000;
-            color: #fff;
-            padding: 0.3rem 0.6rem;
-            border-radius: 50%;
-            font-size: 0.8rem;
-        }
-        .old-price {
-            color: #888;
-            font-size: 0.9rem;
-        }
-        .new-price {
-            color: #28a745;
-            font-size: 1.1rem;
-        }
-        .card-body {
-            padding: 1rem; /* Added padding for better spacing */
-        }
-    </style>
 </section>
 <section>
-    <div class="row justify-content-center col-2 offset-5 px-1 ">
+
+    <div class="row justify-content-center col-2 offset-5 px-1 " style="margin-top: 50px">
         <a href="/san-pham"
            class="text-decoration-none text-dark fw-bold text-center py-3 px-5 border border-none rounded-pill">Xem
             Thêm</a>

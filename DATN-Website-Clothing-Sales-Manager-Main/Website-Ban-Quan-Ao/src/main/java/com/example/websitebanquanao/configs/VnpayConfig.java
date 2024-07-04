@@ -14,10 +14,10 @@ public class VnpayConfig {
     // Link trả về sau khi thanh toán
     public static String vnp_Returnurl = "/vnpay-payment";
     // Mã code của merchant
-    public static String vnp_TmnCode = "3AG1OOC6";
+    public static String vnp_TmnCode = "WC0LIXCD";
 
     // Mật khẩu bí mật của merchant
-    public static String vnp_HashSecret = "WALXQUSCFMEKFDAKPLBRLVBVZLECGGAY";
+    public static String vnp_HashSecret = "CX5WLHYK2XAURZZ19DK73RZY4U5SZAGR";
     // Link API của VNPAY
     public static String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 
