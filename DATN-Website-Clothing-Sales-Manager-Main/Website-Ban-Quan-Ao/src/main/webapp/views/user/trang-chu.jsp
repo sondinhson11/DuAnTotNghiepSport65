@@ -10,23 +10,32 @@
             border-radius: 10px; /* Rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
         }
+
         .product-card:hover {
             transform: scale(1.05); /* Slightly enlarge on hover */
         }
+
         .product-image {
             width: 15rem; /* Match card size */
             height: 15rem; /* Maintain aspect ratio */
             object-fit: cover; /* Ensure the image covers the card */
             border-radius: 10px 10px 0 0; /* Rounded top corners */
         }
+
         .product-name {
             font-size: 0.9rem; /* Smaller text size */
             margin: 0.5rem 0; /* Margin for better spacing */
         }
+
         .product-price {
             font-size: 1rem;
+<<<<<<< Updated upstream
             color: #ff5733; /* Distinct color for better visibility */
+=======
+            color: #28a745; /* Distinct color for better visibility */
+>>>>>>> Stashed changes
         }
+
         .discount-percentage {
             position: absolute;
             top: 10px;
@@ -37,15 +46,18 @@
             border-radius: 50%;
             font-size: 0.8rem;
         }
+
         .old-price {
             color: #888;
             font-size: 0.9rem;
             text-decoration: line-through;
         }
+
         .new-price {
             color: #28a745;
             font-size: 1.1rem;
         }
+
         .card-body {
             padding: 1rem; /* Added padding for better spacing */
         }
@@ -53,7 +65,11 @@
     </style>
 
     <div class="container">
+<<<<<<< Updated upstream
         <h3 class="fw-bold text-lg-start mt-4">Sản phẩm mới nhất</h3>
+=======
+        <h3 class="fw-bold text-lg-start mt-4" style="margin-bottom: 50px">Sản phẩm mới nhất</h3>
+>>>>>>> Stashed changes
         <div class="row row-cols-2 row-cols-md-4 g-4">
             <c:forEach items="${listTrangChu}" var="sanPham">
                 <div class="col">
@@ -63,7 +79,11 @@
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
                             <div class="card-body text-center">
                                 <p class="product-name">${sanPham.ten}</p>
+<<<<<<< Updated upstream
                                 <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
+=======
+                                <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}"></p>
+>>>>>>> Stashed changes
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>
@@ -97,6 +117,7 @@
                                         giaSpan.after('<p class="fw-bold new-price">' + giaSauGiam.toLocaleString('en-US') + ' vnđ</p>');
                                         giaSpan.after('<p class="fw-bold old-price" style="text-decoration: line-through;">' + giaCu + '</p>');
                                     } else {
+                                        giaSpan.after('<p class="fw-bold new-price">' + giaSanPham.toLocaleString('en-US') + ' vnđ</p>');
                                         giaSpan.show();
                                     }
                                 }
@@ -120,7 +141,7 @@
                             <span class="discount-percentage" id="so-phan-tram-giam_2_${sanPham.id}"></span>
                             <div class="card-body text-center">
                                 <p class="product-name">${sanPham.ten}</p>
-                                <p class="fw-bold product-price" id="gia-san-pham_2_${sanPham.id}">${sanPham.gia}</p>
+                                <p class="fw-bold product-price" id="gia-san-pham_2_${sanPham.id}"></p>
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>
@@ -154,6 +175,7 @@
                                         giaSpan.after('<p class="fw-bold new-price">' + giaSauGiam.toLocaleString('en-US') + ' vnđ</p>');
                                         giaSpan.after('<p class="fw-bold old-price" style="text-decoration: line-through;">' + giaCu + '</p>');
                                     } else {
+                                        giaSpan.after('<p class="fw-bold new-price">' + giaSanPham.toLocaleString('en-US') + ' vnđ</p>');
                                         giaSpan.show();
                                     }
                                 }

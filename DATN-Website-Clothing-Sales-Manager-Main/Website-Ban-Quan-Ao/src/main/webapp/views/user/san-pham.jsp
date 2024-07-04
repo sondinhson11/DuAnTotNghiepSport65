@@ -29,27 +29,104 @@
             padding: 5px; /* Khoảng cách nội dung từ viền */
             font-weight: bold; /* In đậm */
         }
+
         .link-dark {
             transition: all 0.3s ease;
         }
+
         .link-dark:hover {
             background-color: #f8f9fa; /* Light gray background on hover */
             color: #007bff; /* Blue text color on hover */
             text-decoration: underline; /* Underline on hover */
         }
+
         .rounded {
             border-radius: 0.25rem; /* Rounded corners */
         }
-        @media (max-width: 767.98px) { /* For small screens */
+
+        @media (max-width: 767.98px) {
+            /* For small screens */
             .col-md-auto {
                 text-align: center;
             }
         }
+<<<<<<< Updated upstream
         .product-image {
             width: 15rem; /* Match card size */
             height: 15rem; /* Maintain aspect ratio */
             object-fit: cover; /* Ensure the image covers the card */
             border-radius: 10px 10px 0 0; /* Rounded top corners */
+=======
+
+        /* Product card styling */
+        .product-card {
+            position: relative; /* To position the discount percentage absolutely */
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+            border-radius: 10px;
+            overflow: hidden; /* Ensure the image doesn't overflow the card */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: 100%; /* Đặt chiều cao cố định cho card */
+        }
+
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%; /* Đặt chiều cao cố định cho phần body của card */
+        }
+
+        .product-name, .product-price, .new-price, .old-price {
+            margin: 0; /* Xóa margin mặc định */
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            width: 100%; /* Make the image cover the entire width of the card */
+            height: 100%; /* Make the image cover the entire height of the card */
+            object-fit: cover; /* Ensure the image covers the card without distortion */
+            border-radius: inherit; /* Maintain card's border radius */
+        }
+
+        .product-name {
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .product-price {
+            font-size: 1rem;
+            color: #28a745;
+        }
+
+        .discount-percentage {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff0000;
+            color: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+
+        .old-price {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .new-price {
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+
+        .card-body {
+            text-align: center;
+            padding: 1rem;
+>>>>>>> Stashed changes
         }
     </style>
 
@@ -90,7 +167,11 @@
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
                             <div class="card-body text-center">
                                 <p class="product-name">${sanPham.ten}</p>
+<<<<<<< Updated upstream
                                 <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}">${sanPham.gia}</p>
+=======
+                                <p class="fw-bold product-price" id="gia-san-pham_${sanPham.id}"></p>
+>>>>>>> Stashed changes
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>
@@ -124,6 +205,7 @@
                                         giaSpan.after('<p class="fw-bold new-price">' + giaSauGiam.toLocaleString('en-US') + ' vnđ</p>');
                                         giaSpan.after('<p class="fw-bold old-price" style="text-decoration: line-through;">' + giaCu + '</p>');
                                     } else {
+                                        giaSpan.after('<p class="fw-bold new-price">' + giaSanPham.toLocaleString('en-US') + ' vnđ</p>');
                                         giaSpan.show();
                                     }
                                 }
