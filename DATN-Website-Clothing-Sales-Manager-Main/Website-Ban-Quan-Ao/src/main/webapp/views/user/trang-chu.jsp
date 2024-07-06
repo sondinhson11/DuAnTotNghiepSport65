@@ -63,7 +63,6 @@
     </style>
 
     <div class="container">
-        <h3 class="fw-bold text-lg-start mt-4">Sản phẩm mới nhất</h3>
         <h3 class="fw-bold text-lg-start mt-4" style="margin-bottom: 50px">Sản phẩm mới nhất</h3>
         <div class="row row-cols-2 row-cols-md-4 g-4">
             <c:forEach items="${listTrangChu}" var="sanPham">
