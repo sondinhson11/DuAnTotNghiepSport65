@@ -77,7 +77,7 @@ public class HoaDonController {
         model.addAttribute("listHoaDon", hoaDonService.getAll());
         model.addAttribute("idHoaDon", id);
         model.addAttribute("hoaDon", hoaDon); // Truyền giá trị hoaDon vào model
-        model.addAttribute("listhttt", hinhThucThanhToanService.getById(UUID.fromString("33763e19-b7f1-4948-a506-3bca19ed3a48")));
+        model.addAttribute("listhttt", hinhThucThanhToanService.getAll());
         model.addAttribute("listSanPhamTrongGioHang", listSanPhamTrongGioHang);
         model.addAttribute("view", "/views/admin/hoa-don/danh-sach-hoa-don.jsp");
         return "admin/layout";

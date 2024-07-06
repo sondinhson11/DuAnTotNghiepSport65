@@ -88,6 +88,10 @@
                                 <c:if test="${hoaDon.loaiHoaDon == 2}">
                                     <span class="text-black">Giao Hàng</span>
                                 </c:if>
+
+                                <c:if test="${hoaDon.loaiHoaDon == null}">
+                                    <span class="text-black">Hóa đơn chờ</span>
+                                </c:if>
                             </td>
                             <td>
                                 <c:if test="${hoaDon.trangThai == 0}">
