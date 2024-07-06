@@ -99,8 +99,9 @@
             <div class="px-md-5 px-3 py-2 form-check">
                 <label class="form-check-label text-sm-left fw-bold ">
                 </label>
-                <label class="mt-2">Lưu ý: Với thanh toán bằng VnPay quý khách sẽ thanh toán đơn hàng và phí ship sẽ trả
-                    khi nhận hàng.</label>
+                <label class="mt-2">Lưu ý: Với hình thức thanh toán bằng (chuyển khoản ) VnPay quý khách sẽ thanh toán đơn hàng và phí vận chuyển sẽ trả
+                    khi nhận hàng.</label> <br>
+                <label class="mt-2"> Với hình thức thanh toán bằng (Tiền mặt ) COD - quý khách nhận hàng và thanh toán.</label>
             </div>
 
             <div class="px-md-5 px-3 py-2 form-group mb-5">
