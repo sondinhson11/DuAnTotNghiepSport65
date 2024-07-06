@@ -147,11 +147,13 @@
                                 <div class="form-check">
                                     <c:forEach items="${listKichCo}" var="kichCo">
                                         <input class="btn-check" type="radio" name="idKichCo" id="kichCo${kichCo.id}" value="${kichCo.id}">
-                                        <label class="btn btn-outline-secondary d-inline-block me-2 mb-2" for="kichCo${kichCo.id}">
+                                        <label class="btn btn-outline-secondary d-inline-block me-2 mb-2"  for="kichCo${kichCo.id}">
                                                 ${kichCo.ten}
                                         </label>
                                     </c:forEach>
                                 </div>
+                                <p class="text-danger ms-3 mt-2" id="textKichCo" style="display: none">Bạn cần chọn kích cỡ</p>
+
                             </div>
                     </div>
 
@@ -271,31 +273,28 @@
     </div>
 
 
-<script>
-    // nếu khi ấn nút thêm vào giỏ hàng mà chưa chọn kích cỡ thì yêu cầu chọn kích cỡ
-    $(document).ready(function () {
-        $("#btnThemVaoGioHang").click(function () {
-            var kichCo = $("#kichCoSelect").val();
-            if (kichCo == "Chọn") {
-                $("#textKichCo").show();
-                return false;
-            }
-        });
-    });
-    //    nếu đã chọn kích cỡ thì ẩn thông báo
-    $(document).ready(function () {
-        $("#kichCoSelect").change(function () {
-            $("#textKichCo").hide();
-        });
-    });
+    <script>
+        $(document).ready(function () {
+            // Kiểm tra khi người dùng nhấn nút "Thêm vào giỏ hàng"
+            $("#btnThemVaoGioHang").click(function (e) {
+                // Kiểm tra nếu không có nút radio nào cho kích cỡ được chọn
+                var kichCoChecked = $('input[name="idKichCo"]:checked').length > 0;
 
-    $(document).ready(function () {
-        $("#mauSacSelect").change(function () {
-            $("#mauSacSelect option[value='']").attr("disabled", "disabled");
-        });
-    });
-    
+                if (!kichCoChecked) {
+                    $("#textKichCo").show();
+                    e.preventDefault();
+                }
+            });
 
-</script>
+            // Ẩn thông báo cảnh báo khi kích cỡ được chọn
+            $('input[name="idKichCo"]').change(function () {
+                $("#textKichCo").hide();
+            });
+            
+            $("#mauSacSelect").change(function () {
+                $("#mauSacSelect option[value='']").attr("disabled", "disabled");
+            });
+        });
+    </script>
 
 </div>
