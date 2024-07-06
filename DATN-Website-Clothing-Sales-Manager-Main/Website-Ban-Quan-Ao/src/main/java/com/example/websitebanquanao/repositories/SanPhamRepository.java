@@ -20,6 +20,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamResponse(sp.id,sp.idLoai.id, sp.idThuongHieu.id, sp.idCauLacBo.id, sp.ten, sp.ngay_tao, sp.anh, sp.idLoai.ten,sp.idCauLacBo.ten,sp.idThuongHieu.ten,sp.trang_thai) from SanPham sp ORDER BY sp.ten")
     public List<SanPhamResponse> getAll();
 
+
     @Query("select new com.example.websitebanquanao.infrastructures.responses.KhuyenMaiChiTietResponse(s.id, s.ten, s.idLoai.ten) from SanPham s")
     public List<KhuyenMaiChiTietResponse> getAllKhuyenMai();
 

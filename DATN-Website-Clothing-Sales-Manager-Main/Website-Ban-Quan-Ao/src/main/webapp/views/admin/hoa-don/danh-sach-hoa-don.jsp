@@ -86,7 +86,7 @@
             </c:if>
        </span>
     </div>
-
+    <c:if test="${hoaDon.loaiHoaDon != null}">
     <div class="row mt-2">
         <div>
             <div class="float-start">
@@ -118,7 +118,7 @@
             </div>
         </div>
     </div>
-
+    </c:if>
     <div class="card mt-4">
         <div class="card-header">
             <p class="fw-bold text-uppercase">Thông tin đơn hàng</p>
