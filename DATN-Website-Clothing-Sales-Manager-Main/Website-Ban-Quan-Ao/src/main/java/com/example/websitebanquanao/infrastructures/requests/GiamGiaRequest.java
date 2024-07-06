@@ -35,6 +35,10 @@ public class GiamGiaRequest {
     @Max(value = 100, message = "Số phần trăm giảm phải nhỏ hơn hoặc bằng 100")
     private Integer soPhanTramGiam;
 
+    @NotNull(message = "Số phần trăm giảm không được để trống")
+    @Min(value = 1, message = "Số tiền giảm phải lớn hơn hoặc bằng 1")
+    private Integer soTienToiThieu;
+
     @NotNull(message = "Số lượng không được để trống")
     @Min(value = 1, message = "Số lượng phải lớn hơn hoặc bằng 1")
     @Max(value = 10000, message = "Số lượng phải nhỏ hơn hoặc bằng 10000")

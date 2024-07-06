@@ -178,7 +178,7 @@ CREATE TABLE giam_gia
 
 CREATE TABLE hinh_thuc_thanh_toan
 (
-   id  INT IDENTITY (1, 1) PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY ,
     ten NVARCHAR(50) NOT NULL,
 	ma NVARCHAR(50) NOT NULL,
 	ngay_tao DATE ,
@@ -203,7 +203,7 @@ CREATE TABLE hoa_don
     -- id người duyệt
     id_nhan_vien             UNIQUEIDENTIFIER,
     id_giam_gia              UNIQUEIDENTIFIER,
-    id_hinh_thuc_thanh_toan  INTEGER NULL,
+    id_hinh_thuc_thanh_toan  INT,
     nguoi_nhan               NVARCHAR(100),
     email                    NVARCHAR(50),
     so_dien_thoai            NVARCHAR(15),
@@ -309,53 +309,177 @@ ALTER TABLE hoa_don_chi_tiet
     ADD FOREIGN KEY (id_san_pham_chi_tiet) REFERENCES san_pham_chi_tiet (id)
 
 
------------- INSERT HÌNH THỨC THANH TOÁN -----------------
 
-INSERT INTO hinh_thuc_thanh_toan ( ten, ma, ngay_tao, trang_thai) 
-VALUES ('Tiền mặt', 1, GETDATE(), 1);
-INSERT INTO hinh_thuc_thanh_toan ( ten, ma, ngay_tao, trang_thai) 
-VALUES ('Chuyển khoản', 2, GETDATE(), 1);
+	-- Insert data into loai table
+-- populate_data.sql
 
------------- INSERT MÀU SẮC-----------------
-INSERT INTO mau_sac ( ten,  ngay_tao, trang_thai) 
-VALUES ('Đỏ',  GETDATE(), 1);
-INSERT INTO mau_sac ( ten,  ngay_tao, trang_thai) 
-VALUES ('Tím',  GETDATE(), 1);
-INSERT INTO mau_sac ( ten,  ngay_tao, trang_thai) 
-VALUES ('Đen', GETDATE(), 0);
+-- Insert data into 'loai' table
+INSERT INTO loai (ten, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    (N'Quần áo', '2024-01-01', '2024-01-01', 1),
+    (N'Giày dép', '2024-01-01', '2024-01-01', 1),
+    (N'Phụ kiện', '2024-01-01', '2024-01-01', 1);
 
------------- INSERT KÍCH CỠ -----------------
+-- Insert data into 'thuong_hieu' table
+INSERT INTO thuong_hieu (ten, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    (N'Nike', '2024-01-01', '2024-01-01', 1),
+    (N'Adidas', '2024-01-01', '2024-01-01', 1),
+    (N'Puma', '2024-01-01', '2024-01-01', 1);
 
-INSERT INTO kich_co ( ten,  ngay_tao, trang_thai) 
-VALUES ('L',  GETDATE(), 1);
-INSERT INTO kich_co ( ten,  ngay_tao, trang_thai) 
-VALUES ('XL',  GETDATE(), 1);
-INSERT INTO kich_co ( ten,  ngay_tao, trang_thai) 
-VALUES ('S',  GETDATE(), 1);
+-- Insert data into 'cau_lac_bo' table
+INSERT INTO cau_lac_bo (ten, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    (N'FC Barcelona', '2024-01-01', '2024-01-01', 1),
+    (N'Real Madrid', '2024-01-01', '2024-01-01', 1),
+    (N'Liverpool FC', '2024-01-01', '2024-01-01', 1);
 
------------- INSERT LOẠI-----------------
+-- Insert data into 'san_pham' table
+INSERT INTO san_pham (ten, anh, id_loai, id_thuong_hieu, id_cau_lac_bo, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    (N'Áo Nike FC Barcelona', N'/images/ao_nike_fcb.png', 
+        (SELECT id FROM loai WHERE ten = N'Quần áo'), 
+        (SELECT id FROM thuong_hieu WHERE ten = N'Nike'), 
+        (SELECT id FROM cau_lac_bo WHERE ten = N'FC Barcelona'), 
+        '2024-01-01', '2024-01-01', 1),
+    (N'Giày Adidas Real Madrid', N'/images/giay_adidas_rm.png', 
+        (SELECT id FROM loai WHERE ten = N'Giày dép'), 
+        (SELECT id FROM thuong_hieu WHERE ten = N'Adidas'), 
+        (SELECT id FROM cau_lac_bo WHERE ten = N'Real Madrid'), 
+        '2024-01-01', '2024-01-01', 1),
+    (N'Khăn Puma Liverpool', N'/images/khan_puma_lfc.png', 
+        (SELECT id FROM loai WHERE ten = N'Phụ kiện'), 
+        (SELECT id FROM thuong_hieu WHERE ten = N'Puma'), 
+        (SELECT id FROM cau_lac_bo WHERE ten = N'Liverpool FC'), 
+        '2024-01-01', '2024-01-01', 1);
 
-INSERT INTO loai ( ten,  ngay_tao, trang_thai) 
-VALUES ('Euro 2024',  GETDATE(), 1);
-INSERT INTO loai ( ten,  ngay_tao, trang_thai) 
-VALUES ('WC',  GETDATE(), 1);
-INSERT INTO loai ( ten,  ngay_tao, trang_thai) 
-VALUES ('FA',  GETDATE(), 1);
+-- Insert data into 'mau_sac' table
+INSERT INTO mau_sac (ten, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    (N'Đỏ', '2024-01-01', '2024-01-01', 1),
+    (N'Xanh', '2024-01-01', '2024-01-01', 1),
+    (N'Vàng', '2024-01-01', '2024-01-01', 1);
 
------------- INSERT CÂU LẠC BỘ-----------------
+-- Insert data into 'kich_co' table
+INSERT INTO kich_co (ten, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    (N'S', '2024-01-01', '2024-01-01', 1),
+    (N'M', '2024-01-01', '2024-01-01', 1),
+    (N'L', '2024-01-01', '2024-01-01', 1);
 
-INSERT INTO cau_lac_bo ( ten,  ngay_tao, trang_thai) 
-VALUES ('Đức', GETDATE(), 1);
-INSERT INTO cau_lac_bo ( ten,  ngay_tao, trang_thai) 
-VALUES ('Anh', GETDATE(), 1);
-INSERT INTO cau_lac_bo ( ten,  ngay_tao, trang_thai) 
-VALUES ('Bỉ',  GETDATE(), 1);
+-- Insert data into 'san_pham_chi_tiet' table
+INSERT INTO san_pham_chi_tiet (ma_san_pham, id_san_pham, id_kich_co, id_mau_sac, so_luong, mo_ta, gia, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    ('SP001', 
+        (SELECT id FROM san_pham WHERE ten = N'Áo Nike FC Barcelona'), 
+        (SELECT id FROM kich_co WHERE ten = N'S'), 
+        (SELECT id FROM mau_sac WHERE ten = N'Đỏ'), 
+        100, N'Mẫu áo mới nhất của Barcelona', 500000, '2024-01-01', '2024-01-01', 1),
+    ('SP002', 
+        (SELECT id FROM san_pham WHERE ten = N'Giày Adidas Real Madrid'), 
+        (SELECT id FROM kich_co WHERE ten = N'M'), 
+        (SELECT id FROM mau_sac WHERE ten = N'Xanh'), 
+        50, N'Giày mới của Real Madrid', 1200000, '2024-01-01', '2024-01-01', 1),
+    ('SP003', 
+        (SELECT id FROM san_pham WHERE ten = N'Khăn Puma Liverpool'), 
+        (SELECT id FROM kich_co WHERE ten = N'L'), 
+        (SELECT id FROM mau_sac WHERE ten = N'Vàng'), 
+        200, N'Khăn Puma cho Liverpool', 300000, '2024-01-01', '2024-01-01', 1);
 
------------- INSERT THƯƠNG HIỆU-----------------
+-- Insert data into 'anh_san_pham' table
+INSERT INTO anh_san_pham (id_san_pham, duong_dan, trang_thai)
+VALUES 
+    ((SELECT id FROM san_pham WHERE ten = N'Áo Nike FC Barcelona'), N'/images/ao_nike_fcb_1.png', 1),
+    ((SELECT id FROM san_pham WHERE ten = N'Giày Adidas Real Madrid'), N'/images/giay_adidas_rm_1.png', 1),
+    ((SELECT id FROM san_pham WHERE ten = N'Khăn Puma Liverpool'), N'/images/khan_puma_lfc_1.png', 1);
 
-INSERT INTO thuong_hieu ( ten, ngay_tao, trang_thai) 
-VALUES ('Adidas',  GETDATE(), 1);
-INSERT INTO thuong_hieu ( ten, ngay_tao, trang_thai) 
-VALUES ('Sport65',  GETDATE(), 1);
-INSERT INTO thuong_hieu ( ten,  ngay_tao, trang_thai) 
-VALUES ('Pepsi',  GETDATE(), 1);
+-- Insert data into 'khach_hang' table
+INSERT INTO khach_hang (ho_va_ten, email, so_dien_thoai, mat_khau,dia_chi,xa_phuong,quan_huyen,tinh_thanh_pho,ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    (N'Nguyễn Văn A', N'nguyenvana@example.com', N'0123456789', N'password123',N'123 Đường A', N'Phường X', N'Quận Y', N'TP. Z', '2024-01-01', '2024-01-01', 1),
+    (N'Trần Thị B', N'tranthib@example.com', N'0987654321', N'password456',N'456 Đường B', N'Phường W', N'Quận V', N'TP. U', '2024-01-01', '2024-01-01', 1),
+    (N'Lê C D', N'lecd@example.com', N'1122334455', N'password789',N'789 Đường C', N'Phường Q', N'Quận R', N'TP. S', '2024-01-01', '2024-01-01', 1);
+
+-- Insert data into 'nhan_vien' table
+INSERT INTO nhan_vien (ma, ho_va_ten, email, so_dien_thoai, mat_khau, dia_chi, xa_phuong, quan_huyen, tinh_thanh_pho, ngay_vao_lam, chuc_vu, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    ('NV001', N'Văn Đình Sơn', N'sondinhson11@gmail.com', N'0123456780', N'As121202', N'789 Đường D', N'Phường P', N'Quận O', N'TP. N', '2024-01-01', 0, '2024-01-01', '2024-01-01', 1),
+    ('NV002', N'Trần Thị F', N'tranthif@example.com', N'0987654320', N'password456', N'123 Đường E', N'Phường Z', N'Quận Y', N'TP. X', '2024-01-01', 1, '2024-01-01', '2024-01-01', 1),
+    ('NV003', N'Lê G H', N'legh@example.com', N'1122334466', N'password789', N'456 Đường F', N'Phường W', N'Quận V', N'TP. U', '2024-01-01', 1, '2024-01-01', '2024-01-01', 1);
+
+-- Insert datat into 'gio_hang' table
+INSERT INTO gio_hang(id_khach_hang,id_nhan_vien)
+VALUES((SELECT id FROM khach_hang WHERE email = 'sondinhson11@gmail.com'),(SELECT id FROM nhan_vien WHERE ma = 'NV001')),
+	  ((SELECT id FROM khach_hang WHERE email = 'legh@example.com'),(SELECT id FROM nhan_vien WHERE ma = 'NV002'));
+
+-- Insert data into 'gio_hang_chi_tiet' table
+INSERT INTO gio_hang_chi_tiet (id_gio_hang, id_san_pham_chi_tiet, gia, so_luong, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    ((SELECT id FROM gio_hang WHERE id_khach_hang = (SELECT id FROM khach_hang WHERE email = 'sondinhson11@gmail.com')), 
+        (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP001'), 
+        500000, 2, '2024-01-01', '2024-01-01',1),
+    ((SELECT id FROM gio_hang WHERE id_khach_hang = (SELECT id FROM khach_hang WHERE email = 'sondinhson11@gmail.com')), 
+        (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP002'), 
+        1200000, 1, '2024-01-01', '2024-01-01',1);
+
+-- Insert data into 'khuyen_mai' table
+INSERT INTO khuyen_mai (ma, ten, so_phan_tram_giam, ngay_bat_dau, ngay_ket_thuc, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    ('KM001', N'Giảm giá 10%', 10, '2024-01-01', '2024-02-01', '2024-01-01', '2024-01-01', 1),
+    ('KM002', N'Giảm giá 20%', 20, '2024-02-01', '2024-03-01', '2024-01-01', '2024-01-01', 1);
+
+-- Insert data into 'khuyen_mai_chi_tiet' table
+INSERT INTO khuyen_mai_chi_tiet (id_khuyen_mai, id_san_pham_chi_tiet, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    ((SELECT id FROM khuyen_mai WHERE ma = 'KM001'), 
+        (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP001'), 
+        '2024-01-01', '2024-01-01', 1),
+    ((SELECT id FROM khuyen_mai WHERE ma = 'KM002'), 
+        (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP002'), 
+        '2024-01-01', '2024-01-01', 1);
+
+-- Insert data into 'giam_gia' table
+INSERT INTO giam_gia (ma, so_phan_tram_giam, so_luong, ngay_bat_dau, ngay_ket_thuc, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    ('GG001', 15, 100, '2024-01-01', '2024-02-01', '2024-01-01', '2024-01-01', 1),
+    ('GG002', 25, 200, '2024-02-01', '2024-03-01', '2024-01-01', '2024-01-01', 1);
+
+-- Insert data into 'hinh_thuc_thanh_toan' table
+INSERT INTO hinh_thuc_thanh_toan (ten, ma, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    (N'Tiền mặt', '1', '2024-01-01', '2024-01-01', 1),
+    (N'Chuyển khoản', '2', '2024-01-01', '2024-01-01', 1);
+
+-- Insert data into 'hoa_don' table
+INSERT INTO hoa_don (ma, ngay_thanh_toan, ngay_van_chuyen, ngay_nhan, id_khach_hang, id_nhan_vien, id_giam_gia, id_hinh_thuc_thanh_toan, nguoi_nhan, email, so_dien_thoai, dia_chi, xa_phuong, quan_huyen, tinh_thanh_pho, trang_thai, loai_hoa_don, ma_van_chuyen, ten_don_vi_van_chuyen, phi_van_chuyen, anh_hoa_don_chuyen_khoan, ghi_chu, ngay_tao, ngay_sua)
+VALUES 
+    ('HD001', '2024-01-02', '2024-01-03', '2024-01-04', 
+        (SELECT id FROM khach_hang WHERE email = 'nguyenvana@example.com'), 
+        (SELECT id FROM nhan_vien WHERE ma = 'NV001'), 
+        (SELECT id FROM giam_gia WHERE ma = 'GG001'), 
+        (SELECT id FROM hinh_thuc_thanh_toan WHERE ma = 'TTBT'), 
+        N'Nguyễn Văn A', 'nguyenvana@example.com', '0123456789', 
+        N'123 Đường A', N'Phường X', N'Quận Y', N'TP. Z', 1, 1, 'VC001', N'Viettel', 30000, 
+        N'/images/hoa_don_001.png', N'Ghi chú 1', '2024-01-01', '2024-01-01'),
+    ('HD002', '2024-02-02', '2024-02-03', '2024-02-04', 
+        (SELECT id FROM khach_hang WHERE email = 'tranthib@example.com'), 
+        (SELECT id FROM nhan_vien WHERE ma = 'NV002'), 
+        (SELECT id FROM giam_gia WHERE ma = 'GG002'), 
+        (SELECT id FROM hinh_thuc_thanh_toan WHERE ma = 'TTKNH'), 
+        N'Trần Thị B', 'tranthib@example.com', '0987654321', 
+        N'456 Đường B', N'Phường W', N'Quận V', N'TP. U', 1, 1, 'VC002', N'Giao Hàng Nhanh', 50000, 
+        N'/images/hoa_don_002.png', N'Ghi chú 2', '2024-02-01', '2024-02-01');
+
+-- Insert data into 'hoa_don_chi_tiet' table
+INSERT INTO hoa_don_chi_tiet (id_hoa_don, id_san_pham_chi_tiet, id_khuyen_mai, gia, so_luong, ngay_tao, ngay_sua, trang_thai)
+VALUES 
+    ((SELECT id FROM hoa_don WHERE ma = 'HD001'), 
+        (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP001'), 
+        (SELECT id FROM khuyen_mai WHERE ma = 'KM001'), 
+        450000, 2, '2024-01-01', '2024-01-01', 1),
+    ((SELECT id FROM hoa_don WHERE ma = 'HD002'), 
+        (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP002'), 
+        (SELECT id FROM khuyen_mai WHERE ma = 'KM002'), 
+        1000000, 1, '2024-02-01', '2024-02-01', 1);
+
+

@@ -26,6 +26,9 @@ public class GiamGia {
     @Column(name = "so_phan_tram_giam")
     private Integer soPhanTramGiam;
 
+    @Column(name = "so_phan_tien_giam_toi_thieu")
+    private Integer soTienToiThieu;
+
     @Column(name = "so_luong")
     private Integer soLuong;
 

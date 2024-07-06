@@ -20,6 +20,7 @@ public class GiamGiaResponse {
     private UUID id;
     private String ma;
     private Integer soPhanTramGiam;
+    private Integer soTienToiThieu;
     private Integer soLuong;
     private LocalDate ngayBatDau;
     private LocalDate ngayKetThuc;

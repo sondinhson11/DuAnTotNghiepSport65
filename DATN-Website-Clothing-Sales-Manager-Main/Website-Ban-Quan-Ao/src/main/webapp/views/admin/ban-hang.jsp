@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html lang="en">
 <style>
     #searchResults {
@@ -439,8 +439,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-12">
-                        <textarea class="form-control" id="dia-chi" name="diaChi" rows="3"
-              placeholder="Địa chỉ chi tiết"></textarea>
+                        <textarea class="form-control" id="dia-chi" name="diaChi" rows="3" placeholder="Địa chỉ chi tiết"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -530,9 +529,14 @@
 
                             <select class="form-select" id="giam-gia" name="httt" aria-label="Default select example">
                                 <option value= "null">Không Sử Dụng</option>
-
                                 <c:forEach items="${listGG}" var="lshgg">
-                                    <option value=${lshgg.soPhanTramGiam} >${lshgg.soPhanTramGiam}</option>
+                                    <fmt:parseNumber var="tongTienSo" value="${tongTien}" />
+                                    <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}" />
+                                    <c:out value="${tongTienSo}" />
+                                    <c:out value="${lshgg.soTienToiThieu}" />
+                                    <c:if test="${tongTienSo >= soTienToiThieu}" >
+                                        <option value="${lshgg.soPhanTramGiam}" >${lshgg.soPhanTramGiam}%</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
 
@@ -1273,6 +1277,7 @@
                 var giamGia = parseFloat(selectElementGiamGia.val());
                 var tongTien = parseFloat(tongTienInput.val());
                 if (isNaN(giamGia)) {
+                    tienThanhToan.text(tongTien.toLocaleString('en-US'))
                     tienGiam.text(0);
                 } else {
                     var tienGiamne = tongTien * (giamGia/100)

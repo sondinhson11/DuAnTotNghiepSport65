@@ -35,6 +35,7 @@ public class GiamGiaService {
             GiamGia giamGia = new GiamGia();
             giamGia.setMa(giamGiaRequest.getMa());
             giamGia.setSoPhanTramGiam(giamGiaRequest.getSoPhanTramGiam());
+            giamGia.setSoTienToiThieu(giamGiaRequest.getSoTienToiThieu());
             giamGia.setSoLuong(giamGiaRequest.getSoLuong());
             giamGia.setNgayBatDau(giamGiaRequest.getNgayBatDau());
             giamGia.setNgayKetThuc(giamGiaRequest.getNgayKetThuc());
@@ -66,6 +67,7 @@ public class GiamGiaService {
             // Cập nhật thông tin giảm giá
             giamGia.setMa(giamGiaRequest.getMa());
             giamGia.setSoPhanTramGiam(giamGiaRequest.getSoPhanTramGiam());
+            giamGia.setSoTienToiThieu(giamGiaRequest.getSoTienToiThieu());
             giamGia.setSoLuong(giamGiaRequest.getSoLuong());
             giamGia.setNgayBatDau(giamGiaRequest.getNgayBatDau());
             giamGia.setNgayKetThuc(giamGiaRequest.getNgayKetThuc());
