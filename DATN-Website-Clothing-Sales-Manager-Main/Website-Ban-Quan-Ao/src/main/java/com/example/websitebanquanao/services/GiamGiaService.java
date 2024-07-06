@@ -3,6 +3,7 @@ package com.example.websitebanquanao.services;
 import com.example.websitebanquanao.entities.GiamGia;
 import com.example.websitebanquanao.infrastructures.requests.GiamGiaRequest;
 import com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse;
+import com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse;
 import com.example.websitebanquanao.repositories.GiamGiaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -122,6 +124,11 @@ public class GiamGiaService {
             return null;
         }
     }
+
+    public List<GiamGiaResponse> getAll() {
+        return giamGiaRepository.getALL();
+    }
+
 
     @Transactional
     public void updateSoLuongByMa(String ma, int soLuong) {

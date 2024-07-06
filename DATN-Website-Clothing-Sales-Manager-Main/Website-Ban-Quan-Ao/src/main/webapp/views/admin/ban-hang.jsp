@@ -511,7 +511,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Tổng tiền</label>
+                            <label class="form-label">Tổng Tiền</label>
                             <input type="text" class="float-end" id="tong-tien" name="tong-tien" value="${tongTien}"
                                    readonly>
                         </div>
@@ -521,10 +521,20 @@
                             <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
                                 <!-- Vòng lặp để tạo các tùy chọn từ danh sách `listHTTT` -->
                                 <c:forEach items="${listHTTT}" var="lshttt">
-                                    <option value=${lshttt.ma}>${lshttt.ten}</option>
+                                    <option value=${lshttt.id}>${lshttt.ten}</option>
                                 </c:forEach>
                             </select>
+                        </div>
+                        <div class="mb-3" id="giam-gia-div">
+                            <label class="form-label">Giảm Giá</label>
 
+                            <select class="form-select" id="giam-gia" name="httt" aria-label="Default select example">
+                                <option value= "null">Không Sử Dụng</option>
+
+                                <c:forEach items="${listGG}" var="lshgg">
+                                    <option value=${lshgg.soPhanTramGiam} >${lshgg.soPhanTramGiam}</option>
+                                </c:forEach>
+                            </select>
 
                         </div>
                         <div class="mb-3" id="tien-khach-dua-div">
@@ -535,7 +545,11 @@
                         </div>
                         <div class="mb-3" id="tien-thua-div">
                             <label class="form-label">Tiền Thừa</label>
-                            <label class="form-label float-end" id="tien-thua">0</label>
+                            <label class="form-label float-end" id="tien-thua">0</label><br>
+                            <label class="form-label">Tiền Giảm</label>
+                            <label class="form-label float-end" id="tien-giam">0</label><br>
+                            <label class="form-label">Tiền Cần Thanh Toán</label>
+                            <label class="form-label float-end" id="tien-thanh-toan" name="tien-thanh-toan">0</label>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Ghi chú</label>
@@ -860,6 +874,7 @@
     var tienThua = document.getElementById('tien-thua-div');
     var phiVanChuyen = document.getElementById('phi-van-chuyen-div');
     var hinhThucThanhToan = document.getElementById('hinh-thuc-thanh-toan-div');
+    var giamGia = document.getElementById('giam-gia-div');
     var hoVaTen = document.getElementById('hoVaTen');
     toggleSwitch.addEventListener('change', function () {
         if (this.checked) {
@@ -869,6 +884,7 @@
             // đổi action
             tienKhachDua.style.display = 'none';
             hinhThucThanhToan.style.display = 'none';
+            giamGia.style.display = 'none';
             tienThua.style.display = 'none';
             thongTinThanhToanForm.action = '/admin/ban-hang/tao-don-hang/${idHoaDon}';
 
@@ -880,6 +896,7 @@
             tienThua.style.display = 'block';
             phiVanChuyen.style.display = 'none';
             hinhThucThanhToan.style.display = 'block';
+            giamGia.style.display = 'block';
             // đổi action
             thongTinThanhToanForm.action = '/admin/ban-hang/thanh-toan/${idHoaDon}';
 
@@ -1166,15 +1183,30 @@
 
         // tính tiền
         $(document).ready(function () {
-            var selectElement = $("#hinh-thuc-thanh-toan");
-            var tienKhachDuaInput = $("#tien-khach-dua");
             var tongTienInput = $("#tong-tien"); // Lấy ô input của tổng tiền
+            var tienThanhToan = $("#tien-thanh-toan");
+            tienThanhToan.text(tongTienInput.val().toLocaleString('en-US'))
+            var selectElement = $("#hinh-thuc-thanh-toan");
+            var selectElementGiamGia = $("#giam-gia");
+            var tienKhachDuaInput = $("#tien-khach-dua");
+            var tienGiam = $("#tien-giam");
             var tienThuaLabel = $("#tien-thua");
-
 
             // Sự kiện change cho hình thức thanh toán
             selectElement.on("change", function () {
-                updateTienKhachDua(); // Cập nhật tiền khách đưa khi thay đổi hình thức thanh toán
+
+                    var tongTienInput = document.getElementById('tien-thanh-toan');
+                    var tongTienValue =  parseFloat(tongTienInput.textContent.replace(/,/g, ''));
+
+                    console.log(tongTienInput.textContent)
+                    // Gán giá trị vào input có id="total"
+                    var totalInput = document.getElementById('total');
+                    totalInput.value = tongTienValue;
+
+            });
+            // Sự kiện change cho giảm giá
+            selectElementGiamGia.on("change", function () {
+                updateTienGiam(); // Cập nhật tiền khách đưa khi thay đổi hình thức thanh toán
             });
 
             // Sự kiện blur cho tiền khách đưa
@@ -1220,6 +1252,7 @@
                 // Định dạng lại tổng tiền và hiển thị trên giao diện
                 let formattedTongTien = tongTien.toLocaleString('en-US');
                 tongTienInput.val(formattedTongTien);
+                tienThanhToan.text(formattedTongTien)
 
                 // Gán giá trị phiVanChuyen cho trường phiVanChuyen ẩn để submit lên server
                 feeInput.val(phiVanChuyen);
@@ -1227,7 +1260,7 @@
 
             function updateTienKhachDua() {
                 var hinhThucThanhToan = selectElement.val();
-                var tongTien = parseFloat(tongTienInput.val());
+                var tongTien = parseFloat(tienThanhToan.text());
 
                 if (hinhThucThanhToan === "2" || hinhThucThanhToan === "3") {
                     tienKhachDuaInput.val(tongTien.toLocaleString('en-US'));
@@ -1236,10 +1269,21 @@
                 }
             }
 
+            function updateTienGiam() {
+                var giamGia = parseFloat(selectElementGiamGia.val());
+                var tongTien = parseFloat(tongTienInput.val());
+                if (isNaN(giamGia)) {
+                    tienGiam.text(0);
+                } else {
+                    var tienGiamne = tongTien * (giamGia/100)
+                    tienGiam.text(tienGiamne.toLocaleString('en-US'));
+                    tienThanhToan.text((tongTien-tienGiamne).toLocaleString('en-US'))
+                }
+            }
+
             function updateTienThua() {
                 var tienKhachDua = parseFloat(tienKhachDuaInput.val().replace(/[^\d]/g, '')) || 0;
-                var tongTien = parseFloat(tongTienInput.val());
-
+                var tongTien = parseFloat(tienThanhToan.text().replace(/[^\d]/g, ''));
                 if (tienKhachDua >= tongTien) {
                     var tienThua = tienKhachDua - tongTien;
                     tienThuaLabel.text(tienThua.toLocaleString('en-US'));
@@ -1322,13 +1366,6 @@
             });
         });
 
-        // Lấy giá trị từ input có id="tong-tien"
-        var tongTienInput = document.getElementById('tong-tien');
-        var tongTienValue = tongTienInput.value;
-
-        // Gán giá trị vào input có id="total"
-        var totalInput = document.getElementById('total');
-        totalInput.value = tongTienValue;
     });
     // send email
     function sendEmail() {
