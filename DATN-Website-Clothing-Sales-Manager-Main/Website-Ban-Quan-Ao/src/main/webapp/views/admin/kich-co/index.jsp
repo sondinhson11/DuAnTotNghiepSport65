@@ -14,7 +14,6 @@
                 <tr>
                     <th>STT</th>
                     <th>Kích Cỡ</th>
-                    <th>Ngày Tạo</th>
                     <th>Trạng Thái</th>
                     <th>Thao Tác</th>
                 </tr>
@@ -24,7 +23,6 @@
                     <tr>
                         <td>${index.index + kichCoPage.number * kichCoPage.size + 1}</td>
                         <td>${kc.ten}</td>
-                        <td>${kc.ngay_tao}</td>
                         <td>
                             <c:if test="${kc.trang_thai == 1}">
                                 <span class="badge bg-success">Còn hàng</span>

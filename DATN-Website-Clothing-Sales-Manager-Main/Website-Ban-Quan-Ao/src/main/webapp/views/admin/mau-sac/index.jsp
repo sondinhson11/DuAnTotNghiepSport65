@@ -13,7 +13,6 @@
                 <tr>
                     <th>STT</th>
                     <th>Tên Màu</th>
-                    <th>Ngày Tạo</th>
                     <th>Trạng  Thái</th>
                     <th>Thao Tác</th>
                 </tr>
@@ -23,7 +22,6 @@
                     <tr>
                         <td>${index.index + mauSacPage.number * mauSacPage.size + 1}</td>
                         <td>${ms.ten}</td>
-                        <td>${ms.ngay_tao}</td>
                         <td>
                             <c:if test="${ms.trang_thai == 1}">
                                 <span class="badge bg-success">Còn hàng</span>

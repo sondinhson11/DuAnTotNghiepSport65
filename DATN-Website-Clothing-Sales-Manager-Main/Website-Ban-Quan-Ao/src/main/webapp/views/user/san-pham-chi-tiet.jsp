@@ -4,10 +4,9 @@
 
 <style>
     .carousel-item img {
-        max-height: 300px; /* Điều chỉnh kích thước tối đa của ảnh */
-        width: auto; /* Để ảnh tự động điều chỉnh chiều rộng */
+        max-height: 300px;
+        width: auto;
     }
-
 
 </style>
 
@@ -114,47 +113,49 @@
             <hr/>
             <form:form modelAttribute="gioHang" action="/gio-hang/${sanPham.id}" method="post">
                 <div class="mt-3 row">
-                    <div class="col-3">
+                    <div class="col">
                         <div class="title">
                             <p>Màu sắc:</p>
                         </div>
-                        <form:select path="idMauSac" class="form-select w-75" aria-label="Color Select"
-                                     id="mauSacSelect">
+                        <div id="mauSacSelect">
                             <c:forEach items="${listMauSac}" var="mauSac">
-                                <option value="${mauSac.id}" ${mauSac.id == idMauSac ? "selected" : ""}>${mauSac.ten}</option>
+                                <input class="btn-check" type="radio" id="mauSac${mauSac.id}" name="idMauSac" value="${mauSac.id}" ${mauSac.id == idMauSac ? "checked" : ""}>
+                                <label class="btn btn-outline-secondary d-inline-block me-2 mb-2" for="mauSac${mauSac.id}">
+                                        ${mauSac.ten}
+                                </label>
                             </c:forEach>
-                        </form:select>
+                        </div>
+
 
                         <script>
-                            // Lấy thẻ select
-                            var selectElement = document.getElementById("mauSacSelect");
-
-                            // Thêm sự kiện onchange để theo dõi khi người dùng thay đổi giá trị
-                            selectElement.addEventListener("change", function () {
-                                // Lấy giá trị value của select
-                                var selectedValue = selectElement.value;
-
-                                // Cập nhật đường link với giá trị mới
-                                var newURL = "http://localhost:8080/san-pham/${sanPham.id}/" + selectedValue;
-
-                                // Tải lại trang với đường link mới
-                                window.location.href = newURL;
+                            const checkboxes = document.querySelectorAll('input[name="idMauSac"]');
+                            checkboxes.forEach((checkbox) => {
+                                checkbox.addEventListener('change', function () {
+                                    const selectedValues = [...document.querySelectorAll('input[name="idMauSac"]:checked')].map(cb => cb.value);
+                                    const newURL = "http://localhost:8080/san-pham/${sanPham.id}/" + selectedValues.join("/");
+                                    window.location.href = newURL;
+                                });
                             });
                         </script>
                     </div>
 
-                    <div class="col-3">
+                    <div class="col"  >
                         <div class="title">
                             <p>Kích cỡ:</p>
                         </div>
-                        <form:select path="idKichCo" class="form-select w-75" aria-label="Size Select"
-                                     id="kichCoSelect">
-                            <option selected>Chọn</option>
-                            <c:forEach items="${listKichCo}" var="kichCo">
-                                <option value="${kichCo.id}">${kichCo.ten}</option>
-                            </c:forEach>
-                        </form:select>
+                            <div class="col">
+                                <div class="form-check">
+                                    <c:forEach items="${listKichCo}" var="kichCo">
+                                        <input class="btn-check" type="radio" name="idKichCo" id="kichCo${kichCo.id}" value="${kichCo.id}">
+                                        <label class="btn btn-outline-secondary d-inline-block me-2 mb-2" for="kichCo${kichCo.id}">
+                                                ${kichCo.ten}
+                                        </label>
+                                    </c:forEach>
+                                </div>
+                            </div>
                     </div>
+
+
                     <div class="col-4">
                         <div class="quantity">
                             <div class="title">
@@ -269,7 +270,7 @@
 
     </div>
 
-</div>
+
 <script>
     // nếu khi ấn nút thêm vào giỏ hàng mà chưa chọn kích cỡ thì yêu cầu chọn kích cỡ
     $(document).ready(function () {
@@ -287,13 +288,14 @@
             $("#textKichCo").hide();
         });
     });
-    // không cho phép click vào option "chọn" ở màu sắc. disable option "chọn" ở màu sắc, không được phép chọn
+
     $(document).ready(function () {
         $("#mauSacSelect").change(function () {
             $("#mauSacSelect option[value='']").attr("disabled", "disabled");
         });
     });
-
+    
 
 </script>
 
+</div>
