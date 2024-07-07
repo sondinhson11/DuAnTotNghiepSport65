@@ -442,10 +442,11 @@ VALUES
         '2024-01-01', '2024-01-01', 1);
 
 -- Insert data into 'giam_gia' table
-INSERT INTO giam_gia (ma, so_phan_tram_giam, so_luong, ngay_bat_dau, ngay_ket_thuc, ngay_tao, ngay_sua, trang_thai)
+INSERT INTO giam_gia (ma, so_phan_tram_giam, so_luong,so_phan_tien_giam_toi_thieu, ngay_bat_dau, ngay_ket_thuc, ngay_tao, ngay_sua, trang_thai)
 VALUES 
-    ('GG001', 15, 100, '2024-01-01', '2024-02-01', '2024-01-01', '2024-01-01', 1),
-    ('GG002', 25, 200, '2024-02-01', '2024-03-01', '2024-01-01', '2024-01-01', 1);
+    ('GG001', 0, 100000, 0, '2024-01-01', '2999-02-01', '2024-01-01', '2024-01-01', 1),
+    ('GG002', 15, 100, 0, '2024-01-01', '2024-02-01', '2024-01-01', '2024-01-01', 1),
+    ('GG003', 25, 200, 0, '2024-02-01', '2024-03-01', '2024-01-01', '2024-01-01', 1);
 
 -- Insert data into 'hinh_thuc_thanh_toan' table
 INSERT INTO hinh_thuc_thanh_toan (ten, ma, ngay_tao, ngay_sua, trang_thai)

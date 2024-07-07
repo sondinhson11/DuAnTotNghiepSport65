@@ -5,15 +5,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
 <html lang="en">
 <style>
-    .font {
-        font-family: "Exo 2", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal;
-    }
 
 
     #searchResults {
@@ -215,37 +209,37 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 
 <body>
 
 <c:if test="${not empty sessionScope.successMessage}">
-    <div class="alert alert-success" role="alert">
-            ${sessionScope.successMessage}
-    </div>
     <script>
-        setTimeout(function () {
-            $('.alert').alert('close');
-        }, 3000);
+        Swal.fire({
+            title: "Thành Công!",
+            text: "${sessionScope.successMessage}",
+            icon: "success"
+        });
     </script>
     <% session.removeAttribute("successMessage"); %>
 </c:if>
 <c:if test="${not empty sessionScope.errorMessage}">
-    <div class="alert alert-danger" role="alert">
-            ${sessionScope.errorMessage}
-    </div>
-    <% session.removeAttribute("errorMessage"); %>
     <script>
-        setTimeout(function () {
-            $('.alert').alert('close');
-        }, 3000);
+        Swal.fire({
+            title: "Thất Bại!",
+            text: "${sessionScope.errorMessage}",
+            icon: "error"
+        });
+        <% session.removeAttribute("errorMessage"); %>
     </script>
 </c:if>
 
 <div class="card border rounded">
     <div class="card-header">
-        <div class="row mb-1 font"> <!-- Thêm class mb-1 để giảm khoảng cách -->
+        <div class="row mb-1"> <!-- Thêm class mb-1 để giảm khoảng cách -->
             <div class="col">
                 <p class="fw-bold fs-4 text-dark">Bán Hàng Tại Quầy</p>
             </div>
@@ -256,12 +250,12 @@
                 </form>
             </div>
         </div>
-        <div class="row mt-1 font"> <!-- Thêm class mt-1 để giảm khoảng cách -->
+        <div class="row mt-1"> <!-- Thêm class mt-1 để giảm khoảng cách -->
             <div class="col text-center">
                 <p class="fw-bold">Đơn Hàng: ${hoaDon.ma}</p>
             </div>
         </div>
-        <div class=" row justify-content-center font">
+        <div class=" row justify-content-center">
             <c:forEach items="${listHoaDon}" var="hoaDon" varStatus="index">
                 <div class="d-grid gap-2 col-1">
                     <a href="/admin/ban-hang/view-hoa-don/${hoaDon.id}" class="btn btn-primary">
@@ -274,7 +268,7 @@
 
     <div class="card-body ">
         <!-- Giỏ hàng -->
-        <div class="row border mt-2 gap-3 font">
+        <div class="row border mt-2 gap-3">
             <div class="col-9 border custom-border ">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <p class="fw-bold mb-0">Giỏ Hàng</p>
@@ -413,7 +407,7 @@
         <form method="post" action="/admin/ban-hang/thanh-toan/${idHoaDon}" id="thong-tin-thanh-toanForm"
               enctype="multipart/form-data">
             <input type="hidden" name="idKhachHang" id="id-khach-hang">
-            <div class="row border mt-3 font">
+            <div class="row border mt-3">
                 <div class="row mb-3">
                     <div class="col">
                         <p class="fw-bold fs-4 text-dark">Thông tin thanh toán</p>
@@ -450,19 +444,19 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col">
+                            <div class="col"  style="display: none" id="tinh-div">
                                 <select id="provinceSelect" class="form-select">
                                     <option value="" disabled selected>Chọn tỉnh/thành phố</option>
                                 </select>
                                 <input type="hidden" id="provinceName" name="tinhThanh">
                             </div>
-                            <div class="col">
+                            <div class="col" style="display: none" id="huyen-div">
                                 <select id="districtSelect" class="form-select">
                                     <option value="" disabled selected>Chọn quận/huyện</option>
                                 </select>
                                 <input type="hidden" id="districtName" name="quanHuyen">
                             </div>
-                            <div class="col">
+                            <div class="col" style="display: none" id="xa-div">
                                 <select id="wardSelect" class="form-select">
                                     <option value="" disabled selected>Chọn phường/xã</option>
                                 </select>
@@ -470,16 +464,16 @@
                             </div>
 
                         </div>
-                        <div class="row mb-3">
-                            <div class="col">
+                        <div class="row mb-3" >
+                            <div class="col" style="display: none" id="ma-van-chuyen-div">
                                 <input type="text" class="form-control" id="ma-van-chuyen" name="maVanChuyen"
                                        placeholder="Mã vận chuyển">
                             </div>
-                            <div class="col">
+                            <div class="col" style="display: none" id="ten-don-vi-div">
                                 <input type="text" id="ten-don-vi" name="tenDonViVanChuyen"
                                        placeholder="Tên đơn vị vận chuyển">
                             </div>
-                            <div class="col">
+                            <div class="col" style="display: none" id="dia-chi-chi-tiet-div">
                                 <input type="text" class="form-control" id="dia-chi" name="diaChi" rows="3"
                                        placeholder="Địa chỉ chi tiết">
                             </div>
@@ -541,23 +535,23 @@
 
                     <div class="col-6" id="thong-tin-thanh-toan">
                         <div class="row mb-3">
-                            <div class="col">
+                            <div class="col"  id="giam-gia-div">
                                 <div class="mb-3">
                                     <label class="form-label">Giảm Giá</label>
                                     <select class="form-select" id="giam-gia" name="giamGia" aria-label="Default select example">
-                                        <option value="null">Không Sử Dụng</option>
                                         <!-- Các option được tạo từ danh sách listGG -->
+<%--                                        <option value="none" >Không sử dụng</option>--%>
                                         <c:forEach items="${listGG}" var="lshgg">
                                             <fmt:parseNumber var="tongTienSo" value="${tongTien}"/>
                                             <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}"/>
                                             <c:if test="${tongTienSo >= soTienToiThieu}">
-                                                <option value="${lshgg.soPhanTramGiam}">${lshgg.soPhanTramGiam}%</option>
+                                                <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}">${lshgg.soPhanTramGiam}%</option>
                                             </c:if>
                                         </c:forEach>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col" id="hinh-thuc-thanh-toan-div">
                                 <div class="mb-3">
                                     <label class="form-label">Hình thức thanh toán</label>
                                     <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
@@ -573,29 +567,29 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Tổng Tiền</label>
-                                <input type="text" class="form-control" id="tong-tien" name="tong-tien" value="${tongTien}" readonly>
+                                <input type="number" class="form-control" id="tong-tien" name="tong-tien" value="${tongTien}" readonly>
                             </div>
                             <div class="col" id="phi-van-chuyen-div" style="display: none">
                                 <label class="form-label">Phí Vận Chuyển</label>
-                                <input class="form-control" type="text" id="feeInput" name="phiVanChuyen" oninput="formatCurrency(this);" value="0">
+                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" oninput="formatCurrency(this);" value="0">
                             </div>
                             <div class="col">
                                 <label class="form-label">Tiền Giảm</label>
-                                <input type="text" class="form-control" id="tien-giam" name="tien-giam" readonly>
+                                <input type="number" class="form-control" id="tien-giam" name="tien-giam" value="0" readonly>
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col">
-                                <div class="mb-3">
+                        <div class="row mb-3" >
+                            <div class="col" >
+                                <div class="mb-3" id="tien-khach-dua-div">
                                     <label class="form-label">Tiền khách đưa</label>
-                                    <input oninput="formatCurrency(this);" type="text" class="form-control" id="tien-khach-dua" name="tienKhachDua" min="${tongTien}" step="0.01">
+                                    <input type="number" class="form-control" id="tien-khach-dua" value="0" name="tienKhachDua" min="${tongTien}" step="0.01">
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="mb-3">
+                            <div class="col" >
+                                <div class="mb-3"id="tien-thua-div">
                                     <label class="form-label">Tiền Thừa</label>
-                                    <input type="text" class="form-control" id="tien-thua" readonly>
+                                    <input type="number" class="form-control" id="tien-thua" value="0" readonly>
                                 </div>
                             </div>
                         </div>
@@ -603,7 +597,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Tiền Cần Thanh Toán</label>
-                                <input type="text" class="form-control" id="tien-thanh-toan" name="tien-thanh-toan">
+                                <input type="text" class="form-control" id="tien-thanh-toan" value="0" name="tien-thanh-toan" readonly>
                             </div>
                             <div class="col">
                                 <div class="mb-3">
@@ -925,6 +919,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
 <script>
+    // or via CommonJS
     // bật/tắt giao hàng
     var toggleSwitch = document.getElementById('toggleSwitch');
     var formKhachHang = document.getElementById('form-khach-hang');
@@ -937,6 +932,12 @@
     var hinhThucThanhToan = document.getElementById('hinh-thuc-thanh-toan-div');
     var giamGia = document.getElementById('giam-gia-div');
     var hoVaTen = document.getElementById('hoVaTen');
+    var tinhDiv = document.getElementById('tinh-div');
+    var huyenDiv = document.getElementById('huyen-div');
+    var xaDiv = document.getElementById('xa-div');
+    var tenDV = document.getElementById('ten-don-vi-div');
+    var maCH = document.getElementById('ma-van-chuyen-div');
+    var diaChiCuThe = document.getElementById('dia-chi-chi-tiet-div');
     toggleSwitch.addEventListener('change', function () {
         if (this.checked) {
             // Switch is ON (bật)
@@ -947,6 +948,12 @@
             // hinhThucThanhToan.style.display = 'none';
             // giamGia.style.display = 'none';
             tienThua.style.display = 'none';
+            tinhDiv.style.display = 'block';
+            huyenDiv.style.display = 'block';
+            xaDiv.style.display = 'block';
+            tenDV.style.display = 'block';
+            maCH.style.display = 'block';
+            diaChiCuThe.style.display = 'block';
             thongTinThanhToanForm.action = '/admin/ban-hang/tao-don-hang/${idHoaDon}';
 
         } else {
@@ -958,6 +965,12 @@
             phiVanChuyen.style.display = 'none';
             hinhThucThanhToan.style.display = 'block';
             giamGia.style.display = 'block';
+            tinhDiv.style.display = 'none';
+            huyenDiv.style.display = 'none';
+            xaDiv.style.display = 'none';
+            tenDV.style.display = 'none';
+            maCH.style.display = 'none';
+            diaChiCuThe.style.display = 'none';
             // đổi action
             thongTinThanhToanForm.action = '/admin/ban-hang/thanh-toan/${idHoaDon}';
 
@@ -1062,6 +1075,9 @@
                     return customer.id === selectedCustomerId;
                 });
                 // Cập nhật thông tin khách hàng trên giao diện
+
+                $('#hoVaTen').val(selectedCustomer.hoVaTen);
+                $('#sdt').val((selectedCustomer.soDienThoai ? selectedCustomer.soDienThoai : 'Chưa Có'));
                 $('#tenKhachHang').text('Tên khách hàng: ' + selectedCustomer.hoVaTen);
                 $('#emailKhachHang').text((selectedCustomer.email ? selectedCustomer.email : ''));
                 $('#soDienThoaiKhachHang').text('Số điện thoại: ' + (selectedCustomer.soDienThoai ? selectedCustomer.soDienThoai : ''));
@@ -1246,7 +1262,7 @@
         $(document).ready(function () {
             var tongTienInput = $("#tong-tien"); // Lấy ô input của tổng tiền
             var tienThanhToan = $("#tien-thanh-toan");
-            tienThanhToan.val(tongTienInput.val().toLocaleString('en-US'))
+            tienThanhToan.val(tongTienInput.val())
             var vanchuyen = $("#toggleSwitch")
             var selectElement = $("#hinh-thuc-thanh-toan");
             var selectElementGiamGia = $("#giam-gia");
@@ -1262,6 +1278,11 @@
             // Sự kiện change cho hình thức thanh toán
             selectElement.on("change", function () {
                 updateTienKhachDua()
+                var tongTienValue = parseFloat(tienThanhToan.val());
+                // Gán giá trị vào input có id="total"
+                var totalInput = document.getElementById('total');
+                totalInput.value = tongTienValue;
+
             });
             // Sự kiện change cho giảm giá
             selectElementGiamGia.on("change", function () {
@@ -1286,20 +1307,20 @@
 
             function formatCurrency(input) {
                 // Giữ lại chỉ các ký tự số và dấu phẩy
-                let inputValue = input.value.replace(/[^\d,]/g, '');
+                let inputValue = input.value;
 
                 // Định dạng lại giá trị
                 inputValue = inputValue.replace(/,/g, '');
 
                 // Gán giá trị đã định dạng lại vào trường input
-                input.value = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                input.value = inputValue;
             }
 
             function updateTotal() {
                 // Use jQuery to get the value of the feeInput
                 let feeInput = $('#feeInput');
                 // Giữ lại chỉ các ký tự số và dấu phẩy
-                let phiVanChuyen = parseFloat(feeInput.val().replace(/,/g, '')) || 0;
+                let phiVanChuyen = parseFloat(feeInput.val()|| 0);
 
                 // Lấy giá trị tổng tiền từ JSP
                 let tongTien = parseFloat('${tongTien}') || 0;
@@ -1308,7 +1329,7 @@
                 tongTien += phiVanChuyen;
 
                 // Định dạng lại tổng tiền và hiển thị trên giao diện
-                let formattedTongTien = tongTien.toLocaleString('en-US');
+                let formattedTongTien = tongTien;
                 tongTienInput.val(formattedTongTien);
                 tienThanhToan.val(formattedTongTien)
 
@@ -1323,32 +1344,36 @@
                 var tongTien = parseFloat(tienThanhToan.val());
 
                 if (hinhThucThanhToan === "2" || hinhThucThanhToan === "3") {
-                    tienKhachDuaInput.val(tongTien.toLocaleString('en-US'));
+                    tienKhachDuaInput.val(tongTien);
                 } else {
                     tienKhachDuaInput.val("");
                 }
             }
 
             function updateTienGiam() {
-                var giamGia = parseFloat(selectElementGiamGia.val().replace(/[^\d]/g, ''));
-                var tongTien = parseFloat(tongTienInput.val().replace(/[^\d]/g, ''));
-                if (isNaN(giamGia)) {
-                    tienThanhToan.val(tongTien.toLocaleString('en-US'))
-                    tienGiam.text(0);
-                } else {
-                    var tienGiamne = tongTien * (giamGia / 100)
+                var selectElementGiamGia = $('#giam-gia');
+                var selectedOption = selectElementGiamGia.find(':selected');
+                var soPhanTramGiam = selectedOption.data('sophantramgiam');
+
+                var tongTien = parseFloat(tongTienInput.val());
+                if (soPhanTramGiam !== undefined) {
+                    var tienGiamne = tongTien * (soPhanTramGiam / 100)
                     tienGiam.val(tienGiamne);
                     tienThanhToan.val((tongTien - tienGiamne))
                     tienThanhToan.val((tongTien - tienGiamne))
+
+                } else {
+                    tienThanhToan.val(tongTien)
+                    tienGiam.text(0);
                 }
             }
 
             function updateTienThua() {
-                var tienKhachDua = parseFloat(tienKhachDuaInput.val().replace(/[^\d]/g, '')) || 0;
-                var tongTien = parseFloat(tienThanhToan.val().replace(/[^\d]/g, ''));
+                var tienKhachDua = parseFloat(tienKhachDuaInput.val() || 0);
+                var tongTien = parseFloat(tienThanhToan.val());
                 if (tienKhachDua >= tongTien) {
                     var tienThua = tienKhachDua - tongTien;
-                    tienThuaLabel.val(tienThua.toLocaleString('en-US'));
+                    tienThuaLabel.val(tienThua);
                 } else {
                     tienThuaLabel.val("0");
                     alert("Tiền khách đưa phải lớn hơn hoặc bằng tổng tiền!");
@@ -1356,13 +1381,6 @@
             }
         });
         <%--// api vietqr--%>
-        var tongTienInput = document.getElementById('tien-thanh-toan');
-        var tongTienValue = parseFloat(tongTienInput);
-
-        console.log(tongTienInput.val())
-        // Gán giá trị vào input có id="total"
-        var totalInput = document.getElementById('total');
-        totalInput.value = tongTienValue;
 
         <%--$(document).ready(function () {--%>
         <%--    var clientId = '01d6d8e1-f32f-49c2-b2ed-569c35d2d407';--%>
@@ -1423,15 +1441,22 @@
             // Sự kiện change trên phần tử select
             $('#hinh-thuc-thanh-toan').on('change', function () {
                 var selectedValue = $(this).val();
-
-
-                // Kiểm tra giá trị được chọn và thực hiện hành động tương ứng
-                if (selectedValue === '1') {
-                    // Tiền mặt - ẩn form
-                    $('#paymentForm').hide();
-                } else if (selectedValue === '2') {
-                    // Chuyển khoản - hiển thị form và tự động submit form
-                    $('#paymentForm').show().submit();
+                var selectedThanhToan = $("#tien-thanh-toan");
+                if (isNaN(parseFloat(selectedThanhToan.val()))) {
+                    Swal.fire({
+                        title: "Thông Báo!",
+                        text: "Bạn chưa có giá tiền để thanh toán qr",
+                        icon: "error"
+                    });
+                }else{
+                    // // Kiểm tra giá trị được chọn và thực hiện hành động tương ứng
+                    if (selectedValue === '1') {
+                        // Tiền mặt - ẩn form
+                        $('#paymentForm').hide();
+                    } else if (selectedValue === '2') {
+                        // Chuyển khoản - hiển thị form và tự động submit form
+                        $('#paymentForm').show().submit();
+                    }
                 }
             });
         });
@@ -1457,11 +1482,10 @@
     }
 
     // click thanh toán sẽ gửi email
-    $("#thanh_toan").click(function () {
-        sendEmail();
-    });
+    // $("#thanh_toan").click(function () {
+    //     sendEmail();
+    // });
     const emailKhachHang = $('#emailKhachHang').text();
-    console.log(emailKhachHang);
 </script>
 
 </body>

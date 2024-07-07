@@ -229,46 +229,101 @@ public class BanHangController {
     }
 
     @PostMapping("/thanh-toan/{idHoaDon}")
-    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam("ghiChu") String ghiChu, @RequestParam("tong-tien") String tongTien, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan,@RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
+    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam("giamGia") GiamGia giamGia, @RequestParam("ghiChu") String ghiChu, @RequestParam("tong-tien") String tongTien, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan, @RequestParam("nguoiNhan") String hoVaTen, @RequestParam("sdt") String soDienThoai,@RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
         if (hinhThucThanhToan == null) {
-            session.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin");
+            session.setAttribute("errorMessage", "Vui lòng chọn hình thức thanh toán");
+            return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
+        }
+
+        if (hoVaTen.isEmpty() || hoVaTen.isBlank()) {
+            session.setAttribute("errorMessage", "Vui lòng nhập họ tên khách hàng thật nghiêm túc");
+            return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
+        }
+
+        if (soDienThoai.isEmpty() || soDienThoai.isBlank()) {
+            session.setAttribute("errorMessage", "Vui lòng nhập sđt khách hàng thật nghiêm túc");
             return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
         }
 
         HoaDon hoaDon = hoaDonService.getById(idHoaDon);
         session.setAttribute("hoaDon", hoaDon);
         session.setAttribute("listHoaDonChiTiet", hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()));
-        Instant currentInstant = Instant.now();
-        if (idKhachHang == null) {
-            if (hoaDon != null) {
-                hoaDon.setTrangThai(1);
-                hoaDon.setNgayThanhToan(currentInstant);
-                hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
-                hoaDon.setGhiChu(ghiChu);
-                hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
-                hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
-                hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
-                hoaDon.setLoaiHoaDon(0);
-                hoaDonService.update(hoaDon, idHoaDon);
-                createPDF.exportPDFBill(hoaDon, hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()), hoaDonService.sumTongTienByIdHoaDon(hoaDon.getId()).toString());
-                session.setAttribute("successMessage", "Thanh toán thành công");
-            }
-        } else {
-            if (hoaDon != null) {
-                hoaDon.setTrangThai(1);
-                hoaDon.setNgayThanhToan(currentInstant);
-                hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
-                hoaDon.setGhiChu(ghiChu);
-                hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
-                hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
-                hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
-                KhachHang khachHang = new KhachHang();
-                khachHang.setId(idKhachHang);
-                hoaDon.setIdKhachHang(khachHang);
-                hoaDon.setLoaiHoaDon(0);
-                hoaDonService.update(hoaDon, idHoaDon);
-                createPDF.exportPDFBill(hoaDon, hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()), hoaDonService.sumTongTienByIdHoaDon(hoaDon.getId()).toString());
-                session.setAttribute("successMessage", "Thanh toán thành công");
+        List<GioHangUserResponse> listCheck = hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId());
+        if (listCheck.isEmpty()){
+            session.setAttribute("errorMessage", "Bạn chưa chọn sản phẩm");
+            return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
+        }else{
+            Instant currentInstant = Instant.now();
+            if (idKhachHang == null) {
+                if (hoaDon != null) {
+                    if (giamGia!=null){
+                        hoaDon.setTrangThai(1);
+                        hoaDon.setNgayThanhToan(currentInstant);
+                        hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
+                        hoaDon.setIdGiamGia(giamGia);
+                        giamGia.setSoLuong(giamGia.getSoLuong()-1);
+                        hoaDon.setNguoiNhan(hoVaTen);
+                        hoaDon.setSoDienThoai(soDienThoai);
+                        hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
+                        hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
+                        hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
+                        hoaDon.setGhiChu(ghiChu);
+                        hoaDon.setLoaiHoaDon(0);
+                        hoaDonService.update(hoaDon, idHoaDon);
+                        createPDF.exportPDFBill(hoaDon, hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()), hoaDonService.sumTongTienByIdHoaDon(hoaDon.getId()).toString());
+                        session.setAttribute("successMessage", "Thanh toán thành công");
+                    }else{
+                        hoaDon.setTrangThai(1);
+                        hoaDon.setNgayThanhToan(currentInstant);
+                        hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
+                        hoaDon.setNguoiNhan(hoVaTen);
+                        hoaDon.setSoDienThoai(soDienThoai);
+                        hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
+                        hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
+                        hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
+                        hoaDon.setGhiChu(ghiChu);
+                        hoaDon.setLoaiHoaDon(0);
+                        hoaDonService.update(hoaDon, idHoaDon);
+                        createPDF.exportPDFBill(hoaDon, hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()), hoaDonService.sumTongTienByIdHoaDon(hoaDon.getId()).toString());
+                        session.setAttribute("successMessage", "Thanh toán thành công");
+                    }
+                }
+            } else {
+                if (hoaDon != null) {
+                    if (giamGia != null) {
+                        hoaDon.setTrangThai(1);
+                        hoaDon.setNgayThanhToan(currentInstant);
+                        hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
+                        hoaDon.setGhiChu(ghiChu);
+                        hoaDon.setIdGiamGia(giamGia);
+                        giamGia.setSoLuong(giamGia.getSoLuong() - 1);
+                        hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
+                        hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
+                        hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
+                        KhachHang khachHang = new KhachHang();
+                        khachHang.setId(idKhachHang);
+                        hoaDon.setIdKhachHang(khachHang);
+                        hoaDon.setLoaiHoaDon(0);
+                        hoaDonService.update(hoaDon, idHoaDon);
+                        createPDF.exportPDFBill(hoaDon, hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()), hoaDonService.sumTongTienByIdHoaDon(hoaDon.getId()).toString());
+                        session.setAttribute("successMessage", "Thanh toán thành công");
+                    } else {
+                        hoaDon.setTrangThai(1);
+                        hoaDon.setNgayThanhToan(currentInstant);
+                        hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
+                        hoaDon.setGhiChu(ghiChu);
+                        hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
+                        hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
+                        hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
+                        KhachHang khachHang = new KhachHang();
+                        khachHang.setId(idKhachHang);
+                        hoaDon.setIdKhachHang(khachHang);
+                        hoaDon.setLoaiHoaDon(0);
+                        hoaDonService.update(hoaDon, idHoaDon);
+                        createPDF.exportPDFBill(hoaDon, hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()), hoaDonService.sumTongTienByIdHoaDon(hoaDon.getId()).toString());
+                        session.setAttribute("successMessage", "Thanh toán thành công");
+                    }
+                }
             }
 
         }
