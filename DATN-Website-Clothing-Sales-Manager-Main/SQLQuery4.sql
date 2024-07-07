@@ -455,14 +455,14 @@ VALUES
     (N'Chuyển khoản', '2', '2024-01-01', '2024-01-01', 1);
 
 -- Insert data into 'hoa_don' table
-INSERT INTO hoa_don (ma, ngay_thanh_toan, ngay_van_chuyen, ngay_nhan, id_khach_hang, id_nhan_vien, id_giam_gia, id_hinh_thuc_thanh_toan, nguoi_nhan, email, so_dien_thoai, dia_chi, xa_phuong, quan_huyen, tinh_thanh_pho, trang_thai, loai_hoa_don, ma_van_chuyen, ten_don_vi_van_chuyen, phi_van_chuyen, anh_hoa_don_chuyen_khoan, ghi_chu, ngay_tao, ngay_sua)
+INSERT INTO hoa_don (ma, ngay_thanh_toan, ngay_van_chuyen, ngay_nhan, id_khach_hang, id_nhan_vien, id_giam_gia, id_hinh_thuc_thanh_toan, nguoi_nhan, email, so_dien_thoai,tong_tien, dia_chi, xa_phuong, quan_huyen, tinh_thanh_pho, trang_thai, loai_hoa_don, ma_van_chuyen, ten_don_vi_van_chuyen, phi_van_chuyen, anh_hoa_don_chuyen_khoan, ghi_chu, ngay_tao, ngay_sua)
 VALUES 
     ('HD001', '2024-01-02', '2024-01-03', '2024-01-04', 
         (SELECT id FROM khach_hang WHERE email = 'nguyenvana@example.com'), 
         (SELECT id FROM nhan_vien WHERE ma = 'NV001'), 
         (SELECT id FROM giam_gia WHERE ma = 'GG001'), 
         (SELECT id FROM hinh_thuc_thanh_toan WHERE ma = 'TTBT'), 
-        N'Nguyễn Văn A', 'nguyenvana@example.com', '0123456789', 
+        N'Nguyễn Văn A', 'nguyenvana@example.com', '0123456789',480000, 
         N'123 Đường A', N'Phường X', N'Quận Y', N'TP. Z', 1, 1, 'VC001', N'Viettel', 30000, 
         N'/images/hoa_don_001.png', N'Ghi chú 1', '2024-01-01', '2024-01-01'),
     ('HD002', '2024-02-02', '2024-02-03', '2024-02-04', 
@@ -470,12 +470,12 @@ VALUES
         (SELECT id FROM nhan_vien WHERE ma = 'NV002'), 
         (SELECT id FROM giam_gia WHERE ma = 'GG002'), 
         (SELECT id FROM hinh_thuc_thanh_toan WHERE ma = 'TTKNH'), 
-        N'Trần Thị B', 'tranthib@example.com', '0987654321', 
+        N'Trần Thị B', 'tranthib@example.com', '0987654321',1050000,
         N'456 Đường B', N'Phường W', N'Quận V', N'TP. U', 1, 1, 'VC002', N'Giao Hàng Nhanh', 50000, 
-        N'/images/hoa_don_002.png', N'Ghi chú 2', '2024-02-01', '2024-02-01');
 
+        N'/images/hoa_don_002.png', N'Ghi chú 2', '2024-02-01', '2024-02-01');
 -- Insert data into 'hoa_don_chi_tiet' table
-INSERT INTO hoa_don_chi_tiet (id_hoa_don, id_san_pham_chi_tiet, id_khuyen_mai, tong_tien, so_luong, ngay_tao, ngay_sua, trang_thai)
+INSERT INTO hoa_don_chi_tiet (id_hoa_don, id_san_pham_chi_tiet, id_khuyen_mai,gia,so_luong, ngay_tao, ngay_sua, trang_thai)
 VALUES 
     ((SELECT id FROM hoa_don WHERE ma = 'HD001'), 
         (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP001'), 
