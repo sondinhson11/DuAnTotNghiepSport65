@@ -2,9 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    a{
+        text-decoration: none;
+        margin-right: 10px;
+    }
+</style>
 <div class="container mt-3">
     <h1 class="text-center">Quản Lý Khuyến Mãi</h1>
-
     <div class="row mt-3">
         <div class="col-6">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -32,20 +37,15 @@
                 <td>${index.index + khuyenMaiPage.number * khuyenMaiPage.size + 1}</td>
                 <td>${km.ma}</td>
                 <td>${km.ten}</td>
-                <td>${km.soPhanTramGiam}</td>
+                <td>${km.soPhanTramGiam} %</td>
                 <td>${km.ngayBatDau}</td>
                 <td>${km.ngayKetThuc}</td>
                 <td>
-                    <c:if test="${km.trangThai == '0'}">
-                        <a href="/admin/khuyen-mai/update-trang-thai/${km.id}/1" class="btn btn-success"
-                           onclick="return confirm('Bạn có chắc chắn muốn dừng hoạt động không?')">Đang hoạt
-                            động</a>
+                    <c:if test="${km.trangThai == 1}">
+                        <span class="badge bg-success">Còn hạn</span>
                     </c:if>
-                    <c:if test="${km.trangThai == '1'}">
-                        <a href="/admin/khuyen-mai/update-trang-thai/${km.id}/0" class="btn btn-warning"
-                           onclick="return confirm('Bạn có chắc chắn muốn  hoạt động lại  không?')">
-                            Dừng hoạt động
-                           </a>
+                    <c:if test="${km.trangThai == 0}">
+                        <span class="badge bg-danger">Hết hạn</span>
                     </c:if>
                 </td>
                 <td>
@@ -61,7 +61,7 @@
                     </a>
 <%--                    <a href="/admin/khuyen-mai/delete/${km.id}" class="btn btn-danger"--%>
 <%--                       onclick="return confirm('Bạn có chắc chắn muốn xoá không?')">Xoá</a>--%>
-                        <c:if test="${km.trangThai == 0}">
+                        <c:if test="${km.trangThai == 1}">
                             <a href="/admin/khuyen-mai/chi-tiet/${km.id}" >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
@@ -199,7 +199,7 @@
             modalTitle.textContent = "Thêm khuyến Mãi";
 
             $("#edit-form").trigger("reset");
-            $("#edit-form").attr("action", "/admin/khach-hang/store");
+            $("#edit-form").attr("action", "/admin/khuyen-mai/store");
 
         });
     });
@@ -250,4 +250,8 @@
         </c:if>
     });
 
+
+
+
+    
 </script>
