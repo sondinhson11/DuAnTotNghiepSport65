@@ -68,6 +68,16 @@ public class HoaDon {
     @Nationalized
     @Column(name = "so_dien_thoai", length = 15)
     private String soDienThoai;
+
+    @Column(name = "tong_tien", precision = 20)
+    private BigDecimal tongTien;
+
+    @Column(name = "so_tien_giam", precision = 20)
+    private BigDecimal tienGiam;
+
+    @Column(name = "thanh_toan", precision = 20)
+    private BigDecimal thanhToan;
+
     @Nationalized
     @Column(name = "xa_phuong", length = 80)
     private String xaPhuong;

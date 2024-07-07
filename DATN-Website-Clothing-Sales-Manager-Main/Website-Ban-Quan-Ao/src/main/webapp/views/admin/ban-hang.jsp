@@ -3,14 +3,30 @@
 <%@ taglib prefix="f" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
 <html lang="en">
 <style>
+    .font {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+    }
+
+
     #searchResults {
         list-style-type: none;
         padding: 0;
         margin: 0;
     }
-
+    .custom-border {
+        border: 2px solid black; /* Độ dày và màu sắc của viền */
+        border-radius: 10px; /* Bo góc cho viền */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng cho viền */
+        padding: 20px; /* Khoảng cách bên trong */
+    }
     .result-item {
         padding: 8px;
         background-color: white;
@@ -141,6 +157,7 @@
     .fw-bold {
         font-weight: bold;
     }
+
     .image-input {
         display: none;
     }
@@ -154,7 +171,23 @@
         text-align: center;
         cursor: pointer; /* Sử dụng con trỏ kiểu tay khi di chuột vào */
     }
+    .custom-table thead {
+        background-color: #007bff;
+        color: white;
+    }
 
+    .custom-table tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .custom-table tbody tr:hover {
+        background-color: #e9ecef;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        vertical-align: middle;
+    }
     .image-preview {
         max-width: 100%;
         max-height: 100%;
@@ -211,183 +244,192 @@
 </c:if>
 
 <div class="card border rounded">
-    <div class="card-header text-black">
-        <h3 class="mb-0">Bán hàng tại quầy</h3>
-    </div>
-    <div class="card-body">
-        <form method="post" action="/admin/ban-hang/add-hoa-don">
-            <input type="hidden" name="id" value="${admin.id}">
-            <button type="submit" class="btn btn-primary">Tạo mới</button>
-        </form>
-        <hr>
-
-        <!-- QR -->
-        <div class="row">
+    <div class="card-header">
+        <div class="row mb-1 font"> <!-- Thêm class mb-1 để giảm khoảng cách -->
             <div class="col">
-                <p class="float-start fw-bold">Đơn Hàng ${hoaDon.ma}</p>
+                <p class="fw-bold fs-4 text-dark">Bán Hàng Tại Quầy</p>
+            </div>
+            <div class="col d-flex justify-content-end align-items-center">
+                <form method="post" action="/admin/ban-hang/add-hoa-don">
+                    <input type="hidden" name="id" value="${admin.id}">
+                    <button type="submit" class="btn btn-primary">Tạo mới</button>
+                </form>
             </div>
         </div>
-
-        <!-- List hóa đơn -->
-        <div class="row">
+        <div class="row mt-1 font"> <!-- Thêm class mt-1 để giảm khoảng cách -->
+            <div class="col text-center">
+                <p class="fw-bold">Đơn Hàng: ${hoaDon.ma}</p>
+            </div>
+        </div>
+        <div class=" row justify-content-center font">
             <c:forEach items="${listHoaDon}" var="hoaDon" varStatus="index">
-                <div class="d-grid gap-2 col-2">
+                <div class="d-grid gap-2 col-1">
                     <a href="/admin/ban-hang/view-hoa-don/${hoaDon.id}" class="btn btn-primary">
                             ${hoaDon.ma}
                     </a>
                 </div>
             </c:forEach>
         </div>
+    </div>
 
+    <div class="card-body ">
         <!-- Giỏ hàng -->
-        <div class="row border mt-5">
-            <p class="fw-bold mb-2">Giỏ Hàng</p>
-            <div class="col text-end">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#SPModal" id="SPModal_btn">
-                    Thêm sản phẩm
-                </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QRModal" id="QRModal_btn">
-                    Quét QR
-                </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MASPModal" id="MASPModal_btn">
-                    Thêm với mã SP
-                </button>
-            </div>
-            <table class="table text-center">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col" style="width: 150px;"><i class="fas fa-image"></i></th>
-                    <th scope="col">Sản phẩm</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Tổng tiền</th>
-                    <th scope="col">Thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                <form id="paymentForm" action="/create-payment-link" method="post">
-                    <button type="submit" style="display: none">Tạo Link thanh toán</button>
-                    <input type="hidden" name="tongTien" value="" id="total">
-                    <input type="hidden" name="ma" value="${hoaDon.ma}">
-                    <input type="hidden" name="idHoaDon" value="${idHoaDon}">
-                </form>
-                <c:forEach items="${listSanPhamTrongGioHang}" var="sp" varStatus="status">
+        <div class="row border mt-2 gap-3 font">
+            <div class="col-9 border custom-border ">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="fw-bold mb-0">Giỏ Hàng</p>
+                    <div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#SPModal" id="SPModal_btn">
+                            Thêm sản phẩm
+                        </button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QRModal" id="QRModal_btn">
+                            Quét QR
+                        </button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MASPModal" id="MASPModal_btn">
+                            Thêm với mã SP
+                        </button>
+                    </div>
+                </div>
+                <table class="table text-center custom-table">
+                    <thead>
                     <tr>
-                        <td>${status.index + 1}</td>
-                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                        <script>
-                            $(document).ready(function () {
-                                var idSanPham = '${sp.idSanPham}';
-                                console.log(idSanPham);
-                                $.ajax({
-                                    url: '/get-anh-san-pham/' + idSanPham,
-                                    type: 'GET',
-                                    dataType: 'json',
-                                    success: function (data) {
-                                        // Xử lý phản hồi từ máy chủ và cập nhật danh sách ảnh
-                                        var listAnhSanPham = data;
-                                        var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPham} .carousel-inner');
-                                        carouselInner.empty();
-
-                                        $.each(listAnhSanPham, function (index, anhSanPham) {
-                                            var isActive = index === 0 ? 'active' : '';
-                                            var carouselItem = '<div class="carousel-item ' + isActive + '">'
-                                                + '<img src="' + anhSanPham.duongDan + '" class="d-block" id="custom-anh" style="width: 150px; height: 150px">'
-                                                + '</div>';
-                                            carouselInner.append(carouselItem);
-                                        });
-                                    },
-                                    error: function () {
-                                        console.log('Lỗi khi lấy danh sách ảnh sản phẩm');
-                                    }
-                                });
-                            });
-                        </script>
-                        <td>
-                            <!-- Ảnh -->
-                            <div id="carouselExampleSlidesOnly_${sp.idSanPham}"
-                                 class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-                                <div class="carousel-inner" style="width: 150px; height: 150px">
-                                    <c:forEach items="${listAnhSanPham}" var="anhSanPham" varStatus="status">
-                                        <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
-                                            <img src="${anhSanPham.duongDan}" class="d-block"
-                                                 style="width: 150px; height: 150px">
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>${sp.tenSanPham}</p>
-                            <p>${sp.tenMau}/${sp.tenSize}</p>
-                        </td>
-
-                        <td id="formattedGia">
-                                ${sp.gia}
-                        </td>
-                        <td>${sp.soLuong}</td>
-                        <td id="formattedTotal">${sp.soLuong * sp.gia}</td>
-
-                        <!-- Thêm script để định dạng giá trị hiển thị -->
-
-                        <input type="hidden" id="quantity" value=""/>
-                        <c:set var="tongTien" value="${tongTien + (sp.soLuong * sp.gia)}"/>
-                        <td>
-                            <c:if test="${hoaDon.trangThai == 0}">
-                                <form method="post"
-                                      action="/admin/ban-hang/delete-gio-hang/${sp.idHoaDonChiTiet}">
-                                    <div class="input-group">
-                                        <input type="number" name="soLuong" min="1"
-                                               max="${sp.soLuong}" value="1" class="w-50"
-                                               oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                                        <div class="input-group-append mt-2">
-                                            <button type="submit" style="border: none" class="ms-2">
-                                                <i class="fas fa-trash" style="color: #fb0404;"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </c:if>
-                            <c:if test="${hoaDon.trangThai == 1}">
-                                <span class="text-danger">Không thể thao tác</span>
-                            </c:if>
-                        </td>
+                        <th scope="col">#</th>
+                        <th scope="col" style="width: 150px;"><i class="fas fa-image"></i></th>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Thao tác</th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Khách hàng -->
-        <div class="container border mt-5">
-            <div class="row">
-                <div class="col-12 col-md-3">
-                    <div class="mb-3">
-                        <label for="searchInputKh" class="form-label fw-bold">Tìm kiếm khách hàng</label>
-                        <input type="text" class="form-control" id="searchInputKh" placeholder="Nhập tên khách hàng">
-                    </div>
-                    <!-- Dropdown sẽ hiển thị kết quả tìm kiếm -->
-                    <ul id="searchResults" class="list-group" style="display: none;"></ul>
-                </div>
-                <div class="col-12 col-md-9">
-                    <div class="mb-3">
-                        <p class="fw-bold">Thông tin khách hàng</p>
-                        <p class="text-center" id="tenKhachHang">Tên khách hàng: Khách Lẻ</p>
-                        <p class="text-center" id="emailKhachHang"></p>
-                        <p class="text-center" id="soDienThoaiKhachHang">Số điện thoại: </p>
-                        <p class="text-center" id="diaChiKhachHang">Địa chỉ: </p>
-                    </div>
-                </div>
+                    </thead>
+                    <tbody>
+                    <form id="paymentForm" action="/create-payment-link" method="post">
+                        <button type="submit" style="display: none">Tạo Link thanh toán</button>
+                        <input type="hidden" name="tongTien" value="" id="total">
+                        <input type="hidden" name="ma" value="${hoaDon.ma}">
+                        <input type="hidden" name="idHoaDon" value="${idHoaDon}">
+                    </form>
+                    <c:forEach items="${listSanPhamTrongGioHang}" var="sp" varStatus="status">
+                        <tr>
+                            <td>${status.index + 1}</td>
+                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                            <script>
+                                $(document).ready(function () {
+                                    var idSanPham = '${sp.idSanPham}';
+                                    console.log(idSanPham);
+                                    $.ajax({
+                                        url: '/get-anh-san-pham/' + idSanPham,
+                                        type: 'GET',
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            var listAnhSanPham = data;
+                                            var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPham} .carousel-inner');
+                                            carouselInner.empty();
+                                            $.each(listAnhSanPham, function (index, anhSanPham) {
+                                                var isActive = index === 0 ? 'active' : '';
+                                                var carouselItem = '<div class="carousel-item ' + isActive + '">'
+                                                    + '<img src="' + anhSanPham.duongDan + '" class="d-block" id="custom-anh" style="width: 150px; height: 150px">'
+                                                    + '</div>';
+                                                carouselInner.append(carouselItem);
+                                            });
+                                        },
+                                        error: function () {
+                                            console.log('Lỗi khi lấy danh sách ảnh sản phẩm');
+                                        }
+                                    });
+                                });
+                            </script>
+                            <td>
+                                <div id="carouselExampleSlidesOnly_${sp.idSanPham}"
+                                     class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                                    <div class="carousel-inner" style="width: 150px; height: 150px">
+                                        <c:forEach items="${listAnhSanPham}" var="anhSanPham" varStatus="status">
+                                            <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+                                                <img src="${anhSanPham.duongDan}" class="d-block" style="width: 150px; height: 150px">
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>${sp.tenSanPham}</p>
+                                <p>${sp.tenMau}/${sp.tenSize}</p>
+                            </td>
+                            <td id="formattedGia">${sp.gia}</td>
+                            <td>${sp.soLuong}</td>
+                            <td id="formattedTotal">${sp.soLuong * sp.gia}</td>
+                            <input type="hidden" id="quantity" value=""/>
+                            <c:set var="tongTien" value="${tongTien + (sp.soLuong * sp.gia)}"/>
+                            <td>
+                                <c:if test="${hoaDon.trangThai == 0}">
+                                    <form method="post" action="/admin/ban-hang/delete-gio-hang/${sp.idHoaDonChiTiet}">
+                                        <div class="input-group">
+                                            <input type="number" name="soLuong" min="1" max="${sp.soLuong}" value="1" class="w-50"
+                                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                            <div class="input-group-append mt-2">
+                                                <button type="submit" style="border: none" class="ms-2">
+                                                    <i class="fas fa-trash" style="color: #fb0404;"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </c:if>
+                                <c:if test="${hoaDon.trangThai == 1}">
+                                    <span class="text-danger">Không thể thao tác</span>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
-            <input type="hidden" id="idKhachHangInput" value="">
-        </div>
+            <div class="col border custom-border">
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3 ">
+                            <label for="searchInputKh" class="form-label fw-bold text-center d-flex justify-content-center">Tìm kiếm khách hàng</label>
+                            <input type="text" class="form-control" id="searchInputKh" placeholder="Nhập tên khách hàng">
+                        </div>
+                        <!-- Dropdown sẽ hiển thị kết quả tìm kiếm -->
+                        <ul id="searchResults" class="list-group" style="display: none;"></ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <p class="fw-bold text-center">Thông tin khách hàng</p>
+                            <p class="text-center" id="tenKhachHang">Tên khách hàng: Khách Lẻ</p>
+                            <p class="text-center" id="emailKhachHang"></p>
+                            <p class="text-center" id="soDienThoaiKhachHang">Số điện thoại: </p>
+                            <p class="text-center" id="diaChiKhachHang">Địa chỉ: </p>
+                        </div>
+                    </div>
+                </div>
 
+                <input type="hidden" id="idKhachHangInput" value="">
+            </div>
+        </div>
         <!-- Thanh toán -->
-        <form method="post" action="/admin/ban-hang/thanh-toan/${idHoaDon}" id="thong-tin-thanh-toanForm"  enctype="multipart/form-data">
+        <form method="post" action="/admin/ban-hang/thanh-toan/${idHoaDon}" id="thong-tin-thanh-toanForm"
+              enctype="multipart/form-data">
             <input type="hidden" name="idKhachHang" id="id-khach-hang">
-            <div class="row border mt-3">
-                <p class="fw-bold">Thông tin thanh toán</p>
+            <div class="row border mt-3 font">
+                <div class="row mb-3">
+                    <div class="col">
+                        <p class="fw-bold fs-4 text-dark">Thông tin thanh toán</p>
+                    </div>
+
+                    <div class="col">
+                        <div class="mb-3 mt-2 d-flex justify-content-end align-items-center">
+                            <label class="form-label me-2 mb-0 fw-bold">Giao Hàng</label>
+                            <label class="oval-switch mb-0">
+                                <input type="checkbox" id="toggleSwitch">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
                 <hr>
                 <div class="row">
                     <div class="col-6" id="form-khach-hang">
@@ -408,42 +450,43 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-6">
+                            <div class="col">
                                 <select id="provinceSelect" class="form-select">
                                     <option value="" disabled selected>Chọn tỉnh/thành phố</option>
                                 </select>
                                 <input type="hidden" id="provinceName" name="tinhThanh">
                             </div>
-                            <div class="col-6">
+                            <div class="col">
                                 <select id="districtSelect" class="form-select">
                                     <option value="" disabled selected>Chọn quận/huyện</option>
                                 </select>
                                 <input type="hidden" id="districtName" name="quanHuyen">
                             </div>
-                            <div class="col-6 mt-3">
+                            <div class="col">
                                 <select id="wardSelect" class="form-select">
                                     <option value="" disabled selected>Chọn phường/xã</option>
                                 </select>
                                 <input type="hidden" id="wardName" name="xaPhuong">
                             </div>
-                            <div class="col-6 mt-3">
+
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
                                 <input type="text" class="form-control" id="ma-van-chuyen" name="maVanChuyen"
                                        placeholder="Mã vận chuyển">
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-6">
+                            <div class="col">
                                 <input type="text" id="ten-don-vi" name="tenDonViVanChuyen"
                                        placeholder="Tên đơn vị vận chuyển">
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-12">
-                        <textarea class="form-control" id="dia-chi" name="diaChi" rows="3" placeholder="Địa chỉ chi tiết"></textarea>
+                            <div class="col">
+                                <input type="text" class="form-control" id="dia-chi" name="diaChi" rows="3"
+                                       placeholder="Địa chỉ chi tiết">
                             </div>
+
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-12">
+                        <div class="row mb-2 justify-content-center">
+                            <div class="col-auto">
                                 <label for="imageInput" class="image-preview-container">
                                     <label class="form-label">Ảnh chuyển khoản</label>
                                     <img id="imageDisplay" class="image-preview" src="" alt="Image">
@@ -453,6 +496,7 @@
                                        onchange="displayImage();">
                             </div>
                         </div>
+
                         <script>
                             function displayImage() {
                                 var input = document.getElementById('imageInput');
@@ -480,6 +524,7 @@
                                     placeholder.style.display = 'block';
                                 }
                             }
+
                             function convertToBase64(file, callback) {
                                 var reader = new FileReader();
                                 reader.readAsDataURL(file);
@@ -495,86 +540,98 @@
                     </div>
 
                     <div class="col-6" id="thong-tin-thanh-toan">
-                        <div class="mb-3 mt-2">
-                            <label class="oval-switch">
-                                <input type="checkbox" id="toggleSwitch">
-                                <span class="slider"></span>
-                            </label>
-                            <label class="form-label float-end">Giao Hàng</label>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label">Giảm Giá</label>
+                                    <select class="form-select" id="giam-gia" name="giamGia" aria-label="Default select example">
+                                        <option value="null">Không Sử Dụng</option>
+                                        <!-- Các option được tạo từ danh sách listGG -->
+                                        <c:forEach items="${listGG}" var="lshgg">
+                                            <fmt:parseNumber var="tongTienSo" value="${tongTien}"/>
+                                            <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}"/>
+                                            <c:if test="${tongTienSo >= soTienToiThieu}">
+                                                <option value="${lshgg.soPhanTramGiam}">${lshgg.soPhanTramGiam}%</option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label">Hình thức thanh toán</label>
+                                    <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
+                                        <!-- Vòng lặp để tạo các tùy chọn từ danh sách listHTTT -->
+                                        <c:forEach items="${listHTTT}" var="lshttt">
+                                            <option value=${lshttt.id}>${lshttt.ten}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="mb-3" id="phi-van-chuyen-div" style="display: none">
-                            <label class="form-label">Phí Vận Chuyển</label>
-                            <input class="float-end" type="text" id="feeInput" name="phiVanChuyen"
-                                   oninput="formatCurrency(this); updateTotal()" value="0">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Tổng Tiền</label>
+                                <input type="text" class="form-control" id="tong-tien" name="tong-tien" value="${tongTien}" readonly>
+                            </div>
+                            <div class="col" id="phi-van-chuyen-div" style="display: none">
+                                <label class="form-label">Phí Vận Chuyển</label>
+                                <input class="form-control" type="text" id="feeInput" name="phiVanChuyen" oninput="formatCurrency(this);" value="0">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Tiền Giảm</label>
+                                <input type="text" class="form-control" id="tien-giam" name="tien-giam" readonly>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Tổng Tiền</label>
-                            <input type="text" class="float-end" id="tong-tien" name="tong-tien" value="${tongTien}"
-                                   readonly>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label">Tiền khách đưa</label>
+                                    <input oninput="formatCurrency(this);" type="text" class="form-control" id="tien-khach-dua" name="tienKhachDua" min="${tongTien}" step="0.01">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label">Tiền Thừa</label>
+                                    <input type="text" class="form-control" id="tien-thua" readonly>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3" id="hinh-thuc-thanh-toan-div">
-                            <label class="form-label">Hình thức thanh toán</label>
 
-                            <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
-                                <!-- Vòng lặp để tạo các tùy chọn từ danh sách `listHTTT` -->
-                                <c:forEach items="${listHTTT}" var="lshttt">
-                                    <option value=${lshttt.id}>${lshttt.ten}</option>
-                                </c:forEach>
-                            </select>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Tiền Cần Thanh Toán</label>
+                                <input type="text" class="form-control" id="tien-thanh-toan" name="tien-thanh-toan">
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label class="form-label">Ghi chú</label>
+                                    <textarea class="form-control" id="ghi-chu" name="ghiChu" rows="3" placeholder="Ghi chú"></textarea>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3" id="giam-gia-div">
-                            <label class="form-label">Giảm Giá</label>
 
-                            <select class="form-select" id="giam-gia" name="httt" aria-label="Default select example">
-                                <option value= "null">Không Sử Dụng</option>
-                                <c:forEach items="${listGG}" var="lshgg">
-                                    <fmt:parseNumber var="tongTienSo" value="${tongTien}" />
-                                    <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}" />
-                                    <c:out value="${tongTienSo}" />
-                                    <c:out value="${lshgg.soTienToiThieu}" />
-                                    <c:if test="${tongTienSo >= soTienToiThieu}" >
-                                        <option value="${lshgg.soPhanTramGiam}" >${lshgg.soPhanTramGiam}%</option>
-                                    </c:if>
-                                </c:forEach>
-                            </select>
+                        <div class="row mb-3 justify-content-center">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary" id="thanh_toan" onclick="exportPDFBill()">Thanh toán</button>
+                            </div>
+                        </div>
 
-                        </div>
-                        <div class="mb-3" id="tien-khach-dua-div">
-                            <label class="form-label">Tiền khách đưa</label>
-                            <input oninput="formatCurrency(this);" type="text" class="form-control" id="tien-khach-dua"
-                                   name="tienKhachDua"
-                                   min="${tongTien}" step="0.01">
-                        </div>
-                        <div class="mb-3" id="tien-thua-div">
-                            <label class="form-label">Tiền Thừa</label>
-                            <label class="form-label float-end" id="tien-thua">0</label><br>
-                            <label class="form-label">Tiền Giảm</label>
-                            <label class="form-label float-end" id="tien-giam">0</label><br>
-                            <label class="form-label">Tiền Cần Thanh Toán</label>
-                            <label class="form-label float-end" id="tien-thanh-toan" name="tien-thanh-toan">0</label>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Ghi chú</label>
-                            <textarea class="form-control" id="ghi-chu" name="ghiChu" rows="3"
-                                      placeholder="Ghi chú"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary float-end" id="thanh_toan" onclick="exportPDFBill()">Thanh toán</button>
-                            Thanh toán</button>
                         <script>
-                            // nếu url không phải view-hoa-don thì không cho thanh toán và tạo đơn hàng
+                            // Nếu URL không phải view-hoa-don thì không cho thanh toán và tạo đơn hàng
                             var url = window.location.href;
                             if (url.indexOf("view-hoa-don") == -1) {
                                 document.getElementById("thanh_toan").disabled = true;
-                                // disable modal thêm sản phẩm, thêm với mã sản phẩm, quét mã QR
+                                // Disable modal thêm sản phẩm, thêm với mã sản phẩm, quét mã QR
                                 document.getElementById("SPModal_btn").disabled = true;
                                 document.getElementById("MASPModal_btn").disabled = true;
                                 document.getElementById("QRModal_btn").disabled = true;
                             }
-
                         </script>
                     </div>
+
                 </div>
             </div>
         </form>
@@ -887,8 +944,8 @@
             phiVanChuyen.style.display = 'block';
             // đổi action
             tienKhachDua.style.display = 'none';
-            hinhThucThanhToan.style.display = 'none';
-            giamGia.style.display = 'none';
+            // hinhThucThanhToan.style.display = 'none';
+            // giamGia.style.display = 'none';
             tienThua.style.display = 'none';
             thongTinThanhToanForm.action = '/admin/ban-hang/tao-don-hang/${idHoaDon}';
 
@@ -1189,24 +1246,22 @@
         $(document).ready(function () {
             var tongTienInput = $("#tong-tien"); // Lấy ô input của tổng tiền
             var tienThanhToan = $("#tien-thanh-toan");
-            tienThanhToan.text(tongTienInput.val().toLocaleString('en-US'))
+            tienThanhToan.val(tongTienInput.val().toLocaleString('en-US'))
+            var vanchuyen = $("#toggleSwitch")
             var selectElement = $("#hinh-thuc-thanh-toan");
             var selectElementGiamGia = $("#giam-gia");
             var tienKhachDuaInput = $("#tien-khach-dua");
             var tienGiam = $("#tien-giam");
             var tienThuaLabel = $("#tien-thua");
-
+            vanchuyen.on("change", function () {
+                let feeInput = $('#feeInput');
+                feeInput.val(0)
+                updateTotal()
+                updateTienGiam();
+            })
             // Sự kiện change cho hình thức thanh toán
             selectElement.on("change", function () {
-
-                    var tongTienInput = document.getElementById('tien-thanh-toan');
-                    var tongTienValue =  parseFloat(tongTienInput.textContent.replace(/,/g, ''));
-
-                    console.log(tongTienInput.textContent)
-                    // Gán giá trị vào input có id="total"
-                    var totalInput = document.getElementById('total');
-                    totalInput.value = tongTienValue;
-
+                updateTienKhachDua()
             });
             // Sự kiện change cho giảm giá
             selectElementGiamGia.on("change", function () {
@@ -1243,7 +1298,6 @@
             function updateTotal() {
                 // Use jQuery to get the value of the feeInput
                 let feeInput = $('#feeInput');
-
                 // Giữ lại chỉ các ký tự số và dấu phẩy
                 let phiVanChuyen = parseFloat(feeInput.val().replace(/,/g, '')) || 0;
 
@@ -1256,15 +1310,17 @@
                 // Định dạng lại tổng tiền và hiển thị trên giao diện
                 let formattedTongTien = tongTien.toLocaleString('en-US');
                 tongTienInput.val(formattedTongTien);
-                tienThanhToan.text(formattedTongTien)
+                tienThanhToan.val(formattedTongTien)
 
                 // Gán giá trị phiVanChuyen cho trường phiVanChuyen ẩn để submit lên server
                 feeInput.val(phiVanChuyen);
+                updateTienGiam(); // Cập nhật tiền khách đưa khi thay đổi hình thức thanh toán
+
             }
 
             function updateTienKhachDua() {
                 var hinhThucThanhToan = selectElement.val();
-                var tongTien = parseFloat(tienThanhToan.text());
+                var tongTien = parseFloat(tienThanhToan.val());
 
                 if (hinhThucThanhToan === "2" || hinhThucThanhToan === "3") {
                     tienKhachDuaInput.val(tongTien.toLocaleString('en-US'));
@@ -1274,31 +1330,40 @@
             }
 
             function updateTienGiam() {
-                var giamGia = parseFloat(selectElementGiamGia.val());
-                var tongTien = parseFloat(tongTienInput.val());
+                var giamGia = parseFloat(selectElementGiamGia.val().replace(/[^\d]/g, ''));
+                var tongTien = parseFloat(tongTienInput.val().replace(/[^\d]/g, ''));
                 if (isNaN(giamGia)) {
-                    tienThanhToan.text(tongTien.toLocaleString('en-US'))
+                    tienThanhToan.val(tongTien.toLocaleString('en-US'))
                     tienGiam.text(0);
                 } else {
-                    var tienGiamne = tongTien * (giamGia/100)
-                    tienGiam.text(tienGiamne.toLocaleString('en-US'));
-                    tienThanhToan.text((tongTien-tienGiamne).toLocaleString('en-US'))
+                    var tienGiamne = tongTien * (giamGia / 100)
+                    tienGiam.val(tienGiamne);
+                    tienThanhToan.val((tongTien - tienGiamne))
+                    tienThanhToan.val((tongTien - tienGiamne))
                 }
             }
 
             function updateTienThua() {
                 var tienKhachDua = parseFloat(tienKhachDuaInput.val().replace(/[^\d]/g, '')) || 0;
-                var tongTien = parseFloat(tienThanhToan.text().replace(/[^\d]/g, ''));
+                var tongTien = parseFloat(tienThanhToan.val().replace(/[^\d]/g, ''));
                 if (tienKhachDua >= tongTien) {
                     var tienThua = tienKhachDua - tongTien;
-                    tienThuaLabel.text(tienThua.toLocaleString('en-US'));
+                    tienThuaLabel.val(tienThua.toLocaleString('en-US'));
                 } else {
-                    tienThuaLabel.text("0");
+                    tienThuaLabel.val("0");
                     alert("Tiền khách đưa phải lớn hơn hoặc bằng tổng tiền!");
                 }
             }
         });
         <%--// api vietqr--%>
+        var tongTienInput = document.getElementById('tien-thanh-toan');
+        var tongTienValue = parseFloat(tongTienInput);
+
+        console.log(tongTienInput.val())
+        // Gán giá trị vào input có id="total"
+        var totalInput = document.getElementById('total');
+        totalInput.value = tongTienValue;
+
         <%--$(document).ready(function () {--%>
         <%--    var clientId = '01d6d8e1-f32f-49c2-b2ed-569c35d2d407';--%>
         <%--    var apiKey = 'd662918e-19bd-4947-8ddd-fb8a1474dfe0';--%>
@@ -1372,6 +1437,7 @@
         });
 
     });
+
     // send email
     function sendEmail() {
         // gửi đến email khách hàng
@@ -1381,7 +1447,7 @@
         $.ajax({
             type: "POST",
             url: "/send",
-            data: {to: to , maHD: maHoaDon},
+            data: {to: to, maHD: maHoaDon},
             success: function (response) {
                 console.log(response);
             },
@@ -1389,6 +1455,7 @@
             }
         });
     }
+
     // click thanh toán sẽ gửi email
     $("#thanh_toan").click(function () {
         sendEmail();
@@ -1396,6 +1463,7 @@
     const emailKhachHang = $('#emailKhachHang').text();
     console.log(emailKhachHang);
 </script>
+
 </body>
 
 </html>

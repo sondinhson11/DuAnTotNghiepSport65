@@ -229,12 +229,12 @@ public class BanHangController {
     }
 
     @PostMapping("/thanh-toan/{idHoaDon}")
-    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam("ghiChu") String ghiChu,
-                            @RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
-        if (hinhThucThanhToan == null || ghiChu.isEmpty()) {
+    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam("ghiChu") String ghiChu, @RequestParam("tong-tien") String tongTien, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan,@RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
+        if (hinhThucThanhToan == null) {
             session.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin");
             return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
         }
+
         HoaDon hoaDon = hoaDonService.getById(idHoaDon);
         session.setAttribute("hoaDon", hoaDon);
         session.setAttribute("listHoaDonChiTiet", hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()));
@@ -245,6 +245,9 @@ public class BanHangController {
                 hoaDon.setNgayThanhToan(currentInstant);
                 hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
                 hoaDon.setGhiChu(ghiChu);
+                hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
+                hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
+                hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
                 hoaDon.setLoaiHoaDon(0);
                 hoaDonService.update(hoaDon, idHoaDon);
                 createPDF.exportPDFBill(hoaDon, hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()), hoaDonService.sumTongTienByIdHoaDon(hoaDon.getId()).toString());
@@ -256,6 +259,9 @@ public class BanHangController {
                 hoaDon.setNgayThanhToan(currentInstant);
                 hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
                 hoaDon.setGhiChu(ghiChu);
+                hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
+                hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
+                hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
                 KhachHang khachHang = new KhachHang();
                 khachHang.setId(idKhachHang);
                 hoaDon.setIdKhachHang(khachHang);

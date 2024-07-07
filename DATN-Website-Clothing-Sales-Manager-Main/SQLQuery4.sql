@@ -207,6 +207,9 @@ CREATE TABLE hoa_don
     nguoi_nhan               NVARCHAR(100),
     email                    NVARCHAR(50),
     so_dien_thoai            NVARCHAR(15),
+	tong_tien                  DECIMAL(20, 0)               DEFAULT 0,
+    so_tien_giam                  DECIMAL(20, 0)               DEFAULT 0,
+    thanh_toan                  DECIMAL(20, 0)               DEFAULT 0,
     dia_chi                  NVARCHAR(100),
     xa_phuong                NVARCHAR(80),
     quan_huyen               NVARCHAR(80),
@@ -471,7 +474,7 @@ VALUES
         N'/images/hoa_don_002.png', N'Ghi chú 2', '2024-02-01', '2024-02-01');
 
 -- Insert data into 'hoa_don_chi_tiet' table
-INSERT INTO hoa_don_chi_tiet (id_hoa_don, id_san_pham_chi_tiet, id_khuyen_mai, gia, so_luong, ngay_tao, ngay_sua, trang_thai)
+INSERT INTO hoa_don_chi_tiet (id_hoa_don, id_san_pham_chi_tiet, id_khuyen_mai, tong_tien, so_luong, ngay_tao, ngay_sua, trang_thai)
 VALUES 
     ((SELECT id FROM hoa_don WHERE ma = 'HD001'), 
         (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP001'), 

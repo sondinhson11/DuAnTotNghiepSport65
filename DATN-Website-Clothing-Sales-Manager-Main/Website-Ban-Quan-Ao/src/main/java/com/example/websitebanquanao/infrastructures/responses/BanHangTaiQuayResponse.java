@@ -18,6 +18,7 @@ public class BanHangTaiQuayResponse {
     private MauSac mauSac;
     private KichCo kichCo;
     private BigDecimal gia;
+
     private Integer soLuong;
     private String moTa;
     private Integer trangThai;

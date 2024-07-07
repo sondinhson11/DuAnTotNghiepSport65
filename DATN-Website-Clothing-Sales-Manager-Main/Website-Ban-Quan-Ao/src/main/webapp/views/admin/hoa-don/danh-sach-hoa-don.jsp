@@ -155,10 +155,12 @@
                         Ảnh chuyển khoản:
                         <img src="${hoaDon.anhHoaDonChuyenKhoan}" alt="" style="width: 300px; height: 300px">
                     </c:if>
+                    <p id="phi-van-chuyen">Phí vận chuyển: ${hoaDon.phiVanChuyen}</p>
                 </div>
                 <div class="col-4">
-                    <p id="phi-van-chuyen">Phí vận chuyển: ${hoaDon.phiVanChuyen}</p>
-                    <p id="tong_tien_1">${tongTien}</p>
+                    <p id="tong_tien_1">${hoaDon.tongTien}</p>
+                    <p id="tien_giam">${hoaDon.tienGiam}</p>
+                    <p id="thanh_toan">${hoaDon.thanhToan}</p>
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             var giaElement = document.getElementById('tong_tien_1');
@@ -168,6 +170,24 @@
                             giaElement.textContent = giaValue.toLocaleString('en-US');
                             // thêm chữ tônhr tiền trước giá trị
                             giaElement.insertAdjacentText('afterbegin', 'Tổng tiền: ');
+                            giaElement.insertAdjacentHTML('beforeend', 'VNĐ ');
+
+                            var giaElement = document.getElementById('tien_giam');
+                            // Lấy giá trị không định dạng từ thẻ p
+                            var giaValue = parseFloat(giaElement.textContent.replace(/[^\d.]/g, '')) || 0;
+                            // Định dạng lại giá trị và gán lại vào thẻ p
+                            giaElement.textContent = giaValue.toLocaleString('en-US');
+                            // thêm chữ tônhr tiền trước giá trị
+                            giaElement.insertAdjacentText('afterbegin', 'Tiền Giảm: ');
+                            giaElement.insertAdjacentHTML('beforeend', 'VNĐ ');
+
+                            var giaElement = document.getElementById('thanh_toan');
+                            // Lấy giá trị không định dạng từ thẻ p
+                            var giaValue = parseFloat(giaElement.textContent.replace(/[^\d.]/g, '')) || 0;
+                            // Định dạng lại giá trị và gán lại vào thẻ p
+                            giaElement.textContent = giaValue.toLocaleString('en-US');
+                            // thêm chữ tônhr tiền trước giá trị
+                            giaElement.insertAdjacentText('afterbegin', 'Khách Thanh Toán: ');
                             giaElement.insertAdjacentHTML('beforeend', 'VNĐ ');
 
                             // format phí vânj chuyển

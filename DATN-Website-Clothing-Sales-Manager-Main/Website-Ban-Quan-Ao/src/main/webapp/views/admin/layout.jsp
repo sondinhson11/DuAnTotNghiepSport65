@@ -10,7 +10,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
 </head>
 <style>
@@ -18,6 +20,11 @@
     .img-fluid {
         border-radius: 50%;
         background-color: white; /* Đổi màu nền thành trắng */
+    }
+    .font {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
     }
 
     /* Sidebar tuỳ chỉnh */
@@ -104,7 +111,7 @@
 <body>
 <div class="d-flex " id="wrapper">
     <!-- Sidebar-->
-    <div class="border-end custom-sidebar" id="sidebar-wrapper">
+    <div class="border-end custom-sidebar font" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light">
             <c:if test="${admin.chucVu == 0}">
                 <h3>Quản lý</h3>
@@ -238,7 +245,7 @@
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse font" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
                             <a class="nav-link" href="/logout">
@@ -260,7 +267,7 @@
             </div>
         </nav>
         <!-- Page content-->
-        <div class="container-fluid">
+        <div class="container-fluid font">
             <h1></h1>
             <jsp:include page="${ view }"/>
         </div>

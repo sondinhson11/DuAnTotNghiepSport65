@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
@@ -35,6 +35,12 @@ public class HoaDonRequest {
     private String email;
 
     private String soDienThoai;
+
+    private BigDecimal tongTien;
+
+    private BigDecimal tienGiam;
+
+    private BigDecimal thanhToan;
 
     private HinhThucThanhToan hinhThucThanhToan;
 
