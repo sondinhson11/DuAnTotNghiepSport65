@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;

@@ -1,6 +1,7 @@
 package com.example.websitebanquanao.repositories;
 
 import com.example.websitebanquanao.entities.KhuyenMai;
+import com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse;
 import com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,7 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai, UUID> {
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse(km.id, km.ma, km.ten, km.soPhanTramGiam, km.ngayBatDau, km.ngayKetThuc, km.trangThai) " +
             "from KhuyenMai km " +
-            "ORDER BY CASE WHEN km.trangThai = 0 THEN 0 ELSE 1 END, km.ten ASC")
+            "ORDER BY CASE WHEN km.trangThai = 1 THEN 0 ELSE 1 END, km.ten ASC")
     public Page<KhuyenMaiResponse> getPage(Pageable pageable);
 
 
@@ -29,4 +30,6 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai, UUID> {
     public void updateTrangThaiById(@Param("id") UUID id, @Param("trangThai") int trangThai);
 
     boolean existsByMa(String ma);
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse(km.id, km.ma, km.ten, km.soPhanTramGiam, km.ngayBatDau, km.ngayKetThuc, km.trangThai) from KhuyenMai km where km.ma = :ma")
+    public KhuyenMaiResponse getByMa(@Param("ma") String ma);
 }

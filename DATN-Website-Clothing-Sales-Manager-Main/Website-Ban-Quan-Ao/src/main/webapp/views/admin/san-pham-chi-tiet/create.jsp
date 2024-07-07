@@ -57,12 +57,7 @@
     /*    margin: 0;*/
     /*}*/
 
-    .container {
-        border: 2px solid #000;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+
 
     .content {
         display: flex;
@@ -75,9 +70,13 @@
     }
 
     .form-fieldset {
-        border: 2px solid #000;
+        border: 2px solid #dee2e6;
         padding: 20px;
         width: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px; /* Bo góc cho viền */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng cho viền */
+        padding: 20px; /* Khoảng cách bên trong */
     }
 
     legend {

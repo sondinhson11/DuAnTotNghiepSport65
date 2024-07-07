@@ -40,7 +40,7 @@ public class KichCoService {
         }
         // Thiết lập ngày sửa là ngày hiện tại, chuyển đổi sang java.sql.Date
         kichCo.setNgay_sua(new java.sql.Date(currentDate.getTime()));
-        kichCo.setTrang_thai(kichCoRequest.getTrang_thai());
+        kichCo.setTrang_thai(1);
 
             kichCoRepository.save(kichCo);
 

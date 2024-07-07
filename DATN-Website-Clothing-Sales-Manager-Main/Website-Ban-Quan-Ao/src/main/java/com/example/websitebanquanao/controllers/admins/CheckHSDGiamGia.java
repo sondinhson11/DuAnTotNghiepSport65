@@ -24,13 +24,11 @@ public class CheckHSDGiamGia {
             LocalDate ngayKetThuc = giamGia.getNgayKetThuc();
 
             if (ngayKetThuc != null) {
-                // Cập nhật trạng thái thành 0 nếu ngày kết thúc nhỏ hơn hoặc bằng hôm nay và trạng thái hiện tại không phải là 0
                 if ((ngayKetThuc.isEqual(today) || ngayKetThuc.isBefore(today)) && giamGia.getTrang_thai() != 0) {
                     giamGia.setTrang_thai(0);
                     giamGiaRepository.save(giamGia);
                     System.out.println("Cập nhật trạng thái Giảm Giá thành : Hết hạn " + giamGia.getMa());
                 }
-                // Cập nhật trạng thái thành 1 nếu ngày kết thúc lớn hơn hôm nay và trạng thái hiện tại không phải là 1
                 else if (ngayKetThuc.isAfter(today) && giamGia.getTrang_thai() != 1) {
                     giamGia.setTrang_thai(1);
                     giamGiaRepository.save(giamGia);

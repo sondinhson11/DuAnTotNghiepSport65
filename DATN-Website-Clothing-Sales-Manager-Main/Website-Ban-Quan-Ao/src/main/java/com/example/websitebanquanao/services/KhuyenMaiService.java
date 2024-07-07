@@ -30,6 +30,7 @@ public class KhuyenMaiService {
     public List<KhuyenMai> getAll() {
         return khuyenMaiRepository.findAll();
     }
+
     public void checkNgayKetThuc() {
         List<KhuyenMai> khuyenMaiList = khuyenMaiRepository.findAll();
         Date date = new Date(System.currentTimeMillis());
@@ -46,8 +47,8 @@ public class KhuyenMaiService {
         khuyenMai.setMa(khuyenMaiRequest.getMa());
         khuyenMai.setTen(khuyenMaiRequest.getTen());
         khuyenMai.setSoPhanTramGiam(khuyenMaiRequest.getSoPhanTramGiam());
-        khuyenMai.setNgayBatDau(Date.valueOf(khuyenMaiRequest.getNgayBatDau()));
-        khuyenMai.setNgayKetThuc(Date.valueOf(khuyenMaiRequest.getNgayKetThuc()));
+        khuyenMai.setNgayBatDau(khuyenMaiRequest.getNgayBatDau());
+        khuyenMai.setNgayKetThuc(khuyenMaiRequest.getNgayKetThuc());
         khuyenMai.setTrangThai(0);
 
         khuyenMaiRepository.save(khuyenMai);
@@ -62,8 +63,8 @@ public class KhuyenMaiService {
             khuyenMai.setMa(khuyenMaiRequest.getMa());
             khuyenMai.setTen(khuyenMaiRequest.getTen());
             khuyenMai.setSoPhanTramGiam(khuyenMaiRequest.getSoPhanTramGiam());
-            khuyenMai.setNgayBatDau(Date.valueOf(khuyenMaiRequest.getNgayBatDau()));
-            khuyenMai.setNgayKetThuc(Date.valueOf(khuyenMaiRequest.getNgayKetThuc()));
+            khuyenMai.setNgayBatDau(khuyenMaiRequest.getNgayBatDau());
+            khuyenMai.setNgayKetThuc(khuyenMaiRequest.getNgayKetThuc());
             khuyenMai.setTrangThai(0);
 
             khuyenMaiRepository.save(khuyenMai);
@@ -105,12 +106,12 @@ public class KhuyenMaiService {
 //        return khuyenMaiRepository.getByMa(ma);
 //    }
 
-    public boolean ismaValid(String ma) {
-        return ma != null && !ma.trim().isEmpty() && ma.length() <= 10;
-    }
-
+    public boolean isMaValid(String ma) {
+        return ma != null && !ma.trim().isEmpty(); }
     public boolean isTenValid(String ten) {
         return ten != null && !ten.trim().isEmpty();
     }
-
+    public KhuyenMaiResponse getByMa(String ma) {
+        return khuyenMaiRepository.getByMa(ma);
+    }
 }

@@ -13,7 +13,6 @@
                 <tr>
                     <th>STT</th>
                     <th>Tên Loại</th>
-                    <th>Ngày tạo</th>
                     <th>Trạng thái</th>
                     <th>Thao Tác</th>
                 </tr>
@@ -23,7 +22,6 @@
                     <tr>
                         <td>${index.index + thuongHieuPage.number * thuongHieuPage.size + 1}</td>
                         <td>${th.ten}</td>
-                        <td>${th.ngay_tao}</td>
                         <td>
                             <c:if test="${th.trang_thai == 1}">
                                 <span class="badge bg-success">Còn hàng</span>

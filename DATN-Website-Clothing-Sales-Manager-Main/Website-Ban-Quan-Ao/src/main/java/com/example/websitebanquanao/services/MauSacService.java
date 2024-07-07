@@ -46,7 +46,7 @@ public class MauSacService {
 
 
 
-        mauSac.setTrang_thai(mauSacRequest.getTrang_thai());
+        mauSac.setTrang_thai(1);
         mauSacRepository.save(mauSac);
         System.out.println("MauSacService.add: " + mauSac.getTen());
     }

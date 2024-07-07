@@ -126,6 +126,7 @@ public class MauSacController {
             model.addAttribute("view", "/views/admin/mau-sac/index.jsp");
             return "admin/layout";
         }
+
         mauSacService.add(mauSacRequest);
         return "redirect:/admin/san-pham-chi-tiet/create";
     }
