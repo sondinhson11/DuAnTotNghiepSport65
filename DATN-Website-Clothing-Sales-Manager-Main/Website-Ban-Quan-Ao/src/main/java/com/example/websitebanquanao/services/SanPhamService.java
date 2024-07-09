@@ -75,7 +75,7 @@ public class SanPhamService {
             loai.setId(sanPhamRequest.getIdLoai());
             sanPham.setIdLoai(loai);
 
-            ThuongHieu  thuongHieu = new ThuongHieu();
+            ThuongHieu thuongHieu = new ThuongHieu();
             thuongHieu.setId(sanPhamRequest.getIdThuongHieu());
             sanPham.setIdThuongHieu(thuongHieu);
 
@@ -94,6 +94,7 @@ public class SanPhamService {
             e.printStackTrace();
         }
     }
+
     // check trùng tên
     public Boolean checkTen(String ten) {
         SanPham sanPham = sanPhamRepository.findByTen(ten);
@@ -103,6 +104,7 @@ public class SanPhamService {
             return false;
         }
     }
+
     public void update(SanPhamRequest sanPhamRequest, UUID id, MultipartFile anh) {
         SanPham sanPham = sanPhamRepository.findById(id).orElse(null);
         if (sanPham != null) {
@@ -123,7 +125,7 @@ public class SanPhamService {
             loai.setId(sanPhamRequest.getIdLoai());
             sanPham.setIdLoai(loai);
 
-            ThuongHieu  thuongHieu = new ThuongHieu();
+            ThuongHieu thuongHieu = new ThuongHieu();
             thuongHieu.setId(sanPhamRequest.getIdThuongHieu());
             sanPham.setIdThuongHieu(thuongHieu);
 
@@ -175,6 +177,7 @@ public class SanPhamService {
         }
         return list;
     }
+
     public List<TrangChuResponse> getListBanChay(String sort) {
         List<TrangChuResponse> list = transformToResponse(sanPhamRepository.getTop5BestSellingProducts());
         if (sort != null) {
@@ -186,6 +189,7 @@ public class SanPhamService {
         }
         return list;
     }
+
     public List<TrangChuResponse> getListSanPhamByIdLoai(Integer idLoai, String sort) {
         List<TrangChuResponse> list = sanPhamRepository.getListSanPhamByIdLoai(idLoai);
         if (sort != null) {
@@ -213,21 +217,28 @@ public class SanPhamService {
     public List<LoaiResponse> getListLoai() {
         return sanPhamRepository.getListLoai();
     }
+
     public List<LoaiResponse> getListThuongHieu() {
         return sanPhamRepository.getListThuongHieu();
     }
+
     public List<LoaiResponse> getListCauLacBo() {
         return sanPhamRepository.getListThuongHieu();
     }
 
 
-
     public SanPhamChiTietUserResponse getByIdSanPham(UUID idSanPham) {
         return sanPhamRepository.getByIdSanPham(idSanPham);
     }
+
+    public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSac(UUID idSanPham, Integer idMauSac) {
+        return sanPhamRepository.getByIdSanPhamAndIdMauSac(idSanPham, idMauSac);
+    }
+
     public List<SanPham> getAllKhuyenMai2() {
         return sanPhamRepository.getAllKhuyenMai2();
     }
+
     public List<TrangChuResponse> transformToResponse(List<Object[]> resultList) {
         List<TrangChuResponse> responseList = new ArrayList<>();
         for (Object[] result : resultList) {

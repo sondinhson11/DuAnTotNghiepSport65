@@ -119,7 +119,7 @@ public class TrangChuController {
     // trang sản phẩm chi tiết
     @GetMapping("/san-pham/{idSanPham}/{idMauSac}")
     public String sanPhamChiTiet(@PathVariable("idSanPham") UUID idSanPham, @PathVariable("idMauSac") Integer idMauSac, Model model) {
-        model.addAttribute("sanPham", sanPhamService.getByIdSanPham(idSanPham));
+        model.addAttribute("sanPham", sanPhamService.getByIdSanPhamAndIdMauSac(idSanPham,idMauSac));
         model.addAttribute("kh", khachHangRequest);
         model.addAttribute("listMauSac", mauSacService.getListMauSacByIdSanPham(idSanPham));
         model.addAttribute("listKichCo", kichCoService.getListKichCoByIdSanPhamAndMauSac(idSanPham, idMauSac));

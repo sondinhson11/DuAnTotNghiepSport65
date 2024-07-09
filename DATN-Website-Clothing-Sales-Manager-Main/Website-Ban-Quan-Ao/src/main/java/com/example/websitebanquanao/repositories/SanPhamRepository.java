@@ -74,6 +74,8 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietUserResponse(s.id, s.ten, min(spct.gia), spct.moTa) from SanPham s join s.sanPhamChiTiets spct where s.id = :idSanPham group by s.id, s.ten, spct.moTa")
     public SanPhamChiTietUserResponse getByIdSanPham(@Param("idSanPham") UUID idSanPham);
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietUserResponse(s.id, s.ten, min(spct.gia), spct.moTa) from SanPham s join s.sanPhamChiTiets spct where s.id = :idSanPham and spct.idMauSac.id = :idMauSac group by s.id, s.ten, spct.moTa")
+    public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSac(@Param("idSanPham") UUID idSanPham,@Param("idMauSac") Integer idMauSac);
 
     @Query("SELECT DISTINCT new com.example.websitebanquanao.infrastructures.responses.LoaiResponse(sp.idLoai.id, sp.idLoai.ten,sp.idLoai.ngay_sua,sp.idLoai.ngay_sua,sp.idLoai.trang_thai) FROM SanPham sp ORDER BY sp.idLoai.ten")
     public List<LoaiResponse> getListLoai();
