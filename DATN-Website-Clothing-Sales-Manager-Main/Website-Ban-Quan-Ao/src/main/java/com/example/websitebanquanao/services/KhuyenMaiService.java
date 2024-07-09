@@ -1,6 +1,7 @@
 package com.example.websitebanquanao.services;
 
 import com.example.websitebanquanao.entities.KhuyenMai;
+import com.example.websitebanquanao.entities.ThuongHieu;
 import com.example.websitebanquanao.infrastructures.requests.KhuyenMaiRequest;
 import com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse;
 import com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse;
@@ -47,8 +48,8 @@ public class KhuyenMaiService {
         khuyenMai.setMa(khuyenMaiRequest.getMa());
         khuyenMai.setTen(khuyenMaiRequest.getTen());
         khuyenMai.setSoPhanTramGiam(khuyenMaiRequest.getSoPhanTramGiam());
-        khuyenMai.setNgayBatDau(khuyenMaiRequest.getNgayBatDau());
-        khuyenMai.setNgayKetThuc(khuyenMaiRequest.getNgayKetThuc());
+        khuyenMai.setNgayBatDau(Date.valueOf(khuyenMaiRequest.getNgayBatDau()));
+        khuyenMai.setNgayKetThuc(Date.valueOf(khuyenMaiRequest.getNgayKetThuc()));
         khuyenMai.setTrangThai(0);
 
         khuyenMaiRepository.save(khuyenMai);
@@ -63,8 +64,8 @@ public class KhuyenMaiService {
             khuyenMai.setMa(khuyenMaiRequest.getMa());
             khuyenMai.setTen(khuyenMaiRequest.getTen());
             khuyenMai.setSoPhanTramGiam(khuyenMaiRequest.getSoPhanTramGiam());
-            khuyenMai.setNgayBatDau(khuyenMaiRequest.getNgayBatDau());
-            khuyenMai.setNgayKetThuc(khuyenMaiRequest.getNgayKetThuc());
+            khuyenMai.setNgayBatDau(Date.valueOf(khuyenMaiRequest.getNgayBatDau()));
+            khuyenMai.setNgayKetThuc(Date.valueOf(khuyenMaiRequest.getNgayKetThuc()));
             khuyenMai.setTrangThai(0);
 
             khuyenMaiRepository.save(khuyenMai);
@@ -74,7 +75,6 @@ public class KhuyenMaiService {
             System.out.println("KhuyenMaiService.update: null");
         }
     }
-
     @Transactional
     public void updateTrangThai(UUID id, int trangThai) {
         khuyenMaiRepository.updateTrangThaiById(id, trangThai);
@@ -102,9 +102,11 @@ public class KhuyenMaiService {
         }
     }
 
-//    public KhuyenMaiResponse getByMa(String ma) {
-//        return khuyenMaiRepository.getByMa(ma);
-//    }
+
+public KhuyenMai findById(UUID id) {
+    // Trả về đối tượng thương hiệu nếu tìm thấy, hoặc null nếu không tìm thấy
+    return khuyenMaiRepository.findById(id).orElse(null);
+}
 
     public boolean isMaValid(String ma) {
         return ma != null && !ma.trim().isEmpty(); }

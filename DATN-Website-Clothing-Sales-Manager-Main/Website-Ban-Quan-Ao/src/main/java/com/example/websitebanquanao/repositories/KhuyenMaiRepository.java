@@ -30,6 +30,7 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai, UUID> {
     public void updateTrangThaiById(@Param("id") UUID id, @Param("trangThai") int trangThai);
 
     boolean existsByMa(String ma);
+    boolean existsByTen(String ten);
     @Query("select new com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse(km.id, km.ma, km.ten, km.soPhanTramGiam, km.ngayBatDau, km.ngayKetThuc, km.trangThai) from KhuyenMai km where km.ma = :ma")
     public KhuyenMaiResponse getByMa(@Param("ma") String ma);
 }

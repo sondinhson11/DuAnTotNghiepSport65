@@ -11,30 +11,37 @@ import java.util.List;
 
 @Component
 public class CheckHSD_Khuyen_Mai {
-
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
-    // Chạy mỗi 30 giây
-    @Scheduled(fixedRate = 30000)
-    public void updateGiamGiaStatus() {
+    @Scheduled(fixedRate = 30000) // sẽ được chạy mỗi 30 giây
+    public void updateKhuyenMaiStatus() {
+        Date today = new Date();
         List<KhuyenMai> khuyenMais = khuyenMaiRepository.findAll();
-        Date today = new Date(); // Lấy ngày hiện tại
 
         for (KhuyenMai khuyenMai : khuyenMais) {
             Date ngayKetThuc = khuyenMai.getNgayKetThuc();
 
             if (ngayKetThuc != null) {
-                if (ngayKetThuc.compareTo(today) <= 0 && khuyenMai.getTrangThai() != 0) {
-                    khuyenMai.setTrangThai(0);
+                // Kiểm tra nếu ngày kết thúc <= ngày hiện tại thì trạng thái chuyển thành 1 (còn hạn), ngược lại là 0 (hết hạn)
+                int newTrangThai = (ngayKetThuc.compareTo(today) <= 0) ? 1 : 0;
+
+                if (newTrangThai != khuyenMai.getTrangThai()) {
+                    System.out.println(newTrangThai);
+                    khuyenMai.setTrangThai(newTrangThai);
                     khuyenMaiRepository.save(khuyenMai);
-                    System.out.println("Cập nhật trạng thái Khuyến Mại thành: Hết hạn " + khuyenMai.getMa());
-                } else if (ngayKetThuc.compareTo(today) > 0 && khuyenMai.getTrangThai() != 1) {
-                    khuyenMai.setTrangThai(1);
-                    khuyenMaiRepository.save(khuyenMai);
-                    System.out.println("Cập nhật trạng thái Khuyến Mại thành: Còn hạn  " + khuyenMai.getMa());
+
+                    // Hiển thị thông báo trạng thái mới của khuyến mãi
+                    if (newTrangThai == 1) {
+                        System.out.println("Cập nhật trạng thái Khuyến Mãi thành: Còn hạn " + khuyenMai.getMa());
+
+                    } else {
+                        System.out.println("Cập nhật trạng thái Khuyến Mãi thành: Hết hạn " + khuyenMai.getMa());
+                    }
                 }
             }
         }
     }
+
+
 }

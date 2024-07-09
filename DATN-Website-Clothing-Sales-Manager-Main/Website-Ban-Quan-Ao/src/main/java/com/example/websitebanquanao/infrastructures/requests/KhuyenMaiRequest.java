@@ -36,10 +36,10 @@ public class KhuyenMaiRequest {
 
 
     @NotNull(message = "Ngày bắt đầu không được để trống")
-    private Date ngayBatDau;
+    private LocalDate ngayBatDau;
 
     @NotNull(message = "Ngày kết thúc không được để trống")
-    private Date ngayKetThuc;
+    private LocalDate ngayKetThuc;
 
     private Integer trangThai;
 

@@ -1,7 +1,8 @@
 package com.example.websitebanquanao.controllers.admins;
 
+import com.example.websitebanquanao.entities.KhuyenMai;
+import com.example.websitebanquanao.entities.ThuongHieu;
 import com.example.websitebanquanao.infrastructures.requests.KhuyenMaiRequest;
-import com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse;
 import com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse;
 import com.example.websitebanquanao.repositories.KhuyenMaiRepository;
 import com.example.websitebanquanao.services.KhuyenMaiChiTietService;
@@ -87,12 +88,10 @@ public class KhuyenMaiController {
 
 
         // Kiểm tra xem ngày kết thúc sau ngày bắt đầu
-
-        if (khuyenMaiRequest.getNgayKetThuc().compareTo(khuyenMaiRequest.getNgayBatDau()) < 0) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Ngày bắt đầu và ngày kết thúc không hợp lệ");
+        if (khuyenMaiRequest.getNgayKetThuc().isBefore(khuyenMaiRequest.getNgayBatDau())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "ngày bắt đầu và ngày kết thúc không hợp lệ");
             return redirect;
         }
-
 
         khuyenMaiService.add(khuyenMaiRequest);
         redirectAttributes.addFlashAttribute("successMessage", "Thêm khuyến mãi thành công");
@@ -105,9 +104,25 @@ public class KhuyenMaiController {
             model.addAttribute("view", "/views/admin/khuyen-mai/index.jsp");
             return "admin/layout";
         }
+        String updatedTen = khuyenMaiRequest.getTen().trim();
+        String updatedMa = khuyenMaiRequest.getMa().trim();
+        KhuyenMai existingKhuyenMai = khuyenMaiService.findById(id);
+        
+        if (khuyenMaiRepository.existsByTen(updatedTen) && !updatedTen.equals(existingKhuyenMai.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên thương hiệu đã tồn tại");
+            return redirect;
+        }
+        if (khuyenMaiRepository.existsByTen(updatedTen) && !updatedTen.equals(existingKhuyenMai.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên khuyễn mại đã tồn tại");
+            return redirect;
+        }
 
-        if (!khuyenMaiService.isTenValid(khuyenMaiRequest.getTen())) {
+        if (!khuyenMaiService.isTenValid(updatedTen)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
+            return redirect;
+        }
+        if (!khuyenMaiService.isMaValid(updatedMa)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Mã toàn khoảng trắng không hợp lệ");
             return redirect;
         }
 
@@ -115,22 +130,9 @@ public class KhuyenMaiController {
             redirectAttributes.addFlashAttribute("errorMessage", "Phần trăm giảm không hợp lệ");
             return redirect;
         }
-        if (!khuyenMaiService.isMaValid(khuyenMaiRequest.getMa())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Mã toàn khoảng trắng không hợp lệ");
-            return redirect;
+        if (updatedTen.equals(existingKhuyenMai.getTen())) {
+            khuyenMaiRequest.setTen(existingKhuyenMai.getTen());
         }
-
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/khuyen-mai/index.jsp");
-            return "admin/layout"; // Trả về trang index nếu có lỗi
-        }
-
-        KhuyenMaiResponse existingGiamgia = khuyenMaiService.getByMa(khuyenMaiRequest.getMa());
-        if (existingGiamgia != null && !existingGiamgia.getId().equals(id)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật khuyễn mãi thất bại. Mã đã tồn tại.");
-            return redirect;
-        }
-
 
         khuyenMaiService.update(khuyenMaiRequest, id);
         redirectAttributes.addFlashAttribute("successMessage", "Cập nhật khuyến mãi thành công");
