@@ -295,7 +295,7 @@
                             <td>${status.index + 1}</td>
                             <td>
                                 <!-- Ảnh -->
-                                <div id="carouselExampleSlidesOnly_${sp.idSanPhamChiTiet}"
+                                <div id="carouselExampleSlidesOnly_${sp.idSanPham}"
                                      class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000">
                                     <div class="carousel-inner" style="width: 150px; height: 150px">
                                         <c:forEach items="${listAnhSanPham}" var="anhSanPham" varStatus="status">
@@ -311,14 +311,14 @@
                                 <p>${sp.tenSanPham}</p>
                                 <p>${sp.tenMau}/${sp.tenSize}</p>
                             </td>
-                            <td id="gia_sp_${sp.idSanPhamChiTiet}">${sp.gia}</td>
+                            <td id="gia_sp_${sp.idSanPham}">${sp.gia}</td>
                             <td>${sp.soLuong}</td>
-                            <td id="tong_tien_${sp.idSanPhamChiTiet}">
+                            <td id="tong_tien_${sp.idSanPham}">
                                     ${sp.soLuong * sp.gia}
                             </td>
                             <td>
-                                <form id="returnForm_${sp.idSanPhamChiTiet}" action="/admin/san-pham-chi-tiet/tra-hang-vao-kho" method="post" display="none">
-                                    <input type="hidden" name="idSanPhamChiTiet" value="${sp.idSanPhamChiTiet}">
+                                <form id="returnForm_${sp.idSanPham}" action="/admin/san-pham-chi-tiet/tra-hang-vao-kho" method="post" display="none">
+                                    <input type="hidden" name="idSanPhamChiTiet" value="${sp.idSanPham}">
                                     <input type="hidden" name="soLuongTraHang" value="${sp.soLuong}">
                                     <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
                                     <c:if test="${hoaDon.trangThai == 5}">
@@ -333,11 +333,11 @@
                             <script>
                                 // format tổng tiền
                                 document.addEventListener('DOMContentLoaded', function () {
-                                    var giaElement = document.getElementById('tong_tien_${sp.idSanPhamChiTiet}');
+                                    var giaElement = document.getElementById('tong_tien_${sp.idSanPham}');
                                     var giaValue = parseFloat(giaElement.textContent.replace(/[^\d.]/g, '')) || 0;
                                     giaElement.textContent = giaValue.toLocaleString('en-US');
 
-                                    var giaElement = document.getElementById('gia_sp_${sp.idSanPhamChiTiet}');
+                                    var giaElement = document.getElementById('gia_sp_${sp.idSanPham}');
                                     var giaValue = parseFloat(giaElement.textContent.replace(/[^\d.]/g, '')) || 0;
                                     giaElement.textContent = giaValue.toLocaleString('en-US');
                                 });
@@ -345,7 +345,7 @@
                             <script>
                                 // get ảnh sản phẩm
                                 $(document).ready(function () {
-                                    var idSanPham = '${sp.idSanPhamChiTiet}';
+                                    var idSanPham = '${sp.idSanPham}';
                                     $.ajax({
                                         url: '/api/kho/soLuong/' + idSanPham,
                                         type: 'GET',
@@ -365,7 +365,7 @@
                                         dataType: 'json',
                                         success: function (data) {
                                             var listAnhSanPham = data;
-                                            var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPhamChiTiet} .carousel-inner');
+                                            var carouselInner = $('#carouselExampleSlidesOnly_${sp.idSanPham} .carousel-inner');
                                             carouselInner.empty();
 
                                             $.each(listAnhSanPham, function (index, anhSanPham) {
