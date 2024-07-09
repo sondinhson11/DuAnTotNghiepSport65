@@ -27,7 +27,7 @@ public interface GiamGiaRepository extends JpaRepository<GiamGia, UUID> {
     boolean existsByMa(String ma);
 
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse(g.id, g.ma, g.soPhanTramGiam, g.soTienToiThieu, g.soLuong, g.ngayBatDau, g.ngayKetThuc,g.ngay_sua,g.ngay_tao,g.trang_thai)from GiamGia g ORDER BY CASE WHEN g.trang_thai = 1 THEN 0 ELSE 1 END, g.ma")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse(g.id, g.ma, g.soPhanTramGiam, g.soTienToiThieu, g.soLuong, g.ngayBatDau, g.ngayKetThuc,g.ngay_sua,g.ngay_tao,g.trang_thai)from GiamGia g where g.trang_thai = 1 ORDER BY CASE WHEN g.trang_thai = 1 THEN 0 ELSE 1 END, g.ma")
     public List<GiamGiaResponse> getALL();
 
 

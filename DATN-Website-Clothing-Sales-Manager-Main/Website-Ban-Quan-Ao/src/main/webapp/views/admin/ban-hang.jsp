@@ -569,22 +569,27 @@
                                 <label class="form-label">Tổng Tiền</label>
                                 <input type="number" class="form-control" id="tong-tien" name="tong-tien" value="${tongTien}" readonly>
                             </div>
-                            <div class="col" id="phi-van-chuyen-div" style="display: none">
-                                <label class="form-label">Phí Vận Chuyển</label>
-                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" oninput="formatCurrency(this);" value="0">
-                            </div>
                             <div class="col">
-                                <label class="form-label">Tiền Giảm</label>
-                                <input type="number" class="form-control" id="tien-giam" name="tien-giam" value="0" readonly>
+                                <label class="form-label">Tiền Cần Thanh Toán</label>
+                                <input type="text" class="form-control" id="tien-thanh-toan" value="0" name="tien-thanh-toan" readonly>
                             </div>
                         </div>
-
                         <div class="row mb-3" >
                             <div class="col" >
                                 <div class="mb-3" id="tien-khach-dua-div">
                                     <label class="form-label">Tiền khách đưa</label>
                                     <input type="number" class="form-control" id="tien-khach-dua" value="0" name="tienKhachDua" min="${tongTien}" step="0.01">
                                 </div>
+                            </div>
+                            <div class="col" id="phi-van-chuyen-div" style="display: none">
+                                <label class="form-label">Phí Vận Chuyển</label>
+                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" oninput="formatCurrency(this);" value="0">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Tiền Giảm</label>
+                                <input type="number" class="form-control" id="tien-giam" name="tien-giam" value="0" readonly>
                             </div>
                             <div class="col" >
                                 <div class="mb-3"id="tien-thua-div">
@@ -593,12 +598,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label class="form-label">Tiền Cần Thanh Toán</label>
-                                <input type="text" class="form-control" id="tien-thanh-toan" value="0" name="tien-thanh-toan" readonly>
-                            </div>
+                        <div class="row mb-3" >
                             <div class="col">
                                 <div class="mb-3">
                                     <label class="form-label">Ghi chú</label>
@@ -606,7 +606,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row mb-3 justify-content-center">
                             <div class="col-auto">
                                 <c:if test="${tongTien>0}">
@@ -949,10 +948,10 @@
             thanhToan.innerHTML = 'Tạo đơn hàng';
             phiVanChuyen.style.display = 'block';
             // đổi action
-            tienKhachDua.style.display = 'none';
+            // tienKhachDua.style.display = 'none';
             // hinhThucThanhToan.style.display = 'none';
             // giamGia.style.display = 'none';
-            tienThua.style.display = 'none';
+            // tienThua.style.display = 'none';
             tinhDiv.style.display = 'block';
             huyenDiv.style.display = 'block';
             xaDiv.style.display = 'block';
@@ -998,12 +997,22 @@
                 },
                 success: function (response) {
                     // Xử lý khi thêm thành công
-                    alert("Đã thêm sản phẩm vào giỏ hàng!");
+                    // alert("Đã thêm sản phẩm vào giỏ hàng!");
+                    Swal.fire({
+                        title: "Thông Báo!",
+                        text: "Đã thêm sản phẩm vào giỏ hàng!",
+                        icon: "success"
+                    });
                     location.reload();
                 },
                 error: function (xhr, status, error) {
                     // Xử lý khi có lỗi từ server
-                    alert("Lỗi: " + xhr.responseText);
+                    Swal.fire({
+                        title: "Thông Báo!",
+                        text: "Lỗi: " + xhr.responseText,
+                        icon: "error"
+                    });
+                    // alert("Lỗi: " + xhr.responseText);
                     // load lại trang
                     location.reload();
                 }
@@ -1017,7 +1026,12 @@
         if (cameras.length > 0) {
             scanner.start(cameras[0]);
         } else {
-            alert('Không tìm thấy máy ảnh.');
+            Swal.fire({
+                title: "Thông Báo!",
+                text: "Không tìm thấy máy ảnh",
+                icon: "error"
+            });
+            // alert('Không tìm thấy máy ảnh.');
         }
     }).catch(function (e) {
         console.error(e);
@@ -1039,13 +1053,23 @@
             },
             success: function (response) {
                 // Xử lý khi thêm thành công
-                alert("Đã thêm sản phẩm vào giỏ hàng!");
+                // alert("Đã thêm sản phẩm vào giỏ hàng!");
+                Swal.fire({
+                    title: "Thông Báo!",
+                    text: "Đã thêm sản phẩm vào giỏ hàng!",
+                    icon: "success"
+                });
                 $("#SPModal").modal("hide");  // Đóng modal sau khi thêm sản phẩm thành công
                 location.reload();
             },
             error: function (xhr, status, error) {
                 // Xử lý khi có lỗi từ server
-                alert("Lỗi: " + xhr.responseText);
+                Swal.fire({
+                    title: "Thông Báo!",
+                    text: "Lỗi: " + xhr.responseText,
+                    icon: "error"
+                });
+                // alert("Lỗi: " + xhr.responseText);
                 console.log("Lỗi: " + xhr.responseText);
                 // load lại trang
                 location.reload();
@@ -1267,7 +1291,7 @@
         $(document).ready(function () {
             var tongTienInput = $("#tong-tien"); // Lấy ô input của tổng tiền
             var tienThanhToan = $("#tien-thanh-toan");
-            tienThanhToan.val(tongTienInput.val())
+            tienThanhToan.val(tongTienInput.val().toLocaleString('vi-VN'))
             var vanchuyen = $("#toggleSwitch")
             var selectElement = $("#hinh-thuc-thanh-toan");
             var selectElementGiamGia = $("#giam-gia");
@@ -1283,7 +1307,7 @@
             // Sự kiện change cho hình thức thanh toán
             selectElement.on("change", function () {
                 updateTienKhachDua()
-                var tongTienValue = parseFloat(tienThanhToan.val());
+                var tongTienValue = parseFloat(tienThanhToan.val().replace(/[^\d]/g, '')) || 0;
                 // Gán giá trị vào input có id="total"
                 var totalInput = document.getElementById('total');
                 totalInput.value = tongTienValue;
@@ -1318,38 +1342,38 @@
                 inputValue = inputValue.replace(/,/g, '');
 
                 // Gán giá trị đã định dạng lại vào trường input
-                input.value = inputValue;
+                input.value = inputValue.toLocaleString('en-US');
             }
 
             function updateTotal() {
                 // Use jQuery to get the value of the feeInput
                 let feeInput = $('#feeInput');
                 // Giữ lại chỉ các ký tự số và dấu phẩy
-                let phiVanChuyen = parseFloat(feeInput.val()|| 0);
+                let phiVanChuyen = parseFloat(feeInput.val().replace(/\./g, ''))|| 0;
 
                 // Lấy giá trị tổng tiền từ JSP
-                let tongTien = parseFloat('${tongTien}') || 0;
+                let tongTien = parseFloat('${tongTien}'.replace(/\./g, '')) || 0;
 
                 // Thêm phí vận chuyển vào tổng tiền
                 tongTien += phiVanChuyen;
 
                 // Định dạng lại tổng tiền và hiển thị trên giao diện
                 let formattedTongTien = tongTien;
-                tongTienInput.val(formattedTongTien);
-                tienThanhToan.val(formattedTongTien)
+                tongTienInput.val(formattedTongTien).toLocaleString('vi-VN');
+                tienThanhToan.val(formattedTongTien).toLocaleString('vi-VN');
 
                 // Gán giá trị phiVanChuyen cho trường phiVanChuyen ẩn để submit lên server
-                feeInput.val(phiVanChuyen);
+                feeInput.val(phiVanChuyen).toLocaleString('vi-VN');
                 updateTienGiam(); // Cập nhật tiền khách đưa khi thay đổi hình thức thanh toán
 
             }
 
             function updateTienKhachDua() {
-                var hinhThucThanhToan = selectElement.val();
-                var tongTien = parseFloat(tienThanhToan.val());
+                var hinhThucThanhToan = selectElement.val().replace(/[^\d]/g, '') || 0;
+                var tongTien = parseFloat(tienThanhToan.val().replace(/[^\d]/g, '')) || 0;
 
                 if (hinhThucThanhToan === "2" || hinhThucThanhToan === "3") {
-                    tienKhachDuaInput.val(tongTien);
+                    tienKhachDuaInput.val(tongTien).toLocaleString('vi-VN');
                 } else {
                     tienKhachDuaInput.val("");
                 }
@@ -1360,28 +1384,32 @@
                 var selectedOption = selectElementGiamGia.find(':selected');
                 var soPhanTramGiam = selectedOption.data('sophantramgiam');
 
-                var tongTien = parseFloat(tongTienInput.val());
+                var tongTien = parseFloat(tongTienInput.val().replace(/[^\d]/g, '')) || 0;
                 if (soPhanTramGiam !== undefined) {
                     var tienGiamne = tongTien * (soPhanTramGiam / 100)
-                    tienGiam.val(tienGiamne);
-                    tienThanhToan.val((tongTien - tienGiamne))
-                    tienThanhToan.val((tongTien - tienGiamne))
+                    tienGiam.val(tienGiamne.toLocaleString('vi-VN'));
+                    tienThanhToan.val((tongTien - tienGiamne).toLocaleString('vi-VN'))
 
                 } else {
-                    tienThanhToan.val(tongTien)
-                    tienGiam.text(0);
+                    tienThanhToan.val(tongTien).toLocaleString('vi-VN')
+                    tienGiam.val(0);
                 }
             }
 
             function updateTienThua() {
-                var tienKhachDua = parseFloat(tienKhachDuaInput.val() || 0);
-                var tongTien = parseFloat(tienThanhToan.val());
+                var tienKhachDua = parseFloat(tienKhachDuaInput.val().replace(/[^\d]/g, '')) || 0;
+                var tongTien = parseFloat(tienThanhToan.val().replace(/[^\d]/g, '')) || 0;
                 if (tienKhachDua >= tongTien) {
                     var tienThua = tienKhachDua - tongTien;
-                    tienThuaLabel.val(tienThua);
+                    tienThuaLabel.val(tienThua.toLocaleString('vi-VN'));
                 } else {
                     tienThuaLabel.val("0");
-                    alert("Tiền khách đưa phải lớn hơn hoặc bằng tổng tiền!");
+                    Swal.fire({
+                        title: "Thông Báo!",
+                        text: "Tiền khách đưa phải lớn hơn hoặc bằng tổng tiền!",
+                        icon: "error"
+                    });
+                    // alert("Tiền khách đưa phải lớn hơn hoặc bằng tổng tiền!");
                 }
             }
         });
