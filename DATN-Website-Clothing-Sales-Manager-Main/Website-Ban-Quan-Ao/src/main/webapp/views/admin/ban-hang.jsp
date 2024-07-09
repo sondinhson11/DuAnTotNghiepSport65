@@ -609,7 +609,12 @@
 
                         <div class="row mb-3 justify-content-center">
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-primary" id="thanh_toan" onclick="exportPDFBill()">Thanh toán</button>
+                                <c:if test="${tongTien>0}">
+                                    <button type="submit" class="btn btn-primary" id="thanh_toan" onclick="exportPDFBill()">Thanh toán</button>
+                                </c:if>
+                                <c:if test="${tongTien==null}">
+                                    <button type="submit" class="btn btn-primary" id="thanh_toan" onclick="exportPDFBill()" disabled>Thanh toán</button>
+                                </c:if>
                             </div>
                         </div>
 
