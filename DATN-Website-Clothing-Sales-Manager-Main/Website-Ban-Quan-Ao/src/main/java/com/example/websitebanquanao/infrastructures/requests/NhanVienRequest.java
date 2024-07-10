@@ -64,7 +64,6 @@ public class NhanVienRequest {
                         StringUtils.isEmpty(diaChi) ||
                         StringUtils.isEmpty(tinhThanhPho) ||
                         StringUtils.isEmpty(xaPhuong) ||
-                        StringUtils.isEmpty(ma) ||
                         StringUtils.isEmpty(quanHuyen);
     }
 
@@ -76,7 +75,6 @@ public class NhanVienRequest {
                         StringUtils.isEmpty(diaChi) ||
                         StringUtils.isEmpty(tinhThanhPho) ||
                         StringUtils.isEmpty(xaPhuong) ||
-                        StringUtils.isEmpty(ma) ||
                         StringUtils.isEmpty(quanHuyen);
     }
 }
