@@ -27,16 +27,18 @@
             <div class="col">
                 <div id="carouselExampleControls" class="carousel slide custom-carousel" data-ride="carousel">
                     <div class="carousel-inner">
-
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="..." alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="..." alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="..." alt="Third slide">
-                        </div>
+                        <c:forEach items="${listAnh}" var="hinhAnh" varStatus="loop">
+                            <c:if test="${loop.index == 0}">
+                                <div class="carousel-item active">
+                                    <img src="${hinhAnh.duongDan}" class="d-block w-100" alt="...">
+                                </div>
+                            </c:if>
+                            <c:if test="${loop.index != 0}">
+                                <div class="carousel-item">
+                                    <img src="${hinhAnh.duongDan}" class="d-block w-100" alt="...">
+                                </div>
+                            </c:if>
+                        </c:forEach>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
