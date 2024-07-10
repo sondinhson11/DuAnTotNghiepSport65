@@ -5,6 +5,12 @@
 <html>
 <head>
     <title>Sport65</title>
+    <link
+            rel="icon"
+            href=
+                    "https://www.youtube.com/s/desktop/a2763344/img/favicon.ico"
+            type="image/x-icon"
+    />
     <link rel="stylesheet" href="/../views/user/css/index.css"/>
     <link rel="stylesheet" href="/../views/user/css/styleguide.css"/>
     <link rel="stylesheet" href="/../views/user/css/productdetail.css"/>

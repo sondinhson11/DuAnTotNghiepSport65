@@ -5,6 +5,12 @@
 <html>
 <head>
     <title>Admin</title>
+    <link
+            rel="icon"
+            href=
+                    "https://www.youtube.com/s/desktop/a2763344/img/favicon.ico"
+            type="image/x-icon"
+    />
     <link href="/../views/admin/css/styles.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
