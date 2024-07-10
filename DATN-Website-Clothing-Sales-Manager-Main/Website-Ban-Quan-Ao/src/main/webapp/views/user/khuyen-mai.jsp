@@ -72,7 +72,7 @@
                                     // nếu tồn tại khuyến mãi thì mới hiển thị thẻ span
                                     if (data > 0) {
                                         span.show();
-                                        span.html(data + "% off");
+                                        span.html( "-" +data + "%");
                                     } else {
                                         span.hide();
                                     }

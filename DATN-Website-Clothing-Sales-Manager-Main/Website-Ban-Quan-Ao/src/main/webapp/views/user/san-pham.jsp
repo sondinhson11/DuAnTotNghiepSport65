@@ -242,7 +242,7 @@
                                 if (data != null) {
                                     if (data > 0) {
                                         span.show();
-                                        span.html(data + "% off");
+                                        span.html("-" + data + "%");
                                     } else {
                                         span.hide();
                                     }
