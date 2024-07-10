@@ -7,23 +7,49 @@
         max-height: 300px;
         width: auto;
     }
+    .custom-carousel {
+        width: 400px;
+        height: 600px;
+    }
+
+    .custom-carousel .carousel-item img {
+        height: 600px;
+        width: 400px;
+        object-fit: cover;
+    }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <div class="container">
     <div class="p-4">
         <div class="row row-cols-1 row-cols-lg-2 g-4">
+<%--            ----------------ANH SP --------------------%>
             <div class="col">
-                <img src="https://placehold.co/400x600?text=Product+Image" alt="Product Image" class="img-fluid rounded-lg shadow" />
-                <div class="d-flex mt-4 gap-2">
-                    <img src="https://placehold.co/80x80?text=Image1" alt="Thumbnail 1" class="img-thumbnail" />
-                    <img src="https://placehold.co/80x80?text=Image2" alt="Thumbnail 2" class="img-thumbnail" />
-                    <img src="https://placehold.co/80x80?text=Image3" alt="Thumbnail 3" class="img-thumbnail" />
-                    <img src="https://placehold.co/80x80?text=Image4" alt="Thumbnail 4" class="img-thumbnail" />
-                    <img src="https://placehold.co/80x80?text=Image5" alt="Thumbnail 5" class="img-thumbnail" />
-                </div>
-            </div>
+                <div id="carouselExampleControls" class="carousel slide custom-carousel" data-ride="carousel">
+                    <div class="carousel-inner">
 
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="..." alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="..." alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="..." alt="Third slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+            </div>
+<%-------------------------------------------------------------%>
             <div class="col">
                 <h1 class="h2">${sanPham.ten}</h1>
                 <p class="text-muted">Mã sản phẩm: FABK00101CT00SB_DBU-29 | Tình trạng: <span class="text-danger">Hết hàng</span> | Thương hiệu: TORANO</p>
