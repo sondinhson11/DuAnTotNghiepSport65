@@ -22,5 +22,6 @@ public class SanPhamChiTietUserResponse {
     private String moTa;
     private Integer trangThai;
     private String maSanPham;
+    private String tenThuongHieu;
 
 }

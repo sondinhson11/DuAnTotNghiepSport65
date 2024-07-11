@@ -57,7 +57,7 @@
                 <h1 class="h2">${sanPham.ten}</h1>
                 <p class="text-muted">Mã sản phẩm: ${sanPham.maSanPham} | Tình trạng: <span
                         class="text-danger">${sanPham.trangThai == 0 ? "Hết Hàng" :"Còn Hàng"  }</span> | Thương hiệu:
-                    TORANO</p>
+                    ${sanPham.tenThuongHieu}</p>
 
                 <div class="mt-4 p-4 bg-light rounded-lg shadow-sm">
                     <div class="d-flex justify-content-between align-items-center flex-wrap">
@@ -125,8 +125,8 @@
                                 const checkboxes = document.querySelectorAll('input[name="idMauSac"]');
                                 checkboxes.forEach((checkbox) => {
                                     checkbox.addEventListener('change', function () {
-                                        const selectedValues = [...document.querySelectorAll('input[name="idMauSac"]:checked')].map(cb => cb.value);
-                                        const newURL = "http://localhost:8080/san-pham/${sanPham.id}/" + selectedValues.join("/") + "/1";
+                                        const selectedValues = document.querySelector('input[name="idMauSac"]:checked').value;
+                                        const newURL = "http://localhost:8080/san-pham/${sanPham.id}/" + selectedValues + "/1";
                                         window.location.href = newURL;
                                     });
                                 });

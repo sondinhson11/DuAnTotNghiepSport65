@@ -343,12 +343,10 @@ public class TrangChuController {
     public String dangNhap(@ModelAttribute("dangNhap") DangNhapUserRequest dangNhapUserRequest, RedirectAttributes redirectAttributes) {
         String email = dangNhapUserRequest.getEmail();
         String matKhau = dangNhapUserRequest.getMatKhau();
-
         if (email == null || email.isEmpty() || matKhau == null || matKhau.isEmpty()) {
             redirectAttributes.addFlashAttribute("loginError", "Vui lòng điền đầy đủ thông tin.");
             return "redirect:/dang-nhap";
         }
-
         KhachHangResponse khachHangResponse = khachHangService.getByEmailAndMatKhau(email, matKhau);
         if (khachHangResponse != null) {
             if (khachHangResponse.getTrangThai() == 1) {

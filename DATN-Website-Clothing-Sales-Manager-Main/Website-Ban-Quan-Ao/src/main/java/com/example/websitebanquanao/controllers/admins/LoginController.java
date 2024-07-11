@@ -39,25 +39,26 @@ public class LoginController {
     public String checkLogin(@ModelAttribute("nv") LoginAdminRequest loginAdminRequest, Model model) {
         String email = loginAdminRequest.getEmail();
         String matKhau = loginAdminRequest.getMatKhau();
-        NhanVienRequest nhanVienRequest = nhanVienService.checkLogin(email, matKhau);
         session.removeAttribute("error");
-
         if (email.trim().isEmpty() || matKhau.trim().isEmpty()) {
             session.setAttribute("error", "Vui lòng nhập đầy đủ thông tin");
             return "admin/login/login";
         }
-        if(nhanVienRequest.getTrangThai()==1){
-            session.setAttribute("error", "Tài khoản của bạn đã bị khóa không thể đăng nhập. Liên hệ Admin để biết thêm...");
-            return "admin/login/login";
-
-        }
+        NhanVienRequest nhanVienRequest = nhanVienService.checkLogin(email, matKhau);
         if (nhanVienRequest != null) {
-            session.setAttribute("admin", nhanVienRequest);
-            return "redirect:/admin";
+            if (nhanVienRequest.getTrangThai() == 1) {
+                session.setAttribute("error", "Tài khoản của bạn đã bị khóa không thể đăng nhập. Liên hệ Admin để biết thêm...");
+                return "admin/login/login";
+
+            } else {
+                session.setAttribute("admin", nhanVienRequest);
+                return "redirect:/admin";
+            }
         } else {
             session.setAttribute("error", "Email hoặc mật khẩu không đúng");
             return "admin/login/login";
         }
+
     }
 
     @GetMapping("/logout")
