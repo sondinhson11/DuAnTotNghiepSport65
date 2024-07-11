@@ -67,7 +67,8 @@
         <div class="row row-cols-2 row-cols-md-4 g-4">
             <c:forEach items="${listTrangChu}" var="sanPham">
                 <div class="col">
-                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}" class="text-decoration-none text-dark">
+                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}/${sanPham.idKichCo}"
+                       class="text-decoration-none text-dark">
                         <div class="card product-card border-0">
                             <img src="${sanPham.anh}" class="card-img-top product-image" alt="${sanPham.ten}">
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>
@@ -124,13 +125,15 @@
         <div class="row row-cols-2 row-cols-md-4 g-4">
             <c:forEach items="${listBanChay}" var="sanPham">
                 <div class="col">
-                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}" class="text-decoration-none text-dark">
+                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}/${sanPham.idKichCo}"
+                       class="text-decoration-none text-dark">
                         <div class="card product-card border-0">
                             <img src="${sanPham.anh}" class="card-img-top product-image" alt="${sanPham.ten}">
                             <span class="discount-percentage" id="so-phan-tram-giam_2_${sanPham.id}"></span>
                             <div class="card-body text-center">
                                 <p class="product-name">${sanPham.ten}</p>
-                                <p class="fw-bold product-price" id="gia-san-pham_2_${sanPham.id}">${sanPham.gia} vnđ</p>
+                                <p class="fw-bold product-price" id="gia-san-pham_2_${sanPham.id}">${sanPham.gia}
+                                    vnđ</p>
                                 <p class="fw-bold new-price" id="gia-moi_${sanPham.id}"></p>
                             </div>
                         </div>

@@ -7,6 +7,7 @@
         max-height: 300px;
         width: auto;
     }
+
     .custom-carousel {
         width: 400px;
         height: 600px;
@@ -23,7 +24,7 @@
 <div class="container">
     <div class="p-4">
         <div class="row row-cols-1 row-cols-lg-2 g-4">
-<%--            ----------------ANH SP --------------------%>
+            <%--            ----------------ANH SP --------------------%>
             <div class="col">
                 <div id="carouselExampleControls" class="carousel slide custom-carousel" data-ride="carousel">
                     <div class="carousel-inner">
@@ -51,10 +52,12 @@
                 </div>
 
             </div>
-<%-------------------------------------------------------------%>
+            <%-------------------------------------------------------------%>
             <div class="col">
                 <h1 class="h2">${sanPham.ten}</h1>
-                <p class="text-muted">Mã sản phẩm: FABK00101CT00SB_DBU-29 | Tình trạng: <span class="text-danger">Hết hàng</span> | Thương hiệu: TORANO</p>
+                <p class="text-muted">Mã sản phẩm: ${sanPham.maSanPham} | Tình trạng: <span
+                        class="text-danger">${sanPham.trangThai == 0 ? "Hết Hàng" :"Còn Hàng"  }</span> | Thương hiệu:
+                    TORANO</p>
 
                 <div class="mt-4 p-4 bg-light rounded-lg shadow-sm">
                     <div class="d-flex justify-content-between align-items-center flex-wrap">
@@ -62,13 +65,14 @@
                         <div class="text-end d-flex align-items-center">
                             <span class="text-danger fw-bold fs-4" id="gia-moi"></span>
                             <span id="gia-san-pham">${sanPham.gia}</span>
-                            <div class="bg-danger text-white fw-bold py-05 px-2 rounded-pill ms-3" id="so-phan-tram-giam_${sanPham.id}" style="font-size: 14px; display: none;"></div>
+                            <div class="bg-danger text-white fw-bold py-05 px-2 rounded-pill ms-3"
+                                 id="so-phan-tram-giam_${sanPham.id}" style="font-size: 14px; display: none;"></div>
                         </div>
                     </div>
                 </div>
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function() {
+                    document.addEventListener("DOMContentLoaded", function () {
                         var giaSanPhamElement = document.getElementById("gia-san-pham");
                         var giaSanPhamText = giaSanPhamElement.innerText;
                         var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
@@ -103,16 +107,16 @@
                 </script>
 
 
-
-
                 <form:form modelAttribute="gioHang" action="/gio-hang/${sanPham.id}" method="post">
                     <div class="mt-4">
                         <span class="fw-bold">Màu sắc:</span>
                         <div class="d-flex flex-wrap gap-2 mt-2">
                             <div id="mauSacSelect">
                                 <c:forEach items="${listMauSac}" var="mauSac">
-                                    <input class="btn-check" type="radio" id="mauSac${mauSac.id}" name="idMauSac" value="${mauSac.id}" ${mauSac.id == idMauSac ? "checked" : ""}>
-                                    <label class="btn btn-outline-secondary d-inline-block me-2 mb-2" for="mauSac${mauSac.id}">
+                                    <input class="btn-check" type="radio" id="mauSac${mauSac.id}" name="idMauSac"
+                                           value="${mauSac.id}" ${mauSac.id == idMauSac ? "checked" : ""}>
+                                    <label class="btn btn-outline-secondary d-inline-block me-2 mb-2"
+                                           for="mauSac${mauSac.id}">
                                             ${mauSac.ten}
                                     </label>
                                 </c:forEach>
@@ -122,7 +126,7 @@
                                 checkboxes.forEach((checkbox) => {
                                     checkbox.addEventListener('change', function () {
                                         const selectedValues = [...document.querySelectorAll('input[name="idMauSac"]:checked')].map(cb => cb.value);
-                                        const newURL = "http://localhost:8080/san-pham/${sanPham.id}/" + selectedValues.join("/");
+                                        const newURL = "http://localhost:8080/san-pham/${sanPham.id}/" + selectedValues.join("/") + "/1";
                                         window.location.href = newURL;
                                     });
                                 });
@@ -134,29 +138,38 @@
                             <span class="fw-bold">Kích cỡ:</span>
 
                             <div class="d-flex flex-wrap gap-2 mt-2">
-                                <c:forEach items="${listKichCo}" var="kichCo">
-                                    <input class="btn-check" type="radio" name="idKichCo" id="kichCo${kichCo.id}" value="${kichCo.id}">
-                                    <label class="btn btn-outline-secondary d-inline-block me-2 mb-2"  for="kichCo${kichCo.id}">
-                                            ${kichCo.ten}
-                                    </label>
-                                </c:forEach>
+                                <div id="kichCoSelect">
+                                    <c:forEach items="${listKichCo}" var="kichCo" >
+                                        <input class="btn-check" type="radio" name="idKichCo" id="kichCo${kichCo.id}"
+                                               value="${kichCo.id}">
+                                        <label class="btn btn-outline-secondary d-inline-block me-2 mb-2"
+                                               for="kichCo${kichCo.id}">
+                                                ${kichCo.ten}
+                                        </label>
+                                    </c:forEach>
+                                </div>
                             </div>
                             <div>
-                                <p class="text-danger ms-3 mt-2" id="textKichCo" style="display: none">Bạn cần chọn kích cỡ</p>
-                                <a href="#" class="text-primary text-decoration-none mt-2 d-block">Hướng dẫn chọn size</a>
+                                <p class="text-danger ms-3 mt-2" id="textKichCo" style="display: none">Bạn cần chọn kích
+                                    cỡ</p>
                             </div>
 
                         </div>
-
 
 
                         <div class="mt-4">
                             <div class="quantity">
                                 <span class="fw-bold">Số lượng:</span>
                                 <div class="d-flex align-items-center mt-2">
-                                    <button class="btn btn-outline-secondary d-inline-block me-2 mb-2" onclick="decrement(event)">-</button>
-                                    <form:input path="soLuong" id="quantity" type="text" value="1" min="1"  max="100" class="form-control text-center border-top-0 border-bottom-0" style="width: 80px;" />
-                                    <button class="btn btn-outline-secondary d-inline-block me-2 mb-2" onclick="increment(event)">+</button>
+                                    <button class="btn btn-outline-secondary d-inline-block me-2 mb-2"
+                                            onclick="decrement(event)">-
+                                    </button>
+                                    <form:input path="soLuong" id="quantity" type="text" value="1" min="1" max="100"
+                                                class="form-control text-center border-top-0 border-bottom-0"
+                                                style="width: 80px;"/>
+                                    <button class="btn btn-outline-secondary d-inline-block me-2 mb-2"
+                                            onclick="increment(event)">+
+                                    </button>
                                 </div>
                                 <script>
                                     function decrement(event) {
@@ -195,10 +208,10 @@
                                 kichCoSelect.addEventListener('change', fetchData);
 
                                 function fetchData() {
-                                    const idMauSac = mauSacSelect.value;
-                                    const idKichCo = kichCoSelect.value;
+                                    const idMauSac = document.querySelector('input[name="idMauSac"]:checked');
+                                    const idKichCo = document.querySelector('input[name="idKichCo"]:checked');
 
-                                    fetch(`/so-luong-san-pham/${sanPham.id}/` + idMauSac + `/` + idKichCo)
+                                    fetch(`/so-luong-san-pham/${sanPham.id}/` + idMauSac.value + `/` + idKichCo.value)
                                         .then(response => {
                                             if (!response.ok) {
                                                 throw new Error('Network response was not ok');
@@ -222,7 +235,9 @@
                     </div>
                     <div class="mt-4 d-flex gap-3">
                         <c:if test="${khachHang != null}">
-                            <button class="btn btn-secondary flex-grow-1" type="submit" id="btnThemVaoGioHang">THÊM VÀO GIỎ</button>
+                            <button class="btn btn-secondary flex-grow-1" type="submit" id="btnThemVaoGioHang">THÊM VÀO
+                                GIỎ
+                            </button>
                             <p class="text-danger ms-3 mt-2" id="textKichCo" style="display: none">Bạn cần chọn kích
                                 cỡ</p>
                             <p class="text-danger ms-3 mt-2" id="textMauSac" style="display: none">Bạn cần chọn màu
@@ -237,22 +252,28 @@
                     </div>
                 </form:form>
                 <div class="mt-4 d-flex align-items-center gap-2 text-muted">
-                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=S" alt="Facebook" /></a>
-                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=P" alt="Messenger" /></a>
-                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=O" alt="Twitter" /></a>
-                    <a href="#" class="text-danger"><img src="https://openui.fly.dev/openui/24x24.svg?text=R" alt="Pinterest" /></a>
-                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=T" alt="Email" /></a>
-                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=6" alt="Email" /></a>
-                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=5" /></a>
+                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=S"
+                                                          alt="Facebook"/></a>
+                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=P"
+                                                          alt="Messenger"/></a>
+                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=O"
+                                                          alt="Twitter"/></a>
+                    <a href="#" class="text-danger"><img src="https://openui.fly.dev/openui/24x24.svg?text=R"
+                                                         alt="Pinterest"/></a>
+                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=T"
+                                                          alt="Email"/></a>
+                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=6"
+                                                          alt="Email"/></a>
+                    <a href="#" class="text-primary"><img src="https://openui.fly.dev/openui/24x24.svg?text=5"/></a>
                 </div>
 
                 <div class="mt-4 d-flex gap-2 text-muted">
                     <div class="d-flex align-items-center gap-2">
-                        <img src="https://openui.fly.dev/openui/24x24.svg?text=🔒" alt="Secure Payment" />
+                        <img src="https://openui.fly.dev/openui/24x24.svg?text=🔒" alt="Secure Payment"/>
                         <span>Hàng phân phối chính hãng 100%</span>
                     </div>
                     <div class="d-flex align-items-center gap-2">
-                        <img src="https://openui.fly.dev/openui/24x24.svg?text=📞" alt="Customer Support" />
+                        <img src="https://openui.fly.dev/openui/24x24.svg?text=📞" alt="Customer Support"/>
                         <span>TỔNG ĐÀI 24/7 : 0383349871</span>
                     </div>
                 </div>

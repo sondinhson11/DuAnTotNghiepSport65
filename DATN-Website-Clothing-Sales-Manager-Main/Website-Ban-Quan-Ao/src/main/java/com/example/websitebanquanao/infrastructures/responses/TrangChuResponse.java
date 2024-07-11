@@ -20,6 +20,6 @@ public class TrangChuResponse {
     private BigDecimal gia;
     private Integer idMauSac;
     private Date ngayTao;
-
+    private Integer idKichCo;
 
 }

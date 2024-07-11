@@ -215,7 +215,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
             <c:forEach items="${listSanPham}" var="sanPham">
                 <div class="col">
-                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}" class="text-decoration-none text-dark">
+                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}/${sanPham.idKichCo}" class="text-decoration-none text-dark">
                         <div class="card product-card border-0">
                             <img src="${sanPham.anh}" class="product-image" alt="${sanPham.ten}">
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>

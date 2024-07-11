@@ -231,8 +231,8 @@ public class SanPhamService {
         return sanPhamRepository.getByIdSanPham(idSanPham);
     }
 
-    public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSac(UUID idSanPham, Integer idMauSac) {
-        return sanPhamRepository.getByIdSanPhamAndIdMauSac(idSanPham, idMauSac);
+    public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSacAndIdKichCo(UUID idSanPham, Integer idMauSac,Integer idKichCo) {
+        return sanPhamRepository.getByIdSanPhamAndIdMauSacAndIdKichCo(idSanPham, idMauSac,idKichCo);
     }
 
     public List<SanPham> getAllKhuyenMai2() {
@@ -249,6 +249,7 @@ public class SanPhamService {
             response.setGia(new BigDecimal(result[3].toString()));
             response.setIdMauSac(Integer.parseInt(result[4].toString()));
             response.setNgayTao((Date) result[5]);
+            response.setIdKichCo(Integer.parseInt(result[6].toString()));
             responseList.add(response);
         }
         return responseList;

@@ -20,5 +20,7 @@ public class SanPhamChiTietUserResponse {
     private String ten;
     private BigDecimal gia;
     private String moTa;
+    private Integer trangThai;
+    private String maSanPham;
 
 }
