@@ -40,6 +40,10 @@ public class KhuyenMai {
     @Column(name = "trang_thai")
     private Integer trangThai;
 
+    @Temporal(TemporalType.DATE)
+    private Date ngay_tao;
+    @Temporal(TemporalType.DATE)
+    private Date ngay_sua;
 
     @OneToMany(mappedBy = "idKhuyenMai")
     private Set<KhuyenMaiChiTiet> khuyenMaiChiTiets = new LinkedHashSet<>();

@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.UUID;
 
 @Repository
@@ -29,8 +30,14 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai, UUID> {
     @Query("update KhuyenMai km set km.trangThai = :trangThai where km.id = :id")
     public void updateTrangThaiById(@Param("id") UUID id, @Param("trangThai") int trangThai);
 
+    @Modifying
+    @Query("update KhuyenMai km set km.ngayKetThuc = :ngayKetThuc where km.id = :id")
+    public void updateNgayKetThucById(@Param("id") UUID id,Date ngayKetThuc);
+
     boolean existsByMa(String ma);
+
     boolean existsByTen(String ten);
+
     @Query("select new com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse(km.id, km.ma, km.ten, km.soPhanTramGiam, km.ngayBatDau, km.ngayKetThuc, km.trangThai) from KhuyenMai km where km.ma = :ma")
     public KhuyenMaiResponse getByMa(@Param("ma") String ma);
 }
