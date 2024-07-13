@@ -75,9 +75,11 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietUserResponse(s.id, s.ten, min(spct.gia), spct.moTa,spct.trangThai,spct.maSanPham,th.ten) from SanPham s join s.sanPhamChiTiets spct join s.idThuongHieu th where s.id = :idSanPham and spct.idMauSac.id = :idMauSac and spct.idKichCo.id = :idKichCo group by s.id, s.ten, spct.moTa,spct.maSanPham,spct.trangThai,th.ten")
     public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSacAndIdKichCo(@Param("idSanPham") UUID idSanPham, @Param("idMauSac") Integer idMauSac, @Param("idKichCo") Integer idKichCo);
 
-    @Query(value="select top 1 spct.id_kich_co from san_pham s join san_pham_chi_tiet spct on s.id = spct.id_san_pham where spct.id_san_pham= :idSanPham  and spct.id_mau_sac= :idMauSac" , nativeQuery = true)
-    public Integer getMinIdKichCoByIdMauSacnAndIdSanPham(UUID idSanPham,Integer idMauSac);
+    @Query(value = "select top 1 spct.id_kich_co from san_pham s join san_pham_chi_tiet spct on s.id = spct.id_san_pham where spct.id_san_pham= :idSanPham  and spct.id_mau_sac= :idMauSac", nativeQuery = true)
+    public Integer getMinIdKichCoByIdMauSacnAndIdSanPham(UUID idSanPham, Integer idMauSac);
 
+    @Query(value = "select spct.id from san_pham s join san_pham_chi_tiet spct on s.id=spct.id_san_pham where spct.id_san_pham = :idSanPham and id_kich_co= :idKichCo and id_mau_sac= :idMauSac", nativeQuery = true)
+    public UUID getIdSanPhamChiTietByIdMauSacnAndIdSanPham(UUID idSanPham, Integer idMauSac, Integer idKichCo);
 
     @Query("SELECT DISTINCT new com.example.websitebanquanao.infrastructures.responses.LoaiResponse(sp.idLoai.id, sp.idLoai.ten,sp.idLoai.ngay_sua,sp.idLoai.ngay_sua,sp.idLoai.trang_thai) FROM SanPham sp ORDER BY sp.idLoai.ten")
     public List<LoaiResponse> getListLoai();

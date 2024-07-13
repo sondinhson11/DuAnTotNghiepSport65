@@ -231,11 +231,16 @@ public class SanPhamService {
         return sanPhamRepository.getByIdSanPham(idSanPham);
     }
 
-    public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSacAndIdKichCo(UUID idSanPham, Integer idMauSac,Integer idKichCo) {
-        return sanPhamRepository.getByIdSanPhamAndIdMauSacAndIdKichCo(idSanPham, idMauSac,idKichCo);
+    public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSacAndIdKichCo(UUID idSanPham, Integer idMauSac, Integer idKichCo) {
+        return sanPhamRepository.getByIdSanPhamAndIdMauSacAndIdKichCo(idSanPham, idMauSac, idKichCo);
     }
+
     public Integer getMinIdKichCoByIdMauSacnAndIdSanPham(UUID idSanPham, Integer idMauSac) {
         return sanPhamRepository.getMinIdKichCoByIdMauSacnAndIdSanPham(idSanPham, idMauSac);
+    }
+
+    public UUID getIdSanPhamChiTietByIdMauSacnAndIdSanPham(UUID idSanPham, Integer idMauSac, Integer idKichCo) {
+        return sanPhamRepository.getIdSanPhamChiTietByIdMauSacnAndIdSanPham(idSanPham, idMauSac, idKichCo);
     }
 
     public List<SanPham> getAllKhuyenMai2() {

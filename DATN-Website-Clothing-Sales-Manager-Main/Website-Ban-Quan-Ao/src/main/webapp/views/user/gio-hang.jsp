@@ -93,7 +93,7 @@
                                 </button>
                                 <input type="number" class="form-control text-center" style="width: 50px"
                                        id="quantity_${gioHang.maSanPham}"
-                                       name="soLuong" value="${gioHang.soLuong}" min="1" max="${gioHang.soLuongTonKho}"
+                                       name="soLuong" value="${gioHang.soLuong}" min="1"
                                        readonly>
                                 <button type="submit" class="btn btn-outline-dark" type="button"
                                         onclick="increment_${gioHang.maSanPham}()">+
@@ -125,11 +125,7 @@
                     function increment_${gioHang.maSanPham}() {
                         var quantityInput = document.getElementById("quantity_${gioHang.maSanPham}");
                         var currentValue = parseInt(quantityInput.value);
-                        var maxValue = parseInt(quantityInput.getAttribute('max'));
-
-                        if (currentValue < maxValue) {
                             quantityInput.value = currentValue + 1;
-                        }
                     }
                 </script>
             </c:forEach>

@@ -71,6 +71,15 @@ public class GioHangChiTietService {
     }
 
     @Transactional
+    public GioHangChiTiet getByIdSanPhamChiTietAndIdKhachHang(UUID idSanPhamChiTiet, UUID idKhachHang) {
+        GioHang gioHang = gioHangService.findByIdKhachHang(idKhachHang);
+
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(idSanPhamChiTiet, gioHang.getId());
+
+        return gioHangChiTiet;
+    }
+
+    @Transactional
     public void deleteByIdSanPhamChiTietAndIdKhachHang(UUID idSanPhamChiTiet, UUID idKhachHang) {
         gioHangChiTietRepository.deleteByIdSanPhamChiTietAndIdKhachHang(idSanPhamChiTiet, idKhachHang);
         System.out.println("GioHangChiTietService.deleteByIdSanPhamChiTietAndIdKhachHang: " + idSanPhamChiTiet + " " + idKhachHang);

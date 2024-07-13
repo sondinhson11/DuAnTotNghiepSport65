@@ -1,5 +1,7 @@
 package com.example.websitebanquanao.controllers.users;
 
+import com.example.websitebanquanao.entities.GioHangChiTiet;
+import com.example.websitebanquanao.entities.SanPhamChiTiet;
 import com.example.websitebanquanao.infrastructures.requests.DangKyUserRequest;
 import com.example.websitebanquanao.infrastructures.requests.DangNhapUserRequest;
 import com.example.websitebanquanao.infrastructures.requests.FormThanhToan;
@@ -31,6 +33,9 @@ public class TrangChuController {
 
     @Autowired
     private SanPhamService sanPhamService;
+
+    @Autowired
+    private SanPhamChiTietService ctspService;
 
     @Autowired
     private MauSacService mauSacService;
@@ -188,7 +193,16 @@ public class TrangChuController {
 
     // thêm sản phẩm vào giả hàng trang chi tiết
     @PostMapping("/gio-hang/{id}")
-    public String themGioHang(@ModelAttribute("gioHang") GioHangUserRequest gioHangUserRequest, Model model, @PathVariable("id") UUID id) {
+    public String themGioHang(@ModelAttribute("gioHang") GioHangUserRequest gioHangUserRequest, Model model, @PathVariable("id") UUID id, @RequestParam("soLuong") Integer soLuongMoi) {
+        UUID idSanPhamChiTiet = sanPhamService.getIdSanPhamChiTietByIdMauSacnAndIdSanPham(id, gioHangUserRequest.getIdMauSac(), gioHangUserRequest.getIdKichCo());
+        SanPhamChiTiet ctsp = ctspService.findById(idSanPhamChiTiet);
+        int soLuongConLai = ctsp.getSoLuong() - soLuongMoi;
+        if (soLuongConLai < 0) {
+            // Xử lý tình huống số lượng âm (tuỳ theo quy tắc của bạn)
+            soLuongConLai = 0;
+        }
+        ctsp.setSoLuong(soLuongConLai);
+        ctspService.updateSoLuong(ctsp);
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
         gioHangChiTietService.add(id, khachHangResponse.getId(), gioHangUserRequest);
         return "redirect:/gio-hang";
@@ -196,16 +210,39 @@ public class TrangChuController {
 
     // thay dổi số lượng sản phẩm trong giỏ hàng
     @PostMapping("/gio-hang/update/{id}")
-    public String capNhatGioHang(@PathVariable("id") UUID id, @RequestParam("soLuong") Integer soLuong) {
+    public String capNhatGioHang(@PathVariable("id") UUID id, @RequestParam("soLuong") Integer soLuong, RedirectAttributes redirectAttributes) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
-        gioHangChiTietService.updateByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId(), soLuong);
-        return "redirect:/gio-hang";
+        GioHangChiTiet ghct = gioHangChiTietService.getByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId());
+        SanPhamChiTiet ctsp = ctspService.findById(id);
+        if (soLuong > ghct.getSoLuong()) {
+            int soLuongConLai = ctsp.getSoLuong() - 1;
+            if (soLuongConLai < 0) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Hết hàng");
+                return "redirect:/gio-hang";
+            } else {
+                ctsp.setSoLuong(soLuongConLai);
+                ctspService.updateSoLuong(ctsp);
+                gioHangChiTietService.updateByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId(), soLuong);
+                return "redirect:/gio-hang";
+            }
+        } else {
+            int soLuongConLai = ctsp.getSoLuong() + 1;
+            ctsp.setSoLuong(soLuongConLai);
+            ctspService.updateSoLuong(ctsp);
+            gioHangChiTietService.updateByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId(), soLuong);
+            return "redirect:/gio-hang";
+        }
     }
 
     // xóa sản phẩm trong giỏ hàng
     @GetMapping("/gio-hang/{id}")
     public String xoaGioHang(@PathVariable("id") UUID id) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
+        GioHangChiTiet ghct = gioHangChiTietService.getByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId());
+        SanPhamChiTiet ctsp = ctspService.findById(id);
+        int soLuongConLai = ctsp.getSoLuong() + ghct.getSoLuong();
+        ctsp.setSoLuong(soLuongConLai);
+        ctspService.updateSoLuong(ctsp);
         gioHangChiTietService.deleteByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId());
         return "redirect:/gio-hang";
     }
