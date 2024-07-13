@@ -234,6 +234,9 @@ public class SanPhamService {
     public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSacAndIdKichCo(UUID idSanPham, Integer idMauSac,Integer idKichCo) {
         return sanPhamRepository.getByIdSanPhamAndIdMauSacAndIdKichCo(idSanPham, idMauSac,idKichCo);
     }
+    public Integer getMinIdKichCoByIdMauSacnAndIdSanPham(UUID idSanPham, Integer idMauSac) {
+        return sanPhamRepository.getMinIdKichCoByIdMauSacnAndIdSanPham(idSanPham, idMauSac);
+    }
 
     public List<SanPham> getAllKhuyenMai2() {
         return sanPhamRepository.getAllKhuyenMai2();

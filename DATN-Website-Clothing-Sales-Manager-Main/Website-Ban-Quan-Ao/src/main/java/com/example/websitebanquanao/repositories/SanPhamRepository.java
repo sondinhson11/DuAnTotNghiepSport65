@@ -35,8 +35,8 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             "                 from khuyen_mai km join khuyen_mai_chi_tiet kmct on km.id = kmct.id_khuyen_mai\n" +
             "                 where km.trang_thai = 0\n" +
             "                   and kmct.id_san_pham_chi_tiet = spct.id\n" +
-            "                )",nativeQuery = true)
-        List<SanPham> getAllKhuyenMai2();
+            "                )", nativeQuery = true)
+    List<SanPham> getAllKhuyenMai2();
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamResponse(sp.id, sp.idLoai.id, sp.idThuongHieu.id, sp.idCauLacBo.id, sp.ten, sp.ngay_tao, sp.anh, sp.idLoai.ten, sp.idThuongHieu.ten, sp.idCauLacBo.ten, sp.trang_thai) from SanPham sp ORDER BY CASE WHEN sp.trang_thai = 1 THEN 0 ELSE 1 END, sp.ten")
     public Page<SanPhamResponse> getPage(Pageable pageable);
@@ -53,7 +53,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
     @Query(value = "SELECT TOP 5 s.id, s.ten, s.anh, MIN(spct.gia), MIN(ms.id), s.ngay_tao,MIN(kc.id) " +
             "FROM san_pham s " +
             "JOIN san_pham_chi_tiet spct ON s.id = spct.id_san_pham " +
-            "JOIN kich_co kc ON spct.id_kich_co = kc.id "+
+            "JOIN kich_co kc ON spct.id_kich_co = kc.id " +
             "JOIN mau_sac ms ON spct.id_mau_sac = ms.id " +
             "JOIN hoa_don_chi_tiet hdct ON spct.id = hdct.id_san_pham_chi_tiet " +
             "JOIN hoa_don hd ON hdct.id_hoa_don = hd.id " +
@@ -61,10 +61,6 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             "GROUP BY s.id, s.ten, s.anh, s.ngay_tao " +
             "ORDER BY COUNT(hdct.id) DESC", nativeQuery = true)
     public List<Object[]> getTop5BestSellingProducts();
-
-
-
-
 
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.TrangChuResponse(s.id, s.ten, s.anh, MIN(spct.gia), MIN(ms.id), s.ngay_tao,Min(kc.id)) from SanPham s join s.sanPhamChiTiets spct join spct.idMauSac ms join spct.idKichCo kc join spct.khuyenMaiChiTiets kmct join kmct.idKhuyenMai km where km.ngayBatDau <= CURRENT_DATE and km.ngayKetThuc >= CURRENT_DATE and spct.trangThai = 1 group by s.id, s.ten, s.anh, s.ngay_tao order by s.ngay_tao desc")
@@ -75,13 +71,20 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietUserResponse(s.id, s.ten, min(spct.gia), spct.moTa,spct.trangThai,spct.maSanPham,th.ten) from SanPham s join s.sanPhamChiTiets  spct join s.idThuongHieu th where s.id = :idSanPham group by s.id, s.ten, spct.moTa,spct.maSanPham,spct.trangThai,th.ten")
     public SanPhamChiTietUserResponse getByIdSanPham(@Param("idSanPham") UUID idSanPham);
+
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietUserResponse(s.id, s.ten, min(spct.gia), spct.moTa,spct.trangThai,spct.maSanPham,th.ten) from SanPham s join s.sanPhamChiTiets spct join s.idThuongHieu th where s.id = :idSanPham and spct.idMauSac.id = :idMauSac and spct.idKichCo.id = :idKichCo group by s.id, s.ten, spct.moTa,spct.maSanPham,spct.trangThai,th.ten")
-    public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSacAndIdKichCo(@Param("idSanPham") UUID idSanPham,@Param("idMauSac") Integer idMauSac,@Param("idKichCo") Integer idKichCo);
+    public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSacAndIdKichCo(@Param("idSanPham") UUID idSanPham, @Param("idMauSac") Integer idMauSac, @Param("idKichCo") Integer idKichCo);
+
+    @Query(value="select top 1 spct.id_kich_co from san_pham s join san_pham_chi_tiet spct on s.id = spct.id_san_pham where spct.id_san_pham= :idSanPham  and spct.id_mau_sac= :idMauSac" , nativeQuery = true)
+    public Integer getMinIdKichCoByIdMauSacnAndIdSanPham(UUID idSanPham,Integer idMauSac);
+
 
     @Query("SELECT DISTINCT new com.example.websitebanquanao.infrastructures.responses.LoaiResponse(sp.idLoai.id, sp.idLoai.ten,sp.idLoai.ngay_sua,sp.idLoai.ngay_sua,sp.idLoai.trang_thai) FROM SanPham sp ORDER BY sp.idLoai.ten")
     public List<LoaiResponse> getListLoai();
+
     @Query("SELECT DISTINCT new com.example.websitebanquanao.infrastructures.responses.ThuongHieuResponse(sp.idLoai.id, sp.idLoai.ten,sp.idLoai.ngay_sua,sp.idLoai.ngay_sua,sp.idLoai.trang_thai) FROM SanPham sp ORDER BY sp.idLoai.ten")
     public List<LoaiResponse> getListThuongHieu();
+
     @Query("SELECT DISTINCT new com.example.websitebanquanao.infrastructures.responses.CauLacBoResponse(sp.idLoai.id, sp.idLoai.ten,sp.idLoai.ngay_sua,sp.idLoai.ngay_sua,sp.idLoai.trang_thai) FROM SanPham sp ORDER BY sp.idLoai.ten")
     public List<LoaiResponse> getListCauLacBo();
 

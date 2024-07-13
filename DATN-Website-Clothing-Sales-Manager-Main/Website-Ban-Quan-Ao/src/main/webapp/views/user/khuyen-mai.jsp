@@ -44,7 +44,7 @@
             <!-- Sử dụng col-lg-3 để hiển thị 4 sản phẩm trong mỗi hàng và làm cho sản phẩm lớn hơn -->
             <c:forEach items="${listSanPham}" var="sanPham">
                 <div class="col">
-                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}/${sanPham.idKichCo}" class="text-decoration-none text-dark">
+                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}" class="text-decoration-none text-dark">
                         <div class="card product-card border-0">
                             <img src="${sanPham.anh}" class="card-img-top product-image" alt="${sanPham.ten}">
                             <span class="discount-percentage" id="so-phan-tram-giam_${sanPham.id}"></span>

@@ -126,7 +126,7 @@
                                 checkboxes.forEach((checkbox) => {
                                     checkbox.addEventListener('change', function () {
                                         const selectedValues = document.querySelector('input[name="idMauSac"]:checked').value;
-                                        const newURL = "http://localhost:8080/san-pham/${sanPham.id}/" + selectedValues + "/1";
+                                        const newURL = "http://localhost:8080/san-pham/${sanPham.id}/" + selectedValues;
                                         window.location.href = newURL;
                                     });
                                 });

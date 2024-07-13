@@ -67,7 +67,7 @@
         <div class="row row-cols-2 row-cols-md-4 g-4">
             <c:forEach items="${listTrangChu}" var="sanPham">
                 <div class="col">
-                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}/${sanPham.idKichCo}"
+                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}"
                        class="text-decoration-none text-dark">
                         <div class="card product-card border-0">
                             <img src="${sanPham.anh}" class="card-img-top product-image" alt="${sanPham.ten}">
@@ -125,7 +125,7 @@
         <div class="row row-cols-2 row-cols-md-4 g-4">
             <c:forEach items="${listBanChay}" var="sanPham">
                 <div class="col">
-                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}/${sanPham.idKichCo}"
+                    <a href="/san-pham/${sanPham.id}/${sanPham.idMauSac}"
                        class="text-decoration-none text-dark">
                         <div class="card product-card border-0">
                             <img src="${sanPham.anh}" class="card-img-top product-image" alt="${sanPham.ten}">
