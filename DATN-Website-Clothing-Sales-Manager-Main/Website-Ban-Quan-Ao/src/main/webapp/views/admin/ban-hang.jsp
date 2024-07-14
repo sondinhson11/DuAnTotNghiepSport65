@@ -770,6 +770,7 @@
                                     '<td>' +
                                     '<p>' + product.tenSanPham + '</p>' +
                                     '<p>' + product.tenMauSac + '</p>' +
+                                    '<p>' + product.tenKichCo + '</p>' +
                                     '</td>' +
                                     '<td>' +
                                     '<p class="fw-bold gia-san-pham" id="gia-san-pham_' + product.id + '">' + product.gia + '</p>' +
