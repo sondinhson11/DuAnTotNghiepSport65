@@ -91,7 +91,6 @@ public class HoaDonChiTietService {
             hoaDonChiTiet.setNgayTao(new Date(currentDate.getTime()));
             hoaDonChiTiet.setTrangThai(1);
             hoaDonChiTietRepository.save(hoaDonChiTiet);
-            sanPhamChiTietService.updateSoLuongByIdSanPhamChiTiet(gioHangUserResponse.getIdSanPhamChiTiet(), gioHangUserResponse.getSoLuong());
         }
         createPDF.exportPDFBill(hoaDon, listSanPhamGioHang, sumTongTienByIdHoaDon(hoaDon.getId()).toString());
         gioHangChiTietService.deleteByIdKhachHang(idKhachHang);
