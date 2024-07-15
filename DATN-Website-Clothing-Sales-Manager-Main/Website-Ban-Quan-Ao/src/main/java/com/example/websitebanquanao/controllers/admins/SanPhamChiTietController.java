@@ -81,6 +81,18 @@ public class SanPhamChiTietController {
     }
     @PostMapping("/add")
     public String add(@ModelAttribute("sanPhamChiTiet") SanPhamChiTietRequest sanPhamChiTietRequest) {
+
+//        String kichco = kichCoRequest.getTen();
+//        String mausac = mauSacRequest.getTen();
+//        session.removeAttribute("error");
+//        if(kichco.equals(sanPhamChiTietRequest) || mausac.equals(sanPhamChiTietRequest)){
+//            session.setAttribute("error", "Tồn tại");
+//
+//        }else{
+//            sanPhamChiTietRequest.setTrangThai(2);
+//            sanPhamChiTietService.add(sanPhamChiTietRequest);
+//            return "redirect:/admin/san-pham-chi-tiet/create";
+//        }
         sanPhamChiTietRequest.setTrangThai(2);
         sanPhamChiTietService.add(sanPhamChiTietRequest);
         return "redirect:/admin/san-pham-chi-tiet/create";

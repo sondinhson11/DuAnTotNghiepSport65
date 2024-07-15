@@ -23,7 +23,6 @@ import java.util.UUID;
 public class SanPhamChiTietService {
     @Autowired
     private SanPhamChiTietRepository sanPhamChiTietRepository;
-
     @Autowired
     private QRCodeGenerator qrCodeGenerator;
 
@@ -72,6 +71,9 @@ public class SanPhamChiTietService {
         }
         return code;
     }
+    public boolean isDuplicate(UUID idSanPham, Integer idMauSac, Integer idKichCo) {
+        return sanPhamChiTietRepository.checkTrung(idSanPham, idMauSac, idKichCo);
+    }
 
     public void add(SanPhamChiTietRequest sanPhamChiTietRequest) {
         List<Integer> listIdMauSac = sanPhamChiTietRequest.getIdMauSac();
@@ -80,17 +82,19 @@ public class SanPhamChiTietService {
         SanPham sanPham = new SanPham();
         sanPham.setId(sanPhamChiTietRequest.getIdSanPham());
 
-        // Lặp qua từng màu sắc
         for (Integer idMauSac : listIdMauSac) {
-            MauSac mauSac = new MauSac();
-            mauSac.setId(idMauSac);
-
-            // Lặp qua từng kích cỡ
             for (Integer idKichCo : listIdKichCo) {
+                if (isDuplicate(sanPham.getId(), idMauSac, idKichCo)) {
+                    System.out.println("SanPhamChiTietService.add: Duplicate product with same ID, size, and color.");
+                    continue;
+                }
+
+                MauSac mauSac = new MauSac();
+                mauSac.setId(idMauSac);
+
                 KichCo kichCo = new KichCo();
                 kichCo.setId(idKichCo);
 
-                // Tạo đối tượng SanPhamChiTiet cho từng kết hợp màu sắc và kích cỡ
                 SanPhamChiTiet sanPhamChiTiet = new SanPhamChiTiet();
                 sanPhamChiTiet.setMaSanPham(maSPCount());
                 sanPhamChiTiet.setGia(sanPhamChiTietRequest.getGia());
@@ -101,29 +105,25 @@ public class SanPhamChiTietService {
                 sanPhamChiTiet.setIdMauSac(mauSac);
                 sanPhamChiTiet.setIdKichCo(kichCo);
 
-                // Thiết lập ngày tạo là ngày hiện tại nếu chưa có
                 if (sanPhamChiTietRequest.getNgay_tao() == null) {
-                    sanPhamChiTiet.setNgay_tao(new java.util.Date());
+                    sanPhamChiTiet.setNgay_tao(new Date());
                 } else {
                     sanPhamChiTiet.setNgay_tao(sanPhamChiTietRequest.getNgay_tao());
                 }
                 sanPhamChiTiet.setNgay_sua(new Date());
 
-                // Lưu đối tượng SanPhamChiTiet vào cơ sở dữ liệu
                 SanPhamChiTiet sanPhamChiTietSaved = sanPhamChiTietRepository.save(sanPhamChiTiet);
 
-                // Tạo mã QR cho sản phẩm chi tiết
                 String qrCodeData = String.valueOf(sanPhamChiTietSaved.getId());
                 String filePath = "src/main/java/com/example/websitebanquanao/images/" + sanPhamChiTietSaved.getMaSanPham() + ".png";
                 qrCodeGenerator.generateQRCode(qrCodeData, filePath);
 
-                // Thêm ảnh sản phẩm
-
                 System.out.println("SanPhamChiTietService.add: " + sanPhamChiTietSaved.getId());
-                System.out.println("file đường dẫn: " + filePath);
+                System.out.println("File path: " + filePath);
             }
         }
-    }
+
+}
 
     public void update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id) {
         SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.findById(id).orElse(null);
@@ -174,6 +174,7 @@ public class SanPhamChiTietService {
             sanPhamChiTietRepository.updateTrangThai(entity.getId(),1);
         }
     }
+
 
     public void delete(UUID id) {
         SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.findById(id).orElse(null);

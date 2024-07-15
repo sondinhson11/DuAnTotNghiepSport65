@@ -67,5 +67,7 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
     @Query("UPDATE SanPhamChiTiet ctsp SET ctsp.trangThai = :currentTrangthai WHERE ctsp.id = :idSanPhamChiTiet")
     public void updateTrangThai(@Param("idSanPhamChiTiet") UUID idSanPhamChiTiet, @Param("currentTrangthai") int currentTrangthai);
 
+    @Query("SELECT CASE WHEN COUNT(sp) > 0 THEN TRUE ELSE FALSE END FROM SanPhamChiTiet sp WHERE sp.idSanPham.id = :idSanPham AND sp.idMauSac.id = :idMauSac AND sp.idKichCo.id = :idKichCo")
+    boolean checkTrung(@Param("idSanPham") UUID idSanPham, @Param("idMauSac") Integer idMauSac, @Param("idKichCo") Integer idKichCo);
 
 }

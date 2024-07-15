@@ -178,7 +178,10 @@
             console.error('Error reading file: ', error);
         };
     }
+
+
 </script>
+
 
 <div class="container mt-3">
 <div class="content">
@@ -238,10 +241,16 @@
         <form:textarea path="moTa" id="moTa" class="form-control" style="height: 130px"
                        value="${sanPhamChiTiet.moTa}"/>
     </div>
+<%--    <c:if test="${not empty notification}">--%>
+<%--        <div>--%>
+<%--                ${notification}--%>
+<%--        </div>--%>
+<%--    </c:if>--%>
     <div class="mt-3">
         <button type="button" class="btn btn-secondary">Làm Mới</button>
         <button type="submit" class="btn btn-primary">Tạo</button>
     </div>
+
     </form>
     </div>
     </div>
@@ -366,6 +375,7 @@
                             alert('Vui lòng nhập Mô tả.');
                             return;
                         }
+
 
                         <%--for (let i = 0; i < 2; i++) {--%>
                         <%--    const fileInput = document.getElementById(`base64Images${i}`);--%>
