@@ -135,3 +135,28 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Kiểm tra thông báo thành công
+        <c:if test="${not empty successMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '${successMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
+
+        // Kiểm tra thông báo lỗi
+        <c:if test="${not empty errorMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '${errorMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
+    });
+</script>

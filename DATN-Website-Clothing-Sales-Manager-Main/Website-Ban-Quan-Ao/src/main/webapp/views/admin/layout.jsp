@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="f" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <html>
 <head>
     <title>Admin</title>
@@ -334,30 +334,6 @@
         if (savedSidebarState && savedSidebarState === 'true') {
             document.body.classList.add('sb-sidenav-toggled');
         }
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        // Kiểm tra thông báo thành công
-        <c:if test="${not empty successMessage}">
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '${successMessage}',
-            showConfirmButton: false,
-            timer: 2000
-        });
-        </c:if>
-
-        // Kiểm tra thông báo lỗi
-        <c:if test="${not empty errorMessage}">
-        Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: '${errorMessage}',
-            showConfirmButton: false,
-            timer: 2000
-        });
-        </c:if>
     });
 </script>
 </body>

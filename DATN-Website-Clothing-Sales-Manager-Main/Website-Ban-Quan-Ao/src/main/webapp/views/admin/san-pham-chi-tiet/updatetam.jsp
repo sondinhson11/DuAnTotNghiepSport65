@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
@@ -148,7 +149,7 @@
                             <%--                                <option value="${mauSac.id}" ${mauSac.id == sanPhamChiTiet.idMauSac.id ? 'selected' : ''}>${mauSac.ten}</option>--%>
                             <%--                            </c:forEach>--%>
                             <%--                        </form:select>--%>
-                        <form:select name="idMauSac" id="idMauSac" path="idMauSac" multiple="true"  >
+                        <form:select name="idMauSac" id="idMauSac" path="idMauSac" multiple="true">
                             <c:forEach items="${listMauSac}" var="mauSac">
                                 <option value="${mauSac.id}" ${mauSac.id == sanPhamChiTiet.idMauSac.id ? 'selected' : ''}>${mauSac.ten}</option>
                             </c:forEach>
@@ -161,7 +162,7 @@
                         <i class="fas fa-plus-circle" data-bs-toggle="modal" data-bs-target="#modalKichCo"
                            title="Thêm Kích cỡ"></i>
 
-                        <form:select path="idKichCo" id="idKichCo"  name="idMauSac" multiple="true" >
+                        <form:select path="idKichCo" id="idKichCo" name="idMauSac" multiple="true">
 
                             <c:forEach items="${listKichCo}" var="kichCo">
                                 <option value="${kichCo.id}"
@@ -171,12 +172,13 @@
                     </div>
                     <div class="col-4">
                         <label for="gia" class="form-label">Giá Bán</label>
-                        <form:input path="gia" id="gia" class="form-control" type="number" value="${sanPhamChiTiet.gia}"/>
+                        <form:input path="gia" id="gia" class="form-control" type="number"
+                                    value="${sanPhamChiTiet.gia}"/>
                     </div>
                     <div class="col-4">
                         <label for="soLuong" class="form-label">Số lượng</label>
                         <form:input path="soLuong" id="soLuong" class="form-control" type="number"
-                                    value="${sanPhamChiTiet.soLuong}" />
+                                    value="${sanPhamChiTiet.soLuong}"/>
                     </div>
                 </div>
                 <div class="mt-3">
@@ -192,8 +194,6 @@
                 </div>
 
 
-
-
                 <div class="mt-3">
                     <button type="button" class="btn btn-secondary">Làm Mới</button>
                     <button type="submit" class="btn btn-primary">Lưu</button>
@@ -203,7 +203,7 @@
             </form:form>
 
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
+                document.addEventListener('DOMContentLoaded', function () {
                     const form = document.getElementById('formSP');
                     const idSanPhamSelect = document.getElementById('idSanPham');
                     const idMauSacSelect = document.getElementById('idMauSac');
@@ -212,7 +212,7 @@
                     const soLuongInput = document.getElementById('soLuong');
                     const moTaTextarea = document.getElementById('moTa');
 
-                    form.addEventListener('submit', function(event) {
+                    form.addEventListener('submit', function (event) {
                         // Check if the "Sản Phẩm" select is not selected
                         if (idSanPhamSelect.value === '') {
                             event.preventDefault();
@@ -296,7 +296,7 @@
     </div>
 
     <%--kich co--%>
-    <div class="modal fade" id="modalKichCo"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalKichCo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
@@ -372,7 +372,7 @@
             borderColor: '#92e681',
             bgColor: '#eaffe6',
         },
-        onChange: function(values) {
+        onChange: function (values) {
             console.log(values)
         }
     }); // id
@@ -387,7 +387,7 @@
             borderColor: '#92e681',
             bgColor: '#eaffe6',
         },
-        onChange: function(values) {
+        onChange: function (values) {
             console.log(values)
         }
     })
@@ -481,7 +481,4 @@
             })
             .catch(error => console.error('Lỗi:', error));
     }
-
-
-
 </script>
