@@ -80,21 +80,13 @@ public class SanPhamChiTietController {
         return "redirect:/admin/san-pham-chi-tiet/index";
     }
     @PostMapping("/add")
-    public String add(@ModelAttribute("sanPhamChiTiet") SanPhamChiTietRequest sanPhamChiTietRequest) {
-
-//        String kichco = kichCoRequest.getTen();
-//        String mausac = mauSacRequest.getTen();
-//        session.removeAttribute("error");
-//        if(kichco.equals(sanPhamChiTietRequest) || mausac.equals(sanPhamChiTietRequest)){
-//            session.setAttribute("error", "Tồn tại");
-//
-//        }else{
-//            sanPhamChiTietRequest.setTrangThai(2);
-//            sanPhamChiTietService.add(sanPhamChiTietRequest);
-//            return "redirect:/admin/san-pham-chi-tiet/create";
-//        }
+    public String add(@ModelAttribute("sanPhamChiTiet") SanPhamChiTietRequest sanPhamChiTietRequest, RedirectAttributes redirectAttributes) {
         sanPhamChiTietRequest.setTrangThai(2);
-        sanPhamChiTietService.add(sanPhamChiTietRequest);
+        if(sanPhamChiTietService.add(sanPhamChiTietRequest)){
+            redirectAttributes.addFlashAttribute("successMessage", "Thêm sản phẩm chỉ tiết tạm thành công");
+        }else{
+            redirectAttributes.addFlashAttribute("errorMessage", "Sản phẩm chi tiết đã tồn tại");
+        };
         return "redirect:/admin/san-pham-chi-tiet/create";
     }
 
@@ -116,18 +108,6 @@ public class SanPhamChiTietController {
         return "redirect:/admin/san-pham-chi-tiet/index";
     }
 
-    //    @PostMapping("updatetam/{id}")
-//    public String updatetam(@PathVariable("id") UUID id, @Valid @ModelAttribute("sanPhamChiTiet") SanPhamChiTietRequest sanPhamChiTietRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-//        if (result.hasErrors()) {
-//            model.addAttribute("list", sanPhamChiTietService.getAll());
-//            model.addAttribute("view", "/views/admin/san-pham-chi-tiet/create.jsp");
-//            return "admin/layout";
-//        }
-//        sanPhamChiTietService.update(sanPhamChiTietRequest, id);
-//        sanPhamChiTietRequest.setTrangThai(2);
-//        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật chi tiết sản phẩm thành công");
-//        return "redirect:/admin/san-pham-chi-tiet/create";
-//    }
     @PostMapping("updatetam/{id}")
     public String updatetam(@PathVariable("id") UUID id, @Valid @ModelAttribute("sanPhamChiTiet") SanPhamChiTietRequest sanPhamChiTietRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {

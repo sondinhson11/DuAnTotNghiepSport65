@@ -32,6 +32,7 @@ public class SanPhamChiTietService {
     public List<SanPhamChiTietResponse> getAll() {
         return sanPhamChiTietRepository.getAll();
     }
+
     public List<SanPhamChiTietResponse> getlisttam() {
         return sanPhamChiTietRepository.Getlisttam();
     }
@@ -71,11 +72,12 @@ public class SanPhamChiTietService {
         }
         return code;
     }
+
     public boolean isDuplicate(UUID idSanPham, Integer idMauSac, Integer idKichCo) {
         return sanPhamChiTietRepository.checkTrung(idSanPham, idMauSac, idKichCo);
     }
 
-    public void add(SanPhamChiTietRequest sanPhamChiTietRequest) {
+    public Boolean add(SanPhamChiTietRequest sanPhamChiTietRequest) {
         List<Integer> listIdMauSac = sanPhamChiTietRequest.getIdMauSac();
         List<Integer> listIdKichCo = sanPhamChiTietRequest.getIdKichCo();
 
@@ -86,7 +88,7 @@ public class SanPhamChiTietService {
             for (Integer idKichCo : listIdKichCo) {
                 if (isDuplicate(sanPham.getId(), idMauSac, idKichCo)) {
                     System.out.println("SanPhamChiTietService.add: Duplicate product with same ID, size, and color.");
-                    continue;
+                    return false;
                 }
 
                 MauSac mauSac = new MauSac();
@@ -117,13 +119,12 @@ public class SanPhamChiTietService {
                 String qrCodeData = String.valueOf(sanPhamChiTietSaved.getId());
                 String filePath = "src/main/java/com/example/websitebanquanao/images/" + sanPhamChiTietSaved.getMaSanPham() + ".png";
                 qrCodeGenerator.generateQRCode(qrCodeData, filePath);
-
                 System.out.println("SanPhamChiTietService.add: " + sanPhamChiTietSaved.getId());
                 System.out.println("File path: " + filePath);
             }
         }
-
-}
+        return true;
+    }
 
     public void update(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id) {
         SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.findById(id).orElse(null);
@@ -141,6 +142,7 @@ public class SanPhamChiTietService {
             System.out.println("SanPhamChiTietService.update: " + sanPhamChiTiet.getId());
         }
     }
+
     public void updatetam(SanPhamChiTietRequest sanPhamChiTietRequest, UUID id) {
         // Tìm đối tượng SanPhamChiTiet theo id
         SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.findById(id).orElse(null);
@@ -168,10 +170,10 @@ public class SanPhamChiTietService {
 
 
     @Transactional
-    public void updateList(){
+    public void updateList() {
         List<SanPhamChiTietResponse> list = sanPhamChiTietRepository.Getlisttam();
         for (SanPhamChiTietResponse entity : list) {
-            sanPhamChiTietRepository.updateTrangThai(entity.getId(),1);
+            sanPhamChiTietRepository.updateTrangThai(entity.getId(), 1);
         }
     }
 
@@ -239,6 +241,7 @@ public class SanPhamChiTietService {
         List<BanHangTaiQuayResponse> filteredProducts = sanPhamChiTietRepository.filterProducts(size, color, searchTerm);
         return filteredProducts;
     }
+
     @Transactional
     public void xuLyTraHangVaoKho(UUID idSanPhamChiTiet, int soLuongTraHang) {
         // Lấy số lượng hiện tại trong kho
@@ -260,6 +263,7 @@ public class SanPhamChiTietService {
     public Integer getSoLuongSanPham(UUID idSanPham, Integer idMauSac, Integer idKichCo) {
         return sanPhamChiTietRepository.getSoLuongSanPham(idSanPham, idMauSac, idKichCo);
     }
+
     public List<SanPhamChiTietResponse> searchByTenSanPham(String tenSanPham) {
         return sanPhamChiTietRepository.getByTenSanPham(tenSanPham);
     }
