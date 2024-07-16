@@ -311,14 +311,14 @@
                                 <p>${sp.tenSanPham}</p>
                                 <p>${sp.tenMau}/${sp.tenSize}</p>
                             </td>
-                            <td id="gia_sp_${sp.idSanPham}">${sp.gia}</td>
+                            <td id="gia_sp_${sp.idSanPhamChiTiet}">${sp.gia}</td>
                             <td>${sp.soLuong}</td>
-                            <td id="tong_tien_${sp.idSanPham}">
+                            <td id="tong_tien_${sp.idSanPhamChiTiet}">
                                     ${sp.soLuong * sp.gia}
                             </td>
                             <td>
-                                <form id="returnForm_${sp.idSanPham}" action="/admin/san-pham-chi-tiet/tra-hang-vao-kho" method="post" display="none">
-                                    <input type="hidden" name="idSanPhamChiTiet" value="${sp.idSanPham}">
+                                <form id="returnForm_${sp.idSanPhamChiTiet}" action="/admin/san-pham-chi-tiet/tra-hang-vao-kho" method="post" display="none">
+                                    <input type="hidden" name="idSanPhamChiTiet" value="${sp.idSanPhamChiTiet}">
                                     <input type="hidden" name="soLuongTraHang" value="${sp.soLuong}">
                                     <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
                                     <c:if test="${hoaDon.trangThai == 5}">
@@ -346,18 +346,6 @@
                                 // get ảnh sản phẩm
                                 $(document).ready(function () {
                                     var idSanPham = '${sp.idSanPham}';
-                                    $.ajax({
-                                        url: '/api/kho/soLuong/' + idSanPham,
-                                        type: 'GET',
-                                        dataType: 'json',
-                                        success: function (soLuong) {
-                                            console.log('Số lượng trong kho:', soLuong);
-                                        },
-                                        error: function () {
-                                            console.log('Lỗi khi lấy số lượng trong kho');
-                                        }
-                                    });
-
                                     // get ảnh sản phẩm
                                     $.ajax({
                                         url: '/get-anh-san-pham/' + idSanPham,
