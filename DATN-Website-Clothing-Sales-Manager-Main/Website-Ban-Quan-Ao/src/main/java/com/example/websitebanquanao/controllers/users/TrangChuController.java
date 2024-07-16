@@ -250,18 +250,22 @@ public class TrangChuController {
     // add voucher
     @PostMapping("/ap-dung-voucher")
     public String apDungVoucher(@RequestParam("ma") String ma, HttpSession session) {
+        KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
+        BigDecimal tongTien = gioHangChiTietService.getTongTienByIdKhachHang(khachHangResponse.getId());
         GiamGiaResponse giamGiaResponse = giamGiaService.findByMa(ma);
-        session.setAttribute("giamGia", giamGiaResponse);
-
         String thongBaoGiamGia = "";
         if (giamGiaResponse == null) {
             thongBaoGiamGia = "Mã giảm giá không tồn tại.";
         } else {
-            thongBaoGiamGia = "Đã áp dụng mã giảm giá.";
+            if (tongTien.intValue()+1 <= giamGiaResponse.getSoTienToiThieu()) {
+                thongBaoGiamGia = "Mã giảm giá Không được áp dụng do chưa đử tiền tối thiểu";
+                giamGiaResponse = null;
+            } else {
+                thongBaoGiamGia = "Đã áp dụng mã giảm giá.";
+            }
         }
-
+        session.setAttribute("giamGia", giamGiaResponse);
         session.setAttribute("thongBaoGiamGia", thongBaoGiamGia);
-
         return "redirect:/gio-hang";
     }
 
