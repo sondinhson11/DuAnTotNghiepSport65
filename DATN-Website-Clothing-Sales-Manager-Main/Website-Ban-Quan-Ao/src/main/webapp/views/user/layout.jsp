@@ -154,7 +154,7 @@
                 </div>
                 <div class="d-flex mb-2">
                     <div class="text-sm font-weight-bold mr-1">Hotline:</div>
-                    <div class="text-sm"> 038-334-9871</div>
+                    <div class="text-sm"> 0862521305</div>
                 </div>
             </div>
             <div class="col-md-4 col-12">

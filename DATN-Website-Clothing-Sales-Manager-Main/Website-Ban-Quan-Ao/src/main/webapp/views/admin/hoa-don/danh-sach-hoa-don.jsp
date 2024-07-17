@@ -145,7 +145,13 @@
                         </c:if>
                     </p>
                     <p>Nhân viên: ${hoaDon.idNhanVien.hoVaTen}</p>
-                    <p>Địa chỉ: ${hoaDon.xaPhuong}, ${hoaDon.quanHuyen}, ${hoaDon.tinhThanhPho}</p>
+                    <c:if test="${hoaDon.xaPhuong == null}">
+                        <p>Địa chỉ: Bán Tại Quầy</p>
+                    </c:if>
+                    <c:if test="${hoaDon.xaPhuong!=null}">
+                        <p>Địa chỉ: ${hoaDon.xaPhuong}, ${hoaDon.quanHuyen}, ${hoaDon.tinhThanhPho}</p>
+                    </c:if>
+
                     <c:if test="${hoaDon.trangThai == 3}">
                         <p>Số điện thoại: ${hoaDon.soDienThoai}</p>
                         <p>Mã vận đơn: ${hoaDon.maVanChuyen}</p>

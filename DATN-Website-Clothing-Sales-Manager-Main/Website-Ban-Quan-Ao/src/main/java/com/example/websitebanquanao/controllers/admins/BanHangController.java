@@ -229,7 +229,12 @@ public class BanHangController {
     }
 
     @PostMapping("/thanh-toan/{idHoaDon}")
-    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam("giamGia") GiamGia giamGia, @RequestParam("ghiChu") String ghiChu, @RequestParam("tong-tien") String tongTien, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan, @RequestParam("nguoiNhan") String hoVaTen, @RequestParam("sdt") String soDienThoai,@RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
+    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam(value = "giamGia", required = false) GiamGia giamGia, @RequestParam("ghiChu") String ghiChu, @RequestParam("tong-tien") String tongTien, @RequestParam("tienKhachDua") String tienKhachDua, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan, @RequestParam("nguoiNhan") String hoVaTen, @RequestParam("sdt") String soDienThoai,@RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
+        System.out.println(idKhachHang);
+        String tongTien2 = tongTien.replace(".", "");
+        String tienGiam2 = tienGiamGia.replace(".", "");
+        String tienThanhToan2 = tienThanhToan.replace(".", "");
+
         if (hinhThucThanhToan == null) {
             session.setAttribute("errorMessage", "Vui lòng chọn hình thức thanh toán");
             return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
@@ -237,6 +242,10 @@ public class BanHangController {
 
         if (hoVaTen.isEmpty() || hoVaTen.isBlank()) {
             session.setAttribute("errorMessage", "Vui lòng nhập họ tên khách hàng thật nghiêm túc");
+            return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
+        }
+        if (Float.valueOf(tienKhachDua) < Float.valueOf(tienThanhToan2)) {
+            session.setAttribute("errorMessage", "Số tiền khách đưa còn thiếu");
             return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
         }
 
@@ -264,9 +273,9 @@ public class BanHangController {
                         giamGia.setSoLuong(giamGia.getSoLuong()-1);
                         hoaDon.setNguoiNhan(hoVaTen);
                         hoaDon.setSoDienThoai(soDienThoai);
-                        hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
-                        hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
-                        hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
+                        hoaDon.setTongTien(BigDecimal.valueOf(Float.valueOf(tongTien2)));
+                        hoaDon.setTienGiam(BigDecimal.valueOf(Float.valueOf(tienGiam2)));
+                        hoaDon.setThanhToan(BigDecimal.valueOf(Float.valueOf(tienThanhToan2)));
                         hoaDon.setGhiChu(ghiChu);
                         hoaDon.setLoaiHoaDon(0);
                         hoaDonService.update(hoaDon, idHoaDon);
@@ -278,9 +287,9 @@ public class BanHangController {
                         hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
                         hoaDon.setNguoiNhan(hoVaTen);
                         hoaDon.setSoDienThoai(soDienThoai);
-                        hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
-                        hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
-                        hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
+                        hoaDon.setTongTien(BigDecimal.valueOf(Float.valueOf(tongTien2)));
+                        hoaDon.setTienGiam(BigDecimal.valueOf(Float.valueOf(tienGiam2)));
+                        hoaDon.setThanhToan(BigDecimal.valueOf(Float.valueOf(tienThanhToan2)));
                         hoaDon.setGhiChu(ghiChu);
                         hoaDon.setLoaiHoaDon(0);
                         hoaDonService.update(hoaDon, idHoaDon);
@@ -297,9 +306,9 @@ public class BanHangController {
                         hoaDon.setGhiChu(ghiChu);
                         hoaDon.setIdGiamGia(giamGia);
                         giamGia.setSoLuong(giamGia.getSoLuong() - 1);
-                        hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
-                        hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
-                        hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
+                        hoaDon.setTongTien(BigDecimal.valueOf(Float.valueOf(tongTien2)));
+                        hoaDon.setTienGiam(BigDecimal.valueOf(Float.valueOf(tienGiam2)));
+                        hoaDon.setThanhToan(BigDecimal.valueOf(Float.valueOf(tienThanhToan2)));
                         KhachHang khachHang = new KhachHang();
                         khachHang.setId(idKhachHang);
                         hoaDon.setIdKhachHang(khachHang);
@@ -312,9 +321,9 @@ public class BanHangController {
                         hoaDon.setNgayThanhToan(currentInstant);
                         hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
                         hoaDon.setGhiChu(ghiChu);
-                        hoaDon.setTongTien(BigDecimal.valueOf(Integer.valueOf(tongTien)));
-                        hoaDon.setTienGiam(BigDecimal.valueOf(Integer.valueOf(tienGiamGia)));
-                        hoaDon.setThanhToan(BigDecimal.valueOf(Integer.valueOf(tienThanhToan)));
+                        hoaDon.setTongTien(BigDecimal.valueOf(Float.valueOf(tongTien2)));
+                        hoaDon.setTienGiam(BigDecimal.valueOf(Float.valueOf(tienGiam2)));
+                        hoaDon.setThanhToan(BigDecimal.valueOf(Float.valueOf(tienThanhToan2)));
                         KhachHang khachHang = new KhachHang();
                         khachHang.setId(idKhachHang);
                         hoaDon.setIdKhachHang(khachHang);

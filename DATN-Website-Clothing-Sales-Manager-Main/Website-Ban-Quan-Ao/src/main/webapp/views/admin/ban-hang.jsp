@@ -310,7 +310,6 @@
                             <script>
                                 $(document).ready(function () {
                                     var idSanPham = '${sp.idSanPham}';
-                                    console.log(idSanPham);
                                     $.ajax({
                                         url: '/get-anh-san-pham/' + idSanPham,
                                         type: 'GET',
@@ -406,7 +405,7 @@
         <!-- Thanh toán -->
         <form method="post" action="/admin/ban-hang/thanh-toan/${idHoaDon}" id="thong-tin-thanh-toanForm"
               enctype="multipart/form-data">
-            <input type="hidden" name="idKhachHang" id="id-khach-hang">
+            <input type="hidden" name="idKhachHang" id="idKhachHang">
             <div class="row border mt-3">
                 <div class="row mb-3">
                     <div class="col">
@@ -540,12 +539,14 @@
                                     <label class="form-label">Giảm Giá</label>
                                     <select class="form-select" id="giam-gia" name="giamGia" aria-label="Default select example">
                                         <!-- Các option được tạo từ danh sách listGG -->
-<%--                                        <option value="none" >Không sử dụng</option>--%>
+                                        <option value="" >Không sử dụng</option>
                                         <c:forEach items="${listGG}" var="lshgg">
                                             <fmt:parseNumber var="tongTienSo" value="${tongTien}"/>
                                             <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}"/>
-                                            <c:if test="${tongTienSo >= soTienToiThieu}">
-                                                <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}">${lshgg.soPhanTramGiam}%</option>
+                                            <c:if test="${lshgg.soLuong >=0}">
+                                                <c:if test="${tongTienSo >= soTienToiThieu}">
+                                                    <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}">${lshgg.soPhanTramGiam}%</option>
+                                                </c:if>
                                             </c:if>
                                         </c:forEach>
                                     </select>
@@ -580,7 +581,7 @@
                             <div class="col" >
                                 <div class="mb-3" id="tien-khach-dua-div">
                                     <label class="form-label">Tiền khách đưa</label>
-                                    <input type="number" class="form-control" id="tien-khach-dua" value="0" name="tienKhachDua" min="${tongTien}" step="0.01">
+                                    <input type="number" class="form-control" id="tien-khach-dua" value="0" name="tienKhachDua" step="0.01">
                                 </div>
                             </div>
                             <div class="col" id="phi-van-chuyen-div" style="display: none">
@@ -596,7 +597,7 @@
                             <div class="col" >
                                 <div class="mb-3"id="tien-thua-div">
                                     <label class="form-label">Tiền Thừa</label>
-                                    <input type="number" class="form-control" id="tien-thua" value="0" readonly>
+                                    <input type="text" class="form-control" id="tien-thua" value="0" readonly>
                                 </div>
                             </div>
                         </div>
@@ -858,9 +859,7 @@
 
                             if (discountPercentage > 0) {
                                 var giaMoi = giaSanPham - (giaSanPham * discountPercentage) / 100;
-                                console.log(giaMoi);
                                 giaInput.value = giaMoi;
-                                console.log(giaInput.value);
                                 // Update the UI with the discount percentage and the new price
                                 giaMoiElement.text('Giảm ' + discountPercentage + '%: ' + giaMoi);
                                 giaSanPhamElement.addClass('text-decoration-line-through');
@@ -1107,9 +1106,10 @@
                     return customer.id === selectedCustomerId;
                 });
                 // Cập nhật thông tin khách hàng trên giao diện
-
+                console.log(selectedCustomer.id)
                 $('#hoVaTen').val(selectedCustomer.hoVaTen);
                 $('#sdt').val((selectedCustomer.soDienThoai ? selectedCustomer.soDienThoai : 'Chưa Có'));
+                $('#idKhachHang').val(selectedCustomer.id);
                 $('#tenKhachHang').text('Tên khách hàng: ' + selectedCustomer.hoVaTen);
                 $('#emailKhachHang').text((selectedCustomer.email ? selectedCustomer.email : ''));
                 $('#soDienThoaiKhachHang').text('Số điện thoại: ' + (selectedCustomer.soDienThoai ? selectedCustomer.soDienThoai : ''));
@@ -1119,7 +1119,6 @@
                 $('#idKhachHangInput').val(selectedCustomerId);
 
                 fillCustomerData(selectedCustomer);
-                console.log(selectedCustomer);
             }
 
             // Hàm lọc và cập nhật danh sách khách hàng dựa trên từ khóa tìm kiếm
