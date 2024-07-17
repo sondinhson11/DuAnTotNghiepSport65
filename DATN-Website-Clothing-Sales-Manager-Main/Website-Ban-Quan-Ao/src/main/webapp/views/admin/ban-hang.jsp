@@ -557,7 +557,9 @@
                                     <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
                                         <!-- Vòng lặp để tạo các tùy chọn từ danh sách listHTTT -->
                                         <c:forEach items="${listHTTT}" var="lshttt">
+                                            <c:if test="${lshttt.trangThai == 1}" >
                                             <option value=${lshttt.id}>${lshttt.ten}</option>
+                                            </c:if>
                                         </c:forEach>
                                     </select>
                                 </div>

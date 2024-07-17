@@ -3,6 +3,7 @@ package com.example.websitebanquanao.controllers.admins;
 import com.example.websitebanquanao.entities.KhuyenMai;
 import com.example.websitebanquanao.infrastructures.requests.LoginAdminRequest;
 import com.example.websitebanquanao.infrastructures.requests.NhanVienRequest;
+import com.example.websitebanquanao.services.GiamGiaService;
 import com.example.websitebanquanao.services.KhachHangService;
 import com.example.websitebanquanao.services.KhuyenMaiService;
 import com.example.websitebanquanao.services.NhanVienService;
@@ -27,11 +28,14 @@ public class LoginController {
     private HttpSession session;
     @Autowired
     private KhuyenMaiService khuyenMaiService;
+    @Autowired
+    private GiamGiaService giamGiaService;
 
     @GetMapping("/login-admin")
     public String login(Model model) {
         model.addAttribute("nv", new LoginAdminRequest());
         khuyenMaiService.checkNgayKetThuc();
+       giamGiaService.checkNgayKetThuc();
         return "admin/login/login";
     }
 

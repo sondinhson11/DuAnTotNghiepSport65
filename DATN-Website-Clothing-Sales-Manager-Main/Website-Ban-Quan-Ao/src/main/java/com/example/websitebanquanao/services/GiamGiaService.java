@@ -1,6 +1,7 @@
 package com.example.websitebanquanao.services;
 
 import com.example.websitebanquanao.entities.GiamGia;
+import com.example.websitebanquanao.entities.KhuyenMai;
 import com.example.websitebanquanao.infrastructures.requests.GiamGiaRequest;
 import com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse;
 import com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse;
@@ -135,5 +136,17 @@ public class GiamGiaService {
     @Transactional
     public void updateSoLuongByMa(String ma, int soLuong) {
         giamGiaRepository.updateSoLuongByMa(ma, soLuong);
+    }
+
+    public void checkNgayKetThuc() {
+        LocalDate today = LocalDate.now();
+        List<GiamGia> giamGias = giamGiaRepository.findAll();
+
+        for (GiamGia giamGia : giamGias) {
+            if (giamGia.getNgayKetThuc().isBefore(today) || giamGia.getNgayKetThuc().isEqual(today)) {
+                giamGiaRepository.updateTrangThaiById(giamGia.getId(), 0);
+            }
+
+        }
     }
 }

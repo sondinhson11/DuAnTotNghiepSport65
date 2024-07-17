@@ -41,4 +41,8 @@ public interface GiamGiaRepository extends JpaRepository<GiamGia, UUID> {
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse(g.id, g.ma, g.soPhanTramGiam, g.soTienToiThieu, g.soLuong, g.ngayBatDau, g.ngayKetThuc,g.ngay_sua,g.ngay_tao,g.trang_thai) from GiamGia g where g.ma = :ma")
     public GiamGiaResponse getByMa(@Param("ma") String ma);
+
+    @Modifying
+    @Query("update GiamGia km set km.trang_thai = :trang_thai where km.id = :id")
+    public void updateTrangThaiById(@Param("id") UUID id, @Param("trang_thai") int trang_thai);
 }

@@ -79,8 +79,10 @@
                 <div class="form-label ">Phương thức thanh toán (*)</div>
                 <label class="form-check-label text-sm-left fw-bold ">
                     <c:forEach items="${listHTTT}" var="lshttt" varStatus="status">
+                        <c:if test="${lshttt.trangThai == 1}" >
                         <form:radiobutton path="hinhThucThanhToan" value="${lshttt.id}" name="payment_method" checked= "true" />
                         ${lshttt.ten}
+                        </c:if>
                     </c:forEach>
                 </label>
             </div>
