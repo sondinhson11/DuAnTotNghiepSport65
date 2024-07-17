@@ -193,18 +193,22 @@ public class TrangChuController {
 
     // thêm sản phẩm vào giả hàng trang chi tiết
     @PostMapping("/gio-hang/{id}")
-    public String themGioHang(@ModelAttribute("gioHang") GioHangUserRequest gioHangUserRequest, Model model, @PathVariable("id") UUID id, @RequestParam("soLuong") Integer soLuongMoi) {
+    public String themGioHang(@ModelAttribute("gioHang") GioHangUserRequest gioHangUserRequest, Model model, @PathVariable("id") UUID id, @RequestParam("soLuong") Integer soLuongMoi, RedirectAttributes redirectAttributes) {
         UUID idSanPhamChiTiet = sanPhamService.getIdSanPhamChiTietByIdMauSacnAndIdSanPham(id, gioHangUserRequest.getIdMauSac(), gioHangUserRequest.getIdKichCo());
         SanPhamChiTiet ctsp = ctspService.findById(idSanPhamChiTiet);
-        int soLuongConLai = ctsp.getSoLuong() - soLuongMoi;
-        if (soLuongConLai < 0) {
-            // Xử lý tình huống số lượng âm (tuỳ theo quy tắc của bạn)
-            soLuongConLai = 0;
+        if (soLuongMoi > ctsp.getSoLuong()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Số lượng sản phẩm trong kho không đủ ");
+        } else {
+            int soLuongConLai = ctsp.getSoLuong() - soLuongMoi;
+            if (soLuongConLai < 0) {
+                // Xử lý tình huống số lượng âm (tuỳ theo quy tắc của bạn)
+                soLuongConLai = 0;
+            }
+            ctsp.setSoLuong(soLuongConLai);
+            ctspService.updateSoLuong(ctsp);
+            KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
+            gioHangChiTietService.add(id, khachHangResponse.getId(), gioHangUserRequest);
         }
-        ctsp.setSoLuong(soLuongConLai);
-        ctspService.updateSoLuong(ctsp);
-        KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
-        gioHangChiTietService.add(id, khachHangResponse.getId(), gioHangUserRequest);
         return "redirect:/gio-hang";
     }
 
@@ -257,7 +261,7 @@ public class TrangChuController {
         if (giamGiaResponse == null) {
             thongBaoGiamGia = "Mã giảm giá không tồn tại.";
         } else {
-            if (tongTien.intValue()+1 <= giamGiaResponse.getSoTienToiThieu()) {
+            if (tongTien.intValue() + 1 <= giamGiaResponse.getSoTienToiThieu()) {
                 thongBaoGiamGia = "Mã giảm giá Không được áp dụng do chưa đử tiền tối thiểu";
                 giamGiaResponse = null;
             } else {
@@ -307,9 +311,10 @@ public class TrangChuController {
 
     // form thanh toán
     @PostMapping("thanh-toan")
-    public String formThanhToan(@ModelAttribute("formThanhToan") FormThanhToan formThanhToan, @RequestParam(value = "diaChiMacDinh", required = false) Integer diaChiMacDinh) {
+    public String formThanhToan(Model model, @ModelAttribute("formThanhToan") FormThanhToan formThanhToan, @RequestParam(value = "diaChiMacDinh", required = false) Integer diaChiMacDinh) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
         GiamGiaResponse giamGiaResponse = (GiamGiaResponse) session.getAttribute("giamGia");
+        BigDecimal tongTien = gioHangChiTietService.getTongTienByIdKhachHang(khachHangResponse.getId());
         if (khachHangResponse == null) {
             return "redirect:/dang-nhap";
         } else {
@@ -317,10 +322,13 @@ public class TrangChuController {
                 diaChiMacDinh = 0;
             }
             if (giamGiaResponse == null) {
-                UUID id = hoaDonService.addHoaDonUser(formThanhToan, khachHangResponse, null, diaChiMacDinh);
+                BigDecimal soTienDuocGiam = null;
+                UUID id = hoaDonService.addHoaDonUser(formThanhToan, khachHangResponse, null, diaChiMacDinh, tongTien, soTienDuocGiam);
                 return "redirect:/hoa-don/" + id;
             } else {
-                UUID id = hoaDonService.addHoaDonUser(formThanhToan, khachHangResponse, giamGiaResponse, diaChiMacDinh);
+                int soPhanTramGiam = giamGiaResponse.getSoPhanTramGiam();
+                BigDecimal soTienDuocGiam = tongTien.multiply(new BigDecimal(soPhanTramGiam).divide(new BigDecimal(100)));
+                UUID id = hoaDonService.addHoaDonUser(formThanhToan, khachHangResponse, giamGiaResponse, diaChiMacDinh, tongTien, soTienDuocGiam);
                 session.setAttribute("giamGia", null);
                 return "redirect:/hoa-don/" + id;
             }
@@ -357,13 +365,13 @@ public class TrangChuController {
         model.addAttribute("listHTTT", hinhThucThanhToanService.getAll());
         session.setAttribute("idHoaDon", id);
 
-        BigDecimal tongTien = hoaDonService.sumTongTienByIdHoaDon(id);
+        BigDecimal tongTien = hoaDonChiTietService.sumTongTien(id);
         Integer soPhanTramGiam = hoaDonService.getSoPhanTramGiamByIdHoaDon(id);
         BigDecimal soTienDuocGiam = tongTien.multiply(new BigDecimal(soPhanTramGiam).divide(new BigDecimal(100)));
 
         model.addAttribute("soTienTruocGiam", hoaDonChiTietService.sumTongTien(id).intValue());
         model.addAttribute("soTienDuocGiam", soTienDuocGiam.intValue());
-        model.addAttribute("soTienSauKhiGiam", tongTien.intValue());
+        model.addAttribute("soTienSauKhiGiam", tongTien.intValue()-soTienDuocGiam.intValue());
 
         model.addAttribute("viewContent", "/views/user/hoa-don-chi-tiet.jsp");
         return "user/layout";

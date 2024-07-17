@@ -142,7 +142,7 @@ public class HoaDonService {
     }
 
     // user
-    public UUID addHoaDonUser(FormThanhToan formThanhToan, KhachHangResponse khachHangResponse, GiamGiaResponse giamGiaResponse, int diaChiMacDinh) {
+    public UUID addHoaDonUser(FormThanhToan formThanhToan, KhachHangResponse khachHangResponse, GiamGiaResponse giamGiaResponse, int diaChiMacDinh,BigDecimal tongTien,BigDecimal soTienGiam) {
         HoaDon hoaDon = new HoaDon();
 
         hoaDon.setMa(maHDCount());
@@ -165,6 +165,8 @@ public class HoaDonService {
             hoaDon.setSoDienThoai(formThanhToan.getSoDienThoai());
             hoaDon.setEmail(formThanhToan.getEmail());
         }
+        hoaDon.setTongTien(tongTien);
+        hoaDon.setTienGiam(soTienGiam);
         hoaDon.setHinhThucThanhToan(formThanhToan.getHinhThucThanhToan());
         hoaDon.setGhiChu(formThanhToan.getGhiChu());
         hoaDon.setLoaiHoaDon(1);
@@ -181,9 +183,7 @@ public class HoaDonService {
 
             giamGiaService.updateSoLuongByMa(giamGiaResponse.getMa(), giamGiaResponse.getSoLuong() - 1);
         }
-
         hoaDon.setIdKhachHang(khachHang);
-
         hoaDonRepository.save(hoaDon);
         hoaDonChiTietService.addHoaDonChiTietUser(hoaDon, khachHangResponse.getId());
         System.out.println("HoaDonService.addHoaDonUser: " + hoaDon.getMa());

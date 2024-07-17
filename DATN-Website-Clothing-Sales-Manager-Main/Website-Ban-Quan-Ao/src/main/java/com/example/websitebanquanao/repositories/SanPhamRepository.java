@@ -47,7 +47,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
 
 
     // user
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.TrangChuResponse(s.id, s.ten, s.anh, min(spct.gia), min(ms.id), s.ngay_tao,min(kc.id)) from SanPham s join s.sanPhamChiTiets spct join spct.idMauSac ms join spct.idKichCo kc where spct.trangThai = 1 group by s.id, s.ten, s.anh, s.ngay_tao order by s.ngay_tao desc")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.TrangChuResponse(s.id, s.ten, s.anh, min(spct.gia), min(ms.id), s.ngay_tao,min(kc.id)) from SanPham s join s.sanPhamChiTiets spct join spct.idMauSac ms join spct.idKichCo kc where spct.trangThai = 1 and spct.soLuong >0 group by s.id, s.ten, s.anh, s.ngay_tao order by s.ngay_tao desc")
     public List<TrangChuResponse> getListTrangChu();
 
     @Query(value = "SELECT TOP 5 s.id, s.ten, s.anh, MIN(spct.gia), MIN(ms.id), s.ngay_tao,MIN(kc.id) " +
@@ -57,16 +57,16 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             "JOIN mau_sac ms ON spct.id_mau_sac = ms.id " +
             "JOIN hoa_don_chi_tiet hdct ON spct.id = hdct.id_san_pham_chi_tiet " +
             "JOIN hoa_don hd ON hdct.id_hoa_don = hd.id " +
-            "WHERE spct.trang_thai = 1 " +
+            "WHERE spct.trang_thai = 1 " + "And spct.so_luong > 0 " +
             "GROUP BY s.id, s.ten, s.anh, s.ngay_tao " +
             "ORDER BY COUNT(hdct.id) DESC", nativeQuery = true)
     public List<Object[]> getTop5BestSellingProducts();
 
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.TrangChuResponse(s.id, s.ten, s.anh, MIN(spct.gia), MIN(ms.id), s.ngay_tao,Min(kc.id)) from SanPham s join s.sanPhamChiTiets spct join spct.idMauSac ms join spct.idKichCo kc join spct.khuyenMaiChiTiets kmct join kmct.idKhuyenMai km where km.ngayBatDau <= CURRENT_DATE and km.ngayKetThuc >= CURRENT_DATE and spct.trangThai = 1 group by s.id, s.ten, s.anh, s.ngay_tao order by s.ngay_tao desc")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.TrangChuResponse(s.id, s.ten, s.anh, MIN(spct.gia), MIN(ms.id), s.ngay_tao,Min(kc.id)) from SanPham s join s.sanPhamChiTiets spct join spct.idMauSac ms join spct.idKichCo kc join spct.khuyenMaiChiTiets kmct join kmct.idKhuyenMai km where km.ngayBatDau <= CURRENT_DATE and km.ngayKetThuc >= CURRENT_DATE and spct.trangThai = 1 and spct.soLuong > 0 group by s.id, s.ten, s.anh, s.ngay_tao order by s.ngay_tao desc")
     public List<TrangChuResponse> getListSale();
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.TrangChuResponse(s.id, s.ten, s.anh, min(spct.gia), min(ms.id), s.ngay_tao,Min(kc.id)) from SanPham s join s.sanPhamChiTiets spct join spct.idKichCo kc join spct.idMauSac ms where s.idLoai.id = :idLoai and spct.trangThai = 1 group by s.id, s.ten, s.anh, s.ngay_tao order by s.ngay_tao desc")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.TrangChuResponse(s.id, s.ten, s.anh, min(spct.gia), min(ms.id), s.ngay_tao,Min(kc.id)) from SanPham s join s.sanPhamChiTiets spct join spct.idKichCo kc join spct.idMauSac ms where s.idLoai.id = :idLoai and spct.trangThai = 1 and spct.soLuong > 0 group by s.id, s.ten, s.anh, s.ngay_tao order by s.ngay_tao desc")
     public List<TrangChuResponse> getListSanPhamByIdLoai(@Param("idLoai") Integer idLoai);
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietUserResponse(s.id, s.ten, min(spct.gia), spct.moTa,spct.trangThai,spct.maSanPham,th.ten) from SanPham s join s.sanPhamChiTiets  spct join s.idThuongHieu th where s.id = :idSanPham group by s.id, s.ten, spct.moTa,spct.maSanPham,spct.trangThai,th.ten")
@@ -75,7 +75,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietUserResponse(s.id, s.ten, min(spct.gia), spct.moTa,spct.trangThai,spct.maSanPham,th.ten) from SanPham s join s.sanPhamChiTiets spct join s.idThuongHieu th where s.id = :idSanPham and spct.idMauSac.id = :idMauSac and spct.idKichCo.id = :idKichCo group by s.id, s.ten, spct.moTa,spct.maSanPham,spct.trangThai,th.ten")
     public SanPhamChiTietUserResponse getByIdSanPhamAndIdMauSacAndIdKichCo(@Param("idSanPham") UUID idSanPham, @Param("idMauSac") Integer idMauSac, @Param("idKichCo") Integer idKichCo);
 
-    @Query(value = "select top 1 spct.id_kich_co from san_pham s join san_pham_chi_tiet spct on s.id = spct.id_san_pham where spct.id_san_pham= :idSanPham  and spct.id_mau_sac= :idMauSac", nativeQuery = true)
+    @Query(value = "select top 1 spct.id_kich_co from san_pham s join san_pham_chi_tiet spct on s.id = spct.id_san_pham where spct.id_san_pham= :idSanPham  and spct.id_mau_sac= :idMauSac and spct.so_luong >0 and spct.trang_thai =1", nativeQuery = true)
     public Integer getMinIdKichCoByIdMauSacnAndIdSanPham(UUID idSanPham, Integer idMauSac);
 
     @Query(value = "select spct.id from san_pham s join san_pham_chi_tiet spct on s.id=spct.id_san_pham where spct.id_san_pham = :idSanPham and id_kich_co= :idKichCo and id_mau_sac= :idMauSac", nativeQuery = true)

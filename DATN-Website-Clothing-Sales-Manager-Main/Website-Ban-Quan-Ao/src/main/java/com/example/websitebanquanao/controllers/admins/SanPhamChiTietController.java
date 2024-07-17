@@ -245,9 +245,8 @@ public class SanPhamChiTietController {
             session.setAttribute("successMessage", "Trả hàng vào kho thành công.");
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("error", "Lỗi khi trả hàng vào kho: " + e.getMessage());
+            session.setAttribute("errorMessage", "Lỗi khi trả hàng vào kho: " + e.getMessage());
         }
-
         return "redirect:/admin/hoa-don/" + idHoaDon;
     }
     // Mapping for searching by name

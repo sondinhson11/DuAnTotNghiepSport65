@@ -140,6 +140,10 @@ public class HoaDonController {
             hoaDon.setNgayNhan(instant);
             hoaDon.setNgayThanhToan(instant);
             hoaDon.setTrangThai(trangThai);
+            Integer tienGiam1=0;
+            if(hoaDon.getTienGiam()!=null){ tienGiam1=hoaDon.getTienGiam().intValue();}
+            BigDecimal thanhToan=BigDecimal.valueOf(hoaDon.getTongTien().intValue()+hoaDon.getPhiVanChuyen().intValue()-tienGiam1);
+            hoaDon.setThanhToan(thanhToan);
             hoaDonService.update(hoaDon, id);
         } else {
             HoaDon hoaDon = hoaDonService.getById(id);
@@ -148,6 +152,10 @@ public class HoaDonController {
             hoaDon.setNgayNhan(instant);
             hoaDon.setNgayThanhToan(instant);
             hoaDon.setTrangThai(trangThai);
+            Integer tienGiam1=0;
+            if(hoaDon.getTienGiam()!=null){ tienGiam1=hoaDon.getTienGiam().intValue();}
+            BigDecimal thanhToan=BigDecimal.valueOf(hoaDon.getTongTien().intValue()+hoaDon.getPhiVanChuyen().intValue()-tienGiam1);
+            hoaDon.setThanhToan(thanhToan);
             hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
             hoaDonService.update(hoaDon, id);
         }

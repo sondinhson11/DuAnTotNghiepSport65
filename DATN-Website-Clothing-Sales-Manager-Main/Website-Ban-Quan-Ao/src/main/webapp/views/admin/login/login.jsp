@@ -8,7 +8,7 @@
     <link
             rel="icon"
             href=
-                    "https://www.youtube.com/s/desktop/a2763344/img/favicon.ico"
+                    "/../views/admin/css/Summer.png"
             type="image/x-icon"
     />
     <link href="/../views/admin/css/styles.css" rel="stylesheet"/>
