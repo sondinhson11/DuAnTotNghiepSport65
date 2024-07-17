@@ -86,7 +86,8 @@ public class KhuyenMaiService {
     public void updateTrangThai(UUID id, int trangThai) {
         Date ngayKetThuc = Date.valueOf("2024-01-03");
         khuyenMaiRepository.updateTrangThaiById(id, trangThai);
-        khuyenMaiRepository.updateNgayKetThucById(id,ngayKetThuc);
+        khuyenMaiRepository.updateNgayKetThucById(id, ngayKetThuc);
+        khuyenMaiRepository.deleteKhuyenMaiChiTietById(id);
         System.out.println("KhuyenMaiService.updateTrangThai: " + id);
     }
 

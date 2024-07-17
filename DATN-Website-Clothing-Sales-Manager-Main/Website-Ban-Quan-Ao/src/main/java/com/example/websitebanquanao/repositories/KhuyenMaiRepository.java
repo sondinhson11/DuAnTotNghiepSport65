@@ -27,6 +27,10 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai, UUID> {
     public KhuyenMaiResponse getByIdResponse(@Param("id") UUID id);
 
     @Modifying
+    @Query("delete from KhuyenMaiChiTiet km where km.idKhuyenMai.id = :id")
+    public void deleteKhuyenMaiChiTietById(@Param("id") UUID id);
+
+    @Modifying
     @Query("update KhuyenMai km set km.trangThai = :trangThai where km.id = :id")
     public void updateTrangThaiById(@Param("id") UUID id, @Param("trangThai") int trangThai);
 
