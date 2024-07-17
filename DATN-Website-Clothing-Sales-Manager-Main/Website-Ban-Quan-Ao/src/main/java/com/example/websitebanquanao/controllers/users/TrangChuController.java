@@ -371,7 +371,7 @@ public class TrangChuController {
 
         model.addAttribute("soTienTruocGiam", hoaDonChiTietService.sumTongTien(id).intValue());
         model.addAttribute("soTienDuocGiam", soTienDuocGiam.intValue());
-        model.addAttribute("soTienSauKhiGiam", tongTien.intValue());
+        model.addAttribute("soTienSauKhiGiam", tongTien.intValue()-soTienDuocGiam.intValue());
 
         model.addAttribute("viewContent", "/views/user/hoa-don-chi-tiet.jsp");
         return "user/layout";

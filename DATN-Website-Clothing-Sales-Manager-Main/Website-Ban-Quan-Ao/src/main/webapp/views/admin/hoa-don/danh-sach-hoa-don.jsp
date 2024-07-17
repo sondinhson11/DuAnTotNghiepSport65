@@ -40,7 +40,7 @@
 <c:forEach items="${listSanPhamTrongGioHang}" var="sp" varStatus="status">
     <c:set var="tongTien" value="${tongTien + (sp.soLuong * sp.gia)}"/>
 </c:forEach>
-<c:set var="tongTien" value="${tongTien + hoaDon.phiVanChuyen}"/>
+<c:set var="tongTien" value="${tongTien + hoaDon.phiVanChuyen- hoaDon.tienGiam}"/>
 <div class="">
     <div class="row">
             <span class="d-flex">

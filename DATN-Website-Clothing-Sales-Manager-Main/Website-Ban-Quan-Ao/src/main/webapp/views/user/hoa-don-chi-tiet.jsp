@@ -249,9 +249,11 @@
             <div class="col-9 d-flex justify-content-end">Tổng</div>
             <div class="col-3">
                 <p id="phaiTra"></p>
+                <p id="soTienSauKhiGiam" STYLE="display: none" >${soTienSauKhiGiam}</p>
                 <script>
                     var phaiTraElement = document.getElementById("phaiTra");
-                    var soTienSauKhiGiam = ${soTienSauKhiGiam};
+                    var soTienSauKhiGiamElement = document.getElementById("soTienSauKhiGiam");
+                    var soTienSauKhiGiamText = soTienSauKhiGiamElement.innerText;
 
                     var giaVanChuyenElement = document.getElementById("phiVanChuyen");
                     var giaVanChuyenText = giaVanChuyenElement.innerText;
@@ -259,15 +261,11 @@
 
                     var tong = 0;
                     if (giaVanChuyenText !== 'Chưa tính') {
-                        var soTienSauKhiGiam = parseInt(giaSanPhamText.replace(/[^\d]/g, ''));
+                        var soTienSauKhiGiam = parseInt(soTienSauKhiGiamText.replace(/[^\d]/g, ''));
                         var giaVanChuyen = parseInt(giaVanChuyenText.replace(/[^\d]/g, ''));
 
                         if (!isNaN(soTienSauKhiGiam) && !isNaN(giaVanChuyen)) {
-                            if (hinhThucThanhToan == 'Thanh toán khi nhận hàng') {
                                 tong = soTienSauKhiGiam + giaVanChuyen;
-                            } else {
-                                tong = giaVanChuyen;
-                            }
                         }
                     }
 
