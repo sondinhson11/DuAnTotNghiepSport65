@@ -1,5 +1,6 @@
 package com.example.websitebanquanao.controllers.users;
 
+import com.example.websitebanquanao.entities.GiamGia;
 import com.example.websitebanquanao.entities.GioHangChiTiet;
 import com.example.websitebanquanao.entities.SanPhamChiTiet;
 import com.example.websitebanquanao.infrastructures.requests.DangKyUserRequest;
@@ -154,6 +155,7 @@ public class TrangChuController {
     public String gioHang(Model model, @ModelAttribute("thongBaoGiamGia") String thoangBaoGiamGia) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
         model.addAttribute("kh", khachHangRequest);
+        model.addAttribute("listGG", giamGiaService.getAll());
         GiamGiaResponse giamGiaResponse = (GiamGiaResponse) session.getAttribute("giamGia");
         if (khachHangResponse == null) {
             return "redirect:/dang-nhap";
@@ -199,13 +201,13 @@ public class TrangChuController {
         if (soLuongMoi > ctsp.getSoLuong()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Số lượng sản phẩm trong kho không đủ ");
         } else {
-            int soLuongConLai = ctsp.getSoLuong() - soLuongMoi;
-            if (soLuongConLai < 0) {
-                // Xử lý tình huống số lượng âm (tuỳ theo quy tắc của bạn)
-                soLuongConLai = 0;
-            }
-            ctsp.setSoLuong(soLuongConLai);
-            ctspService.updateSoLuong(ctsp);
+//            int soLuongConLai = ctsp.getSoLuong() - soLuongMoi;
+//            if (soLuongConLai < 0) {
+//                // Xử lý tình huống số lượng âm (tuỳ theo quy tắc của bạn)
+//                soLuongConLai = 0;
+//            }
+//            ctsp.setSoLuong(soLuongConLai);
+//            ctspService.updateSoLuong(ctsp);
             KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
             gioHangChiTietService.add(id, khachHangResponse.getId(), gioHangUserRequest);
         }
@@ -216,47 +218,47 @@ public class TrangChuController {
     @PostMapping("/gio-hang/update/{id}")
     public String capNhatGioHang(@PathVariable("id") UUID id, @RequestParam("soLuong") Integer soLuong, RedirectAttributes redirectAttributes) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
-        GioHangChiTiet ghct = gioHangChiTietService.getByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId());
-        SanPhamChiTiet ctsp = ctspService.findById(id);
-        if (soLuong > ghct.getSoLuong()) {
-            int soLuongConLai = ctsp.getSoLuong() - 1;
-            if (soLuongConLai < 0) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Hết hàng");
-                return "redirect:/gio-hang";
-            } else {
-                ctsp.setSoLuong(soLuongConLai);
-                ctspService.updateSoLuong(ctsp);
-                gioHangChiTietService.updateByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId(), soLuong);
-                return "redirect:/gio-hang";
-            }
-        } else {
-            int soLuongConLai = ctsp.getSoLuong() + 1;
-            ctsp.setSoLuong(soLuongConLai);
-            ctspService.updateSoLuong(ctsp);
+//        GioHangChiTiet ghct = gioHangChiTietService.getByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId());
+//        SanPhamChiTiet ctsp = ctspService.findById(id);
+//        if (soLuong > ghct.getSoLuong()) {
+//            int soLuongConLai = ctsp.getSoLuong() - 1;
+//            if (soLuongConLai < 0) {
+//                redirectAttributes.addFlashAttribute("errorMessage", "Hết hàng");
+//                return "redirect:/gio-hang";
+//            } else {
+//                ctsp.setSoLuong(soLuongConLai);
+//                ctspService.updateSoLuong(ctsp);
+//                gioHangChiTietService.updateByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId(), soLuong);
+//                return "redirect:/gio-hang";
+//            }
+//        } else {
+//            int soLuongConLai = ctsp.getSoLuong() + 1;
+//            ctsp.setSoLuong(soLuongConLai);
+//            ctspService.updateSoLuong(ctsp);
             gioHangChiTietService.updateByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId(), soLuong);
             return "redirect:/gio-hang";
-        }
+//        }
     }
 
     // xóa sản phẩm trong giỏ hàng
     @GetMapping("/gio-hang/{id}")
     public String xoaGioHang(@PathVariable("id") UUID id) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
-        GioHangChiTiet ghct = gioHangChiTietService.getByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId());
-        SanPhamChiTiet ctsp = ctspService.findById(id);
-        int soLuongConLai = ctsp.getSoLuong() + ghct.getSoLuong();
-        ctsp.setSoLuong(soLuongConLai);
-        ctspService.updateSoLuong(ctsp);
+//        GioHangChiTiet ghct = gioHangChiTietService.getByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId());
+//        SanPhamChiTiet ctsp = ctspService.findById(id);
+//        int soLuongConLai = ctsp.getSoLuong() + ghct.getSoLuong();
+//        ctsp.setSoLuong(soLuongConLai);
+//        ctspService.updateSoLuong(ctsp);
         gioHangChiTietService.deleteByIdSanPhamChiTietAndIdKhachHang(id, khachHangResponse.getId());
         return "redirect:/gio-hang";
     }
 
     // add voucher
     @PostMapping("/ap-dung-voucher")
-    public String apDungVoucher(@RequestParam("ma") String ma, HttpSession session) {
+    public String apDungVoucher(@RequestParam(value = "ma", required = false) GiamGia ma, HttpSession session) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
         BigDecimal tongTien = gioHangChiTietService.getTongTienByIdKhachHang(khachHangResponse.getId());
-        GiamGiaResponse giamGiaResponse = giamGiaService.findByMa(ma);
+        GiamGiaResponse giamGiaResponse = giamGiaService.findByMa(ma.getMa());
         String thongBaoGiamGia = "";
         if (giamGiaResponse == null) {
             thongBaoGiamGia = "Mã giảm giá không tồn tại.";

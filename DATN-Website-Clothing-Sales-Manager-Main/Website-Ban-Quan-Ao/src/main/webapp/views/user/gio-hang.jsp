@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -134,7 +135,20 @@
         <form action="/ap-dung-voucher" method="post">
             <div class="row">
                 <div class="col-3">
-                    <input type="text" name="ma" class="form-control" placeholder="Mã giảm giá">
+                    <select class="form-select" id=ma" name="ma" aria-label="Default select example">
+                        <!-- Các option được tạo từ danh sách listGG -->
+                        <option value="" >Không sử dụng</option>
+                        <c:forEach items="${listGG}" var="lshgg">
+                            <fmt:parseNumber var="tongTienSo" value="${tongTien}"/>
+                            <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}"/>
+                            <c:if test="${lshgg.soLuong >=0}">
+                                <c:if test="${tongTienSo >= soTienToiThieu}">
+                                    <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}"> ${lshgg.soPhanTramGiam}%</option>
+                                </c:if>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+<%--                    <input type="text" name="ma" class="form-control" placeholder="Mã giảm giá">--%>
                 </div>
                 <div class="col-3">
                     <button id="ap-dung-btn" type="submit" class="btn btn-dark">Áp dụng</button>

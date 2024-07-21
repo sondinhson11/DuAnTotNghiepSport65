@@ -1,9 +1,6 @@
 package com.example.websitebanquanao.controllers.admins;
 
-import com.example.websitebanquanao.entities.HinhThucThanhToan;
-import com.example.websitebanquanao.entities.HoaDon;
-import com.example.websitebanquanao.entities.HoaDonChiTiet;
-import com.example.websitebanquanao.entities.NhanVien;
+import com.example.websitebanquanao.entities.*;
 import com.example.websitebanquanao.infrastructures.requests.NhanVienRequest;
 import com.example.websitebanquanao.infrastructures.responses.AnhSanPhamResponse;
 import com.example.websitebanquanao.infrastructures.responses.BanHangTaiQuayResponse;
@@ -93,6 +90,15 @@ public class HoaDonController {
 
     @PostMapping("/admin/hoa-don/update-trang-thai/{id}")
     public String updateTrangThaiHoaDon(@PathVariable("id") UUID id, @RequestParam("trangThai") Integer trangThai, @RequestParam("ghiChu") String ghiChu, Model model) {
+        if (trangThai-1 == 2){
+            List<GioHangResponse> listSanPhamTrongGioHang = hoaDonChiTietService.getHoaDonChiTietByHoaDonId(id);
+            for (GioHangResponse gh:listSanPhamTrongGioHang) {
+                SanPhamChiTiet ctsp = sanPhamChiTietService.findById(gh.getIdSanPhamChiTiet());
+                int soLuongConLai = ctsp.getSoLuong() - Integer.valueOf(String.valueOf(gh.getSoLuong())) ;
+                ctsp.setSoLuong(soLuongConLai);
+                sanPhamChiTietService.updateSoLuong(ctsp);
+            }
+        }
         NhanVien nhanVien = new NhanVien();
         NhanVienRequest nhanVienRequest = (NhanVienRequest) httpSession.getAttribute("admin");
         nhanVien.setId(nhanVienRequest.getId());
@@ -113,6 +119,17 @@ public class HoaDonController {
                                               @RequestParam("tenDonViVanChuyen") String tenDonViVanChuyen,
                                               @RequestParam("phiVanChuyen") BigDecimal phiVanChuyen
             , Model model) {
+
+        if (trangThai-1 == 2){
+            List<GioHangResponse> listSanPhamTrongGioHang = hoaDonChiTietService.getHoaDonChiTietByHoaDonId(id);
+            for (GioHangResponse gh:listSanPhamTrongGioHang) {
+                SanPhamChiTiet ctsp = sanPhamChiTietService.findById(gh.getIdSanPhamChiTiet());
+                int soLuongConLai = ctsp.getSoLuong() - Integer.valueOf(String.valueOf(gh.getSoLuong())) ;
+                ctsp.setSoLuong(soLuongConLai);
+                sanPhamChiTietService.updateSoLuong(ctsp);
+            }
+        }
+
         NhanVien nhanVien = new NhanVien();
         NhanVienRequest nhanVienRequest = (NhanVienRequest) httpSession.getAttribute("admin");
         nhanVien.setId(nhanVienRequest.getId());

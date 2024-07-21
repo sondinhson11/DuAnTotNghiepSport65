@@ -230,7 +230,6 @@ public class BanHangController {
 
     @PostMapping("/thanh-toan/{idHoaDon}")
     public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam(value = "giamGia", required = false) GiamGia giamGia, @RequestParam("ghiChu") String ghiChu, @RequestParam("tong-tien") String tongTien, @RequestParam("tienKhachDua") String tienKhachDua, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan, @RequestParam("nguoiNhan") String hoVaTen, @RequestParam("sdt") String soDienThoai,@RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
-        System.out.println(idKhachHang);
         String tongTien2 = tongTien.replace(".", "");
         String tienGiam2 = tienGiamGia.replace(".", "");
         String tienThanhToan2 = tienThanhToan.replace(".", "");
