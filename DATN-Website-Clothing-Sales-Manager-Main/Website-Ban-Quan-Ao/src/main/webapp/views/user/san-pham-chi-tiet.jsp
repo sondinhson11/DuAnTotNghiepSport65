@@ -152,51 +152,98 @@
                             <div>
                                 <p class="text-danger ms-3 mt-2" id="textKichCo" style="display: none">Bạn cần chọn kích
                                     cỡ</p>
+
                             </div>
 
                         </div>
 
 
+                        <script>
+                            $(document).ready(function () {
+                                // Kiểm tra số lượng âm
+                                $("#quantity").on('input', function () {
+                                    var value = parseInt($(this).val());
+                                    if (value < 1 || isNaN(value)) {
+                                        $(this).val(1); // Đặt lại giá trị về 1 nếu là số âm hoặc không hợp lệ
+                                    }
+                                });
+
+                                // Xử lý sự kiện click cho nút "Thêm vào giỏ hàng"
+                                $("#btnThemVaoGioHang").click(function (event) {
+                                    // Kiểm tra xem người dùng đã chọn kích cỡ và màu sắc chưa
+                                    var kichCoSelected = $("input[name='idKichCo']:checked").length > 0;
+                                    var mauSacSelected = $("input[name='idMauSac']:checked").length > 0;
+
+                                    if (!kichCoSelected || !mauSacSelected) {
+                                        // Ngăn form không được submit
+                                        event.preventDefault();
+
+                                        // Hiển thị thông báo lỗi phù hợp
+                                        if (!kichCoSelected) {
+                                            $("#textKichCo").show();
+                                        } else {
+                                            $("#textKichCo").hide();
+                                        }
+
+                                        if (!mauSacSelected) {
+                                            $("#textMauSac").show();
+                                        } else {
+                                            $("#textMauSac").hide();
+                                        }
+                                    }
+                                });
+
+                                // Ẩn thông báo lỗi khi người dùng chọn kích cỡ hoặc màu sắc
+                                $("input[name='idKichCo']").change(function () {
+                                    $("#textKichCo").hide();
+                                });
+
+                                $("input[name='idMauSac']").change(function () {
+                                    $("#textMauSac").hide();
+                                });
+
+                                // Vô hiệu hóa tùy chọn "Chọn" cho màu sắc
+                                $("#mauSacSelect input[value='']").attr("disabled", "disabled");
+                            });
+
+                            function decrement(event) {
+                                event.preventDefault();
+                                var quantityInput = document.getElementById("quantity");
+                                var currentValue = parseInt(quantityInput.value);
+                                if (currentValue > 1) {
+                                    quantityInput.value = currentValue - 1;
+                                }
+                            }
+
+                            function increment(event) {
+                                event.preventDefault();
+                                var kichCoSelected = $("input[name='idKichCo']:checked").length > 0;
+                                if (!kichCoSelected) {
+                                    $("#textKichCo").show();
+                                    return;
+                                }
+                                $("#textKichCo").hide();
+                                var quantityInput = document.getElementById("quantity");
+                                var currentValue = parseInt(quantityInput.value);
+                                var max = parseInt(quantityInput.getAttribute('max'));
+                                if (currentValue < max) {
+                                    quantityInput.value = currentValue + 1;
+                                }
+                            }
+                        </script>
+
                         <div class="mt-4">
                             <div class="quantity">
                                 <span class="fw-bold">Số lượng:</span>
                                 <div class="d-flex align-items-center mt-2">
-                                    <button class="btn btn-outline-secondary d-inline-block me-2 mb-2"
-                                            onclick="decrement(event)">-
-                                    </button>
+                                    <button class="btn btn-outline-secondary d-inline-block me-2 mb-2" onclick="decrement(event)">-</button>
+
                                     <form:input path="soLuong" id="quantity" type="text" value="1" min="1" max="100"
                                                 class="form-control text-center border-top-0 border-bottom-0"
-                                                style="width: 80px;"/>
-                                    <button class="btn btn-outline-secondary d-inline-block me-2 mb-2"
-                                            onclick="increment(event)">+
-                                    </button>
-                                </div>
-                                <script>
-                                    function decrement(event) {
-                                        event.preventDefault();
-                                        var quantityInput = document.getElementById("quantity");
-                                        var currentValue = parseInt(quantityInput.value);
-                                        if (currentValue > 1) {
-                                            quantityInput.value = currentValue - 1;
-                                        }
-                                    }
+                                                style="width: 80px;" />
 
-                                    function increment(event) {
-                                        event.preventDefault();
-                                        var kichCoSelected = $("input[name='idKichCo']:checked").length > 0;
-                                        if (!kichCoSelected) {
-                                            $("#textKichCo").show();
-                                            return;
-                                        }
-                                        $("#textKichCo").hide();
-                                        var quantityInput = document.getElementById("quantity");
-                                        var currentValue = parseInt(quantityInput.value);
-                                        var max = parseInt(quantityInput.getAttribute('max'));
-                                        if (currentValue < max) {
-                                            quantityInput.value = currentValue + 1;
-                                        }
-                                    }
-                                </script>
+                                    <button class="btn btn-outline-secondary d-inline-block me-2 mb-2" onclick="increment(event)">+</button>
+                                </div>
                             </div>
                             <div id="soLuongSanPham" class="mt-3"></div>
                             <script>
@@ -232,6 +279,8 @@
                             </script>
                         </div>
 
+<%--                    </div>--%>
+
                     </div>
                     <div class="mt-4 d-flex gap-3">
                         <c:if test="${khachHang != null}">
@@ -242,6 +291,9 @@
                                 cỡ</p>
                             <p class="text-danger ms-3 mt-2" id="textMauSac" style="display: none">Bạn cần chọn màu
                                 sắc</p>
+                            <p class="text-danger ms-3 mt-2" id="soLuongError" style="display: none">Số lượng phải lớn hơn hoặc bằng 1
+                            </p>
+
                         </c:if>
                     </div>
 
@@ -281,6 +333,20 @@
         </div>
         <script>
             $(document).ready(function () {
+                // Kiểm tra số lượng âm và chữ
+                $("#quantity").on('input', function () {
+                    // Chỉ cho phép nhập số
+                    var value = $(this).val();
+                    // Loại bỏ tất cả các ký tự không phải số
+                    value = value.replace(/[^0-9]/g, '');
+                    // Chuyển giá trị thành số
+                    value = parseInt(value);
+                    // Kiểm tra giá trị âm hoặc không hợp lệ
+                    if (value < 1 || isNaN(value)) {
+                        value = 1; // Đặt lại giá trị về 1 nếu là số âm hoặc không hợp lệ
+                    }
+                    $(this).val(value);
+                });
                 // Handle the 'Add to Cart' button click
                 $("#btnThemVaoGioHang").click(function (event) {
                     // Check if a size is selected
