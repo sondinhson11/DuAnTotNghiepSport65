@@ -246,7 +246,7 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-9 d-flex justify-content-end">Tổng</div>
+            <div class="col-9 d-flex justify-content-end">Thanh Toán</div>
             <div class="col-3">
                 <p id="phaiTra"></p>
                 <p id="soTienSauKhiGiam" STYLE="display: none" >${soTienSauKhiGiam}</p>
@@ -260,6 +260,7 @@
                     var hinhThucThanhToan = '${hoaDon.hinhThucThanhToan.ten}';
 
                     var tong = 0;
+                    console.log(giaVanChuyenText !== 'Chưa tính')
                     if (giaVanChuyenText !== 'Chưa tính') {
                         var soTienSauKhiGiam = parseInt(soTienSauKhiGiamText.replace(/[^\d]/g, ''));
                         var giaVanChuyen = parseInt(giaVanChuyenText.replace(/[^\d]/g, ''));
@@ -267,6 +268,8 @@
                         if (!isNaN(soTienSauKhiGiam) && !isNaN(giaVanChuyen)) {
                                 tong = soTienSauKhiGiam + giaVanChuyen;
                         }
+                    }   else {
+                        tong = soTienSauKhiGiamText
                     }
 
                     var formattedGia = parseInt(tong).toLocaleString('en-US');
