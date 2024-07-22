@@ -370,7 +370,7 @@ public class TrangChuController {
         BigDecimal tongTien = hoaDonChiTietService.sumTongTien(id);
         Integer soPhanTramGiam = hoaDonService.getSoPhanTramGiamByIdHoaDon(id);
         BigDecimal soTienDuocGiam = tongTien.multiply(new BigDecimal(soPhanTramGiam).divide(new BigDecimal(100)));
-
+        System.out.println(tongTien.intValue()-soTienDuocGiam.intValue());
         model.addAttribute("soTienTruocGiam", hoaDonChiTietService.sumTongTien(id).intValue());
         model.addAttribute("soTienDuocGiam", soTienDuocGiam.intValue());
         model.addAttribute("soTienSauKhiGiam", tongTien.intValue()-soTienDuocGiam.intValue());
