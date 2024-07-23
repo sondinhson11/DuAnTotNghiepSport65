@@ -305,7 +305,7 @@ public class TrangChuController {
 
     // form thanh toán
     @PostMapping("thanh-toan")
-    public String formThanhToan(Model model, @ModelAttribute("formThanhToan") FormThanhToan formThanhToan, @RequestParam(value = "diaChiMacDinh", required = false) Integer diaChiMacDinh) {
+    public String formThanhToan(Model model, @ModelAttribute("formThanhToan") FormThanhToan formThanhToan, @RequestParam(value = "diaChiMacDinh", required = false) Integer diaChiMacDinh,@RequestParam(value = "phiVanChuyen")BigDecimal  phiVanChuyen ) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
         GiamGiaResponse giamGiaResponse = (GiamGiaResponse) session.getAttribute("giamGia");
         BigDecimal tongTien = gioHangChiTietService.getTongTienByIdKhachHang(khachHangResponse.getId());
@@ -317,12 +317,12 @@ public class TrangChuController {
             }
             if (giamGiaResponse == null) {
                 BigDecimal soTienDuocGiam = null;
-                UUID id = hoaDonService.addHoaDonUser(formThanhToan, khachHangResponse, null, diaChiMacDinh, tongTien, soTienDuocGiam);
+                UUID id = hoaDonService.addHoaDonUser(formThanhToan, khachHangResponse, null, diaChiMacDinh, tongTien, soTienDuocGiam,phiVanChuyen);
                 return "redirect:/hoa-don/" + id;
             } else {
                 int soPhanTramGiam = giamGiaResponse.getSoPhanTramGiam();
                 BigDecimal soTienDuocGiam = tongTien.multiply(new BigDecimal(soPhanTramGiam).divide(new BigDecimal(100)));
-                UUID id = hoaDonService.addHoaDonUser(formThanhToan, khachHangResponse, giamGiaResponse, diaChiMacDinh, tongTien, soTienDuocGiam);
+                UUID id = hoaDonService.addHoaDonUser(formThanhToan, khachHangResponse, giamGiaResponse, diaChiMacDinh, tongTien, soTienDuocGiam,phiVanChuyen);
                 session.setAttribute("giamGia", null);
                 return "redirect:/hoa-don/" + id;
             }

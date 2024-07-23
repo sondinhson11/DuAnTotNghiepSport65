@@ -112,9 +112,7 @@
                     <c:if test="${hoaDon.soDienThoai!=null}">
                         <p>Số điện thoại : ${hoaDon.soDienThoai}
                     </c:if>
-
                     <c:if test="${hoaDon.trangThai == 4}">
-                        <p>Số điện thoại: ${hoaDon.soDienThoai}</p>
                         <p>Mã vận đơn: ${hoaDon.maVanChuyen}</p>
                         <p>Đơn vị vận chuyển: ${hoaDon.tenDonViVanChuyen}</p>
                     </c:if>
@@ -394,7 +392,7 @@
                         </div>
                         <div class="mb-3">
                             <label id="phiVanChuyen" class="form-label">Phí vận chuyển </label>
-                            <input type="number" class="form-control" name="phiVanChuyen" placeholder="Phí vận chuyển">
+                            <input type="number" class="form-control" name="phiVanChuyen" value="${hoaDon.phiVanChuyen}" placeholder="Phí vận chuyển" readonly>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -507,7 +505,6 @@
         </c:if>
     });
 </script>
-
 </body>
 
 </html>

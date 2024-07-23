@@ -142,7 +142,7 @@ public class HoaDonService {
     }
 
     // user
-    public UUID addHoaDonUser(FormThanhToan formThanhToan, KhachHangResponse khachHangResponse, GiamGiaResponse giamGiaResponse, int diaChiMacDinh,BigDecimal tongTien,BigDecimal soTienGiam) {
+    public UUID addHoaDonUser(FormThanhToan formThanhToan, KhachHangResponse khachHangResponse, GiamGiaResponse giamGiaResponse, int diaChiMacDinh,BigDecimal tongTien,BigDecimal soTienGiam,BigDecimal phiVanChuyen) {
         HoaDon hoaDon = new HoaDon();
 
         hoaDon.setMa(maHDCount());
@@ -170,6 +170,7 @@ public class HoaDonService {
         hoaDon.setHinhThucThanhToan(formThanhToan.getHinhThucThanhToan());
         hoaDon.setGhiChu(formThanhToan.getGhiChu());
         hoaDon.setLoaiHoaDon(1);
+        hoaDon.setPhiVanChuyen(phiVanChuyen);
         hoaDon.setTrangThai(2);
         java.util.Date currentDate = new java.util.Date();
         hoaDon.setNgaySua(new Date(currentDate.getTime()));

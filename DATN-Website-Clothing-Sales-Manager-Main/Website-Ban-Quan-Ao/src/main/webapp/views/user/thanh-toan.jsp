@@ -57,6 +57,8 @@
                         <option value="" disabled selected>Chọn xã/phường</option>
                     </select>
                     <form:input path="xaPhuong" type="hidden" id="wardName" name="xaPhuong"/>
+                    <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" style="display: none"
+                           value="0" readonly>
                 </div>
                 <div class="px-md-5 px-3 py-2 form-group">
                     <div class="form-label ">Địa chỉ (*)</div>
@@ -79,9 +81,10 @@
                 <div class="form-label ">Phương thức thanh toán (*)</div>
                 <label class="form-check-label text-sm-left fw-bold ">
                     <c:forEach items="${listHTTT}" var="lshttt" varStatus="status">
-                        <c:if test="${lshttt.trangThai == 1}" >
-                        <form:radiobutton path="hinhThucThanhToan" value="${lshttt.id}" name="payment_method" checked= "true" />
-                        ${lshttt.ten}
+                        <c:if test="${lshttt.trangThai == 1}">
+                            <form:radiobutton path="hinhThucThanhToan" value="${lshttt.id}" name="payment_method"
+                                              checked="true"/>
+                            ${lshttt.ten}
                         </c:if>
                     </c:forEach>
                 </label>
@@ -90,6 +93,8 @@
             <script>
                 document.getElementById('hideInfoCheckbox').addEventListener('change', function () {
                     var infoContainer = document.getElementById('infoContainer');
+                    const thanh = '${khachHang.tinhThanhPho}';
+                    findProvinceIdByName(thanh);
                     if (this.checked) {
                         infoContainer.style.display = 'none'; // Ẩn thông tin khi checkbox được tích vào
                     } else {
@@ -101,9 +106,11 @@
             <div class="px-md-5 px-3 py-2 form-check">
                 <label class="form-check-label text-sm-left fw-bold ">
                 </label>
-                <label class="mt-2">Lưu ý: Với hình thức thanh toán bằng (chuyển khoản ) VnPay quý khách sẽ thanh toán đơn hàng và phí vận chuyển sẽ trả
+                <label class="mt-2">Lưu ý: Với hình thức thanh toán bằng (chuyển khoản ) VnPay quý khách sẽ thanh toán
+                    đơn hàng và phí vận chuyển sẽ trả
                     khi nhận hàng.</label> <br>
-                <label class="mt-2"> Với hình thức thanh toán bằng (Tiền mặt ) COD - quý khách nhận hàng và thanh toán.</label>
+                <label class="mt-2"> Với hình thức thanh toán bằng (Tiền mặt ) COD - quý khách nhận hàng và thanh
+                    toán.</label>
             </div>
 
             <div class="px-md-5 px-3 py-2 form-group mb-5">
@@ -388,4 +395,143 @@
             });
         });
     });
+    $(document).ready(function () {
+        var phuongxa = $("#wardSelect")
+        var quanHuyen = $("#districtSelect")
+        phuongxa.on("change", function () {
+            console.log(quanHuyen.val(), phuongxa.val())
+            calculateShippingFee(quanHuyen.val(), phuongxa.val())
+        })
+    });
+</script>
+<script>
+    const calculateShippingFee = (huyen, xa) => {
+        $.ajax({
+            url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
+            type: 'GET',
+            data: {
+                service_type_id: 2,
+                to_district_id: huyen,
+                to_ward_code: xa,
+                height: '9',
+                length: '29',
+                weight: '5000',
+                width: '18',
+            },
+            headers: {
+                token: '442f5c30-4906-11ef-8e53-0a00184fe694',
+                shop_id: '193116',
+                ContentType: 'application/json',
+            },
+            success: (response) => {
+                if (response && response.data && response.data.total !== undefined) {
+                    const feeResponse = response.data.total;
+                    console.log("tính phí ship: " + feeResponse);
+                    document.getElementById('feeInput').value = feeResponse;
+                    // Hiển thị phần phí vận chuyển
+                } else {
+                    console.error('Lỗi khi gọi API tính phí ship: ', response);
+                    // Xử lý lỗi và cập nhật giá trị mặc định hoặc 0
+                    document.getElementById('feeInput').value = '0';
+                }
+            },
+            error: (xhr, status, error) => {
+                console.error('Lỗi khi gọi API tính phí ship:', error);
+                // Xử lý lỗi và cập nhật giá trị mặc định hoặc 0
+                document.getElementById('feeInput').value = '0';
+            }
+        });
+    };
+</script>
+<script>
+    const findProvinceIdByName = (tenThanh) => {
+        $.ajax({
+            url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province',
+            type: 'GET',
+            headers: {
+                token: 'a76df0d2-77a1-11ee-b1d4-92b443b7a897',
+                ContentType: 'application/json',
+            },
+            success: (response) => {
+                if (response && response.data) {
+                    const provinces = response.data;
+                    const province = provinces.find(d => d.ProvinceName === tenThanh);
+                    if (province) {
+                        const provinceId = province.ProvinceID;
+                        console.log(provinceId);
+                        const huyen = '${khachHang.quanHuyen}';
+                        findDistrictIdByName(huyen, provinceId);
+                        // Sau khi lấy được districtId, gọi hàm tính phí vận chuyển
+                    } else {
+                        console.error('Không tìm thấy thành có tên: ', tenThanh);
+                    }
+                } else {
+                    console.error('Lỗi khi lấy danh sách thành từ API');
+                }
+            },
+            error: (xhr, status, error) => {
+                console.error('Lỗi khi gọi API lấy danh sách thành:', error);
+            }
+        });
+    };
+    const findDistrictIdByName = (tenHuyen, thanhId) => {
+        $.ajax({
+            url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district',
+            type: 'GET',
+            headers: {
+                token: 'a76df0d2-77a1-11ee-b1d4-92b443b7a897',
+                province_id: thanhId.toString(),
+                ContentType: 'application/json',
+            },
+            success: (response) => {
+                if (response && response.data) {
+                    const districts = response.data;
+                    const district = districts.find(d => d.DistrictName === tenHuyen);
+                    if (district) {
+                        const xa = '${khachHang.xaPhuong}';
+                        const districtId = district.DistrictID;
+                        console.log(districtId);
+                        findWardByName(xa,districtId);
+                        // Sau khi lấy được districtId, gọi hàm tính phí vận chuyển
+                    } else {
+                        console.error('Không tìm thấy huyện có tên: ', tenHuyen);
+                    }
+                } else {
+                    console.error('Lỗi khi lấy danh sách huyện từ API');
+                }
+            },
+            error: (xhr, status, error) => {
+                console.error('Lỗi khi gọi API lấy danh sách huyện:', error);
+            }
+        });
+    };
+    const findWardByName = (tenXa, huyenID) => {
+        $.ajax({
+            url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id='+huyenID.toString(),
+            type: 'GET',
+            headers: {
+                token: 'a76df0d2-77a1-11ee-b1d4-92b443b7a897',
+                ContentType: 'application/json',
+            },
+            success: (response) => {
+                if (response && response.data) {
+                    const wards = response.data;
+                    const ward = wards.find(d => d.WardName === tenXa);
+                    if (ward) {
+                        const wardId = ward.WardCode;
+                        console.log(wardId);
+                        calculateShippingFee(huyenID,wardId);
+                        // Sau khi lấy được districtId, gọi hàm tính phí vận chuyển
+                    } else {
+                        console.error('Không tìm thấy xã có tên: ', tenXa);
+                    }
+                } else {
+                    console.error('Lỗi khi lấy danh sách xã từ API');
+                }
+            },
+            error: (xhr, status, error) => {
+                console.error('Lỗi khi gọi API lấy danh sách xã:', error);
+            }
+        });
+    };
 </script>
