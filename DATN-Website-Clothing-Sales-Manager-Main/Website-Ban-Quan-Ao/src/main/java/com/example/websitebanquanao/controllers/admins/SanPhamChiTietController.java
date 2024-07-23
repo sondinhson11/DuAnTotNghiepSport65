@@ -1,7 +1,10 @@
 package com.example.websitebanquanao.controllers.admins;
 
+import com.example.websitebanquanao.entities.HoaDon;
+import com.example.websitebanquanao.entities.HoaDonChiTiet;
 import com.example.websitebanquanao.entities.SanPhamChiTiet;
 import com.example.websitebanquanao.infrastructures.requests.*;
+import com.example.websitebanquanao.infrastructures.responses.HoaDonChiTietUserResponse;
 import com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse;
 import com.example.websitebanquanao.repositories.SanPhamChiTietRepository;
 import com.example.websitebanquanao.services.*;
@@ -34,6 +37,9 @@ public class SanPhamChiTietController {
 
     @Autowired
     private KichCoService kichCoService;
+
+    @Autowired
+    private HoaDonChiTietService hoaDonChiTietService;
 
     @Autowired
     private AnhSanPhamService anhSanPhamService;
@@ -237,18 +243,21 @@ public class SanPhamChiTietController {
                                 @RequestParam("idSanPhamChiTiet") UUID idSanPhamChiTiet,
                                 @RequestParam("soLuongTraHang") int soLuongTraHang,
                                 RedirectAttributes redirectAttributes) {
+        if (hoaDonChiTietService.getHoaDonChiTietByHoaDonIdAndIdSanPhamChiTiet(idHoaDon, idSanPhamChiTiet).getTrangThai() == 2) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Sản phẩm này đã được hoàn trước đó.");
+            return "redirect:/admin/hoa-don/" + idHoaDon;
+        }
         try {
             // Kiểm tra trạng thái đã hoàn từ session trước khi thực hiện
             String sessionKey = "daHoan_" + idSanPhamChiTiet + "_" + idHoaDon;
             if (session.getAttribute(sessionKey) != null) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Sản phẩm này đã được hoàn trước đó.");
-                // Nếu đã hoàn thì không thực hiện trả hàng vào kho nữa
                 throw new Exception("Sản phẩm này đã được hoàn trước đó.");
             }
-
             // Thực hiện trả hàng vào kho
             sanPhamChiTietService.xuLyTraHangVaoKho(idSanPhamChiTiet, soLuongTraHang);
-
+            HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHoaDonChiTietByHoaDonIdAndIdSanPhamChiTiet(idHoaDon, idSanPhamChiTiet);
+            hoaDonChiTiet.setTrangThai(2);
+            hoaDonChiTietService.update(hoaDonChiTiet);
             // Lưu trạng thái đã hoàn vào session
             session.setAttribute(sessionKey, true);
 

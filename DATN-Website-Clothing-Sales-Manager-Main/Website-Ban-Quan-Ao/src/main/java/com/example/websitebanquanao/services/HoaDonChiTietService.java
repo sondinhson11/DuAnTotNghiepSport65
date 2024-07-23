@@ -40,12 +40,20 @@ public class HoaDonChiTietService {
 
     // admin
     public void add(HoaDonChiTiet hoaDonChiTiet) {
+        java.util.Date currentDate = new java.util.Date();
+        hoaDonChiTiet.setNgaySua(new Date(currentDate.getTime()));
+        hoaDonChiTiet.setNgayTao(new Date(currentDate.getTime()));
+        hoaDonChiTiet.setTrangThai(1);
         hoaDonChiTietRepository.save(hoaDonChiTiet);
         System.out.println(hoaDonChiTiet.getId());
     }
 
     public List<GioHangResponse> getHoaDonChiTietByHoaDonId(UUID hoaDonId) {
         return hoaDonChiTietRepository.findTotalQuantityByHoaDonId(hoaDonId);
+    }
+
+    public HoaDonChiTiet getHoaDonChiTietByHoaDonIdAndIdSanPhamChiTiet(UUID hoaDonId, UUID idSanPhamChiTiet) {
+        return hoaDonChiTietRepository.findByHoaDonIdAndSanPhamChiTietId(hoaDonId, idSanPhamChiTiet);
     }
 
     public HoaDonChiTiet getById(UUID id) {

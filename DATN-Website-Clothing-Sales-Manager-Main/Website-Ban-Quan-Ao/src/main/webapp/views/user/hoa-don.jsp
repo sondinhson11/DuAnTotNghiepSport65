@@ -66,26 +66,11 @@
                                         <c:if test="${hoaDon.trangThai == 2}">
                                             <span class="text-secondary">Chờ xác nhận</span>
                                         </c:if>
-                                        <c:if test="${hoaDon.trangThai == 3}">
-                                            <span class="text-secondary">Chờ giao</span>
-                                        </c:if>
                                         <c:if test="${hoaDon.trangThai == 4}">
                                             <span class="text-success">Đang giao</span>
                                         </c:if>
                                         <c:if test="${hoaDon.trangThai == 5}">
                                             <span class="text-danger">Đã huỷ</span>
-                                        </c:if>
-                                        <c:if test="${hoaDon.trangThai == 6}">
-                                            <span class="text-secondary">Đã xác nhận</span>
-                                        </c:if>
-                                        <c:if test="${hoaDon.trangThai == 7}">
-                                            <span class="text-secondary">Khách delay giao hàng lần 1</span>
-                                        </c:if>
-                                        <c:if test="${hoaDon.trangThai == 8}">
-                                            <span class="text-secondary">Khách delay giao hàng lần 2</span>
-                                        </c:if>
-                                        <c:if test="${hoaDon.trangThai == 9}">
-                                            <span class="text-secondary">Khách delay giao hàng lần 3</span>
                                         </c:if>
                                         <c:if test="${hoaDon.trangThai == 10}">
                                             <span class="text-secondary">Đã huỷ/Chờ hoàn tiền</span>
