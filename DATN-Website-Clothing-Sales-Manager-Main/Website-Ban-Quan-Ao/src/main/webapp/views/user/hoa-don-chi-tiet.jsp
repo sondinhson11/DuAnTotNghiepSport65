@@ -213,7 +213,7 @@
         <div class="row">
             <div class="col-9 d-flex justify-content-end">Phí vận chuyển</div>
             <div class="col-3">
-                <p id="phiVanChuyen">${hoaDon.phiVanChuyen != null ? hoaDon.phiVanChuyen : 'Chưa tính'}</p>
+                <p id="phiVanChuyen">${hoaDon.phiVanChuyen}</p>
                 <script>
                     var giaVanChuyenElement = document.getElementById("phiVanChuyen");
                     var giaVanChuyenText = giaVanChuyenElement.innerText;

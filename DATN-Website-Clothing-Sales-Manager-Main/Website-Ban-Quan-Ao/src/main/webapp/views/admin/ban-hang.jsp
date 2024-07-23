@@ -586,11 +586,11 @@
                             </div>
                             <div class="col" id="phi-van-chuyen-div" style="display: none">
                                 <label class="form-label">Phí Vận Chuyển</label>
-                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" oninput="formatCurrency(this);" value="0">
+                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" oninput="formatCurrency(this);" value="0" readonly>
                             </div>
                         </div>
                         <script>
-                                const calculateShippingFee = (tp,huyen,xa) => {
+                                const calculateShippingFee = (huyen,xa) => {
                                     $.ajax({
                                         url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
                                         type: 'GET',
@@ -614,7 +614,6 @@
                                                 console.log("tính phí ship: "+ feeResponse);
                                                 document.getElementById('feeInput').value = feeResponse;
                                                 // Hiển thị phần phí vận chuyển
-                                                document.getElementById('phi-van-chuyen-div').style.display = 'block';
                                             } else {
                                                 console.error('Lỗi khi gọi API tính phí ship: ', response);
                                                 // Xử lý lỗi và cập nhật giá trị mặc định hoặc 0
@@ -626,50 +625,10 @@
                                             console.error('Lỗi khi gọi API tính phí ship:', error);
                                             // Xử lý lỗi và cập nhật giá trị mặc định hoặc 0
                                             document.getElementById('feeInput').value = '0';
-                                            document.getElementById('phi-van-chuyen-div').style.display = 'none';
+                                            document.getElementById('phi-van-chuyen-div').style = 'none';
                                         }
                                     });
                                 };
-                            //     const calculateShippingFee = async (huyen,xa) => {
-                            //
-                            //     try {
-                            //         const feeRes = $.ajax(
-                            //             `https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`,
-                            //             {
-                            //                 params: {
-                            //                     service_type_id: "2",
-                            //                     to_district_id: tp,
-                            //                     to_ward_code: huyen,
-                            //                     height: "9",
-                            //                     length: "29",
-                            //                     weight: "300",
-                            //                     width: "18",
-                            //                 },
-                            //                 headers: {
-                            //                     token: "442f5c30-4906-11ef-8e53-0a00184fe694",
-                            //                     shop_id: "193116",
-                            //                     ContentType: "application/json",
-                            //                 },
-                            //             }
-                            //         );
-                            //
-                            //         if (feeRes.status === 200) {
-                            //             const feeResponse = feeRes.data.data.total;
-                            //             console.log(feeResponse);
-                            //
-                            //             // Cập nhật state phiShip sau khi tính phí ship thành công
-                            //             // onFeeResponseChange(feeResponse);
-                            //         } else {
-                            //             console.error("Lỗi khi gọi API tính phí ship: ", feeRes.status);
-                            //             // Xử lý lỗi và cập nhật state phiShip (ví dụ, set giá trị mặc định hoặc 0 nếu có lỗi)
-                            //             // onFeeResponseChange(0);
-                            //         }
-                            //     } catch (error) {
-                            //         console.error("Lỗi khi gọi API tính phí ship:", error);
-                            //         // Xử lý lỗi và cập nhật state phiShip (ví dụ, set giá trị mặc định hoặc 0 nếu có lỗi)
-                            //         // onFeeResponseChange(0);
-                            //     }
-                            // };
                         </script>
                         <div class="row mb-3">
                             <div class="col">
@@ -1386,8 +1345,8 @@
             var tienGiam = $("#tien-giam");
             var tienThuaLabel = $("#tien-thua");
             phuongxa.on("change", function () {
-                console.log(tinhTP.val(),quanHuyen.val())
-                calculateShippingFee(tinhTP.val(),quanHuyen.val(),phuongxa.val())
+                console.log(quanHuyen.val(),phuongxa.val())
+                calculateShippingFee(quanHuyen.val(),phuongxa.val())
             })
             vanchuyen.on("change", function () {
                 let feeInput = $('#feeInput');
@@ -1456,7 +1415,6 @@
                 // Gán giá trị phiVanChuyen cho trường phiVanChuyen ẩn để submit lên server
                 feeInput.val(phiVanChuyen).toLocaleString('vi-VN');
                 updateTienGiam(); // Cập nhật tiền khách đưa khi thay đổi hình thức thanh toán
-
             }
 
             function updateTienKhachDua() {
