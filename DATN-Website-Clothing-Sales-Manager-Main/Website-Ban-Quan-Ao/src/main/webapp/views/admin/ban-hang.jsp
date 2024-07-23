@@ -612,15 +612,21 @@
                                             if (response && response.data && response.data.total !== undefined) {
                                                 const feeResponse = response.data.total;
                                                 console.log("tính phí ship: "+ feeResponse);
-                                                // Cập nhật state phiShip sau khi tính phí ship thành công
+                                                document.getElementById('feeInput').value = feeResponse;
+                                                // Hiển thị phần phí vận chuyển
+                                                document.getElementById('phi-van-chuyen-div').style.display = 'block';
                                             } else {
                                                 console.error('Lỗi khi gọi API tính phí ship: ', response);
-                                                // Xử lý lỗi và cập nhật state phiShip (ví dụ, set giá trị mặc định hoặc 0 nếu có lỗi)
+                                                // Xử lý lỗi và cập nhật giá trị mặc định hoặc 0
+                                                document.getElementById('feeInput').value = '0';
+                                                document.getElementById('phi-van-chuyen-div').style.display = 'none';
                                             }
                                         },
                                         error: (xhr, status, error) => {
                                             console.error('Lỗi khi gọi API tính phí ship:', error);
-                                            // Xử lý lỗi và cập nhật state phiShip (ví dụ, set giá trị mặc định hoặc 0 nếu có lỗi)
+                                            // Xử lý lỗi và cập nhật giá trị mặc định hoặc 0
+                                            document.getElementById('feeInput').value = '0';
+                                            document.getElementById('phi-van-chuyen-div').style.display = 'none';
                                         }
                                     });
                                 };
