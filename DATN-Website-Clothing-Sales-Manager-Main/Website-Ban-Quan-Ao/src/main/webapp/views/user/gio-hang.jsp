@@ -14,18 +14,63 @@
         }, 5000);
     }
 </script>
+
 <div class="row container mt-3 ms-5">
+
     <div class="col-8">
+        <div style="text-align: center  ; font-size: 30px ; margin-top: 10px" >GIỎ HÀNG CỦA BẠN</div>
+        <div id="cart-size-info" style="font-size: 15px; background: #fafafa" >
+            Bạn đang có <span id="cart-size">0</span> sản phẩm trong giỏ hàng
+        </div>
+        <div id="empty-cart-message" style="font-size: 15px; display: none; text-align: center ; margin-top: 10px">
+            Giỏ hàng của bạn đang trống
+        </div>
+        <div id="empty-cart-message2" style="display: none; text-align: center; margin-top: 20px; ">
+            <a href="/san-pham" class="btn btn-outline-dark">Tiếp tục mua hàng</a>
+        </div>
+        <script>
+            $(document).ready(function () {
+                // Tính số lượng sản phẩm trong giỏ hàng
+                function calculateTotalQuantity() {
+                    var totalQuantity = 0;
+
+                    // Duyệt qua tất cả các phần tử input quantity
+                    $('input[id^="quantity_"]').each(function() {
+                        var quantity = parseInt($(this).val(), 10);
+                        if (!isNaN(quantity)) {
+                            totalQuantity += quantity;
+                        }
+                    });
+
+                    // Cập nhật số lượng vào thẻ div
+                    $('#cart-size').text(totalQuantity);
+
+                    // Hiện hoặc ẩn thông tin giỏ hàng và thông báo trống
+                    if (totalQuantity > 0) {
+                        $('#cart-size-info').show();
+                        $('#empty-cart-message').hide();
+                        $('#empty-cart-message2').hide();
+                        $('#anApDungVouCher').show();
+                    } else {
+                        $('#cart-size-info').hide();
+                        $('#anApDungVouCher').hide();
+                        $('#empty-cart-message').show();
+                        $('#empty-cart-message2').show();
+                    }
+                }
+                // Gọi hàm tính toán khi trang được tải
+                calculateTotalQuantity();
+
+                // Cập nhật số lượng khi có sự thay đổi số lượng sản phẩm
+                $('input[id^="quantity_"]').on('change', function() {
+                    calculateTotalQuantity();
+                });
+            });
+        </script>
+
+
+
         <table class="table align-middle">
-            <thead class="text-center">
-            <tr>
-                <th colspan="2">Sản phẩm</th>
-                <th>Giá</th>
-                <th>Số lượng</th>
-                <th>Tạm tính</th>
-                <th></th>
-            </tr>
-            </thead>
             <tbody class="text-center">
             <c:forEach items="${listGioHang}" var="gioHang">
                 <tr>
@@ -82,7 +127,7 @@
                         var giaSanPhamElement = document.getElementById("giaSP_${gioHang.maSanPham}");
                         var giaSanPhamText = giaSanPhamElement.innerText;
                         var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                        giaSanPhamElement.innerText = formattedGia + " vnđ";
+                        giaSanPhamElement.innerText = formattedGia + "₫";
                     </script>
 
 
@@ -107,7 +152,7 @@
                         var tongGiaSanPhamElement = document.getElementById("tongGiaSP_${gioHang.maSanPham}");
                         var tongGiaSanPhamText = tongGiaSanPhamElement.innerText;
                         var formattedTongGia = parseInt(tongGiaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                        tongGiaSanPhamElement.innerText = formattedTongGia + " vnđ";
+                        tongGiaSanPhamElement.innerText = formattedTongGia + "₫";
                     </script>
                     <td>
                         <a href="/gio-hang/${gioHang.idSanPhamChiTiet}" type="button" class="btn-close"
@@ -132,41 +177,44 @@
             </c:forEach>
             </tbody>
         </table>
-        <form action="/ap-dung-voucher" method="post">
-            <div class="row">
-                <div class="col-3">
-                    <select class="form-select" id=ma" name="ma" aria-label="Default select example">
-                        <!-- Các option được tạo từ danh sách listGG -->
-                        <option value="" >Không sử dụng</option>
-                        <c:forEach items="${listGG}" var="lshgg">
-                            <fmt:parseNumber var="tongTienSo" value="${tongTien}"/>
-                            <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}"/>
-                            <c:if test="${lshgg.soLuong >=0}">
-                                <c:if test="${tongTienSo >= soTienToiThieu}">
-                                    <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}"> ${lshgg.soPhanTramGiam}%</option>
+        <div id="anApDungVouCher">
+            <form action="/ap-dung-voucher" method="post">
+                <div class="row">
+                    <div class="col-3">
+                        <select class="form-select" id=ma" name="ma" aria-label="Default select example">
+                            <!-- Các option được tạo từ danh sách listGG -->
+                            <option value="" >Không sử dụng</option>
+                            <c:forEach items="${listGG}" var="lshgg">
+                                <fmt:parseNumber var="tongTienSo" value="${tongTien}"/>
+                                <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}"/>
+                                <c:if test="${lshgg.soLuong >=0}">
+                                    <c:if test="${tongTienSo >= soTienToiThieu}">
+                                        <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}"> ${lshgg.soPhanTramGiam}%</option>
+                                    </c:if>
                                 </c:if>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-<%--                    <input type="text" name="ma" class="form-control" placeholder="Mã giảm giá">--%>
+                            </c:forEach>
+                        </select>
+                        <%--                    <input type="text" name="ma" class="form-control" placeholder="Mã giảm giá">--%>
+                    </div>
+                    <div class="col-3">
+                        <button id="ap-dung-btn" type="submit" class="btn btn-dark">Áp dụng</button>
+                    </div>
                 </div>
-                <div class="col-3">
-                    <button id="ap-dung-btn" type="submit" class="btn btn-dark">Áp dụng</button>
-                </div>
-            </div>
-            <c:if test="${not empty thongBaoGiamGia}">
-                <div class="alert alert-success col-6 mt-2 text-center">${thongBaoGiamGia}</div>
-            </c:if>
-        </form>
+                <c:if test="${not empty thongBaoGiamGia}">
+                    <div class="alert alert-success col-6 mt-2 text-center">${thongBaoGiamGia}</div>
+                </c:if>
+            </form>
+        </div>
+
     </div>
 
-    <div class="col-4 border">
+    <div class="col-4 border" style="margin-top: 30px; width: 400px;height: 300px ; margin-left: 30px ;margin-top: 50px">
         <div class="ms-3">
-            <div class="py-5 fw-bold fs-4 text-xl text-uppercase">
+            <div class="py-4 fw-bold fs-4 text-xl text-uppercase">
                 Thành tiền
             </div>
-            <div class="me-3">
-                <div class="py-3 border-bottom">
+            <div class="me-2">
+                <div class="py-2 border-bottom">
                     <div class="row ms-1 me-1">
                         <label class="col fw-bold fs-6 ">Tạm tính</label>
                         <label class="col fs-6 text-end" id="tongTien">${tongTien}</label>
@@ -174,12 +222,12 @@
                             var tongTienElement = document.getElementById("tongTien");
                             var tongTienText = tongTienElement.innerText;
                             var formattedTongTien = parseInt(tongTienText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                            tongTienElement.innerText = formattedTongTien + " vnđ";
+                            tongTienElement.innerText = formattedTongTien + "₫";
                         </script>
                     </div>
                 </div>
 
-                <div class="bg-white py-3 border-bottom">
+                <div class="bg-white py-2 border-bottom">
                     <div class="row ms-1 me-1">
                         <label class="col fw-bold fs-6">Mã khuyến mãi</label>
                         <label class="col fs-6 text-end" id="soTienDuocGiam">${soTienDuocGiam}</label>
@@ -187,27 +235,26 @@
                             var soTienDuocGiamElement = document.getElementById("soTienDuocGiam");
                             var soTienDuocGiamText = soTienDuocGiamElement.innerText;
                             var formattedSoTienDuocGiam = parseInt(soTienDuocGiamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                            soTienDuocGiamElement.innerText = formattedSoTienDuocGiam + " vnđ";
+                            soTienDuocGiamElement.innerText = formattedSoTienDuocGiam + "₫";
                         </script>
                     </div>
                 </div>
 
-                <div class="bg-white py-3 border-bottom">
+                <div class="bg-white py-2 border-bottom">
                     <div class="row ms-1 me-1">
-                        <label class="col-3 fw-bold fs-5">Tổng</label>
+                        <label class="col-3 fw-bold fs-5">Tổng :</label>
                         <label class="col fw-bold fs-5 text-end" id="soTienSauKhiGiam">${soTienSauKhiGiam}</label>
                         <script>
                             var soTienSauKhiGiamElement = document.getElementById("soTienSauKhiGiam");
                             var soTienSauKhiGiamText = soTienSauKhiGiamElement.innerText;
                             var formattedSoTienSauKhiGiam = parseInt(soTienSauKhiGiamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                            soTienSauKhiGiamElement.innerText = formattedSoTienSauKhiGiam + " vnđ";
+                            soTienSauKhiGiamElement.innerText = formattedSoTienSauKhiGiam + "₫";
                         </script>
                     </div>
                 </div>
             </div>
             <div class="mt-3 mb-3 text-center">
-                <a id="thanh-toan-link" href="/thanh-toan" class="bg-dark text-bg-dark fw-bold btn btn-dark">XÁC NHẬN
-                    ĐẶT HÀNG</a>
+                <a id="thanh-toan-link" href="/thanh-toan" class="bg-dark text-bg-dark fw-bold btn btn-dark">THANH TOÁN</a>
             </div>
             <script>
                 var thanhToanLink = document.getElementById('thanh-toan-link');
