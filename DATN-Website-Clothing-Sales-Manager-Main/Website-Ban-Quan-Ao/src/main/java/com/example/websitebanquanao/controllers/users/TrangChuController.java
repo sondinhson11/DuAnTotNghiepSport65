@@ -460,6 +460,7 @@ public class TrangChuController {
     // trang chính sách bảo mật
     @GetMapping("/chinh-sach-bao-mat")
     public String chinhSachBaoMat(Model model) {
+        model.addAttribute("kh", khachHangRequest);
         model.addAttribute("viewContent", "/views/user/chinh-sach-bao-mat.jsp");
         return "user/layout";
     }
