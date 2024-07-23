@@ -52,7 +52,16 @@
                 <c:if test="${hoaDon.ngayThanhToan == null && hoaDon.hinhThucThanhToan.ten == 'Chuyển khoản'}">
                     <div>
                         <form action="/submit-payment/${id}" method="post">
-                            <button type="submit" class="btn btn-success col-12">Xác nhận thanh toán</button>
+
+<%--                            <button type="submit" class="btn btn-success col-12">Xác nhận thanh toán</button>--%>
+    <c:choose>
+        <c:when test="${hoaDon.trangThai == 5}">
+            <button type="submit" class="btn btn-success col-12" disabled>Xác nhận thanh toán</button>
+        </c:when>
+        <c:otherwise>
+            <button type="submit" class="btn btn-success col-12">Xác nhận thanh toán</button>
+        </c:otherwise>
+    </c:choose>
                         </form>
                     </div>
                 </c:if>
