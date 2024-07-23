@@ -107,8 +107,12 @@
                         <p>Địa chỉ: Bán Tại Quầy</p>
                     </c:if>
                     <c:if test="${hoaDon.xaPhuong!=null}">
-                        <p>Địa chỉ: ${hoaDon.xaPhuong}, ${hoaDon.quanHuyen}, ${hoaDon.tinhThanhPho}</p>
+                        <p>Địa chỉ: ${hoaDon.diaChi},  ${hoaDon.xaPhuong}, ${hoaDon.quanHuyen}, ${hoaDon.tinhThanhPho}</p>
                     </c:if>
+                    <c:if test="${hoaDon.soDienThoai!=null}">
+                        <p>Số điện thoại : ${hoaDon.soDienThoai}
+                    </c:if>
+
                     <c:if test="${hoaDon.trangThai == 4}">
                         <p>Số điện thoại: ${hoaDon.soDienThoai}</p>
                         <p>Mã vận đơn: ${hoaDon.maVanChuyen}</p>

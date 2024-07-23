@@ -62,7 +62,7 @@
             <p class="fw-bold text-uppercase">Địa chỉ nhận hàng</p>
             <p>Họ và tên : ${hoaDon.nguoiNhan}</p>
             <p>Số điện thoại : ${hoaDon.soDienThoai}</p>
-            <p>Địa chỉ :${hoaDon.diaChi} / ${hoaDon.xaPhuong} / ${hoaDon.quanHuyen} / ${hoaDon.tinhThanhPho}</p>
+            <p>Địa chỉ :${hoaDon.diaChi} , ${hoaDon.xaPhuong} , ${hoaDon.quanHuyen} , ${hoaDon.tinhThanhPho}</p>
         </div>
         <div class="col-4 border-end">
             <c:if test="${hoaDon.ngayTao != null}">
