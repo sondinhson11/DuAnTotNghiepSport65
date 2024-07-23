@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <html lang="vi">
 
 <head>
@@ -14,28 +15,6 @@
 
 
 <body>
-<c:if test="${not empty sessionScope.successMessage}">
-    <div class="alert alert-success" role="alert">
-            ${sessionScope.successMessage}
-    </div>
-    <script>
-        setTimeout(function () {
-            $('.alert').alert('close');
-        }, 3000);
-    </script>
-    <% session.removeAttribute("successMessage"); %>
-</c:if>
-<c:if test="${not empty sessionScope.errorMessage}">
-    <div class="alert alert-danger" role="alert">
-            ${sessionScope.errorMessage}
-    </div>
-    <% session.removeAttribute("errorMessage"); %>
-    <script>
-        setTimeout(function () {
-            $('.alert').alert('close');
-        }, 3000);
-    </script>
-</c:if>
 <c:set var="tongTien" value="0"/>
 <c:forEach items="${listSanPhamTrongGioHang}" var="sp" varStatus="status">
     <c:set var="tongTien" value="${tongTien + (sp.soLuong * sp.gia)}"/>
@@ -60,64 +39,43 @@
            <c:if test="${hoaDon.trangThai == 2}">
                <span class="text-secondary">Chờ xác nhận</span>
            </c:if>
-            <c:if test="${hoaDon.trangThai == 3}">
-                <span class="text-secondary">Chờ giao</span>
-            </c:if>
             <c:if test="${hoaDon.trangThai == 4}">
-                <span class="text-success">Đang giao</span>
+                <span class="text-success"> Đã xác nhận </span>
             </c:if>
             <c:if test="${hoaDon.trangThai == 5}">
-                <span class="text-danger">Đã huỷ</span>
-            </c:if>
-           <c:if test="${hoaDon.trangThai == 6}">
-               <span class="text-secondary">Đã xác nhận</span>
-           </c:if>
-            <c:if test="${hoaDon.trangThai == 7}">
-                <span class="text-secondary">Khách delay giao hàng lần 1</span>
-            </c:if>
-            <c:if test="${hoaDon.trangThai == 8}">
-                <span class="text-secondary">Khách delay giao hàng lần 2</span>
-            </c:if>
-            <c:if test="${hoaDon.trangThai == 9}">
-                <span class="text-secondary">Khách delay giao hàng lần 3</span>
+                <span class="text-danger">Đã huỷ </span>
             </c:if>
             <c:if test="${hoaDon.trangThai == 10}">
-                <span class="text-secondary">Đã huỷ/Chờ hoàn tiền</span>
+                <span class="text-secondary">Đã huỷ/Chờ hoàn tiền </span>
             </c:if>
        </span>
     </div>
     <c:if test="${hoaDon.loaiHoaDon != null}">
-    <div class="row mt-2">
-        <div>
-            <div class="float-start">
-                <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 || hoaDon.trangThai == 3 || hoaDon.trangThai == 9 || hoaDon.trangThai == 10 || hoaDon.trangThai == 6}">
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHuy">
-                        Huỷ đơn hàng
-                    </button>
-                </c:if>
-                <c:if test="${hoaDon.trangThai !=4}">
-                    <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 || hoaDon.trangThai == 3 || hoaDon.trangThai == 6 || hoaDon.trangThai == 7 || hoaDon.trangThai == 8 || hoaDon.trangThai == 9}">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#modalXacNhan">
+        <div class="row mt-2">
+            <div>
+                <div class="float-start">
+                    <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 || hoaDon.trangThai == 3 || hoaDon.trangThai == 10 || hoaDon.trangThai == 6|| hoaDon.trangThai == 4}">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHuy">
+                            Huỷ đơn hàng
+                        </button>
+                    </c:if>
+                    <c:if test="${hoaDon.trangThai !=4}">
+                        <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 || hoaDon.trangThai == 3 || hoaDon.trangThai == 6}">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#modalXacNhan">
+                                Xác nhận
+                            </button>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${hoaDon.trangThai == 4}">
+                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
                             Xác nhận
                         </button>
                     </c:if>
-                </c:if>
-                <c:if test="${hoaDon.trangThai == 4 || hoaDon.trangThai == 7 || hoaDon.trangThai == 8 }">
-                    <button type="button" class="btn btn-danger me-5 " data-bs-toggle="modal"
-                            data-bs-target="#ModalDelay">
-                        Khách delay
-                    </button>
-                </c:if>
-                <c:if test="${hoaDon.trangThai == 4}">
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                        Xác nhận
-                    </button>
-                </c:if>
+                </div>
             </div>
         </div>
-    </div>
     </c:if>
     <div class="card mt-4">
         <div class="card-header">
@@ -151,13 +109,12 @@
                     <c:if test="${hoaDon.xaPhuong!=null}">
                         <p>Địa chỉ: ${hoaDon.xaPhuong}, ${hoaDon.quanHuyen}, ${hoaDon.tinhThanhPho}</p>
                     </c:if>
-
-                    <c:if test="${hoaDon.trangThai == 3}">
+                    <c:if test="${hoaDon.trangThai == 4}">
                         <p>Số điện thoại: ${hoaDon.soDienThoai}</p>
                         <p>Mã vận đơn: ${hoaDon.maVanChuyen}</p>
                         <p>Đơn vị vận chuyển: ${hoaDon.tenDonViVanChuyen}</p>
                     </c:if>
-                    <c:if test="${hoaDon.loaiHoaDon == 2}">
+                    <c:if test="${hoaDon.hinhThucThanhToan.id == 2 && hoaDon.loaiHoaDon != 1}">
                         Ảnh chuyển khoản:
                         <img src="${hoaDon.anhHoaDonChuyenKhoan}" alt="" style="width: 300px; height: 300px">
                     </c:if>
@@ -221,22 +178,10 @@
                             <span class="text-secondary">Chờ giao</span>
                         </c:if>
                         <c:if test="${hoaDon.trangThai == 4}">
-                            <span class="text-success">Đang giao</span>
+                            <span class="text-success">Đã xác nhận</span>
                         </c:if>
                         <c:if test="${hoaDon.trangThai == 5}">
                             <span class="text-danger">Đã huỷ</span>
-                        </c:if>
-                        <c:if test="${hoaDon.trangThai == 6}">
-                            <span class="text-secondary">Đã xác nhận</span>
-                        </c:if>
-                        <c:if test="${hoaDon.trangThai == 7}">
-                            <span class="text-secondary">Khách delay giao hàng lần 1</span>
-                        </c:if>
-                        <c:if test="${hoaDon.trangThai == 8}">
-                            <span class="text-secondary">Khách delay giao hàng lần 2</span>
-                        </c:if>
-                        <c:if test="${hoaDon.trangThai == 9}">
-                            <span class="text-secondary">Khách delay giao hàng lần 3</span>
                         </c:if>
                         <c:if test="${hoaDon.trangThai == 10}">
                             <span class="text-secondary">Đã huỷ/Chờ hoàn tiền</span>
@@ -273,7 +218,6 @@
             </div>
         </div>
     </div>
-
 
 
     <div class="card mt-4 mb-4">
@@ -323,12 +267,15 @@
                                     ${sp.soLuong * sp.gia}
                             </td>
                             <td>
-                                <form id="returnForm_${sp.idSanPhamChiTiet}" action="/admin/san-pham-chi-tiet/tra-hang-vao-kho" method="post" display="none">
+                                <form id="returnForm_${sp.idSanPhamChiTiet}"
+                                      action="/admin/san-pham-chi-tiet/tra-hang-vao-kho" method="post" display="none">
                                     <input type="hidden" name="idSanPhamChiTiet" value="${sp.idSanPhamChiTiet}">
                                     <input type="hidden" name="soLuongTraHang" value="${sp.soLuong}">
                                     <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
                                     <c:if test="${hoaDon.trangThai == 5}">
-                                        <button type="submit" class="btn btn-success" style="display: inline-block">Hoàn lại kho</button>
+                                        <button type="submit" class="btn btn-success" style="display: inline-block">Hoàn
+                                            lại kho
+                                        </button>
                                     </c:if>
                                 </form>
                             </td>
@@ -385,7 +332,9 @@
     </div>
 
 </div>
+
 <!--modal xác nhận thanh toán-->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -414,40 +363,13 @@
         </div>
     </div>
 </div>
+
 <!-- modal xác nhận đơn hàng -->
+
 <div class="modal fade" id="modalXacNhan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <c:if test="${hoaDon.trangThai != 2 && hoaDon.trangThai != 6}">
-                <form id="form" action="/admin/hoa-don/update-trang-thai/${hoaDon.id}" method="post">
-                    <input type="hidden" name="trangThai" value="" id="trang-thai">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Ghi chú </label>
-                            <textarea class="form-control" name="ghiChu" rows="3"
-                                      placeholder="Ghi chú"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
-                    </div>
-                </form>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const form = document.getElementById('form');
-                        form.addEventListener('submit', function (event) {
-                            // Validate the form fields
-                            const ghiChu = document.querySelector('#form textarea[name="ghiChu"]');
-                            if (ghiChu.value.trim() === '') {
-                                event.preventDefault();
-                                alert('Vui lòng điền đầy đủ thông tin.');
-                            }
-                        });
-                    });
-                </script>
-            </c:if>
-            <c:if test="${hoaDon.trangThai == 2 || hoaDon.trangThai == 6}">
+            <c:if test="${hoaDon.trangThai == 2}">
                 <form id="form1" action="/admin/hoa-don/update-trang-thai-online/${hoaDon.id}" method="post">
                     <input type="hidden" name="trangThai" value="" id="trang-thai">
                     <div class="modal-body">
@@ -458,7 +380,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Mã vận đơn </label>
-                            <input id="maVanChuyen" type="text" class="form-control" name="maVanChuyen" placeholder="Mã vận đơn">
+                            <input id="maVanChuyen" type="text" class="form-control" name="maVanChuyen"
+                                   placeholder="Mã vận đơn">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Đơn vị vận chuyển </label>
@@ -500,7 +423,9 @@
         </div>
     </div>
 </div>
+
 <!-- modal huỷ -->
+
 <div class="modal fade" id="modalHuy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -508,13 +433,7 @@
                 <c:if test="${hoaDon.trangThai == 2 && hoaDon.loaiHoaDon == 1}">
                     <input type="hidden" name="trangThai" value="5">
                 </c:if>
-                <c:if test="${hoaDon.trangThai == 3}">
-                    <input type="hidden" name="trangThai" value="10">
-                </c:if>
-                <c:if test="${hoaDon.trangThai == 6}">
-                    <input type="hidden" name="trangThai" value="10">
-                </c:if>
-                <c:if test="${hoaDon.trangThai == 9}">
+                <c:if test="${hoaDon.trangThai == 4}">
                     <input type="hidden" name="trangThai" value="10">
                 </c:if>
                 <c:if test="${hoaDon.trangThai == 10}">
@@ -549,52 +468,6 @@
         </div>
     </div>
 </div>
-<%--modal delay giao hàng--%>
-<div class="modal fade" id="ModalDelay" tabindex="-1" aria-labelledby="ModalDelay" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Delay giao hàng</h1>
-                <button type="button" class="btn-Đóng" data-bs-dismiss="modal" aria-label="Đóng"></button>
-            </div>
-            <form id="form3" action="/admin/hoa-don/update-trang-thai/${hoaDon.id}" method="post">
-                <c:if test="${hoaDon.trangThai == 4}">
-                    <input type="hidden" name="trangThai" value="7">
-                </c:if>
-                <c:if test="${hoaDon.trangThai == 7}">
-                    <input type="hidden" name="trangThai" value="8">
-                </c:if>
-                <c:if test="${hoaDon.trangThai == 8}">
-                    <input type="hidden" name="trangThai" value="9">
-                </c:if>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Ghi chú </label>
-                        <textarea class="form-control" name="ghiChu" rows="3"
-                                  placeholder="Ghi chú"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
-                </div>
-            </form>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const form = document.getElementById('form3');
-                    form.addEventListener('submit', function (event) {
-                        // Validate the form fields
-                        const ghiChu = document.querySelector('#form3 textarea[name="ghiChu"]');
-                        if (ghiChu.value.trim() === '') {
-                            event.preventDefault();
-                            alert('Vui lòng điền đầy đủ thông tin.');
-                        }
-                    });
-                });
-            </script>
-        </div>
-    </div>
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
@@ -604,15 +477,31 @@
     const trangThai = document.getElementById('trang-thai');
     const trangThaiHoaDon = ${hoaDon.trangThai};
     if (trangThaiHoaDon == 2) {
-        trangThai.value = 3;
-    }
-    if (trangThaiHoaDon == 3) {
         trangThai.value = 4;
     }
-    if (trangThaiHoaDon == 6) {
-        trangThai.value = 3;
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+        // Kiểm tra thông báo thành công
+        <c:if test="${not empty successMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '${successMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
 
+        // Kiểm tra thông báo lỗi
+        <c:if test="${not empty errorMessage}">
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '${errorMessage}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+        </c:if>
+    });
 </script>
 
 </body>

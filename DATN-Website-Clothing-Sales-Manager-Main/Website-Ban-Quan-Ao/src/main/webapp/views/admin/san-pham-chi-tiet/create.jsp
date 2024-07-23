@@ -231,7 +231,7 @@
                         <div class="col-4">
                             <label for="soLuong" class="form-label">Số lượng sản phẩm</label>
                             <form:input path="soLuong" id="soLuong" class="form-control" type="number"
-                                        value="${sanPhamChiTiet.soLuong}"/>
+                                        value="${sanPhamChiTiet.soLuong}" min="0" max="10000" required="true"/>
                         </div>
                     </div>
                     <div class="mt-3">

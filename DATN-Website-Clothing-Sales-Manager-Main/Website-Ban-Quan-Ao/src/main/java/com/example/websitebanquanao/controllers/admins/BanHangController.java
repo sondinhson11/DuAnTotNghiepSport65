@@ -345,8 +345,11 @@ public class BanHangController {
                              @RequestParam("xaPhuong") String xaPhuong, @RequestParam("quanHuyen") String quanHuyen,
                              @RequestParam("tinhThanh") String tinhThanh, @RequestParam("phiVanChuyen") BigDecimal phiVanChuyen,
                              @RequestParam("maVanChuyen") String maVanChuyen, @RequestParam("tenDonViVanChuyen") String tenDonViVanChuyen,
-                             @RequestParam("anh") MultipartFile anh
+                             @RequestParam("anh") MultipartFile anh,@RequestParam("tong-tien") String tongTien, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan
     ) {
+        String tongTien2 = tongTien.replace(".", "");
+        String tienGiam2 = tienGiamGia.replace(".", "");
+        String tienThanhToan2 = tienThanhToan.replace(".", "");
         // validate full trường và session tồn tại 3s
         if (nguoiNhan.isEmpty() || sdt.isEmpty() || ghiChu.isEmpty() || xaPhuong.isEmpty() || quanHuyen.isEmpty() || tinhThanh.isEmpty() || phiVanChuyen == null || maVanChuyen.isEmpty() || tenDonViVanChuyen.isEmpty()) {
             session.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin");
@@ -355,12 +358,15 @@ public class BanHangController {
         HoaDon hoaDon = hoaDonService.getById(idHoaDon);
 
         if (hoaDon != null) {
-            hoaDon.setTrangThai(3);
+            hoaDon.setTrangThai(4);
             hoaDon.setNguoiNhan(nguoiNhan);
             hoaDon.setSoDienThoai(sdt);
             hoaDon.setLoaiHoaDon(2);
             hoaDon.setDiaChi(diaChi);
             hoaDon.setGhiChu(ghiChu);
+            hoaDon.setTongTien(BigDecimal.valueOf(Float.valueOf(tongTien2)));
+            hoaDon.setTienGiam(BigDecimal.valueOf(Float.valueOf(tienGiam2)));
+            hoaDon.setThanhToan(BigDecimal.valueOf(Float.valueOf(tienThanhToan2)));
             hoaDon.setTinhThanhPho(tinhThanh);
             hoaDon.setQuanHuyen(quanHuyen);
             hoaDon.setXaPhuong(xaPhuong);

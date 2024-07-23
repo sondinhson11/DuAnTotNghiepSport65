@@ -52,16 +52,15 @@
                 <c:if test="${hoaDon.ngayThanhToan == null && hoaDon.hinhThucThanhToan.ten == 'Chuyển khoản'}">
                     <div>
                         <form action="/submit-payment/${id}" method="post">
-
-<%--                            <button type="submit" class="btn btn-success col-12">Xác nhận thanh toán</button>--%>
-    <c:choose>
-        <c:when test="${hoaDon.trangThai == 5}">
-            <button type="submit" class="btn btn-success col-12" disabled>Xác nhận thanh toán</button>
-        </c:when>
-        <c:otherwise>
-            <button type="submit" class="btn btn-success col-12">Xác nhận thanh toán</button>
-        </c:otherwise>
-    </c:choose>
+                            <c:choose>
+                                <c:when test="${hoaDon.trangThai == 5 || hoaDon.trangThai == 10}">
+                                    <button type="submit" class="btn btn-success col-12" disabled>Xác nhận thanh toán
+                                    </button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="submit" class="btn btn-success col-12">Xác nhận thanh toán</button>
+                                </c:otherwise>
+                            </c:choose>
                         </form>
                     </div>
                 </c:if>
@@ -258,7 +257,7 @@
             <div class="col-9 d-flex justify-content-end">Thanh Toán</div>
             <div class="col-3">
                 <p id="phaiTra"></p>
-                <p id="soTienSauKhiGiam" STYLE="display: none" >${soTienSauKhiGiam}</p>
+                <p id="soTienSauKhiGiam" STYLE="display: none">${soTienSauKhiGiam}</p>
                 <script>
                     var phaiTraElement = document.getElementById("phaiTra");
                     var soTienSauKhiGiamElement = document.getElementById("soTienSauKhiGiam");
@@ -275,9 +274,9 @@
                         var giaVanChuyen = parseInt(giaVanChuyenText.replace(/[^\d]/g, ''));
 
                         if (!isNaN(soTienSauKhiGiam) && !isNaN(giaVanChuyen)) {
-                                tong = soTienSauKhiGiam + giaVanChuyen;
+                            tong = soTienSauKhiGiam + giaVanChuyen;
                         }
-                    }   else {
+                    } else {
                         tong = soTienSauKhiGiamText
                     }
 

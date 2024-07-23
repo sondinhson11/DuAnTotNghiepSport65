@@ -105,7 +105,7 @@
                                 <div class="form-group">
                                     <label for="soLuong">Số lượng</label>
                                     <form:input type="number" path="soLuong" id="soLuong" class="form-control"
-                                               min="1" max="10000"  required="true"/>
+                                               min="0" max="10000"  required="true"/>
                                 </div>
                             </div>
                         </div>

@@ -35,14 +35,24 @@
     <div class="row mt-2">
         <div class="col-12">
             <div class="btn-group">
-                <button class="btn btn-toolbar ms-2 ${param.trangThai == null ? 'selected' : ''}" onclick="filterByStatus('')">Tất cả</button>
-                <button class="btn btn-toolbar ms-2 ${param.trangThai == '2' ? 'selected' : ''}" onclick="filterByStatus('2')">Chờ xác nhận</button>
-                <button class="btn btn-toolbar ms-2 ${param.trangThai == '3' ? 'selected' : ''}" onclick="filterByStatus('3')">Chờ giao</button>
-                <button class="btn btn-toolbar ms-2 ${param.trangThai == '6' ? 'selected' : ''}" onclick="filterByStatus('6')">Đã xác nhận</button>
-                <button class="btn btn-toolbar ms-2 ${param.trangThai == '4' ? 'selected' : ''}" onclick="filterByStatus('4')">Đang giao</button>
-                <button class="btn btn-toolbar ms-2 ${param.trangThai == '1' ? 'selected' : ''}" onclick="filterByStatus('1')">Đã hoàn thành</button>
-                <button class="btn btn-toolbar ms-2 ${param.trangThai == '10' ? 'selected' : ''}" onclick="filterByStatus('10')">Đã huỷ/Chờ hoàn tiền</button>
-                <button class="btn btn-toolbar ms-2 ${param.trangThai == '5' ? 'selected' : ''}" onclick="filterByStatus('5')">Đã huỷ</button>
+                <button class="btn btn-toolbar ms-2 ${param.trangThai == null ? 'selected' : ''}"
+                        onclick="filterByStatus('')">Tất cả
+                </button>
+                <button class="btn btn-toolbar ms-2 ${param.trangThai == '2' ? 'selected' : ''}"
+                        onclick="filterByStatus('2')">Chờ xác nhận
+                </button>
+                <button class="btn btn-toolbar ms-2 ${param.trangThai == '4' ? 'selected' : ''}"
+                        onclick="filterByStatus('4')">Đã xác nhận
+                </button>
+                <button class="btn btn-toolbar ms-2 ${param.trangThai == '1' ? 'selected' : ''}"
+                        onclick="filterByStatus('1')">Đã hoàn thành
+                </button>
+                <button class="btn btn-toolbar ms-2 ${param.trangThai == '10' ? 'selected' : ''}"
+                        onclick="filterByStatus('10')">Đã huỷ/Chờ hoàn tiền
+                </button>
+                <button class="btn btn-toolbar ms-2 ${param.trangThai == '5' ? 'selected' : ''}"
+                        onclick="filterByStatus('5')">Đã huỷ
+                </button>
             </div>
         </div>
     </div>
@@ -103,17 +113,14 @@
                                 <c:if test="${hoaDon.trangThai == 2}">
                                     <span class="text-secondary">Chờ xác nhận</span>
                                 </c:if>
-                                <c:if test="${hoaDon.trangThai == 3}">
-                                    <span class="text-secondary">Chờ giao</span>
-                                </c:if>
                                 <c:if test="${hoaDon.trangThai == 4}">
-                                    <span class="text-success">Đang giao</span>
+                                    <span class="text-success">Đã xác nhận</span>
                                 </c:if>
                                 <c:if test="${hoaDon.trangThai == 5}">
                                     <span class="text-danger">Đã huỷ</span>
                                 </c:if>
-                                <c:if test="${hoaDon.trangThai == 6}">
-                                    <span class="text-secondary">Đã xác nhận</span>
+                                <c:if test="${hoaDon.trangThai == 10}">
+                                    <span class="text-secondary">Đã huỷ/Chờ hoàn tiền</span>
                                 </c:if>
                             </td>
                             <td>

@@ -1415,63 +1415,6 @@
                 }
             }
         });
-        <%--// api vietqr--%>
-
-        <%--$(document).ready(function () {--%>
-        <%--    var clientId = '01d6d8e1-f32f-49c2-b2ed-569c35d2d407';--%>
-        <%--    var apiKey = 'd662918e-19bd-4947-8ddd-fb8a1474dfe0';--%>
-        <%--    var apiUrl = 'https://api.vietqr.io/v2/generate';--%>
-
-        <%--    // Sự kiện change trên phần tử select--%>
-        <%--    $('#hinh-thuc-thanh-toan').on('change', function () {--%>
-        <%--        var selectedValue = $(this).val();--%>
-
-        <%--        // Kiểm tra giá trị được chọn và hiển thị modal tương ứng--%>
-        <%--        if (selectedValue === '1') {--%>
-        <%--            // Tiền mặt - không hiển thị modal--%>
-        <%--            // Có thể ẩn modal nếu nó đang hiển thị--%>
-        <%--            $('#qrCodeModal').modal('hide');--%>
-        <%--        } else if (selectedValue === '2') {--%>
-        <%--            // Chuyển khoản - hiển thị modal và gửi yêu cầu API--%>
-        <%--            $('#qrCodeModal').modal('show');--%>
-        <%--            sendApiRequest();--%>
-        <%--        }--%>
-        <%--    });--%>
-
-        <%--    function sendApiRequest() {--%>
-        <%--        // Dữ liệu để gửi lên API--%>
-        <%--        let tongTien = parseFloat('${tongTien}') || 0;--%>
-        <%--        const maHoaDon = '${hoaDon.ma}';--%>
-        <%--        var requestData = {--%>
-        <%--            "accountNo": "0866613082003",--%>
-        <%--            "accountName": "PHAM LE QUYEN ANH",--%>
-        <%--            "acqId": "970422",--%>
-        <%--            "addInfo": "Thanh toan hoa don " + maHoaDon,--%>
-        <%--            "amount": tongTien,--%>
-        <%--            "template": "compact",--%>
-        <%--        };--%>
-
-        <%--        // Gửi yêu cầu API sử dụng jQuery AJAX--%>
-        <%--        $.ajax({--%>
-        <%--            url: apiUrl,--%>
-        <%--            type: 'POST',--%>
-        <%--            headers: {--%>
-        <%--                'x-client-id': clientId,--%>
-        <%--                'x-api-key': apiKey,--%>
-        <%--                'Content-Type': 'application/json'--%>
-        <%--            },--%>
-        <%--            data: JSON.stringify(requestData),--%>
-        <%--            success: function (response) {--%>
-        <%--                $('#qrCodeModal .modal-body').html('<img src="' + response.data.qrDataURL + '" class="img-fluid" />');--%>
-        <%--            },--%>
-        <%--            error: function (error) {--%>
-        <%--                // Xử lý lỗi nếu có--%>
-        <%--                console.error('API Error:', error);--%>
-        <%--            }--%>
-        <%--        });--%>
-        <%--    }--%>
-        <%--});--%>
-        // api vietqr
         $(document).ready(function () {
             // Sự kiện change trên phần tử select
             $('#hinh-thuc-thanh-toan').on('change', function () {
