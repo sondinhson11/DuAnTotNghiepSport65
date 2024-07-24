@@ -54,13 +54,13 @@
         <div class="row mt-2">
             <div>
                 <div class="float-start">
-                    <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 || hoaDon.trangThai == 3 || hoaDon.trangThai == 10 || hoaDon.trangThai == 6|| hoaDon.trangThai == 4}">
+                    <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 || hoaDon.trangThai == 10 || hoaDon.trangThai == 4}">
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHuy">
                             Huỷ đơn hàng
                         </button>
                     </c:if>
                     <c:if test="${hoaDon.trangThai !=4}">
-                        <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 || hoaDon.trangThai == 3 || hoaDon.trangThai == 6}">
+                        <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 }">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#modalXacNhan">
                                 Xác nhận
@@ -175,9 +175,6 @@
                         </c:if>
                         <c:if test="${hoaDon.trangThai == 2}">
                             <span class="text-secondary">Chờ xác nhận</span>
-                        </c:if>
-                        <c:if test="${hoaDon.trangThai == 3}">
-                            <span class="text-secondary">Chờ giao</span>
                         </c:if>
                         <c:if test="${hoaDon.trangThai == 4}">
                             <span class="text-success">Đã xác nhận</span>

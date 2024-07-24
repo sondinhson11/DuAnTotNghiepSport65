@@ -124,6 +124,9 @@ public class HoaDonController {
             }
             for (GioHangResponse gh : listSanPhamTrongGioHang) {
                 SanPhamChiTiet ctsp = sanPhamChiTietService.findById(gh.getIdSanPhamChiTiet());
+                HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietService.getHoaDonChiTietByHoaDonIdAndIdSanPhamChiTiet(id, ctsp.getId());
+                hoaDonChiTiet.setTrangThai(3);
+                hoaDonChiTietService.update(hoaDonChiTiet);
                 int soLuongConLai = ctsp.getSoLuong() - Integer.valueOf(String.valueOf(gh.getSoLuong()));
                 ctsp.setSoLuong(soLuongConLai);
                 sanPhamChiTietService.updateSoLuong(ctsp);

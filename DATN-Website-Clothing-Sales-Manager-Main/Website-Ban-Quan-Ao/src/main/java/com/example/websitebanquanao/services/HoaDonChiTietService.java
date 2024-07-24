@@ -43,7 +43,7 @@ public class HoaDonChiTietService {
         java.util.Date currentDate = new java.util.Date();
         hoaDonChiTiet.setNgaySua(new Date(currentDate.getTime()));
         hoaDonChiTiet.setNgayTao(new Date(currentDate.getTime()));
-        hoaDonChiTiet.setTrangThai(1);
+        hoaDonChiTiet.setTrangThai(3);
         hoaDonChiTietRepository.save(hoaDonChiTiet);
         System.out.println(hoaDonChiTiet.getId());
     }

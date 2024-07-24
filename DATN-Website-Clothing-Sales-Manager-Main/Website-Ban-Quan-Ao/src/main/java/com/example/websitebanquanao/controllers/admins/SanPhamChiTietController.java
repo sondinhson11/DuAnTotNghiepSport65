@@ -246,6 +246,9 @@ public class SanPhamChiTietController {
         if (hoaDonChiTietService.getHoaDonChiTietByHoaDonIdAndIdSanPhamChiTiet(idHoaDon, idSanPhamChiTiet).getTrangThai() == 2) {
             redirectAttributes.addFlashAttribute("errorMessage", "Sản phẩm này đã được hoàn trước đó.");
             return "redirect:/admin/hoa-don/" + idHoaDon;
+        }else if(hoaDonChiTietService.getHoaDonChiTietByHoaDonIdAndIdSanPhamChiTiet(idHoaDon, idSanPhamChiTiet).getTrangThai() == 1) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Sản phẩm này chưa được xác nhận lấy trước đó.");
+            return "redirect:/admin/hoa-don/" + idHoaDon;
         }
         try {
             // Kiểm tra trạng thái đã hoàn từ session trước khi thực hiện
