@@ -36,12 +36,12 @@
             <c:if test="${hoaDon.trangThai == 1}">
                 <span class="text-success">Đã hoàn thành</span>
             </c:if>
-           <c:if test="${hoaDon.trangThai == 2}">
-               <span class="text-secondary">Chờ xác nhận</span>
-           </c:if>
-               <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
-                   <span class="text-secondary">Chờ xác nhận và đã thanh toán</span>
-               </c:if>
+          <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan ==null}">
+              <span class="text-secondary">Chờ xác nhận</span>
+          </c:if>
+                 <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
+                     <span class="text-secondary">Chờ xác nhận và đã thanh toán</span>
+                 </c:if>
             <c:if test="${hoaDon.trangThai == 4}">
                 <span class="text-success"> Đã xác nhận </span>
             </c:if>
@@ -82,7 +82,7 @@
                             Xác nhận
                         </button>
                     </c:if>
-                    <c:if test="${hoaDon.trangThai == 4 && hoaDon.loaiHoaDon == 1}">
+                    <c:if test="${hoaDon.trangThai == 4 && hoaDon.loaiHoaDon == 1 && hoaDon.hinhThucThanhToan.id == 2}">
                         <c:if test="${hoaDon.ngayThanhToan != null }">
                             <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
@@ -191,7 +191,7 @@
                         <c:if test="${hoaDon.trangThai == 1}">
                             <span class="text-success">Đã hoàn thành</span>
                         </c:if>
-                        <c:if test="${hoaDon.trangThai == 2}">
+                        <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan == null}">
                             <span class="text-secondary">Chờ xác nhận</span>
                         </c:if>
                         <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
