@@ -15,6 +15,9 @@
                 <c:if test="${hoaDon.trangThai == 2}">
                     <span class="text-secondary">Chờ xác nhận</span>
                 </c:if>
+                 <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
+                     <span class="text-secondary">Chờ xác nhận và đã thanh toán</span>
+                 </c:if>
                 <c:if test="${hoaDon.trangThai == 4}">
                     <span class="text-success">Đã Xác Nhận</span>
                 </c:if>
@@ -254,7 +257,7 @@
 
                     var tong = 0;
                     console.log(giaVanChuyenText !== 'Chưa tính')
-                    if (giaVanChuyenText !== 'Chưa tính') {
+                    if (giaVanChuyenText !== 'Chưa tính' && ${hoaDon.ngayThanhToan != null}) {
                         var soTienSauKhiGiam = parseInt(soTienSauKhiGiamText.replace(/[^\d]/g, ''));
                         var giaVanChuyen = parseInt(giaVanChuyenText.replace(/[^\d]/g, ''));
 
@@ -262,7 +265,7 @@
                             tong = soTienSauKhiGiam + giaVanChuyen;
                         }
                     } else {
-                        tong = soTienSauKhiGiamText
+                        tong = 0
                     }
 
                     var formattedGia = parseInt(tong).toLocaleString('en-US');

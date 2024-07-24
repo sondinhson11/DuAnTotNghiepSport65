@@ -36,7 +36,8 @@ public class CreatePDF {
             if (tenKhachHang == null) {
                 tenKhachHang = "Khách lẻ";
             }
-            String diaChi = hoaDon.getDiaChi() + ", " + hoaDon.getXaPhuong() + ", " + hoaDon.getQuanHuyen() + ", " + hoaDon.getTinhThanhPho();;
+            String diaChi = hoaDon.getDiaChi() + ", " + hoaDon.getXaPhuong() + ", " + hoaDon.getQuanHuyen() + ", " + hoaDon.getTinhThanhPho();
+            ;
             if (diaChi == null) {
                 diaChi = "Khách mua tại cửa hàng";
             }
@@ -51,7 +52,7 @@ public class CreatePDF {
             document.add(new Paragraph("Mã hoá đơn: " + hoaDon.getMa(), font));
             document.add(new Paragraph("Tên Khách hàng: " + tenKhachHang, font));
             document.add(new Paragraph("Số điện thoại: " + hoaDon.getSoDienThoai(), font));
-            document.add(new Paragraph("Địa chỉ: " +diaChi, font));
+            document.add(new Paragraph("Địa chỉ: " + diaChi, font));
             document.add(new Paragraph("Ghi Chú: " + hoaDon.getGhiChu(), font));
             document.add(new Paragraph("Nhân Viên: " + (hoaDon.getIdNhanVien() != null ? hoaDon.getIdNhanVien().getHoVaTen() : "Không có nhân viên"), font));
             document.add(new Paragraph("Ngày Tạo: " + hoaDon.getNgayTao(), font));
@@ -87,6 +88,9 @@ public class CreatePDF {
             document.add(table);
             document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
             document.add(new Paragraph("Tổng tiền : " + tongTien, font2));
+            if (hoaDon.getPhiVanChuyen() != null) {
+                document.add(new Paragraph("Phí vận chuyển : " + hoaDon.getPhiVanChuyen().toString(), font2));
+            }
             document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
             document.add(new Paragraph("Cảm ơn quý khách đã mua hàng!", font2));
             document.close();

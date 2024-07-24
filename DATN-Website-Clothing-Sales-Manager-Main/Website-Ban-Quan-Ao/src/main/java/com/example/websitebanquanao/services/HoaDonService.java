@@ -215,7 +215,7 @@ public class HoaDonService {
 
     @Transactional
     public void updateNgayThanhToanByIdHoaDon(String ma, Instant ngayThanhToan) {
-        hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 6);
+        hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 2);
     }
 
     // nếu số lượng hoá đơn có trạng thái là 0 > 5 hoá đơn thì không cho tạo đơn hàng

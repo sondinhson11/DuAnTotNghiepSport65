@@ -39,6 +39,9 @@
            <c:if test="${hoaDon.trangThai == 2}">
                <span class="text-secondary">Chờ xác nhận</span>
            </c:if>
+               <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
+                   <span class="text-secondary">Chờ xác nhận và đã thanh toán</span>
+               </c:if>
             <c:if test="${hoaDon.trangThai == 4}">
                 <span class="text-success"> Đã xác nhận </span>
             </c:if>
@@ -59,7 +62,7 @@
                             Huỷ đơn hàng
                         </button>
                     </c:if>
-                    <c:if test="${hoaDon.trangThai !=4}">
+                    <c:if test="${hoaDon.trangThai !=4 }">
                         <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 }">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#modalXacNhan">
@@ -67,11 +70,25 @@
                             </button>
                         </c:if>
                     </c:if>
-                    <c:if test="${hoaDon.trangThai == 4}">
+                    <c:if test="${hoaDon.trangThai == 4 && hoaDon.loaiHoaDon != 1}">
                         <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
                             Xác nhận
                         </button>
+                    </c:if>
+                    <c:if test="${hoaDon.trangThai == 4 && hoaDon.loaiHoaDon == 1 && hoaDon.hinhThucThanhToan.id != 2}">
+                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            Xác nhận
+                        </button>
+                    </c:if>
+                    <c:if test="${hoaDon.trangThai == 4 && hoaDon.loaiHoaDon == 1}">
+                        <c:if test="${hoaDon.ngayThanhToan != null }">
+                            <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                Xác nhận
+                            </button>
+                        </c:if>
                     </c:if>
                 </div>
             </div>
@@ -107,14 +124,15 @@
                         <p>Địa chỉ: Bán Tại Quầy</p>
                     </c:if>
                     <c:if test="${hoaDon.xaPhuong!=null}">
-                        <p>Địa chỉ: ${hoaDon.diaChi},  ${hoaDon.xaPhuong}, ${hoaDon.quanHuyen}, ${hoaDon.tinhThanhPho}</p>
+                        <p>Địa
+                            chỉ: ${hoaDon.diaChi}, ${hoaDon.xaPhuong}, ${hoaDon.quanHuyen}, ${hoaDon.tinhThanhPho}</p>
                     </c:if>
                     <c:if test="${hoaDon.soDienThoai!=null}">
-                        <p>Số điện thoại : ${hoaDon.soDienThoai}
-                    </c:if>
-                    <c:if test="${hoaDon.trangThai == 4}">
-                        <p>Mã vận đơn: ${hoaDon.maVanChuyen}</p>
-                        <p>Đơn vị vận chuyển: ${hoaDon.tenDonViVanChuyen}</p>
+                    <p>Số điện thoại : ${hoaDon.soDienThoai}
+                        </c:if>
+                        <c:if test="${hoaDon.trangThai == 4}">
+                    <p>Mã vận đơn: ${hoaDon.maVanChuyen}</p>
+                    <p>Đơn vị vận chuyển: ${hoaDon.tenDonViVanChuyen}</p>
                     </c:if>
                     <c:if test="${hoaDon.hinhThucThanhToan.id == 2 && hoaDon.loaiHoaDon != 1}">
                         Ảnh chuyển khoản:
@@ -389,7 +407,8 @@
                         </div>
                         <div class="mb-3">
                             <label id="phiVanChuyen" class="form-label">Phí vận chuyển </label>
-                            <input type="number" class="form-control" name="phiVanChuyen" value="${hoaDon.phiVanChuyen}" placeholder="Phí vận chuyển" readonly>
+                            <input type="number" class="form-control" name="phiVanChuyen" value="${hoaDon.phiVanChuyen}"
+                                   placeholder="Phí vận chuyển" readonly>
                         </div>
                     </div>
                     <div class="modal-footer">
