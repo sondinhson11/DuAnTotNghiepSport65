@@ -42,7 +42,7 @@
                         onclick="filterByStatus('2')">Chờ xác nhận
                 </button>
                 <button class="btn btn-toolbar ms-2 ${param.trangThai == '4' ? 'selected' : ''}"
-                        onclick="filterByStatus('4')">Đã xác nhận
+                        onclick="filterByStatus('4')">Đã xác nhận / Đang giao
                 </button>
                 <button class="btn btn-toolbar ms-2 ${param.trangThai == '1' ? 'selected' : ''}"
                         onclick="filterByStatus('1')">Đã hoàn thành

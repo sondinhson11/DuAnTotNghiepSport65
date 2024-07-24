@@ -19,7 +19,7 @@
                      <span class="text-secondary">Chờ xác nhận và đã thanh toán</span>
                  </c:if>
                 <c:if test="${hoaDon.trangThai == 4}">
-                    <span class="text-success">Đã Xác Nhận</span>
+                    <span class="text-success">Đã Xác Nhận / Đang giao</span>
                 </c:if>
                 <c:if test="${hoaDon.trangThai == 5 }">
                     <span class="text-danger">Đã huỷ</span>
