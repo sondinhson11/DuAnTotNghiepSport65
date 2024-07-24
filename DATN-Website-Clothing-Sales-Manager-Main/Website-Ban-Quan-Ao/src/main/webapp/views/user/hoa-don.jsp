@@ -63,8 +63,11 @@
                                         <c:if test="${hoaDon.trangThai == 1}">
                                             <span class="text-success">Đã hoàn thành</span>
                                         </c:if>
-                                        <c:if test="${hoaDon.trangThai == 2}">
+                                        <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan ==null}">
                                             <span class="text-secondary">Chờ xác nhận</span>
+                                        </c:if>
+                                        <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
+                                            <span class="text-secondary">Chờ xác nhận và đã thanh toán</span>
                                         </c:if>
                                         <c:if test="${hoaDon.trangThai == 4}">
                                             <span class="text-success">Đang giao</span>
