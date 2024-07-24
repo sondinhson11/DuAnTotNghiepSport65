@@ -16,7 +16,7 @@
                     <span class="text-secondary">Chờ xác nhận</span>
                 </c:if>
                 <c:if test="${hoaDon.trangThai == 4}">
-                    <span class="text-success">Đang giao</span>
+                    <span class="text-success">Đã Xác Nhận</span>
                 </c:if>
                 <c:if test="${hoaDon.trangThai == 5 }">
                     <span class="text-danger">Đã huỷ</span>
@@ -143,9 +143,9 @@
                         <p>${sp.tenSanPham}</p>
                         <p>${sp.tenMauSac}/${sp.tenKichCo}/x${sp.soLuong}</p>
                     </td>
-                    <td id="tongGia_${sp.id}">${sp.soLuong * sp.gia}</td>
+                    <td id="tongGia_${sp.id}_${sp.tenMauSac}_${sp.tenKichCo}">${sp.soLuong * sp.gia}</td>
                     <script>
-                        var giaSanPhamElement = document.getElementById("tongGia_${sp.id}");
+                        var giaSanPhamElement = document.getElementById("tongGia_${sp.id}_${sp.tenMauSac}_${sp.tenKichCo}");
                         var giaSanPhamText = giaSanPhamElement.innerText;
                         var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
                         giaSanPhamElement.innerText = formattedGia + " vnđ";
@@ -213,7 +213,7 @@
         <div class="row">
             <div class="col-9 d-flex justify-content-end">Phí vận chuyển</div>
             <div class="col-3">
-                <p id="phiVanChuyen">${hoaDon.phiVanChuyen}</p>
+                <p id="phiVanChuyen">${hoaDon.maVanChuyen != null ? hoaDon.phiVanChuyen : 'Chưa tính'}</p>
                 <script>
                     var giaVanChuyenElement = document.getElementById("phiVanChuyen");
                     var giaVanChuyenText = giaVanChuyenElement.innerText;
