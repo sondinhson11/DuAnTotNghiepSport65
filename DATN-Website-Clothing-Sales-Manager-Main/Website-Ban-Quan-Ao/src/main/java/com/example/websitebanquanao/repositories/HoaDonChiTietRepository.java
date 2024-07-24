@@ -29,7 +29,7 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
     @Query("SELECT SUM(hdct.gia * hdct.soLuong) FROM HoaDonChiTiet hdct WHERE hdct.idHoaDon.id = :idHoaDon")
     public BigDecimal sumTongTienByIdHoaDon(@Param("idHoaDon") UUID idHoaDon);
 
-    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.HoaDonUserResponse(hd.id, hd.ma, hd.ngayTao, hd.trangThai, SUM(hdct.gia * hdct.soLuong)) FROM HoaDonChiTiet hdct JOIN hdct.idHoaDon hd WHERE hd.idKhachHang.id = :idKhachHang GROUP BY hd.id, hd.ma, hd.ngayTao, hd.trangThai order by hd.ngayTao desc")
+    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.HoaDonUserResponse(hd.id, hd.ma, hd.ngayTao, hd.trangThai, SUM(hdct.gia * hdct.soLuong),hd.ngayThanhToan) FROM HoaDonChiTiet hdct JOIN hdct.idHoaDon hd WHERE hd.idKhachHang.id = :idKhachHang GROUP BY hd.id, hd.ma, hd.ngayTao, hd.trangThai,hd.ngayThanhToan order by hd.ngayTao desc")
     public List<HoaDonUserResponse> findListHoaDonByKhachHang(@Param("idKhachHang") UUID idKhachHang);
 
 

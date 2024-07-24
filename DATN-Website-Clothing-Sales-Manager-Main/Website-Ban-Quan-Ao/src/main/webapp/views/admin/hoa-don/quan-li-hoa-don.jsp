@@ -15,12 +15,12 @@
     }
 </style>
 <script>
-    function filterByStatus(trangThai) {
+    function filterByStatus(trangThai,checkTH) {
         var url;
         if (trangThai === '') {
             url = "/admin/hoa-don"; // Trả về trang chủ nếu không có trạng thái
         } else {
-            url = "/admin/hoa-don/filter?trangThai=" + trangThai;
+            url = "/admin/hoa-don/filter?trangThai=" + trangThai + "&checkTH=" + checkTH;
         }
         window.location.href = url;
     }
@@ -36,22 +36,25 @@
         <div class="col-12">
             <div class="btn-group">
                 <button class="btn btn-toolbar ms-2 ${param.trangThai == null ? 'selected' : ''}"
-                        onclick="filterByStatus('')">Tất cả
+                        onclick="filterByStatus('',false)">Tất cả
                 </button>
-                <button class="btn btn-toolbar ms-2 ${param.trangThai == '2' ? 'selected' : ''}"
-                        onclick="filterByStatus('2')">Chờ xác nhận
+                <button class="btn btn-toolbar ms-2 ${(param.trangThai == '2' && param.checkTH == false) ? 'selected' : ''}"
+                        onclick="filterByStatus('2',false)">Chờ xác nhận
+                </button>
+                <button class="btn btn-toolbar ms-2 ${param.checkTH == true ? 'selected' : ''}"
+                        onclick="filterByStatus('2',true)">Đã thanh toán chuyển khoản
                 </button>
                 <button class="btn btn-toolbar ms-2 ${param.trangThai == '4' ? 'selected' : ''}"
-                        onclick="filterByStatus('4')">Đã xác nhận / Đang giao
+                        onclick="filterByStatus('4',false)">Đã xác nhận / Đang giao
                 </button>
                 <button class="btn btn-toolbar ms-2 ${param.trangThai == '1' ? 'selected' : ''}"
-                        onclick="filterByStatus('1')">Đã hoàn thành
+                        onclick="filterByStatus('1',false)">Đã hoàn thành
                 </button>
                 <button class="btn btn-toolbar ms-2 ${param.trangThai == '10' ? 'selected' : ''}"
-                        onclick="filterByStatus('10')">Đã huỷ/Chờ hoàn tiền
+                        onclick="filterByStatus('10',false)">Đã huỷ/Chờ hoàn tiền
                 </button>
                 <button class="btn btn-toolbar ms-2 ${param.trangThai == '5' ? 'selected' : ''}"
-                        onclick="filterByStatus('5')">Đã huỷ
+                        onclick="filterByStatus('5',false)">Đã huỷ
                 </button>
             </div>
         </div>
@@ -84,7 +87,7 @@
                                     ${hoaDon.idKhachHang.hoVaTen}
                                 </c:if>
                                 <c:if test="${hoaDon.idKhachHang == null}">
-                                    Khách lẻ
+                                    ${hoaDon.nguoiNhan  != null ? hoaDon.nguoiNhan : "Khách lẻ"}
                                 </c:if>
                             </td>
                             <td>${hoaDon.ngayTao}</td>
@@ -114,7 +117,7 @@
                                     <span class="text-secondary">Chờ xác nhận</span>
                                 </c:if>
                                 <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
-                                    <span class="text-secondary">Chờ xác nhận và đã thanh toán</span>
+                                    <span class="text-secondary">Đã thanh toán chuyển khoản</span>
                                 </c:if>
                                 <c:if test="${hoaDon.trangThai == 4}">
                                     <span class="text-success">Đã xác nhận</span>

@@ -15,12 +15,14 @@
         padding: 0;
         margin: 0;
     }
+
     .custom-border {
         border: 2px solid black; /* Độ dày và màu sắc của viền */
         border-radius: 10px; /* Bo góc cho viền */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng cho viền */
         padding: 20px; /* Khoảng cách bên trong */
     }
+
     .result-item {
         padding: 8px;
         background-color: white;
@@ -165,6 +167,7 @@
         text-align: center;
         cursor: pointer; /* Sử dụng con trỏ kiểu tay khi di chuột vào */
     }
+
     .custom-table thead {
         background-color: #007bff;
         color: white;
@@ -182,6 +185,7 @@
     .custom-table td {
         vertical-align: middle;
     }
+
     .image-preview {
         max-width: 100%;
         max-height: 100%;
@@ -273,13 +277,16 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <p class="fw-bold mb-0">Giỏ Hàng</p>
                     <div>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#SPModal" id="SPModal_btn">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#SPModal"
+                                id="SPModal_btn">
                             Thêm sản phẩm
                         </button>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QRModal" id="QRModal_btn">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#QRModal"
+                                id="QRModal_btn">
                             Quét QR
                         </button>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MASPModal" id="MASPModal_btn">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MASPModal"
+                                id="MASPModal_btn">
                             Thêm với mã SP
                         </button>
                     </div>
@@ -338,7 +345,8 @@
                                     <div class="carousel-inner" style="width: 150px; height: 150px">
                                         <c:forEach items="${listAnhSanPham}" var="anhSanPham" varStatus="status">
                                             <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
-                                                <img src="${anhSanPham.duongDan}" class="d-block" style="width: 150px; height: 150px">
+                                                <img src="${anhSanPham.duongDan}" class="d-block"
+                                                     style="width: 150px; height: 150px">
                                             </div>
                                         </c:forEach>
                                     </div>
@@ -357,7 +365,8 @@
                                 <c:if test="${hoaDon.trangThai == 0}">
                                     <form method="post" action="/admin/ban-hang/delete-gio-hang/${sp.idHoaDonChiTiet}">
                                         <div class="input-group">
-                                            <input type="number" name="soLuong" min="1" max="${sp.soLuong}" value="1" class="w-50"
+                                            <input type="number" name="soLuong" min="1" max="${sp.soLuong}" value="1"
+                                                   class="w-50"
                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                             <div class="input-group-append mt-2">
                                                 <button type="submit" style="border: none" class="ms-2">
@@ -380,8 +389,11 @@
                 <div class="row">
                     <div class="col">
                         <div class="mb-3 ">
-                            <label for="searchInputKh" class="form-label fw-bold text-center d-flex justify-content-center">Tìm kiếm khách hàng</label>
-                            <input type="text" class="form-control" id="searchInputKh" placeholder="Nhập tên khách hàng">
+                            <label for="searchInputKh"
+                                   class="form-label fw-bold text-center d-flex justify-content-center">Tìm kiếm khách
+                                hàng</label>
+                            <input type="text" class="form-control" id="searchInputKh"
+                                   placeholder="Nhập tên khách hàng">
                         </div>
                         <!-- Dropdown sẽ hiển thị kết quả tìm kiếm -->
                         <ul id="searchResults" class="list-group" style="display: none;"></ul>
@@ -443,7 +455,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col"  style="display: none" id="tinh-div">
+                            <div class="col" style="display: none" id="tinh-div">
                                 <select id="provinceSelect" class="form-select">
                                     <option value="" disabled selected>Chọn tỉnh/thành phố</option>
                                 </select>
@@ -463,14 +475,14 @@
                             </div>
 
                         </div>
-                        <div class="row mb-3" >
+                        <div class="row mb-3">
                             <div class="col" style="display: none" id="ma-van-chuyen-div">
                                 <input type="text" class="form-control" id="ma-van-chuyen" name="maVanChuyen"
-                                       placeholder="Mã vận chuyển">
+                                       placeholder="Mã vận chuyển" readonly>
                             </div>
                             <div class="col" style="display: none" id="ten-don-vi-div">
-                                <input type="text" id="ten-don-vi" name="tenDonViVanChuyen"
-                                       placeholder="Tên đơn vị vận chuyển">
+                                <input type="text" id="ten-don-vi" class="form-control" name="tenDonViVanChuyen"
+                                       placeholder="Tên đơn vị vận chuyển" readonly>
                             </div>
                             <div class="col" style="display: none" id="dia-chi-chi-tiet-div">
                                 <input type="text" class="form-control" id="dia-chi" name="diaChi" rows="3"
@@ -534,18 +546,21 @@
 
                     <div class="col-6" id="thong-tin-thanh-toan">
                         <div class="row mb-3">
-                            <div class="col"  id="giam-gia-div">
+                            <div class="col" id="giam-gia-div">
                                 <div class="mb-3">
                                     <label class="form-label">Giảm Giá</label>
-                                    <select class="form-select" id="giam-gia" name="giamGia" aria-label="Default select example">
+                                    <select class="form-select" id="giam-gia" name="giamGia"
+                                            aria-label="Default select example">
                                         <!-- Các option được tạo từ danh sách listGG -->
-                                        <option value="" >Không sử dụng</option>
+                                        <option value="">Không sử dụng</option>
                                         <c:forEach items="${listGG}" var="lshgg">
                                             <fmt:parseNumber var="tongTienSo" value="${tongTien}"/>
                                             <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}"/>
                                             <c:if test="${lshgg.soLuong >=0}">
                                                 <c:if test="${tongTienSo >= soTienToiThieu}">
-                                                    <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}">${lshgg.soPhanTramGiam}%</option>
+                                                    <option value="${lshgg.id}"
+                                                            data-soPhanTramGiam="${lshgg.soPhanTramGiam}">${lshgg.soPhanTramGiam}%
+                                                    </option>
                                                 </c:if>
                                             </c:if>
                                         </c:forEach>
@@ -555,11 +570,12 @@
                             <div class="col" id="hinh-thuc-thanh-toan-div">
                                 <div class="mb-3">
                                     <label class="form-label">Hình thức thanh toán</label>
-                                    <select class="form-select" id="hinh-thuc-thanh-toan" name="httt" aria-label="Default select example">
+                                    <select class="form-select" id="hinh-thuc-thanh-toan" name="httt"
+                                            aria-label="Default select example">
                                         <!-- Vòng lặp để tạo các tùy chọn từ danh sách listHTTT -->
                                         <c:forEach items="${listHTTT}" var="lshttt">
-                                            <c:if test="${lshttt.trangThai == 1}" >
-                                            <option value=${lshttt.id}>${lshttt.ten}</option>
+                                            <c:if test="${lshttt.trangThai == 1}">
+                                                <option value=${lshttt.id}>${lshttt.ten}</option>
                                             </c:if>
                                         </c:forEach>
                                     </select>
@@ -570,93 +586,105 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Tổng Tiền</label>
-                                <input type="number" class="form-control" id="tong-tien" name="tong-tien" value="${tongTien}" readonly>
+                                <input type="number" class="form-control" id="tong-tien" name="tong-tien"
+                                       value="${tongTien}" readonly>
                             </div>
                             <div class="col">
                                 <label class="form-label">Tiền Cần Thanh Toán</label>
-                                <input type="text" class="form-control" id="tien-thanh-toan" value="0" name="tien-thanh-toan" readonly>
+                                <input type="text" class="form-control" id="tien-thanh-toan" value="0"
+                                       name="tien-thanh-toan" readonly>
                             </div>
                         </div>
-                        <div class="row mb-3" >
-                            <div class="col" >
+                        <div class="row mb-3">
+                            <div class="col">
                                 <div class="mb-3" id="tien-khach-dua-div">
                                     <label class="form-label">Tiền khách đưa</label>
-                                    <input type="number" class="form-control" id="tien-khach-dua" value="0" name="tienKhachDua" step="0.01">
+                                    <input type="number" class="form-control" id="tien-khach-dua" value="0"
+                                           name="tienKhachDua" step="0.01">
                                 </div>
                             </div>
                             <div class="col" id="phi-van-chuyen-div" style="display: none">
                                 <label class="form-label">Phí Vận Chuyển</label>
-                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" oninput="formatCurrency(this);" value="0" readonly>
+                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen"
+                                       oninput="formatCurrency(this);" value="0" readonly>
                             </div>
                         </div>
                         <script>
-                                const calculateShippingFee = (huyen,xa) => {
-                                    $.ajax({
-                                        url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
-                                        type: 'GET',
-                                        data: {
-                                            service_type_id: 2,
-                                            to_district_id: huyen,
-                                            to_ward_code: xa,
-                                            height: '9',
-                                            length: '29',
-                                            weight: '5000',
-                                            width: '18',
-                                        },
-                                        headers: {
-                                            token: '442f5c30-4906-11ef-8e53-0a00184fe694',
-                                            shop_id: '193116',
-                                            ContentType: 'application/json',
-                                        },
-                                        success: (response) => {
-                                            if (response && response.data && response.data.total !== undefined) {
-                                                const feeResponse = response.data.total;
-                                                console.log("tính phí ship: "+ feeResponse);
-                                                document.getElementById('feeInput').value = feeResponse;
-                                                // Hiển thị phần phí vận chuyển
-                                            } else {
-                                                console.error('Lỗi khi gọi API tính phí ship: ', response);
-                                                // Xử lý lỗi và cập nhật giá trị mặc định hoặc 0
-                                                document.getElementById('feeInput').value = '0';
-                                                document.getElementById('phi-van-chuyen-div').style.display = 'none';
-                                            }
-                                        },
-                                        error: (xhr, status, error) => {
-                                            console.error('Lỗi khi gọi API tính phí ship:', error);
+                            const calculateShippingFee = (huyen, xa) => {
+                                $.ajax({
+                                    url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
+                                    type: 'GET',
+                                    data: {
+                                        service_type_id: 2,
+                                        to_district_id: huyen,
+                                        to_ward_code: xa,
+                                        height: '9',
+                                        length: '29',
+                                        weight: '5000',
+                                        width: '18',
+                                    },
+                                    headers: {
+                                        token: '442f5c30-4906-11ef-8e53-0a00184fe694',
+                                        shop_id: '193116',
+                                        ContentType: 'application/json',
+                                    },
+                                    success: (response) => {
+                                        if (response && response.data && response.data.total !== undefined) {
+                                            const feeResponse = response.data.total;
+                                            console.log("tính phí ship: " + feeResponse);
+                                            document.getElementById('feeInput').value = feeResponse;
+                                            document.getElementById('ma-van-chuyen').value = "${hoaDon.ma}";
+                                            document.getElementById('ten-don-vi').value = "giao Hàng Nhanh";
+                                            // Hiển thị phần phí vận chuyển
+                                        } else {
+                                            console.error('Lỗi khi gọi API tính phí ship: ', response);
                                             // Xử lý lỗi và cập nhật giá trị mặc định hoặc 0
                                             document.getElementById('feeInput').value = '0';
-                                            document.getElementById('phi-van-chuyen-div').style = 'none';
+                                            document.getElementById('phi-van-chuyen-div').style.display = 'none';
                                         }
-                                    });
-                                };
+                                    },
+                                    error: (xhr, status, error) => {
+                                        console.error('Lỗi khi gọi API tính phí ship:', error);
+                                        // Xử lý lỗi và cập nhật giá trị mặc định hoặc 0
+                                        document.getElementById('feeInput').value = '0';
+                                        document.getElementById('phi-van-chuyen-div').style = 'none';
+                                    }
+                                });
+                            };
                         </script>
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Tiền Giảm</label>
-                                <input type="number" class="form-control" id="tien-giam" name="tien-giam" value="0" readonly>
+                                <input type="number" class="form-control" id="tien-giam" name="tien-giam" value="0"
+                                       readonly>
                             </div>
-                            <div class="col" >
-                                <div class="mb-3"id="tien-thua-div">
+                            <div class="col">
+                                <div class="mb-3" id="tien-thua-div">
                                     <label class="form-label">Tiền Thừa</label>
                                     <input type="text" class="form-control" id="tien-thua" value="0" readonly>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3" >
+                        <div class="row mb-3">
                             <div class="col">
                                 <div class="mb-3">
                                     <label class="form-label">Ghi chú</label>
-                                    <textarea class="form-control" id="ghi-chu" name="ghiChu" rows="3" placeholder="Ghi chú"></textarea>
+                                    <textarea class="form-control" id="ghi-chu" name="ghiChu" rows="3"
+                                              placeholder="Ghi chú"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3 justify-content-center">
                             <div class="col-auto">
                                 <c:if test="${tongTien>0}">
-                                    <button type="submit" class="btn btn-primary" id="thanh_toan" onclick="exportPDFBill()">Thanh toán</button>
+                                    <button type="submit" class="btn btn-primary" id="thanh_toan"
+                                            onclick="exportPDFBill()">Thanh toán
+                                    </button>
                                 </c:if>
                                 <c:if test="${tongTien==null}">
-                                    <button type="submit" class="btn btn-primary" id="thanh_toan" onclick="exportPDFBill()" disabled>Thanh toán</button>
+                                    <button type="submit" class="btn btn-primary" id="thanh_toan"
+                                            onclick="exportPDFBill()" disabled>Thanh toán
+                                    </button>
                                 </c:if>
                             </div>
                         </div>
@@ -1150,6 +1178,7 @@
                 console.log(selectedCustomer.id)
                 $('#hoVaTen').val(selectedCustomer.hoVaTen);
                 $('#sdt').val((selectedCustomer.soDienThoai ? selectedCustomer.soDienThoai : 'Chưa Có'));
+                $('#dia-chi').val((selectedCustomer.diaChi ? selectedCustomer.diaChi : 'Chưa Có'));
                 $('#idKhachHang').val(selectedCustomer.id);
                 $('#tenKhachHang').text('Tên khách hàng: ' + selectedCustomer.hoVaTen);
                 $('#emailKhachHang').text((selectedCustomer.email ? selectedCustomer.email : ''));
@@ -1345,8 +1374,8 @@
             var tienGiam = $("#tien-giam");
             var tienThuaLabel = $("#tien-thua");
             phuongxa.on("change", function () {
-                console.log(quanHuyen.val(),phuongxa.val())
-                calculateShippingFee(quanHuyen.val(),phuongxa.val())
+                console.log(quanHuyen.val(), phuongxa.val())
+                calculateShippingFee(quanHuyen.val(), phuongxa.val())
             })
             vanchuyen.on("change", function () {
                 let feeInput = $('#feeInput');
@@ -1399,7 +1428,7 @@
                 // Use jQuery to get the value of the feeInput
                 let feeInput = $('#feeInput');
                 // Giữ lại chỉ các ký tự số và dấu phẩy
-                let phiVanChuyen = parseFloat(feeInput.val().replace(/\./g, ''))|| 0;
+                let phiVanChuyen = parseFloat(feeInput.val().replace(/\./g, '')) || 0;
 
                 // Lấy giá trị tổng tiền từ JSP
                 let tongTien = parseFloat('${tongTien}'.replace(/\./g, '')) || 0;
@@ -1473,7 +1502,7 @@
                         text: "Bạn chưa có giá tiền để thanh toán qr",
                         icon: "error"
                     });
-                }else{
+                } else {
                     // // Kiểm tra giá trị được chọn và thực hiện hành động tương ứng
                     if (selectedValue === '1') {
                         // Tiền mặt - ẩn form

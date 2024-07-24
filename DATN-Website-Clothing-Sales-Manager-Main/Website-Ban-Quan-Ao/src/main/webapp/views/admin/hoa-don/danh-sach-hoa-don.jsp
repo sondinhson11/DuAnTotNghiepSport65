@@ -40,10 +40,10 @@
               <span class="text-secondary">Chờ xác nhận</span>
           </c:if>
                  <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
-                     <span class="text-secondary">Chờ xác nhận và đã thanh toán</span>
+                     <span class="text-secondary">Đã thanh toán chuyển khoản</span>
                  </c:if>
             <c:if test="${hoaDon.trangThai == 4}">
-                <span class="text-success"> Đã xác nhận  / Đang giao</span>
+                <span class="text-success"> Đã xác nhận / Đang giao</span>
             </c:if>
             <c:if test="${hoaDon.trangThai == 5}">
                 <span class="text-danger">Đã huỷ </span>
@@ -116,7 +116,7 @@
                             ${hoaDon.idKhachHang.hoVaTen}
                         </c:if>
                         <c:if test="${hoaDon.idKhachHang == null}">
-                            Khách lẻ
+                            ${hoaDon.nguoiNhan  != null ? hoaDon.nguoiNhan : "Khách lẻ"}
                         </c:if>
                     </p>
                     <p>Nhân viên: ${hoaDon.idNhanVien.hoVaTen}</p>
@@ -195,7 +195,7 @@
                             <span class="text-secondary">Chờ xác nhận</span>
                         </c:if>
                         <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
-                            <span class="text-secondary">Chờ xác nhận và đã thanh toán</span>
+                            <span class="text-secondary">Đã thanh toán chuyển khoản</span>
                         </c:if>
                         <c:if test="${hoaDon.trangThai == 4}">
                             <span class="text-success">Đã xác nhận</span>
@@ -401,12 +401,12 @@
                         <div class="mb-3">
                             <label class="form-label">Mã vận đơn </label>
                             <input id="maVanChuyen" type="text" class="form-control" name="maVanChuyen"
-                                   placeholder="Mã vận đơn">
+                                   placeholder="Mã vận đơn" value="${hoaDon.ma}" readonly>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Đơn vị vận chuyển </label>
                             <input id="tenDonVi" type="text" class="form-control" name="tenDonViVanChuyen"
-                                   placeholder="Đơn vị vận chuyển">
+                                   placeholder="Đơn vị vận chuyển" value="Giao Hàng nhanh" readonly>
                         </div>
                         <div class="mb-3">
                             <label id="phiVanChuyen" class="form-label">Phí vận chuyển </label>
@@ -451,8 +451,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="form2" action="/admin/hoa-don/update-trang-thai/${hoaDon.id}" method="post">
-                <c:if test="${hoaDon.trangThai == 2 && hoaDon.loaiHoaDon == 1}">
+                <c:if test="${hoaDon.trangThai == 2 && hoaDon.loaiHoaDon == 1 && hoaDon.ngayThanhToan == null}">
                     <input type="hidden" name="trangThai" value="5">
+                </c:if>
+                <c:if test="${hoaDon.trangThai == 2 && hoaDon.loaiHoaDon == 1 && hoaDon.ngayThanhToan != null}">
+                    <input type="hidden" name="trangThai" value="10">
                 </c:if>
                 <c:if test="${hoaDon.trangThai == 4}">
                     <input type="hidden" name="trangThai" value="10">

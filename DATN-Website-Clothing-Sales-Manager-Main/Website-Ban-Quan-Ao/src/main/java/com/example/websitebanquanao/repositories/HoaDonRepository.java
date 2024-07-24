@@ -39,4 +39,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Modifying
     @Query("update HoaDon hd set hd.ngayThanhToan = :ngayThanhToan, hd.trangThai = :trangThai where hd.ma = :ma")
     public void updateNgayThanhToanByIdHoaDon(@Param("ma") String ma, @Param("ngayThanhToan") Instant ngayThanhToan, @Param("trangThai") Integer trangThai);
+
+    @Query("select hd.tenDonViVanChuyen from HoaDon hd where hd.ma = :ma ")
+    public String findTenDonViByMa(@Param("ma") String ma);
 }

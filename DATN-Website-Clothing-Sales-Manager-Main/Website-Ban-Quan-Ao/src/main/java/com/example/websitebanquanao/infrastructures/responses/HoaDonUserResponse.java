@@ -20,4 +20,5 @@ public class HoaDonUserResponse {
     private Instant ngayTao;
     private Integer trangThai;
     private BigDecimal tongTien;
+    private Instant ngayThanhToan;
 }

@@ -46,11 +46,25 @@ public class HoaDonService {
         return hoaDonRepository.findAllHoaDon();
     }
 
-    public List<HoaDon> getHoaDonByTrangThai(int trangThai) {
+    public List<HoaDon> getHoaDonByTrangThai(int trangThai, Boolean checkTH) {
         List<HoaDon> allHoaDon = hoaDonRepository.findAll();
-        return allHoaDon.stream()
-                .filter(hoaDon -> hoaDon.getTrangThai() == trangThai)
-                .collect(Collectors.toList());
+        if (trangThai != 2) {
+            return allHoaDon.stream()
+                    .filter(hoaDon -> hoaDon.getTrangThai() == trangThai)
+                    .collect(Collectors.toList());
+        } else {
+            if (checkTH) {
+                System.out.println(checkTH);
+                return allHoaDon.stream()
+                        .filter(hoaDon -> hoaDon.getTrangThai() == trangThai && hoaDon.getNgayThanhToan() != null)
+                        .collect(Collectors.toList());
+            } else {
+                System.out.println(checkTH);
+                return allHoaDon.stream()
+                        .filter(hoaDon -> hoaDon.getTrangThai() == trangThai && hoaDon.getNgayThanhToan() == null)
+                        .collect(Collectors.toList());
+            }
+        }
     }
 
     public String maHDCount() {
@@ -142,7 +156,7 @@ public class HoaDonService {
     }
 
     // user
-    public UUID addHoaDonUser(FormThanhToan formThanhToan, KhachHangResponse khachHangResponse, GiamGiaResponse giamGiaResponse, int diaChiMacDinh,BigDecimal tongTien,BigDecimal soTienGiam,BigDecimal phiVanChuyen) {
+    public UUID addHoaDonUser(FormThanhToan formThanhToan, KhachHangResponse khachHangResponse, GiamGiaResponse giamGiaResponse, int diaChiMacDinh, BigDecimal tongTien, BigDecimal soTienGiam, BigDecimal phiVanChuyen) {
         HoaDon hoaDon = new HoaDon();
 
         hoaDon.setMa(maHDCount());
@@ -215,7 +229,12 @@ public class HoaDonService {
 
     @Transactional
     public void updateNgayThanhToanByIdHoaDon(String ma, Instant ngayThanhToan) {
-        hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 2);
+        String hd = hoaDonRepository.findTenDonViByMa(ma);
+        if (hd != null) {
+            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 4);
+        } else {
+            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 2);
+        }
     }
 
     // nếu số lượng hoá đơn có trạng thái là 0 > 5 hoá đơn thì không cho tạo đơn hàng

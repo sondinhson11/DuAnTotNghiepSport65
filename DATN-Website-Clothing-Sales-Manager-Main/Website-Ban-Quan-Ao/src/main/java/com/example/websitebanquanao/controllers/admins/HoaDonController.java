@@ -82,8 +82,8 @@ public class HoaDonController {
 
 
     @GetMapping("/admin/hoa-don/filter")
-    public String filterHoaDon(@RequestParam("trangThai") Integer trangThai, Model model) {
-        List<HoaDon> filteredHoaDon = hoaDonService.getHoaDonByTrangThai(trangThai);
+    public String filterHoaDon(@RequestParam("trangThai") Integer trangThai, Model model, @RequestParam("checkTH") Boolean checkTH) {
+        List<HoaDon> filteredHoaDon = hoaDonService.getHoaDonByTrangThai(trangThai, checkTH);
         model.addAttribute("listHoaDon", filteredHoaDon);
         model.addAttribute("view", "/views/admin/hoa-don/quan-li-hoa-don.jsp");
         return "admin/layout";
