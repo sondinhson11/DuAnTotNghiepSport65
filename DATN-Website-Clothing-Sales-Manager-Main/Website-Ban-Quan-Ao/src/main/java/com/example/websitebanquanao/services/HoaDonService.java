@@ -230,10 +230,11 @@ public class HoaDonService {
     @Transactional
     public void updateNgayThanhToanByIdHoaDon(String ma, Instant ngayThanhToan) {
         String hd = hoaDonRepository.findTenDonViByMa(ma);
+        BigDecimal thanhToan = hoaDonRepository.findTongTienByMa(ma);
         if (hd != null) {
-            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 4);
+            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 4,thanhToan );
         } else {
-            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 2);
+            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 2,thanhToan );
         }
     }
 

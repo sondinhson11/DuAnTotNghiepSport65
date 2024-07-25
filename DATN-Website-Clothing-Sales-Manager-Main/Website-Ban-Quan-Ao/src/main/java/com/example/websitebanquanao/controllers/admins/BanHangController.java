@@ -82,7 +82,7 @@ public class BanHangController {
         if (check == false) {
             session.setAttribute("errorMessage", "Số lượng hoá đơn chờ vượt quá 5 hoá đơn");
             return "redirect:/admin/ban-hang";
-        }else {
+        } else {
             hoaDonService.add(hoaDonRequest);
             session.setAttribute("successMessage", "Thêm hoá đơn thành công");
         }
@@ -229,7 +229,7 @@ public class BanHangController {
     }
 
     @PostMapping("/thanh-toan/{idHoaDon}")
-    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam(value = "giamGia", required = false) GiamGia giamGia, @RequestParam("ghiChu") String ghiChu, @RequestParam("tong-tien") String tongTien, @RequestParam("tienKhachDua") String tienKhachDua, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan, @RequestParam("nguoiNhan") String hoVaTen, @RequestParam("sdt") String soDienThoai,@RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
+    public String thanhToan(@PathVariable("idHoaDon") UUID idHoaDon, @RequestParam("httt") HinhThucThanhToan hinhThucThanhToan, @RequestParam(value = "giamGia", required = false) GiamGia giamGia, @RequestParam("ghiChu") String ghiChu, @RequestParam("tong-tien") String tongTien, @RequestParam("tienKhachDua") String tienKhachDua, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan, @RequestParam("nguoiNhan") String hoVaTen, @RequestParam("sdt") String soDienThoai, @RequestParam(value = "idKhachHang", required = false) UUID idKhachHang) {
         String tongTien2 = tongTien.replace(".", "");
         String tienGiam2 = tienGiamGia.replace(".", "");
         String tienThanhToan2 = tienThanhToan.replace(".", "");
@@ -257,19 +257,19 @@ public class BanHangController {
         session.setAttribute("hoaDon", hoaDon);
         session.setAttribute("listHoaDonChiTiet", hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()));
         List<GioHangUserResponse> listCheck = hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId());
-        if (listCheck.isEmpty()){
+        if (listCheck.isEmpty()) {
             session.setAttribute("errorMessage", "Bạn chưa chọn sản phẩm");
             return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
-        }else{
+        } else {
             Instant currentInstant = Instant.now();
             if (idKhachHang == null) {
                 if (hoaDon != null) {
-                    if (giamGia!=null){
+                    if (giamGia != null) {
                         hoaDon.setTrangThai(1);
                         hoaDon.setNgayThanhToan(currentInstant);
                         hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
                         hoaDon.setIdGiamGia(giamGia);
-                        giamGia.setSoLuong(giamGia.getSoLuong()-1);
+                        giamGia.setSoLuong(giamGia.getSoLuong() - 1);
                         hoaDon.setNguoiNhan(hoVaTen);
                         hoaDon.setSoDienThoai(soDienThoai);
                         hoaDon.setTongTien(BigDecimal.valueOf(Float.valueOf(tongTien2)));
@@ -280,7 +280,7 @@ public class BanHangController {
                         hoaDonService.update(hoaDon, idHoaDon);
                         createPDF.exportPDFBill(hoaDon, hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()), hoaDonService.sumTongTienByIdHoaDon(hoaDon.getId()).toString());
                         session.setAttribute("successMessage", "Thanh toán thành công");
-                    }else{
+                    } else {
                         hoaDon.setTrangThai(1);
                         hoaDon.setNgayThanhToan(currentInstant);
                         hoaDon.setHinhThucThanhToan(hinhThucThanhToan);
@@ -345,8 +345,9 @@ public class BanHangController {
                              @RequestParam("xaPhuong") String xaPhuong, @RequestParam("quanHuyen") String quanHuyen,
                              @RequestParam("tinhThanh") String tinhThanh, @RequestParam("phiVanChuyen") BigDecimal phiVanChuyen,
                              @RequestParam("maVanChuyen") String maVanChuyen, @RequestParam("tenDonViVanChuyen") String tenDonViVanChuyen,
-                             @RequestParam("anh") MultipartFile anh,@RequestParam("tong-tien") String tongTien, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan
+                             @RequestParam("anh") MultipartFile anh, @RequestParam("tong-tien") String tongTien, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan, @RequestParam("tienKhachDua") String tienKhachDua
     ) {
+        String tienKhachDua2 = tienKhachDua.replace(".", "");
         String tongTien2 = tongTien.replace(".", "");
         String tienGiam2 = tienGiamGia.replace(".", "");
         String tienThanhToan2 = tienThanhToan.replace(".", "");
@@ -358,6 +359,7 @@ public class BanHangController {
         HoaDon hoaDon = hoaDonService.getById(idHoaDon);
 
         if (hoaDon != null) {
+            hoaDon.setThanhToan(BigDecimal.valueOf(Float.valueOf(tienKhachDua2)));
             hoaDon.setTrangThai(4);
             hoaDon.setNguoiNhan(nguoiNhan);
             hoaDon.setSoDienThoai(sdt);

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -37,9 +38,12 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     public Integer getSoPhanTramGiamByIdHoaDon(@Param("id") UUID id);
 
     @Modifying
-    @Query("update HoaDon hd set hd.ngayThanhToan = :ngayThanhToan, hd.trangThai = :trangThai where hd.ma = :ma")
-    public void updateNgayThanhToanByIdHoaDon(@Param("ma") String ma, @Param("ngayThanhToan") Instant ngayThanhToan, @Param("trangThai") Integer trangThai);
+    @Query("update HoaDon hd set hd.ngayThanhToan = :ngayThanhToan, hd.trangThai = :trangThai,hd.thanhToan = :tongTien where hd.ma = :ma")
+    public void updateNgayThanhToanByIdHoaDon(@Param("ma") String ma, @Param("ngayThanhToan") Instant ngayThanhToan, @Param("trangThai") Integer trangThai, @Param("tongTien") BigDecimal tongTien);
 
     @Query("select hd.tenDonViVanChuyen from HoaDon hd where hd.ma = :ma ")
     public String findTenDonViByMa(@Param("ma") String ma);
+
+    @Query("select hd.tongTien from HoaDon hd where hd.ma = :ma ")
+    public BigDecimal findTongTienByMa(@Param("ma") String ma);
 }

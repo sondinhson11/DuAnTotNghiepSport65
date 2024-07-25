@@ -67,7 +67,7 @@
                                             <span class="text-secondary">Chờ xác nhận</span>
                                         </c:if>
                                         <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
-                                            <span class="text-secondary">Đã thanh toán chuyển khoản</span>
+                                            <span class="text-success">Đã thanh toán chuyển khoản</span>
                                         </c:if>
                                         <c:if test="${hoaDon.trangThai == 4}">
                                             <span class="text-success">Đã xác nhận</span>
