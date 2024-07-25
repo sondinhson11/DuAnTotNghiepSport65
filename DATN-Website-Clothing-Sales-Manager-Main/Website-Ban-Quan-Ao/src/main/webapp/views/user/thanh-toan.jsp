@@ -91,24 +91,27 @@
             <script>
                 document.getElementById('hideInfoCheckbox').addEventListener('change', function () {
                     var infoContainer = document.getElementById('infoContainer');
+                    var phiVanChuyenContrainer  = document.getElementById('phiVanChuyenCheck');
                     const thanh = '${khachHang.tinhThanhPho}';
                     findProvinceIdByName(thanh);
                     if (this.checked) {
+                        phiVanChuyenContrainer.style.display = 'block';
                         infoContainer.style.display = 'none'; // Ẩn thông tin khi checkbox được tích vào
                     } else {
+                        phiVanChuyenContrainer.style.display = 'none';
                         infoContainer.style.display = 'block'; // Hiển thị thông tin khi checkbox được bỏ tích
                     }
                 });
             </script>
-            <div class="px-md-5 px-3 py-2 form-check">
+            <div class="px-md-5 px-3 py-2 form-check" style="display: none;" id="phiVanChuyenCheck">
                 <br>
-                <div class="col"  >
+                <div class="col" >
                     <div class="form-label">Phí vẩn chuyển</div>
                 <input class="form-control" type="number" id="feeInput" name="phiVanChuyen"
                        placeholder="..."  readonly>
                 </div>
+                <hr>
             </div>
-            <hr>
             <div class="px-md-5 px-3 py-2 form-check">
                 <label class="form-check-label text-sm-left fw-bold ">
                 </label>
@@ -402,11 +405,13 @@
         });
     });
     $(document).ready(function () {
+        var phiVanChuyenContrainer  = document.getElementById('phiVanChuyenCheck');
         var phuongxa = $("#wardSelect")
         var quanHuyen = $("#districtSelect")
         phuongxa.on("change", function () {
             console.log(quanHuyen.val(), phuongxa.val())
             calculateShippingFee(quanHuyen.val(), phuongxa.val())
+            phiVanChuyenContrainer.style.display='block'
         })
     });
 </script>
@@ -416,7 +421,7 @@
             url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
             type: 'GET',
             data: {
-                service_type_id: 2,
+                service_id:'53321',
                 to_district_id: huyen,
                 to_ward_code: xa,
                 height: '9',
@@ -434,7 +439,6 @@
                     const feeResponse = response.data.total;
                     console.log("tính phí ship: " + feeResponse);
                     document.getElementById('feeInput').value = feeResponse;
-                    document.getElementById('ten-don-vi').value = "giao Hàng Nhanh";
                     // Hiển thị phần phí vận chuyển
                 } else {
                     console.error('Lỗi khi gọi API tính phí ship: ', response);
