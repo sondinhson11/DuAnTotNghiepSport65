@@ -3,57 +3,66 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <style>
-    .carousel-item img {
-        max-height: 300px;
-        width: auto;
+    .thumbnail-container {
+        display: flex;
+        flex-direction: column; /* Xếp các hình ảnh theo chiều dọc */
+        align-items: flex-start; /* Căn chỉnh các hình ảnh nhỏ về phía bên trái */
+        margin-right: 20px; /* Khoảng cách giữa ảnh nhỏ và ảnh lớn */
     }
 
-    .custom-carousel {
-        width: 400px;
-        height: 600px;
+    .thumbnail-container img {
+        cursor: pointer;
+        border: 1px solid #dee2e6;
+        border-radius: 0.375rem;
+        margin-bottom: 8px;
+        width: 50px;
+        height: 50px;
     }
 
-    .custom-carousel .carousel-item img {
+    .main-image-container {
+        flex: 1; /* Đảm bảo rằng hình ảnh chính chiếm hết không gian còn lại */
+    }
+
+    .main-image {
+        max-width: 500px;
         height: 600px;
-        width: 400px;
-        object-fit: cover;
+        border-radius: 0.375rem;
     }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <div class="container">
-    <div class="p-4">
+    <div class="p-4" style="margin-top: 15px">
         <div class="row row-cols-1 row-cols-lg-2 g-4">
             <%--            ----------------ANH SP --------------------%>
-            <div class="col">
-                <div id="carouselExampleControls" class="carousel slide custom-carousel" data-ride="carousel">
-                    <div class="carousel-inner">
+                <div class="col-md-6 d-flex">
+                    <div class="thumbnail-container">
                         <c:forEach items="${listAnh}" var="hinhAnh" varStatus="loop">
-                            <c:if test="${loop.index == 0}">
-                                <div class="carousel-item active">
-                                    <img src="${hinhAnh.duongDan}" class="d-block w-100" alt="...">
-                                </div>
-                            </c:if>
-                            <c:if test="${loop.index != 0}">
-                                <div class="carousel-item">
-                                    <img src="${hinhAnh.duongDan}" class="d-block w-100" alt="...">
-                                </div>
+                            <c:if test="${loop.index < 3}">
+                                <img src="${hinhAnh.duongDan}" class="img-thumbnail" />
                             </c:if>
                         </c:forEach>
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                    <div class="main-image-container">
+                        <c:forEach items="${listAnh}" var="hinhAnh" varStatus="loop">
+                            <c:if test="${loop.index == 2}">
+                                <img src="${hinhAnh.duongDan}" alt="Main Product Image" class="main-image" id="mainImage" />
+                            </c:if>
+                        </c:forEach>
+                    </div>
                 </div>
-
-            </div>
+                <script>
+                    $(document).ready(function() {
+                        $('.thumbnail-container img').on('click', function() {
+                            var newSrc = $(this).attr('src').replace('100x100', '400x600');
+                            $('#mainImage').attr('src', newSrc);
+                        });
+                    });
+                </script>
             <%-------------------------------------------------------------%>
-            <div class="col">
+
+                <div class="aside">
+            <div class="col " >
                 <h1 class="h2">${sanPham.ten}</h1>
                 <p class="text-muted">Mã sản phẩm: ${sanPham.maSanPham} | Tình trạng: <span
                         class="text-danger">${sanPham.trangThai == 0 ? "Hết Hàng" :"Còn Hàng"  }</span> | Thương hiệu:
@@ -326,10 +335,12 @@
                     </div>
                     <div class="d-flex align-items-center gap-2">
                         <img src="https://openui.fly.dev/openui/24x24.svg?text=📞" alt="Customer Support"/>
-                        <span>TỔNG ĐÀI 24/7 : 0383349871</span>
+                        <span>TỔNG ĐÀI 24/7 : 0123456789</span>
                     </div>
                 </div>
             </div>
+
+                </div>
         </div>
         <script>
             $(document).ready(function () {
@@ -386,4 +397,5 @@
             });
         </script>
     </div>
+
 </div>
