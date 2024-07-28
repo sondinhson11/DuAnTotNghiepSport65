@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <style>
     .thumbnail-container {
         display: flex;
@@ -359,16 +360,16 @@
                     $(this).val(value);
                 });
                 // Handle the 'Add to Cart' button click
+
                 $("#btnThemVaoGioHang").click(function (event) {
-                    // Check if a size is selected
+                    // Kiểm tra xem người dùng đã chọn kích cỡ và màu sắc chưa
                     var kichCoSelected = $("input[name='idKichCo']:checked").length > 0;
                     var mauSacSelected = $("input[name='idMauSac']:checked").length > 0;
 
+                    // Nếu không chọn kích cỡ hoặc màu sắc, hiển thị lỗi
                     if (!kichCoSelected || !mauSacSelected) {
-                        // Prevent form submission
-                        event.preventDefault();
+                        event.preventDefault(); // Ngăn form không được submit
 
-                        // Show appropriate error messages
                         if (!kichCoSelected) {
                             $("#textKichCo").show();
                         } else {
@@ -380,10 +381,20 @@
                         } else {
                             $("#textMauSac").hide();
                         }
+                        return; // dung lai khi chua chon mau sac
+                    }
+
+                    // khi da chon mau sac va kich co thì hien thi c
+                    var confirmAddToCart = confirm("Bạn có chắc chắn muốn thêm sản phẩm này vào giỏ hàng không?");
+
+                    if (!confirmAddToCart) {
+                        // Nếu người dùng không đồng ý, ngăn chặn việc submit form
+                        event.preventDefault();
+                        return;
                     }
                 });
 
-                // Hide error messages when a size or color is selected
+                // Ẩn thông báo lỗi khi chọn kích cỡ hoặc màu sắc
                 $("input[name='idKichCo']").change(function () {
                     $("#textKichCo").hide();
                 });

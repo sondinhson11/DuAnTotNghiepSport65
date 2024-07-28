@@ -12,15 +12,8 @@
             </div>
             <hr>
             <input type="checkbox" id="hideInfoCheckbox" name="diaChiMacDinh" class="ms-5"
-                   onchange="updateCheckboxValue(this)">
+                   onchange="updateCheckboxValue(this) ">
             <label class="ms-3" for="hideInfoCheckbox">Sử dụng địa chỉ đã đăng ký</label>
-            <br>
-            <label class="ms-5 mt-3">Tên người nhận: ${khachHang.hoVaTen}</label>
-            <br>
-            <label class="ms-5">Số điện thoại: ${khachHang.soDienThoai}</label>
-            <br>
-            <label class="ms-5">Địa
-                chỉ: ${khachHang.diaChi}/${khachHang.xaPhuong}/${khachHang.quanHuyen}/${khachHang.tinhThanhPho}</label>
             <script>
                 function updateCheckboxValue(checkbox) {
                     if (checkbox.checked) {
@@ -30,6 +23,14 @@
                     }
                 }
             </script>
+            <br>
+            <label class="ms-5 mt-3">Tên người nhận: ${khachHang.hoVaTen}</label>
+            <br>
+            <label class="ms-5">Số điện thoại: ${khachHang.soDienThoai}</label>
+            <br>
+            <label class="ms-5">Địa
+                chỉ: ${khachHang.diaChi}/${khachHang.xaPhuong}/${khachHang.quanHuyen}/${khachHang.tinhThanhPho}</label>
+
             <hr>
 
             <div id="infoContainer">
@@ -103,15 +104,7 @@
                     }
                 });
             </script>
-            <div class="px-md-5 px-3 py-2 form-check" style="display: none;" id="phiVanChuyenCheck">
-                <br>
-                <div class="col" >
-                    <div class="form-label">Phí vẩn chuyển</div>
-                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen"
-                       placeholder="..."  readonly>
-                </div>
-                <hr>
-            </div>
+
             <div class="px-md-5 px-3 py-2 form-check">
                 <label class="form-check-label text-sm-left fw-bold ">
                 </label>
@@ -185,6 +178,15 @@
                             </script>
                         </div>
                     </div>
+                    <div class="bg-white py-3 border-bottom" id="phiVanChuyenCheck">
+                        <div class="row ms-1 me-1 align-items-center">
+                            <label class="col fw-bold fs-5 mb-0">Phí vận chuyển :</label>
+                            <div class="col-auto">
+                                <input class="form-control text-end  fw-bold" type="text" id="feeInput" name="phiVanChuyen" readonly style=" text-align: right;">
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="bg-white py-3 border-bottom">
                         <div class="row ms-1 me-1">
@@ -198,6 +200,7 @@
                             </script>
                         </div>
                     </div>
+
                 </div>
 
             </div>
