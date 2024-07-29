@@ -38,7 +38,7 @@ public class CreatePDF {
             }
             String diaChi = hoaDon.getDiaChi() + ", " + hoaDon.getXaPhuong() + ", " + hoaDon.getQuanHuyen() + ", " + hoaDon.getTinhThanhPho();
             ;
-            if (diaChi == null) {
+            if (diaChi == null || hoaDon.getDiaChi()== null) {
                 diaChi = "Khách mua tại cửa hàng";
             }
             // thêm logo và căn giữa

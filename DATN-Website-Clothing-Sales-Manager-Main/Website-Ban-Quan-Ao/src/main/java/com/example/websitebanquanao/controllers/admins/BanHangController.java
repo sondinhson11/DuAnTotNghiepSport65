@@ -310,6 +310,8 @@ public class BanHangController {
                         hoaDon.setThanhToan(BigDecimal.valueOf(Float.valueOf(tienThanhToan2)));
                         KhachHang khachHang = new KhachHang();
                         khachHang.setId(idKhachHang);
+                        hoaDon.setNguoiNhan(hoVaTen);
+                        hoaDon.setSoDienThoai(soDienThoai);
                         hoaDon.setIdKhachHang(khachHang);
                         hoaDon.setLoaiHoaDon(0);
                         hoaDonService.update(hoaDon, idHoaDon);
@@ -325,6 +327,8 @@ public class BanHangController {
                         hoaDon.setThanhToan(BigDecimal.valueOf(Float.valueOf(tienThanhToan2)));
                         KhachHang khachHang = new KhachHang();
                         khachHang.setId(idKhachHang);
+                        hoaDon.setNguoiNhan(hoVaTen);
+                        hoaDon.setSoDienThoai(soDienThoai);
                         hoaDon.setIdKhachHang(khachHang);
                         hoaDon.setLoaiHoaDon(0);
                         hoaDonService.update(hoaDon, idHoaDon);
