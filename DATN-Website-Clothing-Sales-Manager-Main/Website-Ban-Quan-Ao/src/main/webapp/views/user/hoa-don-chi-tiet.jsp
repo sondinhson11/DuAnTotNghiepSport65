@@ -216,7 +216,7 @@
         <div class="row">
             <div class="col-9 d-flex justify-content-end">Phí vận chuyển</div>
             <div class="col-3">
-                <p id="phiVanChuyen">${hoaDon.maVanChuyen != null ? hoaDon.phiVanChuyen : 'Chưa tính'}</p>
+                <p id="phiVanChuyen">${hoaDon.phiVanChuyen}</p>
                 <script>
                     var giaVanChuyenElement = document.getElementById("phiVanChuyen");
                     var giaVanChuyenText = giaVanChuyenElement.innerText;
@@ -257,13 +257,16 @@
 
                     var tong = 0;
                     console.log(giaVanChuyenText !== 'Chưa tính')
-                    if (giaVanChuyenText !== 'Chưa tính' && ${hoaDon.ngayThanhToan != null}) {
+                    if (giaVanChuyenText !== 'Chưa tính' && ${hoaDon.ngayThanhToan != null} && ${hoaDon.trangThai == 1}) {
                         var soTienSauKhiGiam = parseInt(soTienSauKhiGiamText.replace(/[^\d]/g, ''));
                         var giaVanChuyen = parseInt(giaVanChuyenText.replace(/[^\d]/g, ''));
 
                         if (!isNaN(soTienSauKhiGiam) && !isNaN(giaVanChuyen)) {
                             tong = soTienSauKhiGiam + giaVanChuyen;
                         }
+                    } else if (giaVanChuyenText !== 'Chưa tính' && ${hoaDon.ngayThanhToan != null} && ${hoaDon.trangThai != 1}) {
+                        var soTienSauKhiGiam = parseInt(soTienSauKhiGiamText.replace(/[^\d]/g, ''));
+                        tong = soTienSauKhiGiam;
                     } else {
                         tong = 0
                     }

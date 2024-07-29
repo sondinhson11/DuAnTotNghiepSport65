@@ -178,7 +178,7 @@
                             </script>
                         </div>
                     </div>
-                    <div class="bg-white py-3 border-bottom" id="phiVanChuyenCheck">
+                    <div class="bg-white py-3 border-bottom" id="phiVanChuyenCheck" style="display: none;">
                         <div class="row ms-1 me-1 align-items-center">
                             <label class="col fw-bold fs-5 mb-0">Phí vận chuyển :</label>
                             <div class="col-auto">
@@ -186,8 +186,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="bg-white py-3 border-bottom">
                         <div class="row ms-1 me-1">
                             <label class="col fw-bold fs-5">Tổng</label>
@@ -441,7 +439,8 @@
                 if (response && response.data && response.data.total !== undefined) {
                     const feeResponse = response.data.total;
                     console.log("tính phí ship: " + feeResponse);
-                    document.getElementById('feeInput').value = feeResponse;
+                 var phiText =   parseInt(feeResponse.toString().replace(/[^\d]/g, '')).toLocaleString('en-US');
+                    document.getElementById('feeInput').value = phiText+" vnđ";
                     // Hiển thị phần phí vận chuyển
                 } else {
                     console.error('Lỗi khi gọi API tính phí ship: ', response);
