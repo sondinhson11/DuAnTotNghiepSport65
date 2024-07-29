@@ -326,7 +326,14 @@
                 console.error(error);
             }
         });
-
+        $("#submitButton").click(function (event) {
+            // khi da chon mau sac va kich co thì hien thi c
+            var confirmAddToCart = confirm("Bạn có chắc chắn muốn thanh toán đơn hàng này không?");
+            if (!confirmAddToCart) {
+                event.preventDefault();
+                return;
+            }
+        });
         // Gọi API để lấy dữ liệu quận/huyện khi thay đổi tỉnh/thành phố
         $('#provinceSelect').change(function () {
             isDistrictSelected = false; // Đặt lại trạng thái khi thay đổi tỉnh/thành phố

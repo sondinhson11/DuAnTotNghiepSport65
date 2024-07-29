@@ -312,6 +312,7 @@ public class TrangChuController {
         String phi1 = phiVanChuyen.replace(" vnđ", "");
         String phi2 = phi1.replace(",", "");
         BigDecimal phiBigDecimal = BigDecimal.valueOf(Double.valueOf(phi2));
+
         if (khachHangResponse == null) {
             return "redirect:/dang-nhap";
         } else {
