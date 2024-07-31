@@ -77,6 +77,21 @@ public class GiamGiaService {
             java.util.Date currentDate = new java.util.Date();
             giamGia.setNgay_sua(new java.sql.Date(currentDate.getTime()));
 
+            // Xác định ngày hiện tại và ngày kết thúc
+            LocalDate today = LocalDate.now();
+            LocalDate ngayKetThuc = giamGia.getNgayKetThuc(); // Đảm bảo đối tượng LocalDate
+
+            // Cập nhật trạng thái dựa trên ngày hiện tại và ngày kết thúc
+            if (today.isEqual(ngayKetThuc) || today.isAfter(ngayKetThuc)) {
+                    giamGia.setTrang_thai(0);
+                    System.out.println("Cập nhật trạng thái Giảm Giá thành: Còn hạn " + giamGia.getMa());
+                    System.out.println(giamGia.getTrang_thai());
+
+            } else if (today.isBefore(ngayKetThuc)) {
+                    giamGia.setTrang_thai(1);
+                    System.out.println("Cập nhật trạng thái Giảm Giá thành: Hết hạn " + giamGia.getMa());
+            }
+
             // Lưu giảm giá đã được cập nhật
             giamGiaRepository.save(giamGia);
 
@@ -85,6 +100,7 @@ public class GiamGiaService {
             System.out.println("GiamGiaService.update: null");
         }
     }
+
 
 
     public void delete(UUID id) {

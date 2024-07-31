@@ -14,7 +14,7 @@ public class CheckHSD_Khuyen_Mai {
     @Autowired
     private KhuyenMaiRepository khuyenMaiRepository;
 
-    @Scheduled(fixedRate = 30000) // sẽ được chạy mỗi 30 giây
+    @Scheduled(cron = "0 0 0 * * ?") // đến 00:00 sẽ chạy
     public void updateKhuyenMaiStatus() {
         Date today = new Date();
         List<KhuyenMai> khuyenMais = khuyenMaiRepository.findAll();
@@ -27,14 +27,12 @@ public class CheckHSD_Khuyen_Mai {
                 int newTrangThai = (ngayKetThuc.compareTo(today) <= 0) ? 1 : 0;
 
                 if (newTrangThai != khuyenMai.getTrangThai()) {
-                    System.out.println(newTrangThai);
                     khuyenMai.setTrangThai(newTrangThai);
                     khuyenMaiRepository.save(khuyenMai);
 
                     // Hiển thị thông báo trạng thái mới của khuyến mãi
                     if (newTrangThai == 1) {
                         System.out.println("Cập nhật trạng thái Khuyến Mãi thành: Còn hạn " + khuyenMai.getMa());
-
                     } else {
                         System.out.println("Cập nhật trạng thái Khuyến Mãi thành: Hết hạn " + khuyenMai.getMa());
                     }

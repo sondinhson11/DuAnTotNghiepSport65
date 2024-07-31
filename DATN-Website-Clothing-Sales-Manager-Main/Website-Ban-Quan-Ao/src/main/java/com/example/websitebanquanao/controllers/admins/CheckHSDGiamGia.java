@@ -15,7 +15,7 @@ public class CheckHSDGiamGia {
     private GiamGiaRepository giamGiaRepository;
 
     //  30s Chạy 1 lần
-    @Scheduled(fixedRate = 30000)
+    @Scheduled(cron = "0 0 0 * * ?") // Chạy hàng ngày lúc 00:00
     public void updateGiamGiaStatus() {
         LocalDate today = LocalDate.now();
         List<GiamGia> giamGias = giamGiaRepository.findAll();
@@ -24,15 +24,20 @@ public class CheckHSDGiamGia {
             LocalDate ngayKetThuc = giamGia.getNgayKetThuc();
 
             if (ngayKetThuc != null) {
-                if ((ngayKetThuc.isEqual(today) || ngayKetThuc.isBefore(today)) && giamGia.getTrang_thai() != 0) {
-                    giamGia.setTrang_thai(0);
-                    giamGiaRepository.save(giamGia);
-                    System.out.println("Cập nhật trạng thái Giảm Giá thành : Hết hạn " + giamGia.getMa());
-                }
-                else if (ngayKetThuc.isAfter(today) && giamGia.getTrang_thai() != 1) {
-                    giamGia.setTrang_thai(1);
-                    giamGiaRepository.save(giamGia);
-                    System.out.println("Cập nhật trạng thái Giảm Giá thành : Còn hạn  " + giamGia.getMa());
+                if (today.isEqual(ngayKetThuc) || today.isAfter(ngayKetThuc)) {
+                    // Ngày hiện tại >= ngày kết thúc
+                    if (giamGia.getTrang_thai() != 1) {
+                        giamGia.setTrang_thai(1);
+                        giamGiaRepository.save(giamGia);
+                        System.out.println("Cập nhật trạng thái Giảm Giá thành: Hết hạn " + giamGia.getMa());
+                    }
+                } else if (today.isBefore(ngayKetThuc)) {
+                    // Ngày hiện tại < ngày kết thúc
+                    if (giamGia.getTrang_thai() != 0) {
+                        giamGia.setTrang_thai(0);
+                        giamGiaRepository.save(giamGia);
+                        System.out.println("Cập nhật trạng thái Giảm Giá thành: Còn hạn " + giamGia.getMa());
+                    }
                 }
             }
         }
