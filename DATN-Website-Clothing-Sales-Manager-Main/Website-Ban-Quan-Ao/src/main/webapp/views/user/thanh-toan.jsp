@@ -429,7 +429,7 @@
             url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
             type: 'GET',
             data: {
-                service_id:'53321',
+                service_type_id: '2',
                 to_district_id: huyen,
                 to_ward_code: xa,
                 height: '9',
