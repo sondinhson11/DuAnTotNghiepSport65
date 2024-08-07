@@ -1,14 +1,7 @@
 package com.example.websitebanquanao.controllers.users;
 
-import com.example.websitebanquanao.entities.GiamGia;
-import com.example.websitebanquanao.entities.GioHang;
-import com.example.websitebanquanao.entities.GioHangChiTiet;
-import com.example.websitebanquanao.entities.SanPhamChiTiet;
-import com.example.websitebanquanao.infrastructures.requests.DangKyUserRequest;
-import com.example.websitebanquanao.infrastructures.requests.DangNhapUserRequest;
-import com.example.websitebanquanao.infrastructures.requests.FormThanhToan;
-import com.example.websitebanquanao.infrastructures.requests.GioHangUserRequest;
-import com.example.websitebanquanao.infrastructures.requests.KhachHangRequest;
+import com.example.websitebanquanao.entities.*;
+import com.example.websitebanquanao.infrastructures.requests.*;
 import com.example.websitebanquanao.infrastructures.responses.*;
 import com.example.websitebanquanao.repositories.GioHangChiTietRepository;
 import com.example.websitebanquanao.services.*;
@@ -245,8 +238,13 @@ public class TrangChuController {
     public String apDungVoucher(@RequestParam(value = "ma", required = false) GiamGia ma, HttpSession session) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
         BigDecimal tongTien = gioHangChiTietService.getTongTienByIdKhachHang(khachHangResponse.getId());
-        GiamGiaResponse giamGiaResponse = giamGiaService.findByMa(ma.getMa());
         String thongBaoGiamGia = "";
+        if(ma== null){
+            thongBaoGiamGia = "Phải chọn mã giảm giá.";
+            session.setAttribute("thongBaoGiamGia", thongBaoGiamGia);
+            return "redirect:/gio-hang";
+        }
+        GiamGiaResponse giamGiaResponse = giamGiaService.findByMa(ma.getMa());
         if (giamGiaResponse == null) {
             thongBaoGiamGia = "Mã giảm giá không tồn tại.";
         } else {
@@ -373,6 +371,15 @@ public class TrangChuController {
 
         model.addAttribute("viewContent", "/views/user/hoa-don-chi-tiet.jsp");
         return "user/layout";
+    }
+    @PostMapping("/hoa-don/update-trang-thai/{id}")
+    public String updateTrangThaiHoaDon(@PathVariable("id") UUID id, @RequestParam("trangThai") Integer trangThai, @RequestParam("ghiChu") String ghiChu, RedirectAttributes redirectAttributes) {
+        HoaDon hoaDon = hoaDonService.getById(id);
+        hoaDon.setGhiChu(ghiChu);
+        hoaDon.setTrangThai(trangThai);
+        hoaDonService.update(hoaDon, id);
+        redirectAttributes.addFlashAttribute("successMessage", "hóa đơn đã được hủy");
+        return "redirect:/hoa-don/" + id;
     }
 
     // trang đăng nhập

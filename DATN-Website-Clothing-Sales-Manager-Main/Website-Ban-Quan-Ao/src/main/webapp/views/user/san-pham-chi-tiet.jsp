@@ -107,7 +107,7 @@
                                     discountElement.style.display = "inline-block";
                                 } else {
                                     var giaMoiElement = document.getElementById("gia-moi");
-                                    giaMoiElement.innerText = formattedGia + 'đ';
+                                    giaMoiElement.innerText = formattedGia + ' vnđ';
                                     giaMoiElement.style.color = "#ff2c26";  // Set new price color
                                     giaSanPhamElement.style.display = "none";
                                 }

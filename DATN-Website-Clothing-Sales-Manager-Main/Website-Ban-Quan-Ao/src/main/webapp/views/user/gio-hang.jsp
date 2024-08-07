@@ -127,7 +127,7 @@
                         var giaSanPhamElement = document.getElementById("giaSP_${gioHang.maSanPham}");
                         var giaSanPhamText = giaSanPhamElement.innerText;
                         var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                        giaSanPhamElement.innerText = formattedGia + "₫";
+                        giaSanPhamElement.innerText = formattedGia + " vnđ";
                     </script>
 
 
@@ -152,7 +152,7 @@
                         var tongGiaSanPhamElement = document.getElementById("tongGiaSP_${gioHang.maSanPham}");
                         var tongGiaSanPhamText = tongGiaSanPhamElement.innerText;
                         var formattedTongGia = parseInt(tongGiaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                        tongGiaSanPhamElement.innerText = formattedTongGia + "₫";
+                        tongGiaSanPhamElement.innerText = formattedTongGia + " vnđ";
                     </script>
                     <td>
                         <a href="/gio-hang/${gioHang.idSanPhamChiTiet}" type="button" class="btn-close"
@@ -222,7 +222,7 @@
                             var tongTienElement = document.getElementById("tongTien");
                             var tongTienText = tongTienElement.innerText;
                             var formattedTongTien = parseInt(tongTienText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                            tongTienElement.innerText = formattedTongTien + "₫";
+                            tongTienElement.innerText = formattedTongTien + " vnđ";
                         </script>
                     </div>
                 </div>
@@ -235,7 +235,7 @@
                             var soTienDuocGiamElement = document.getElementById("soTienDuocGiam");
                             var soTienDuocGiamText = soTienDuocGiamElement.innerText;
                             var formattedSoTienDuocGiam = parseInt(soTienDuocGiamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                            soTienDuocGiamElement.innerText = formattedSoTienDuocGiam + "₫";
+                            soTienDuocGiamElement.innerText = formattedSoTienDuocGiam + " vnđ";
                         </script>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
                             var soTienSauKhiGiamElement = document.getElementById("soTienSauKhiGiam");
                             var soTienSauKhiGiamText = soTienSauKhiGiamElement.innerText;
                             var formattedSoTienSauKhiGiam = parseInt(soTienSauKhiGiamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                            soTienSauKhiGiamElement.innerText = formattedSoTienSauKhiGiam + "₫";
+                            soTienSauKhiGiamElement.innerText = formattedSoTienSauKhiGiam + " vnđ";
                         </script>
                     </div>
                 </div>

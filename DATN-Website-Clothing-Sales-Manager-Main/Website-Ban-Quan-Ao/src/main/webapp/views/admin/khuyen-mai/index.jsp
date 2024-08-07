@@ -37,7 +37,7 @@
                 <td>${index.index + khuyenMaiPage.number * khuyenMaiPage.size + 1}</td>
                 <td>${km.ma}</td>
                 <td>${km.ten}</td>
-                <td>${km.soPhanTramGiam}</td>
+                <td>${km.soPhanTramGiam}%</td>
                 <td>${km.ngayBatDau}</td>
                 <td>${km.ngayKetThuc}</td>
                 <td>

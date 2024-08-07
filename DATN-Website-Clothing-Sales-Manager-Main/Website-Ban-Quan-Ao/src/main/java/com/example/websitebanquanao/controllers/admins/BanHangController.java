@@ -347,14 +347,20 @@ public class BanHangController {
                              @RequestParam("nguoiNhan") String nguoiNhan, @RequestParam("sdt") String sdt,
                              @RequestParam("diaChi") String diaChi, @RequestParam("ghiChu") String ghiChu,
                              @RequestParam("xaPhuong") String xaPhuong, @RequestParam("quanHuyen") String quanHuyen,
-                             @RequestParam("tinhThanh") String tinhThanh, @RequestParam("phiVanChuyen") BigDecimal phiVanChuyen,
+                             @RequestParam("tinhThanh") String tinhThanh, @RequestParam("phiVanChuyen") String phiVanChuyen,
                              @RequestParam("maVanChuyen") String maVanChuyen, @RequestParam("tenDonViVanChuyen") String tenDonViVanChuyen,
                              @RequestParam("anh") MultipartFile anh, @RequestParam("tong-tien") String tongTien, @RequestParam("tien-giam") String tienGiamGia, @RequestParam("tien-thanh-toan") String tienThanhToan, @RequestParam("tienKhachDua") String tienKhachDua
     ) {
+
         String tienKhachDua2 = tienKhachDua.replace(".", "");
         String tongTien2 = tongTien.replace(".", "");
+        String phi2 = phiVanChuyen.replace(".", "");
         String tienGiam2 = tienGiamGia.replace(".", "");
         String tienThanhToan2 = tienThanhToan.replace(".", "");
+        if (Float.valueOf(tienKhachDua) < Float.valueOf(tienThanhToan2)) {
+            session.setAttribute("errorMessage", "Số tiền khách đưa còn thiếu");
+            return "redirect:/admin/ban-hang/view-hoa-don/" + idHoaDon;
+        }
         // validate full trường và session tồn tại 3s
         if (nguoiNhan.isEmpty() || sdt.isEmpty() || ghiChu.isEmpty() || xaPhuong.isEmpty() || quanHuyen.isEmpty() || tinhThanh.isEmpty() || phiVanChuyen == null || maVanChuyen.isEmpty() || tenDonViVanChuyen.isEmpty()) {
             session.setAttribute("errorMessage", "Vui lòng nhập đầy đủ thông tin");
@@ -376,7 +382,7 @@ public class BanHangController {
             hoaDon.setTinhThanhPho(tinhThanh);
             hoaDon.setQuanHuyen(quanHuyen);
             hoaDon.setXaPhuong(xaPhuong);
-            hoaDon.setPhiVanChuyen(phiVanChuyen);
+            hoaDon.setPhiVanChuyen(BigDecimal.valueOf(Float.valueOf(phi2)));
             hoaDon.setMaVanChuyen(maVanChuyen);
             hoaDon.setTenDonViVanChuyen(tenDonViVanChuyen);
             createPDF.exportPDFBill(hoaDon, hoaDonChiTietService.getListByIdHoaDon(hoaDon.getId()), hoaDonService.sumTongTienByIdHoaDon(hoaDon.getId()).toString());

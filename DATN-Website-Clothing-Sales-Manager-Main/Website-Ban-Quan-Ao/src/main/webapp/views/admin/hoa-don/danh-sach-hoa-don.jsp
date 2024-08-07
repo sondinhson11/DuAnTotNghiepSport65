@@ -143,6 +143,7 @@
                 <div class="col-4">
                     <p id="tong_tien_1">${hoaDon.tongTien}</p>
                     <p id="tien_giam">${hoaDon.tienGiam}</p>
+                    <p id="tien_sau_giam">${hoaDon.tongTien - hoaDon.tienGiam}</p>
                     <p id="thanh_toan">${hoaDon.thanhToan}</p>
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
@@ -162,6 +163,15 @@
                             giaElement.textContent = giaValue.toLocaleString('en-US');
                             // thêm chữ tônhr tiền trước giá trị
                             giaElement.insertAdjacentText('afterbegin', 'Tiền Giảm: ');
+                            giaElement.insertAdjacentHTML('beforeend', 'VNĐ ');
+
+                            var giaElement = document.getElementById('tien_sau_giam');
+                            // Lấy giá trị không định dạng từ thẻ p
+                            var giaValue = parseFloat(giaElement.textContent.replace(/[^\d.]/g, '')) || 0;
+                            // Định dạng lại giá trị và gán lại vào thẻ p
+                            giaElement.textContent = giaValue.toLocaleString('en-US');
+                            // thêm chữ tônhr tiền trước giá trị
+                            giaElement.insertAdjacentText('afterbegin', 'Tổng tiền khách trả cho shop: ');
                             giaElement.insertAdjacentHTML('beforeend', 'VNĐ ');
 
                             var giaElement = document.getElementById('thanh_toan');
@@ -282,10 +292,22 @@
                                 <p>${sp.tenMau}/${sp.tenSize}</p>
                             </td>
                             <td id="gia_sp_${sp.idSanPhamChiTiet}">${sp.gia}</td>
+                            <script>
+                                var giaSanPhamElement = document.getElementById("gia_sp_${sp.idSanPhamChiTiet}");
+                                var giaSanPhamText = giaSanPhamElement.innerText;
+                                var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
+                                giaSanPhamElement.innerText = formattedGia + " vnđ";
+                            </script>
                             <td>${sp.soLuong}</td>
                             <td id="tong_tien_${sp.idSanPhamChiTiet}">
                                     ${sp.soLuong * sp.gia}
                             </td>
+                            <script>
+                                var giaSanPhamElement = document.getElementById("tong_tien_${sp.idSanPhamChiTiet}");
+                                var giaSanPhamText = giaSanPhamElement.innerText;
+                                var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
+                                giaSanPhamElement.innerText = formattedGia + " vnđ";
+                            </script>
                             <td>
                                 <form id="returnForm_${sp.idSanPhamChiTiet}"
                                       action="/admin/san-pham-chi-tiet/tra-hang-vao-kho" method="post" display="none">
@@ -303,18 +325,6 @@
                                 <!-- Thêm script để tự động submit form nếu chưa hoàn -->
                                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                             </c:if>
-                            <script>
-                                // format tổng tiền
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    var giaElement = document.getElementById('tong_tien_${sp.idSanPham}');
-                                    var giaValue = parseFloat(giaElement.textContent.replace(/[^\d.]/g, '')) || 0;
-                                    giaElement.textContent = giaValue.toLocaleString('en-US');
-
-                                    var giaElement = document.getElementById('gia_sp_${sp.idSanPham}');
-                                    var giaValue = parseFloat(giaElement.textContent.replace(/[^\d.]/g, '')) || 0;
-                                    giaElement.textContent = giaValue.toLocaleString('en-US');
-                                });
-                            </script>
                             <script>
                                 // get ảnh sản phẩm
                                 $(document).ready(function () {

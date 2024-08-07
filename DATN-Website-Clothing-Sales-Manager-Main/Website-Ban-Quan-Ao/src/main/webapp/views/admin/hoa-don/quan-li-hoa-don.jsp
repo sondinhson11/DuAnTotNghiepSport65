@@ -72,6 +72,7 @@
                         <th>Khách Hàng</th>
                         <th>Ngày tạo</th>
                         <th>Loại hoá đơn</th>
+                        <th>Tổng tiền</th>
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
@@ -105,6 +106,26 @@
                                 <c:if test="${hoaDon.loaiHoaDon == null}">
                                     <span class="text-black">Hóa đơn chờ</span>
                                 </c:if>
+                            </td>
+                            <td>
+                                <p class="text-truncate text-danger" id="tongTien_${hoaDon.ma}"></p>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var giaSanPhamElement = document.getElementById("tongTien_${hoaDon.ma}");
+
+                                        fetch(`/so-phan-tram-giam-gia/${hoaDon.id}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+
+                                                var soPhanTramGiam = data;
+                                                var soTienBanDau = ${hoaDon.tongTien};
+                                                var soTienSauGiam = soTienBanDau - (soTienBanDau * (soPhanTramGiam / 100));
+                                                var formattedTienSauGiam = soTienSauGiam.toLocaleString('en-US');
+                                                giaSanPhamElement.innerText = formattedTienSauGiam + " vnđ";
+                                            })
+                                            .catch(error => console.error('Lỗi:', error));
+                                    });
+                                </script>
                             </td>
                             <td>
                                 <c:if test="${hoaDon.trangThai == 0}">

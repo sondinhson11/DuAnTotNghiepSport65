@@ -106,7 +106,7 @@
                         <td>${sanPhamChiTiet.tenMauSac}</td>
                         <td>${sanPhamChiTiet.tenKichCo}</td>
                         <td>
-                            <fmt:formatNumber value="${sanPhamChiTiet.gia}" pattern="#,##0 ₫"/>
+                            <fmt:formatNumber value="${sanPhamChiTiet.gia}" pattern="#,##0 vnđ"/>
                         </td>
 
                         <td>${sanPhamChiTiet.soLuong}</td>

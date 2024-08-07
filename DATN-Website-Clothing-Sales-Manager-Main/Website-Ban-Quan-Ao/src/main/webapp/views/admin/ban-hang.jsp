@@ -357,8 +357,20 @@
                                 <p>${sp.tenMau}/${sp.tenSize}</p>
                             </td>
                             <td id="formattedGia">${sp.gia}</td>
+                            <script>
+                                var giaSanPhamElement = document.getElementById("formattedGia");
+                                var giaSanPhamText = giaSanPhamElement.innerText;
+                                var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
+                                giaSanPhamElement.innerText = formattedGia + " vnđ";
+                            </script>
                             <td>${sp.soLuong}</td>
                             <td id="formattedTotal">${sp.soLuong * sp.gia}</td>
+                            <script>
+                                var giaSanPhamElement = document.getElementById("formattedTotal");
+                                var giaSanPhamText = giaSanPhamElement.innerText;
+                                var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
+                                giaSanPhamElement.innerText = formattedGia + " vnđ";
+                            </script>
                             <input type="hidden" id="quantity" value=""/>
                             <c:set var="tongTien" value="${tongTien + (sp.soLuong * sp.gia)}"/>
                             <td>
@@ -605,8 +617,7 @@
                             </div>
                             <div class="col" id="phi-van-chuyen-div" style="display: none">
                                 <label class="form-label">Phí Vận Chuyển</label>
-                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen"
-                                       oninput="formatCurrency(this);" value="0" readonly>
+                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" value="0" readonly>
                             </div>
                         </div>
                         <script>
@@ -615,7 +626,7 @@
                                     url: 'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
                                     type: 'GET',
                                     data: {
-                                        service_type_id:'2',
+                                        service_type_id: '2',
                                         to_district_id: huyen,
                                         to_ward_code: xa,
                                         height: '9',
@@ -631,8 +642,9 @@
                                     success: (response) => {
                                         if (response && response.data && response.data.total !== undefined) {
                                             const feeResponse = response.data.total;
+                                            var feeText = feeResponse.toLocaleString('vi-VN');
                                             console.log("tính phí ship: " + feeResponse);
-                                            document.getElementById('feeInput').value = feeResponse;
+                                            document.getElementById('feeInput').value = feeText;
                                             document.getElementById('ma-van-chuyen').value = "${hoaDon.ma}";
                                             document.getElementById('ten-don-vi').value = "giao Hàng Nhanh";
                                             // Hiển thị phần phí vận chuyển
@@ -875,7 +887,6 @@
                                 getDiscountPercentage(product.id);
                             });
                         }
-
                         function loadProductImages(productId) {
                             var idSanPham = productId;
                             $.ajax({
@@ -1362,8 +1373,10 @@
         // tính tiền
         $(document).ready(function () {
             var tongTienInput = $("#tong-tien"); // Lấy ô input của tổng tiền
+            var tongTien = parseFloat(tongTienInput.val().replace(/[^\d]/g, '')) || 0;
+            tongTienInput.val(tongTien.toLocaleString('vi-VN'));
             var tienThanhToan = $("#tien-thanh-toan");
-            tienThanhToan.val(tongTienInput.val().toLocaleString('vi-VN'))
+            tienThanhToan.val(tongTien.toLocaleString('vi-VN'));
             var vanchuyen = $("#toggleSwitch")
             var phuongxa = $("#wardSelect")
             var quanHuyen = $("#districtSelect")
@@ -1378,9 +1391,6 @@
                 calculateShippingFee(quanHuyen.val(), phuongxa.val())
             })
             vanchuyen.on("change", function () {
-                let feeInput = $('#feeInput');
-                feeInput.val(0)
-                updateTotal()
                 updateTienGiam();
             })
             // Sự kiện change cho hình thức thanh toán
@@ -1402,12 +1412,6 @@
                 updateTienThua(); // Cập nhật tiền thừa khi blur khỏi trường tiền khách đưa
             });
 
-            // Sự kiện khi thay đổi giá trị phí vận chuyển
-            $('#feeInput, #tong-tien').on('input', function () {
-                formatCurrency(this);
-                updateTotal(); // Cập nhật tổng tiền khi giá trị phí vận chuyển hoặc tổng tiền thay đổi
-            });
-
             // Sự kiện input để ngăn chặn việc nhập chữ trong trường tiền khách đưa
             tienKhachDuaInput.on("input", function () {
                 formatCurrency(this); // Gọi hàm formatCurrency để giữ lại chỉ số và dấu phẩy
@@ -1422,28 +1426,6 @@
 
                 // Gán giá trị đã định dạng lại vào trường input
                 input.value = inputValue.toLocaleString('en-US');
-            }
-
-            function updateTotal() {
-                // Use jQuery to get the value of the feeInput
-                let feeInput = $('#feeInput');
-                // Giữ lại chỉ các ký tự số và dấu phẩy
-                let phiVanChuyen = parseFloat(feeInput.val().replace(/\./g, '')) || 0;
-
-                // Lấy giá trị tổng tiền từ JSP
-                let tongTien = parseFloat('${tongTien}'.replace(/\./g, '')) || 0;
-
-                // Thêm phí vận chuyển vào tổng tiền
-                tongTien += phiVanChuyen;
-
-                // Định dạng lại tổng tiền và hiển thị trên giao diện
-                let formattedTongTien = tongTien;
-                tongTienInput.val(formattedTongTien).toLocaleString('vi-VN');
-                tienThanhToan.val(formattedTongTien).toLocaleString('vi-VN');
-
-                // Gán giá trị phiVanChuyen cho trường phiVanChuyen ẩn để submit lên server
-                feeInput.val(phiVanChuyen).toLocaleString('vi-VN');
-                updateTienGiam(); // Cập nhật tiền khách đưa khi thay đổi hình thức thanh toán
             }
 
             function updateTienKhachDua() {
@@ -1466,10 +1448,12 @@
                 if (soPhanTramGiam !== undefined) {
                     var tienGiamne = tongTien * (soPhanTramGiam / 100)
                     tienGiam.val(tienGiamne.toLocaleString('vi-VN'));
-                    tienThanhToan.val((tongTien - tienGiamne).toLocaleString('vi-VN'))
+                    tongTienInput.val(tongTien.toLocaleString('vi-VN'));
+                    tienThanhToan.val((tongTien - tienGiamne).toLocaleString('vi-VN'));
 
                 } else {
-                    tienThanhToan.val(tongTien).toLocaleString('vi-VN')
+                    tongTienInput.val(tongTien.toLocaleString('vi-VN'));
+                    tienThanhToan.val(tongTien.toLocaleString('vi-VN'));
                     tienGiam.val(0);
                 }
             }
