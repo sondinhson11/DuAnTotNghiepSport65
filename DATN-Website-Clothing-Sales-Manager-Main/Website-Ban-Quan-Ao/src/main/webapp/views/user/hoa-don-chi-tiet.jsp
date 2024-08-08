@@ -2,10 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="col-8 offset-2 mt-5">
-    <div class="row" >
+    <div class="d-flex">
         <p class="d-flex">
-        <p class="me-2 text-uppercase">Mã hoá đơn: ${hoaDon.ma} |
-            <span class="text-uppercase ms-1">
+        <div class="col-9">
+            <p class="me-2 text-uppercase">Mã hoá đơn: ${hoaDon.ma} |
+                <span class="text-uppercase ms-1">
                 <c:if test="${hoaDon.trangThai == 0}">
                     <span class="text-secondary">Chờ thanh toán</span>
                 </c:if>
@@ -28,12 +29,16 @@
                     <span class="text-secondary">Đã huỷ/Chờ hoàn tiền</span>
                 </c:if>
             </span>
-            <c:if test="${ hoaDon.trangThai == 2 ||  hoaDon.trangThai == 4}">
-                <button style="margin-left: 49%" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHuy">
-                    Huỷ đơn hàng
-                </button>
-            </c:if>
-        </p>
+            </p>
+        </div>
+        <div class="col-3">
+        <c:if test="${ hoaDon.trangThai == 2 ||  hoaDon.trangThai == 4}">
+            <button  style="margin-left: 15px" type="button" class="btn btn-danger col-11" data-bs-toggle="modal"
+                    data-bs-target="#modalHuy">
+                Huỷ đơn hàng
+            </button>
+        </c:if>
+        </div>
     </div>
     <br>
     <c:if test="${hoaDon.hinhThucThanhToan.ten == 'Chuyển khoản' }">

@@ -110,9 +110,9 @@ public class HoaDonController {
                                               @RequestParam("ghiChu") String ghiChu,
                                               @RequestParam("maVanChuyen") String maVanChuyen,
                                               @RequestParam("tenDonViVanChuyen") String tenDonViVanChuyen,
-                                              @RequestParam("phiVanChuyen") BigDecimal phiVanChuyen
+                                              @RequestParam("phiVanChuyen") String phiVanChuyen
             , Model model, RedirectAttributes redirectAttributes) {
-
+        String phi2 = phiVanChuyen.replace(".", "");
         if (trangThai == 4) {
             List<GioHangResponse> listSanPhamTrongGioHang = hoaDonChiTietService.getHoaDonChiTietByHoaDonId(id);
             for (GioHangResponse gh : listSanPhamTrongGioHang) {
@@ -141,7 +141,7 @@ public class HoaDonController {
         hoaDon.setTrangThai(trangThai);
         hoaDon.setMaVanChuyen(maVanChuyen);
         hoaDon.setTenDonViVanChuyen(tenDonViVanChuyen);
-        hoaDon.setPhiVanChuyen(phiVanChuyen);
+        hoaDon.setPhiVanChuyen(BigDecimal.valueOf(Float.valueOf(phi2)));
         hoaDonService.update(hoaDon, id);
         model.addAttribute("view", "/views/admin/hoa-don/quan-li-hoa-don.jsp");
         return "redirect:/admin/hoa-don/" + id;

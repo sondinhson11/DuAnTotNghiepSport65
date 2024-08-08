@@ -58,7 +58,8 @@
             <div>
                 <div class="float-start">
                     <c:if test="${hoaDon.trangThai == 0 || hoaDon.trangThai == 2 || hoaDon.trangThai == 10 || hoaDon.trangThai == 4}">
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHuy">
+                        <button style="margin-right: 10px" type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#modalHuy">
                             Huỷ đơn hàng
                         </button>
                     </c:if>
@@ -379,6 +380,12 @@
                         <label class="form-label">Tổng tiền cần thanh toán</label>
                         <label class="form-label float-end" id="tong-tien">${tongTien}</label>
                     </div>
+                    <script>
+                        var giaSanPhamElement = document.getElementById("tong-tien");
+                        var giaSanPhamText = giaSanPhamElement.innerText;
+                        var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
+                        giaSanPhamElement.innerText = formattedGia + " vnđ";
+                    </script>
                     <div class="mb-3">
                         <label class="form-label">Ghi chú </label>
                         <textarea class="form-control" name="ghiChu" rows="3"
@@ -399,9 +406,9 @@
 <div class="modal fade" id="modalXacNhan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <c:if test="${hoaDon.trangThai == 2}">
+            <c:if test="${hoaDon.trangThai == 2 ||(hoaDon.trangThai==10 && hoaDon.maVanChuyen == null)}">
                 <form id="form1" action="/admin/hoa-don/update-trang-thai-online/${hoaDon.id}" method="post">
-                    <input type="hidden" name="trangThai" value="" id="trang-thai">
+                    <input type="hidden" name="trangThai" value="4" id="trang-thai">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Ghi chú </label>
@@ -419,8 +426,9 @@
                                    placeholder="Đơn vị vận chuyển" value="Giao Hàng nhanh" readonly>
                         </div>
                         <div class="mb-3">
-                            <label id="phiVanChuyen" class="form-label">Phí vận chuyển </label>
-                            <input type="number" class="form-control" name="phiVanChuyen" value="${hoaDon.phiVanChuyen}"
+                            <label class="form-label">Phí vận chuyển </label>
+                            <input type="number" class="form-control" name="phiVanChuyen" id="phiVanChuyen"
+                                   value="${hoaDon.phiVanChuyen}"
                                    placeholder="Phí vận chuyển" readonly>
                         </div>
                     </div>
@@ -431,6 +439,9 @@
                 </form>
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
+                        var tongTienInput = $("#phiVanChuyen"); // Lấy ô input của tổng tiền
+                        var tongTien = parseFloat(tongTienInput.val().replace(/[^\d]/g, '')) || 0;
+                        tongTienInput.val(tongTien.toLocaleString('vi-VN'));
                         const form = document.getElementById('form1');
                         form.addEventListener('submit', function (event) {
                             // Validate the form fields
@@ -508,11 +519,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    const trangThai = document.getElementById('trang-thai');
-    const trangThaiHoaDon = ${hoaDon.trangThai};
-    if (trangThaiHoaDon == 2) {
-        trangThai.value = 4;
-    }
     document.addEventListener("DOMContentLoaded", function () {
         // Kiểm tra thông báo thành công
         <c:if test="${not empty successMessage}">
