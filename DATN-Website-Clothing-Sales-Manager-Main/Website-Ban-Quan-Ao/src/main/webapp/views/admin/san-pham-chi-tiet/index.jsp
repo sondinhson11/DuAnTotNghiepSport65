@@ -38,7 +38,7 @@
 </script>
 
 <div>
-    <h1 class="text-center mt-3">Quản Lý Sản Phẩm Chi Tiết</h1>
+    <h3 class="text-center mt-3">Quản Lý Sản Phẩm Chi Tiết</h3>
     <div class="row col-2 ms-1 mt-3">
         <a href="/admin/san-pham-chi-tiet/create" class="btn btn-success">Thêm sản phẩm chi tiết</a>
     </div>

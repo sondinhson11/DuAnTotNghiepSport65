@@ -124,7 +124,7 @@
 </script>
 
 <div class="container mt-3">
-    <h1 class="text-center">Chỉnh sửa chi tiết sản phẩm</h1>
+    <h3 class="text-center">Chỉnh sửa chi tiết sản phẩm</h3>
     <div class="row mt-3">
         <div class="col-12">
             <form:form action="${action}"

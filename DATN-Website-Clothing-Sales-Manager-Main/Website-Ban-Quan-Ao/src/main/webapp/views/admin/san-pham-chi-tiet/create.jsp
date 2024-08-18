@@ -182,7 +182,7 @@
 
 <div class="container mt-3">
     <div class="content">
-        <h1 class="text-center">Tạo mới chi tiết sản phẩm</h1>
+        <h2 class="text-center">Tạo mới chi tiết sản phẩm</h2>
         <fieldset class="form-fieldset">
             <legend>Thông tin chi tiết</legend>
             <div class="row mt-3">
@@ -434,32 +434,47 @@
     </div>
     <%--san pham--%>
     <div class="modal fade" id="modalSanPham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-body">
-            <form:form id="edit-form" modelAttribute="sp" method="post" action="/admin/san-pham/them-nhanh"
-                       enctype="multipart/form-data">
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="ten" class="form-label">Tên Sản Phẩm</label>
-                        <form:input type="text" path="ten" id="ten" class="form-control"
-                                    required="true"/>
-                        <form:errors path="ten" cssClass="text-danger"/>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm Sản Phẩm Mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form:form id="edit-form" modelAttribute="sp" method="post" action="/admin/san-pham/them-nhanh" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="ten" class="form-label">Tên Sản Phẩm</label>
+                            <form:input type="text" path="ten" id="ten" class="form-control" required="true"/>
+                            <form:errors path="ten" cssClass="text-danger"/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Loại</label>
+                            <form:select class="form-select" path="idLoai">
+                                <c:forEach items="${listLoai}" var="loai">
+                                    <option value="${loai.id}">${loai.ten}</option>
+                                </c:forEach>
+                            </form:select>
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label class="form-label">Loại</label>
-                        <form:select class="form-select" path="idLoai">
-                            <c:forEach items="${listLoai}" var="loai">
-                                <option value="${loai.id}">${loai.ten}</option>
-                            </c:forEach>
-                        </form:select>
-
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Câu lạc bộ</label>
+                            <form:select class="form-select" path="idCauLacBo">
+                                <c:forEach items="${listCauLacBo}" var="lcb">
+                                    <option value="${lcb.id}">${lcb.ten}</option>
+                                </c:forEach>
+                            </form:select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Thương hiệu</label>
+                            <form:select class="form-select" path="idThuongHieu">
+                                <c:forEach items="${listThuongHieu}" var="thuongHieu">
+                                    <option value="${thuongHieu.id}">${thuongHieu.ten}</option>
+                                </c:forEach>
+                            </form:select>
+                        </div>
                     </div>
-
-
                     <div class="mt-3 text-center">
                         <label class="form-label">Ảnh sản phẩm</label>
                         <div class="text-center">
@@ -472,12 +487,14 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success mt-3 col-2 offset-5">Lưu</button>
-                    </form:form>
-                </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">Lưu</button>
+                    </div>
+                </form:form>
             </div>
         </div>
     </div>
+
 </c:if>
 
 
