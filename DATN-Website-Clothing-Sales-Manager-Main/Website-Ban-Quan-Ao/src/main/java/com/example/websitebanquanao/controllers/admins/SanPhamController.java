@@ -83,6 +83,7 @@ public class SanPhamController {
             List<String> duongDan = new ArrayList<>();
             duongDan.add(anh1); duongDan.add(anh2); duongDan.add(anh3);
             sanPhamRequest.setDuongDan(duongDan);
+
             sanPhamService.add(sanPhamRequest, anh);
             return redirect;
         }

@@ -50,6 +50,10 @@ public class SanPhamChiTietController {
     @Autowired
     private LoaiService loaiService;
     @Autowired
+    private CauLacBoService cauLacBoService;
+    @Autowired
+    private ThuongHieuService thuongHieuService;
+    @Autowired
     private SanPhamRequest sanPhamRequest;
     @Autowired
     HttpSession session;
@@ -61,6 +65,8 @@ public class SanPhamChiTietController {
         model.addAttribute("list", sanPhamChiTietService.getAll());
         model.addAttribute("listMauSac", mauSacService.getAll());
         model.addAttribute("listKichCo", kichCoService.getAll());
+        model.addAttribute("listCauLacBo", cauLacBoService.getAll());
+        model.addAttribute("listThuongHieu", thuongHieuService.getAll());
         model.addAttribute("view", "/views/admin/san-pham-chi-tiet/index.jsp");
         return "admin/layout";
     }
@@ -72,6 +78,8 @@ public class SanPhamChiTietController {
         model.addAttribute("listSanPham", sanPhamService.getAll());
         model.addAttribute("listMauSac", mauSacService.getAll());
         model.addAttribute("listKichCo", kichCoService.getAll());
+        model.addAttribute("listCauLacBo", cauLacBoService.getAll());
+        model.addAttribute("listThuongHieu", thuongHieuService.getAll());
         model.addAttribute("list", sanPhamChiTietService.getAll());
         model.addAttribute("ms", mauSacRequest);
         model.addAttribute("kc", new KichCoRequest());
