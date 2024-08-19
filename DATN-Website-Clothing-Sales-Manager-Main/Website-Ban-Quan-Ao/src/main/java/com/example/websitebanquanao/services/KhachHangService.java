@@ -94,6 +94,16 @@ public class KhachHangService {
             return null;
         }
     }
+    public KhachHang getById1(UUID id) {
+        KhachHang khachHang = khachHangRepository.getById(id);
+        if (khachHang != null) {
+            System.out.println("KhachHangService.findById: " + khachHang.getHoVaTen());
+            return khachHang;
+        } else {
+            System.out.println("KhachHangService.findById: null");
+            return null;
+        }
+    }
 
 
     //user

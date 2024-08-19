@@ -26,8 +26,6 @@ public class HoaDonChiTietService {
     @Autowired
     private HoaDonRepository hoaDonRepository;
 
-    @Autowired
-    private GioHangService gioHangService;
 
     @Autowired
     private GioHangChiTietService gioHangChiTietService;
@@ -84,7 +82,7 @@ public class HoaDonChiTietService {
 
     // user
     public void addHoaDonChiTietUser(HoaDon hoaDon, UUID idKhachHang) {
-        List<GioHangUserResponse> listSanPhamGioHang = gioHangService.getListByIdKhachHang(idKhachHang);
+        List<GioHangUserResponse> listSanPhamGioHang = gioHangChiTietService.getListByIdKhachHang(idKhachHang);
 
         for (GioHangUserResponse gioHangUserResponse : listSanPhamGioHang) {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();

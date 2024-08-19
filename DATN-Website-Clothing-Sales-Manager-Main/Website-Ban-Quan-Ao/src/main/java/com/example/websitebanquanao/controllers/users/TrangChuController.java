@@ -48,9 +48,6 @@ public class TrangChuController {
     private KhachHangService khachHangService;
 
     @Autowired
-    private GioHangService gioHangService;
-
-    @Autowired
     private GioHangChiTietService gioHangChiTietService;
 
     @Autowired
@@ -159,7 +156,7 @@ public class TrangChuController {
             return "redirect:/dang-nhap";
         } else {
             BigDecimal tongTien = gioHangChiTietService.getTongTienByIdKhachHang(khachHangResponse.getId());
-            List<GioHangUserResponse> listGioHang = gioHangService.getListByIdKhachHang(khachHangResponse.getId());
+            List<GioHangUserResponse> listGioHang = gioHangChiTietService.getListByIdKhachHang(khachHangResponse.getId());
             model.addAttribute("listGioHang", listGioHang);
             if (listGioHang.isEmpty()) {
                 model.addAttribute("nutThanhToan", 0);
@@ -197,8 +194,7 @@ public class TrangChuController {
         UUID idSanPhamChiTiet = sanPhamService.getIdSanPhamChiTietByIdMauSacnAndIdSanPham(id, gioHangUserRequest.getIdMauSac(), gioHangUserRequest.getIdKichCo());
         SanPhamChiTiet ctsp = ctspService.findById(idSanPhamChiTiet);
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
-        GioHang gioHang = gioHangService.findByIdKhachHang(khachHangResponse.getId());
-        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(ctsp.getId(), gioHang.getId());
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(ctsp.getId(),khachHangResponse.getId() );
         int soLuong = 0;
         if (gioHangChiTiet != null) {
             soLuong = gioHangChiTiet.getSoLuong();
@@ -274,7 +270,7 @@ public class TrangChuController {
                 return "redirect:/gio-hang";
             } else {
                 BigDecimal tongTien = gioHangChiTietService.getTongTienByIdKhachHang(khachHangResponse.getId());
-                model.addAttribute("listGioHang", gioHangService.getListByIdKhachHang(khachHangResponse.getId()));
+                model.addAttribute("listGioHang", gioHangChiTietService.getListByIdKhachHang(khachHangResponse.getId()));
                 model.addAttribute("sumSoLuong", gioHangChiTietService.sumSoLuongByIdKhachHang(khachHangResponse.getId()));
                 session.setAttribute("khachHang", khachHangService.getById(khachHangResponse.getId()));
                 model.addAttribute("khachHang", khachHangService.getById(khachHangResponse.getId()));
@@ -410,7 +406,6 @@ public class TrangChuController {
 
             } else {
                 session.setAttribute("khachHang", khachHangResponse);
-                gioHangService.checkAndAdd(khachHangResponse.getId());
                 return "redirect:/";
             }
         } else {

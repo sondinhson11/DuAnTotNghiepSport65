@@ -70,10 +70,6 @@ public class NhanVien {
     @Column(name = "ngay_sua")
     private Date ngaySua;
 
-
-    @OneToMany(mappedBy = "idNhanVien")
-    private Set<GioHang> gioHangs = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "idNhanVien")
     private Set<HoaDon> hoaDons = new LinkedHashSet<>();
 

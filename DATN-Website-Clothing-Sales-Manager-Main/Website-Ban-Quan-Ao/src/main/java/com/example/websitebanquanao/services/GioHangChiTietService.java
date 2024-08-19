@@ -1,15 +1,16 @@
 package com.example.websitebanquanao.services;
 
-import com.example.websitebanquanao.entities.GioHang;
 import com.example.websitebanquanao.entities.GioHangChiTiet;
 import com.example.websitebanquanao.entities.SanPhamChiTiet;
 import com.example.websitebanquanao.infrastructures.requests.GioHangUserRequest;
+import com.example.websitebanquanao.infrastructures.responses.GioHangUserResponse;
 import com.example.websitebanquanao.repositories.GioHangChiTietRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,14 +26,16 @@ public class GioHangChiTietService {
     private KhuyenMaiChiTietService khuyenMaiChiTietService;
 
     @Autowired
-    private GioHangService gioHangService;
+    private KhachHangService khachHangService;
+
+    public List<GioHangUserResponse> getListByIdKhachHang(UUID idKhachHang) {
+        return gioHangChiTietRepository.getListByIdKhachHang(idKhachHang);
+    }
 
     public void add(UUID idSanPham, UUID idKhachHang, GioHangUserRequest gioHangUserRequest) {
         SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietService.getByIdSanPhamAndIdMauSacAndIdKichCo(idSanPham, gioHangUserRequest.getIdMauSac(), gioHangUserRequest.getIdKichCo());
 
-        GioHang gioHang = gioHangService.findByIdKhachHang(idKhachHang);
-
-        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(sanPhamChiTiet.getId(), gioHang.getId());
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(sanPhamChiTiet.getId(), idKhachHang);
 
         if (gioHangChiTiet != null) {
             gioHangChiTiet.setSoLuong(gioHangChiTiet.getSoLuong() + gioHangUserRequest.getSoLuong());
@@ -46,7 +49,11 @@ public class GioHangChiTietService {
             BigDecimal giaBanSauKhuyenMai = giaBan.subtract(giaBan.multiply(new BigDecimal(soPhanTramGiamGia)).divide(new BigDecimal(100)));
 
             gioHangChiTiet = new GioHangChiTiet();
-            gioHangChiTiet.setIdGioHang(gioHang);
+
+            gioHangChiTiet.setIdKhachHang(khachHangService.getById1(idKhachHang));
+            java.util.Date currentDate = new java.util.Date();
+            gioHangChiTiet.setNgay_tao(new java.sql.Date(currentDate.getTime()));
+            gioHangChiTiet.setNgay_sua(new java.sql.Date(currentDate.getTime()));
             gioHangChiTiet.setIdSanPhamChiTiet(sanPhamChiTiet);
             gioHangChiTiet.setSoLuong(gioHangUserRequest.getSoLuong());
             gioHangChiTiet.setGia(giaBanSauKhuyenMai);
@@ -59,24 +66,15 @@ public class GioHangChiTietService {
 
     @Transactional
     public void updateByIdSanPhamChiTietAndIdKhachHang(UUID idSanPhamChiTiet, UUID idKhachHang, Integer soLuong) {
-        GioHang gioHang = gioHangService.findByIdKhachHang(idKhachHang);
 
-        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(idSanPhamChiTiet, gioHang.getId());
-
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(idSanPhamChiTiet, idKhachHang);
+        java.util.Date currentDate = new java.util.Date();
+        gioHangChiTiet.setNgay_sua(new java.sql.Date(currentDate.getTime()));
         gioHangChiTiet.setSoLuong(soLuong);
 
         gioHangChiTietRepository.save(gioHangChiTiet);
 
         System.out.println("GioHangChiTietService.updateByIdSanPhamChiTietAndIdKhachHang: " + gioHangChiTiet.getId());
-    }
-
-    @Transactional
-    public GioHangChiTiet getByIdSanPhamChiTietAndIdKhachHang(UUID idSanPhamChiTiet, UUID idKhachHang) {
-        GioHang gioHang = gioHangService.findByIdKhachHang(idKhachHang);
-
-        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(idSanPhamChiTiet, gioHang.getId());
-
-        return gioHangChiTiet;
     }
 
     @Transactional

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.UUID;
 
 @Getter
@@ -18,8 +19,8 @@ public class GioHangChiTiet {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_gio_hang")
-    private GioHang idGioHang;
+    @JoinColumn(name = "id_khach_hang")
+    private KhachHang idKhachHang;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_san_pham_chi_tiet")
@@ -31,4 +32,9 @@ public class GioHangChiTiet {
     @Column(name = "so_luong")
     private Integer soLuong;
 
+    @Temporal(TemporalType.DATE)
+    private Date ngay_tao;
+
+    @Temporal(TemporalType.DATE)
+    private Date ngay_sua;
 }
