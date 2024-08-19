@@ -71,6 +71,9 @@ public class TrangChuController {
     @Autowired
     private KhachHangRequest khachHangRequest;
 
+    @Autowired
+    private EmailService emailService;
+
     private static final String redirect = "redirect:/";
 
     // trang chủ
@@ -194,7 +197,7 @@ public class TrangChuController {
         UUID idSanPhamChiTiet = sanPhamService.getIdSanPhamChiTietByIdMauSacnAndIdSanPham(id, gioHangUserRequest.getIdMauSac(), gioHangUserRequest.getIdKichCo());
         SanPhamChiTiet ctsp = ctspService.findById(idSanPhamChiTiet);
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
-        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(ctsp.getId(),khachHangResponse.getId() );
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findByIdSanPhamChiTietIdAndIdGioHangId(ctsp.getId(), khachHangResponse.getId());
         int soLuong = 0;
         if (gioHangChiTiet != null) {
             soLuong = gioHangChiTiet.getSoLuong();
@@ -235,7 +238,7 @@ public class TrangChuController {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
         BigDecimal tongTien = gioHangChiTietService.getTongTienByIdKhachHang(khachHangResponse.getId());
         String thongBaoGiamGia = "";
-        if(ma== null){
+        if (ma == null) {
             thongBaoGiamGia = "Phải chọn mã giảm giá.";
             session.setAttribute("thongBaoGiamGia", thongBaoGiamGia);
             return "redirect:/gio-hang";
@@ -368,6 +371,7 @@ public class TrangChuController {
         model.addAttribute("viewContent", "/views/user/hoa-don-chi-tiet.jsp");
         return "user/layout";
     }
+
     @PostMapping("/hoa-don/update-trang-thai/{id}")
     public String updateTrangThaiHoaDon(@PathVariable("id") UUID id, @RequestParam("trangThai") Integer trangThai, @RequestParam("ghiChu") String ghiChu, RedirectAttributes redirectAttributes) {
         HoaDon hoaDon = hoaDonService.getById(id);

@@ -14,7 +14,11 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class CreatePDF {
@@ -38,7 +42,7 @@ public class CreatePDF {
             }
             String diaChi = hoaDon.getDiaChi() + ", " + hoaDon.getXaPhuong() + ", " + hoaDon.getQuanHuyen() + ", " + hoaDon.getTinhThanhPho();
             ;
-            if (diaChi == null || hoaDon.getDiaChi()== null) {
+            if (diaChi == null || hoaDon.getDiaChi() == null) {
                 diaChi = "Khách mua tại cửa hàng";
             }
             // thêm logo và căn giữa
@@ -71,25 +75,26 @@ public class CreatePDF {
             table.addCell(new Paragraph("Số lượng", font2));
             table.addCell(new Paragraph("Đơn giá", font2));
             table.addCell(new Paragraph("Thành tiền", font2));
-
+            Locale usa = new Locale("en", "US");
+            DecimalFormat dollarFormat = (DecimalFormat) NumberFormat.getNumberInstance(usa);
             int count = 0;
             for (GioHangUserResponse hoaDonChiTiet : listHoaDonChiTiet) {
                 count++;
                 table.addCell(new Paragraph(String.valueOf(count + 1), font));
                 table.addCell(new Paragraph(hoaDonChiTiet.getTenSanPham() + "/" + hoaDonChiTiet.getTenMauSac() + "/" + hoaDonChiTiet.getTenKichCo(), font));
                 table.addCell(new Paragraph(hoaDonChiTiet.getSoLuong().toString(), font));
-                table.addCell(new Paragraph(hoaDonChiTiet.getGia().toString(), font));
+                table.addCell(new Paragraph(dollarFormat.format(hoaDonChiTiet.getGia()), font));
                 BigDecimal gia = hoaDonChiTiet.getGia();
                 int soLuong = hoaDonChiTiet.getSoLuong();
                 BigDecimal tongTien1 = gia.multiply(BigDecimal.valueOf(soLuong));
-                table.addCell(new Paragraph(String.valueOf(tongTien1), font));
+                table.addCell(new Paragraph(dollarFormat.format(tongTien1), font));
             }
 
             document.add(table);
             document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
-            document.add(new Paragraph("Tổng tiền : " + tongTien, font2));
+            document.add(new Paragraph("Tổng tiền : " + dollarFormat.format(BigDecimal.valueOf(Float.valueOf(tongTien))), font2));
             if (hoaDon.getPhiVanChuyen() != null) {
-                document.add(new Paragraph("Phí vận chuyển : " + hoaDon.getPhiVanChuyen().toString(), font2));
+                document.add(new Paragraph("Phí vận chuyển : " + dollarFormat.format(hoaDon.getPhiVanChuyen()), font2));
             }
             document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
             document.add(new Paragraph("Cảm ơn quý khách đã mua hàng!", font2));

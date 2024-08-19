@@ -36,6 +36,9 @@ public class HoaDonService {
     @Autowired
     private GiamGiaService giamGiaService;
 
+    @Autowired
+    private EmailService emailService;
+
 
     // admin
     public List<HoaDon> getAll() {
@@ -201,6 +204,7 @@ public class HoaDonService {
         hoaDon.setIdKhachHang(khachHang);
         hoaDonRepository.save(hoaDon);
         hoaDonChiTietService.addHoaDonChiTietUser(hoaDon, khachHangResponse.getId());
+        emailService.sendEmail(khachHangResponse.getEmail(), "Cảm ơn bạn đã mua hàng", "Đây là hóa đơn của bạn", hoaDon.getMa());
         System.out.println("HoaDonService.addHoaDonUser: " + hoaDon.getMa());
         return hoaDon.getId();
     }
@@ -232,9 +236,9 @@ public class HoaDonService {
         String hd = hoaDonRepository.findTenDonViByMa(ma);
         BigDecimal thanhToan = hoaDonRepository.findTongTienByMa(ma);
         if (hd != null) {
-            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 4,thanhToan );
+            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 4, thanhToan);
         } else {
-            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 2,thanhToan );
+            hoaDonRepository.updateNgayThanhToanByIdHoaDon(ma, ngayThanhToan, 2, thanhToan);
         }
     }
 
