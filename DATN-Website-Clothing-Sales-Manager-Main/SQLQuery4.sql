@@ -119,17 +119,10 @@ CREATE TABLE nhan_vien
     trang_thai  INT 
 )
 
-CREATE TABLE gio_hang
-(
-    id            UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    id_khach_hang UNIQUEIDENTIFIER,
-    id_nhan_vien  UNIQUEIDENTIFIER
-)
-
 CREATE TABLE gio_hang_chi_tiet
 (
     id                   UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    id_gio_hang          UNIQUEIDENTIFIER,
+    id_khach_hang          UNIQUEIDENTIFIER,
     id_san_pham_chi_tiet UNIQUEIDENTIFIER,
     gia                  DECIMAL(20, 0)               DEFAULT 0,
     so_luong             INT,
@@ -262,16 +255,8 @@ ALTER TABLE anh_san_pham
     ADD FOREIGN KEY (id_san_pham) REFERENCES san_pham (id)
 
 -- khach_hang - gio_hang
-ALTER TABLE gio_hang
-    ADD FOREIGN KEY (id_khach_hang) REFERENCES khach_hang (id)
-
--- nhan_vien - gio_hang
-ALTER TABLE gio_hang
-    ADD FOREIGN KEY (id_nhan_vien) REFERENCES nhan_vien (id)
-
--- gio_hang - gio_hang_chi_tiet
 ALTER TABLE gio_hang_chi_tiet
-    ADD FOREIGN KEY (id_gio_hang) REFERENCES gio_hang (id)
+    ADD FOREIGN KEY (id_khach_hang) REFERENCES khach_hang (id)
 
 -- san_pham - gio_hang_chi_tiet
 ALTER TABLE gio_hang_chi_tiet
@@ -410,18 +395,13 @@ VALUES
     ('NV002', N'Trần Thị F', N'tranthif@example.com', N'0987654320', N'password456', N'123 Đường E', N'Phường Z', N'Quận Y', N'TP. X', '2024-01-01', 1, '2024-01-01', '2024-01-01', 1),
     ('NV003', N'Lê G H', N'legh@example.com', N'1122334466', N'password789', N'456 Đường F', N'Phường W', N'Quận V', N'TP. U', '2024-01-01', 1, '2024-01-01', '2024-01-01', 1);
 
--- Insert datat into 'gio_hang' table
-INSERT INTO gio_hang(id_khach_hang,id_nhan_vien)
-VALUES((SELECT id FROM khach_hang WHERE email = 'sondinhson11@gmail.com'),(SELECT id FROM nhan_vien WHERE ma = 'NV001')),
-	  ((SELECT id FROM khach_hang WHERE email = 'legh@example.com'),(SELECT id FROM nhan_vien WHERE ma = 'NV002'));
-
 -- Insert data into 'gio_hang_chi_tiet' table
-INSERT INTO gio_hang_chi_tiet (id_gio_hang, id_san_pham_chi_tiet, gia, so_luong, ngay_tao, ngay_sua, trang_thai)
+INSERT INTO gio_hang_chi_tiet (id_khach_hang, id_san_pham_chi_tiet, gia, so_luong, ngay_tao, ngay_sua, trang_thai)
 VALUES 
-    ((SELECT id FROM gio_hang WHERE id_khach_hang = (SELECT id FROM khach_hang WHERE email = 'sondinhson11@gmail.com')), 
+    ((SELECT id FROM khach_hang WHERE email = 'sondinhson11@gmail.com'), 
         (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP001'), 
         500000, 2, '2024-01-01', '2024-01-01',1),
-    ((SELECT id FROM gio_hang WHERE id_khach_hang = (SELECT id FROM khach_hang WHERE email = 'sondinhson11@gmail.com')), 
+    ((SELECT id FROM khach_hang WHERE email = 'sondinhson11@gmail.com'), 
         (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP002'), 
         1200000, 1, '2024-01-01', '2024-01-01',1);
 
