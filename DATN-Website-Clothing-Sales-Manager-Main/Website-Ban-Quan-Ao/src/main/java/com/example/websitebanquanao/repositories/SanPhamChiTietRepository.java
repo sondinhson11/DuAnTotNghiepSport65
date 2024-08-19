@@ -5,6 +5,7 @@ import com.example.websitebanquanao.entities.MauSac;
 import com.example.websitebanquanao.entities.SanPhamChiTiet;
 import com.example.websitebanquanao.infrastructures.responses.BanHangTaiQuayResponse;
 import com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse;
+import com.example.websitebanquanao.infrastructures.responses.SanPhamResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,11 +25,14 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
     public List<SanPhamChiTietResponse> getByTenSanPham(@Param("tenSanPham") String tenSanPham);
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse(s.id, s.maSanPham,s.idSanPham.id, s.idSanPham.ten, s.idMauSac.ten, s.idKichCo.ten, s.gia, s.soLuong, s.moTa, s.trangThai, s.ngay_sua, s.ngay_tao)  from SanPhamChiTiet s where s.trangThai = 1 ORDER BY s.idSanPham.ten")
-
     public List<SanPhamChiTietResponse> getAll();
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse(s.id, s.maSanPham,s.idSanPham.id, s.idSanPham.ten, s.idMauSac.ten, s.idKichCo.ten, s.gia, s.soLuong, s.moTa, s.trangThai, s.ngay_sua, s.ngay_tao)  from SanPhamChiTiet s where s.trangThai = 2 ORDER BY s.idSanPham.ten")
 
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse(s.id, s.maSanPham,s.idSanPham.id, s.idSanPham.ten, s.idMauSac.ten, s.idKichCo.ten, s.gia, s.soLuong, s.moTa, s.trangThai, s.ngay_sua, s.ngay_tao)  from SanPhamChiTiet s where s.trangThai = 1 ORDER BY s.idSanPham.ten")
+    public Page<SanPhamChiTietResponse> getPage(Pageable pageable);
+
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse(s.id, s.maSanPham,s.idSanPham.id, s.idSanPham.ten, s.idMauSac.ten, s.idKichCo.ten, s.gia, s.soLuong, s.moTa, s.trangThai, s.ngay_sua, s.ngay_tao)  from SanPhamChiTiet s where s.trangThai = 2 ORDER BY s.idSanPham.ten")
     public List<SanPhamChiTietResponse> Getlisttam();
+
     @Query("select new com.example.websitebanquanao.infrastructures.responses.BanHangTaiQuayResponse(s.id, s.idSanPham, s.idMauSac, s.idKichCo, s.gia, s.soLuong, s.moTa, s.trangThai) from SanPhamChiTiet s where s.trangThai = 1")
     public List<BanHangTaiQuayResponse> findAllCtsp();
 

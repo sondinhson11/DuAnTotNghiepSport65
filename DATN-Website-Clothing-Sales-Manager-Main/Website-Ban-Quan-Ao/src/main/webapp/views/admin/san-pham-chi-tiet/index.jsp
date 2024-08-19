@@ -21,6 +21,7 @@
             window.location.href = "/admin/san-pham-chi-tiet/filter-mau-sac?tenMauSac=" + selectedColor;
         }
     }
+
     function filterBySize() {
         var selectedSize = document.getElementById("sizeSelect").value;
         if (selectedSize === "") {
@@ -29,6 +30,7 @@
             window.location.href = "/admin/san-pham-chi-tiet/filter-kich-co?tenKichCo=" + selectedSize;
         }
     }
+
     function searchByName(event) {
         if (event.key === "Enter") {
             var searchQuery = document.getElementById("searchInput").value;
@@ -80,7 +82,8 @@
         </div>
         <!-- Tìm kiếm theo tên -->
         <div class="col-4 ms-1 mt-3">
-            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm theo tên" onkeypress="searchByName(event)">
+            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm theo tên"
+                   onkeypress="searchByName(event)">
         </div>
         <div class="ms-1">
             <table class="table table-bordered text-center mt-3">
@@ -98,7 +101,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${list}" var="sanPhamChiTiet" varStatus="status">
+                <c:forEach items="${list.content}" var="sanPhamChiTiet" varStatus="status">
                     <tr>
                         <td>${status.index + 1}</td>
                         <td>${sanPhamChiTiet.maSanPham}</td>
@@ -123,7 +126,8 @@
                         </td>
                         <td>
                             <a href="/admin/san-pham-chi-tiet/edit/${sanPhamChiTiet.id}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                     class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                     <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
                                 </svg>
                             </a>
@@ -133,6 +137,25 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+<div class="mt-3">
+    <div class="text-center">
+        <c:if test="${list.totalPages > 1}">
+            <ul class="pagination">
+                <li class="page-item <c:if test="${list.number == 0}">disabled</c:if>">
+                    <a class="page-link" href="?page=1">First</a>
+                </li>
+                <c:forEach var="i" begin="1" end="${list.totalPages}">
+                    <li class="page-item <c:if test="${list.number + 1 == i}">active</c:if>">
+                        <a class="page-link" href="?page=${i}">${i}</a>
+                    </li>
+                </c:forEach>
+                <li class="page-item <c:if test="${list.number == list.totalPages-1}">disabled</c:if>">
+                    <a class="page-link" href="?page=${list.totalPages}">Last</a>
+                </li>
+            </ul>
+        </c:if>
     </div>
 </div>
 <script>

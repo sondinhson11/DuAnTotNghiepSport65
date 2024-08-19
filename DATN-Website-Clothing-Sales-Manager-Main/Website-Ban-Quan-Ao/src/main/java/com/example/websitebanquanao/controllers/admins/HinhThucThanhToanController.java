@@ -35,8 +35,8 @@ public class HinhThucThanhToanController {
 
     @GetMapping("index")
     public String index(@RequestParam(name = "page", defaultValue = "1") int page, Model model, @ModelAttribute("successMessage") String successMessage, @ModelAttribute("errorMessage") String errorMessage) {
-        Page<HinhThucThanhToanResponse> giamGiaPage = hinhThucThanhToanService.getPage(page, 5);
-        model.addAttribute("giamGiaPage", giamGiaPage);
+        Page<HinhThucThanhToanResponse> htttPage = hinhThucThanhToanService.getPage(page, 5);
+        model.addAttribute("htttPage", htttPage);
         model.addAttribute("gg", hinhThucThanhToanRequest);
         model.addAttribute("successMessage", successMessage); // Hiển thị thông báo thành công
         model.addAttribute("errorMessage", errorMessage); // Hiển thị thông báo thành công

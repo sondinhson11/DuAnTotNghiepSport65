@@ -332,13 +332,13 @@ public class TrangChuController {
 
     // xem danh sách hoá đơn
     @GetMapping("/hoa-don")
-    public String hoaDon(Model model) {
+    public String hoaDon(Model model,@RequestParam(name = "page", defaultValue = "1") int page) {
         KhachHangResponse khachHangResponse = (KhachHangResponse) session.getAttribute("khachHang");
         model.addAttribute("kh", khachHangRequest);
         if (khachHangResponse == null) {
             return "redirect:/dang-nhap";
         } else {
-            model.addAttribute("listHoaDon", hoaDonChiTietService.findListHoaDonByKhachHang(khachHangResponse.getId()));
+            model.addAttribute("listHoaDon", hoaDonChiTietService.getPage(khachHangResponse.getId(),page,10));
         }
         model.addAttribute("viewContent", "/views/user/hoa-don.jsp");
         return "user/layout";

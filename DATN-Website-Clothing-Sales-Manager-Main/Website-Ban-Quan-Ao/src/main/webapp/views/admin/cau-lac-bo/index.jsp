@@ -79,7 +79,7 @@
                         </li>
                     </c:forEach>
                     <li class="page-item <c:if test="${clbPage.number == clbPage.totalPages - 1}">disabled</c:if>">
-                        <a class="page-link" href="?page=${clbPage.totalPages - 1}">Last</a>
+                        <a class="page-link" href="?page=${clbPage.totalPages}">Last</a>
                     </li>
                 </ul>
             </c:if>

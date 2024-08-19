@@ -1,9 +1,12 @@
 package com.example.websitebanquanao.repositories;
 
+import com.example.websitebanquanao.entities.HoaDon;
 import com.example.websitebanquanao.entities.HoaDonChiTiet;
 import com.example.websitebanquanao.infrastructures.responses.GioHangResponse;
 import com.example.websitebanquanao.infrastructures.responses.GioHangUserResponse;
 import com.example.websitebanquanao.infrastructures.responses.HoaDonUserResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,6 +35,8 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, UU
     @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.HoaDonUserResponse(hd.id, hd.ma, hd.ngayTao, hd.trangThai, SUM(hdct.gia * hdct.soLuong),hd.ngayThanhToan) FROM HoaDonChiTiet hdct JOIN hdct.idHoaDon hd WHERE hd.idKhachHang.id = :idKhachHang GROUP BY hd.id, hd.ma, hd.ngayTao, hd.trangThai,hd.ngayThanhToan order by hd.ngayTao desc")
     public List<HoaDonUserResponse> findListHoaDonByKhachHang(@Param("idKhachHang") UUID idKhachHang);
 
+    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.HoaDonUserResponse(hd.id, hd.ma, hd.ngayTao, hd.trangThai, SUM(hdct.gia * hdct.soLuong),hd.ngayThanhToan) FROM HoaDonChiTiet hdct JOIN hdct.idHoaDon hd WHERE hd.idKhachHang.id = :idKhachHang GROUP BY hd.id, hd.ma, hd.ngayTao, hd.trangThai,hd.ngayThanhToan order by hd.ngayTao desc")
+    public Page<HoaDonUserResponse> getPage(@Param("idKhachHang") UUID idKhachHang,Pageable pageable);
 
     // thống kê
     @Query("SELECT SUM(hdct.gia * hdct.soLuong) FROM HoaDonChiTiet hdct " +

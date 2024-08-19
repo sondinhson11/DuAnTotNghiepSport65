@@ -441,7 +441,7 @@ VALUES
         (SELECT id FROM khach_hang WHERE email = 'nguyenvana@example.com'), 
         (SELECT id FROM nhan_vien WHERE ma = 'NV001'), 
         (SELECT id FROM giam_gia WHERE ma = 'GG001'), 
-        (SELECT id FROM hinh_thuc_thanh_toan WHERE ma = 'TTBT'), 
+        (SELECT id FROM hinh_thuc_thanh_toan WHERE ma = '1'), 
         N'Nguyễn Văn A', 'nguyenvana@example.com', '0123456789',480000, 
         N'123 Đường A', N'Phường X', N'Quận Y', N'TP. Z', 1, 1, 'VC001', N'Viettel', 30000, 
         N'/images/hoa_don_001.png', N'Ghi chú 1', '2024-01-01', '2024-01-01'),
@@ -449,7 +449,7 @@ VALUES
         (SELECT id FROM khach_hang WHERE email = 'tranthib@example.com'), 
         (SELECT id FROM nhan_vien WHERE ma = 'NV002'), 
         (SELECT id FROM giam_gia WHERE ma = 'GG002'), 
-        (SELECT id FROM hinh_thuc_thanh_toan WHERE ma = 'TTKNH'), 
+        (SELECT id FROM hinh_thuc_thanh_toan WHERE ma = '2'), 
         N'Trần Thị B', 'tranthib@example.com', '0987654321',1050000,
         N'456 Đường B', N'Phường W', N'Quận V', N'TP. U', 1, 1, 'VC002', N'Giao Hàng Nhanh', 50000, 
 

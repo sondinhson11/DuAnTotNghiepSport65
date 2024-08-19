@@ -300,7 +300,7 @@
                         </li>
                     </c:forEach>
                     <li class="page-item <c:if test="${khachHangPage.number == khachHangPage.totalPages - 1}">disabled</c:if>">
-                        <a class="page-link" href="?page=${khachHangPage.totalPages - 1}">Last</a>
+                        <a class="page-link" href="?page=${khachHangPage.totalPages}">Last</a>
                     </li>
                 </ul>
             </c:if>

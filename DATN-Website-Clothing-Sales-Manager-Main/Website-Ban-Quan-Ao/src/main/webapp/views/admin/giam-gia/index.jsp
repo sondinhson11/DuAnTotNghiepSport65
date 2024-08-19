@@ -148,11 +148,17 @@
     <div class="text-center">
         <c:if test="${giamGiaPage.totalPages > 1}">
             <ul class="pagination justify-content-center">
+                <li class="page-item <c:if test="${giamGiaPage.number == 0}">disabled</c:if>">
+                    <a class="page-link" href="?page=1">First</a>
+                </li>
                 <c:forEach var="i" begin="1" end="${giamGiaPage.totalPages}">
                     <li class="page-item${giamGiaPage.number + 1 == i ? ' active' : ''}">
                         <a class="page-link" href="?page=${i}">${i}</a>
                     </li>
                 </c:forEach>
+                <li class="page-item <c:if test="${giamGiaPage.number == giamGiaPage.totalPages-1}">disabled</c:if>">
+                    <a class="page-link" href="?page=${giamGiaPage.totalPages}">Last</a>
+                </li>
             </ul>
         </c:if>
     </div>

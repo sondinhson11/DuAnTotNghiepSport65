@@ -15,7 +15,7 @@
     }
 </style>
 <script>
-    function filterByStatus(trangThai,checkTH) {
+    function filterByStatus(trangThai, checkTH) {
         var url;
         if (trangThai === '') {
             url = "/admin/hoa-don"; // Trả về trang chủ nếu không có trạng thái
@@ -78,7 +78,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${listHoaDon}" var="hoaDon" varStatus="index">
+                    <c:forEach items="${listHoaDon.content}" var="hoaDon" varStatus="index">
                         <tr class="show-tabs" data-tab="tabs-${index.count}">
                             <td>${index.count}</td>
                             <td>${hoaDon.ma}</td>
@@ -161,6 +161,26 @@
             </div>
         </section>
     </div>
+    <div class="mt-3">
+        <div class="text-center">
+            <c:if test="${listHoaDon.totalPages > 1}">
+                <ul class="pagination">
+                    <li class="page-item <c:if test="${listHoaDon.number == 0}">disabled</c:if>">
+                        <a class="page-link" href="?page=1">First</a>
+                    </li>
+                    <c:forEach var="i" begin="1" end="${listHoaDon.totalPages}">
+                        <li class="page-item <c:if test="${listHoaDon.number + 1 == i}">active</c:if>">
+                            <a class="page-link" href="?page=${i}">${i}</a>
+                        </li>
+                    </c:forEach>
+                    <li class="page-item <c:if test="${listHoaDon.number == listHoaDon.totalPages-1 }">disabled</c:if>">
+                        <a class="page-link" href="?page=${listHoaDon.totalPages}">Last</a>
+                    </li>
+                </ul>
+            </c:if>
+        </div>
+    </div>
+</div>
 </div>
 
 </body>

@@ -77,7 +77,7 @@
                         </li>
                     </c:forEach>
                     <li class="page-item <c:if test="${kichCoPage.number == kichCoPage.totalPages - 1}">disabled</c:if>">
-                        <a class="page-link" href="?page=${kichCoPage.totalPages - 1}">Last</a>
+                        <a class="page-link" href="?page=${kichCoPage.totalPages}">Last</a>
                     </li>
                 </ul>
             </c:if>

@@ -43,8 +43,8 @@ public class LoaiController {
 
     @GetMapping("index")
     public String index(@RequestParam(name = "page", defaultValue = "1") int page, Model model, @ModelAttribute("successMessage") String successMessage) {
-        Page<LoaiResponse> thuongHieuPage = loaiService.getPage(page, 5);
-        model.addAttribute("thuongHieuPage", thuongHieuPage);
+        Page<LoaiResponse> loaiPage = loaiService.getPage(page, 5);
+        model.addAttribute("loaiPage", loaiPage);
         model.addAttribute("th", loaiRequest);
         model.addAttribute("successMessage", successMessage);
         model.addAttribute("view", "/views/admin/loai/index.jsp");

@@ -74,8 +74,8 @@
                             <a class="page-link" href="?page=${i}">${i}</a>
                         </li>
                     </c:forEach>
-                    <li class="page-item <c:if test="${mauSacPage.number == mauSacPage.totalPages - 1}">disabled</c:if>">
-                        <a class="page-link" href="?page=${mauSacPage.totalPages - 1}">Last</a>
+                    <li class="page-item <c:if test="${mauSacPage.number == mauSacPage.totalPages}">disabled</c:if>">
+                        <a class="page-link" href="?page=${mauSacPage.totalPages}">Last</a>
                     </li>
                 </ul>
             </c:if>

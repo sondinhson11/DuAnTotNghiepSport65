@@ -75,7 +75,7 @@
                         </li>
                     </c:forEach>
                     <li class="page-item <c:if test="${thuongHieuPage.number == thuongHieuPage.totalPages - 1}">disabled</c:if>">
-                        <a class="page-link" href="?page=${thuongHieuPage.totalPages - 1}">Cuối</a>
+                        <a class="page-link" href="?page=${thuongHieuPage.totalPages}">Cuối</a>
                     </li>
                 </ul>
             </c:if>

@@ -6,6 +6,7 @@ import com.example.websitebanquanao.infrastructures.requests.SanPhamChiTietReque
 import com.example.websitebanquanao.infrastructures.responses.BanHangTaiQuayResponse;
 import com.example.websitebanquanao.infrastructures.responses.NhanVienResponse;
 import com.example.websitebanquanao.infrastructures.responses.SanPhamChiTietResponse;
+import com.example.websitebanquanao.infrastructures.responses.SanPhamResponse;
 import com.example.websitebanquanao.repositories.SanPhamChiTietRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,11 @@ public class SanPhamChiTietService {
 
     public List<SanPhamChiTietResponse> getAll() {
         return sanPhamChiTietRepository.getAll();
+    }
+
+    public Page<SanPhamChiTietResponse> getPage(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return sanPhamChiTietRepository.getPage(pageable);
     }
 
     public List<SanPhamChiTietResponse> getlisttam() {

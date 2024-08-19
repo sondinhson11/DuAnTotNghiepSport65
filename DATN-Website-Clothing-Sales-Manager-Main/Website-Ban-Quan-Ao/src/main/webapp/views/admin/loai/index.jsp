@@ -18,9 +18,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach varStatus="index" items="${thuongHieuPage.content}" var="th">
+                <c:forEach varStatus="index" items="${loaiPage.content}" var="th">
                     <tr>
-                        <td>${index.index + thuongHieuPage.number * thuongHieuPage.size + 1}</td>
+                        <td>${index.index + loaiPage.number * loaiPage.size + 1}</td>
                         <td>${th.ten}</td>
                         <td>
                             <c:if test="${th.trang_thai == 1}">
@@ -68,18 +68,18 @@
 
     <div class="mt-3">
         <div class="text-center">
-            <c:if test="${thuongHieuPage.totalPages > 1}">
+            <c:if test="${loaiPage.totalPages > 1}">
                 <ul class="pagination">
-                    <li class="page-item <c:if test="${thuongHieuPage.number == 0}">disabled</c:if>">
+                    <li class="page-item <c:if test="${loaiPage.number == 0}">disabled</c:if>">
                         <a class="page-link" href="?page=1">First</a>
                     </li>
-                    <c:forEach var="i" begin="1" end="${thuongHieuPage.totalPages}">
-                        <li class="page-item <c:if test="${thuongHieuPage.number + 1 == i}">active</c:if>">
+                    <c:forEach var="i" begin="1" end="${loaiPage.totalPages}">
+                        <li class="page-item <c:if test="${loaiPage.number + 1 == i}">active</c:if>">
                             <a class="page-link" href="?page=${i}">${i}</a>
                         </li>
                     </c:forEach>
-                    <li class="page-item <c:if test="${thuongHieuPage.number == thuongHieuPage.totalPages - 1}">disabled</c:if>">
-                        <a class="page-link" href="?page=${thuongHieuPage.totalPages - 1}">Last</a>
+                    <li class="page-item <c:if test="${loaiPage.number == loaiPage.totalPages - 1}">disabled</c:if>">
+                        <a class="page-link" href="?page=${loaiPage.totalPages}">Last</a>
                     </li>
                 </ul>
             </c:if>

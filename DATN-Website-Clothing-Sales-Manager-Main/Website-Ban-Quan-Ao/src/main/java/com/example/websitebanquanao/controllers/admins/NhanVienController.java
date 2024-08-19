@@ -28,8 +28,8 @@ public class NhanVienController {
     private static final String redirect = "redirect:/admin/nhan-vien/index";
 
     @GetMapping("index")
-    public String index(@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "pageSize", defaultValue = "5") int pageSize, Model model, @ModelAttribute("successMessage") String successMessage) {
-        Page<NhanVienResponse> nhanVienPage = nhanVienService.getPage(page, pageSize);
+    public String index(@RequestParam(name = "page", defaultValue = "1") int page, Model model, @ModelAttribute("successMessage") String successMessage) {
+        Page<NhanVienResponse> nhanVienPage = nhanVienService.getPage(page, 5);
         model.addAttribute("nhanVienPage", nhanVienPage);
         model.addAttribute("nv", nhanVienRequest);
         model.addAttribute("successMessage", successMessage);

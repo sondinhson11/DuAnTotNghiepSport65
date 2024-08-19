@@ -61,8 +61,8 @@ public class SanPhamChiTietController {
     private SanPhamChiTietRepository sanPhamChiTietRepository;
 
     @GetMapping("/index")
-    public String index(Model model) {
-        model.addAttribute("list", sanPhamChiTietService.getAll());
+    public String index(Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
+        model.addAttribute("list", sanPhamChiTietService.getPage(page, 10));
         model.addAttribute("listMauSac", mauSacService.getAll());
         model.addAttribute("listKichCo", kichCoService.getAll());
         model.addAttribute("listCauLacBo", cauLacBoService.getAll());
@@ -254,7 +254,7 @@ public class SanPhamChiTietController {
         if (hoaDonChiTietService.getHoaDonChiTietByHoaDonIdAndIdSanPhamChiTiet(idHoaDon, idSanPhamChiTiet).getTrangThai() == 2) {
             redirectAttributes.addFlashAttribute("errorMessage", "Sản phẩm này đã được hoàn trước đó.");
             return "redirect:/admin/hoa-don/" + idHoaDon;
-        }else if(hoaDonChiTietService.getHoaDonChiTietByHoaDonIdAndIdSanPhamChiTiet(idHoaDon, idSanPhamChiTiet).getTrangThai() == 1) {
+        } else if (hoaDonChiTietService.getHoaDonChiTietByHoaDonIdAndIdSanPhamChiTiet(idHoaDon, idSanPhamChiTiet).getTrangThai() == 1) {
             redirectAttributes.addFlashAttribute("errorMessage", "Sản phẩm này chưa được xác nhận lấy trước đó.");
             return "redirect:/admin/hoa-don/" + idHoaDon;
         }

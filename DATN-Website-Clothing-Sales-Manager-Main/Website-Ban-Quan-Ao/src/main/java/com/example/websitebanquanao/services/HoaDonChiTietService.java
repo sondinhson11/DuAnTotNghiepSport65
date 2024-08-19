@@ -9,6 +9,9 @@ import com.example.websitebanquanao.infrastructures.responses.HoaDonUserResponse
 import com.example.websitebanquanao.repositories.HoaDonChiTietRepository;
 import com.example.websitebanquanao.repositories.HoaDonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -133,6 +136,10 @@ public class HoaDonChiTietService {
         return hoaDonChiTietRepository.findListHoaDonByKhachHang(idKhachHang);
     }
 
+    public Page<HoaDonUserResponse> getPage(UUID idKhachHang, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return hoaDonChiTietRepository.getPage(idKhachHang, pageable);
+    }
 
     //thống kê
     public Double TongDoanhThu() {

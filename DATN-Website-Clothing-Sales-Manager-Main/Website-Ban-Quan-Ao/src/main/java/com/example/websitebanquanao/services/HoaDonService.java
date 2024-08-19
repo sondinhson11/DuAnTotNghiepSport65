@@ -5,13 +5,13 @@ import com.example.websitebanquanao.entities.HoaDon;
 import com.example.websitebanquanao.entities.KhachHang;
 import com.example.websitebanquanao.infrastructures.requests.FormThanhToan;
 import com.example.websitebanquanao.infrastructures.requests.HoaDonRequest;
-import com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse;
-import com.example.websitebanquanao.infrastructures.responses.GioHangUserResponse;
-import com.example.websitebanquanao.infrastructures.responses.HoaDonChiTietUserResponse;
-import com.example.websitebanquanao.infrastructures.responses.KhachHangResponse;
+import com.example.websitebanquanao.infrastructures.responses.*;
 import com.example.websitebanquanao.repositories.HoaDonRepository;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +43,11 @@ public class HoaDonService {
     // admin
     public List<HoaDon> getAll() {
         return hoaDonRepository.findAllHd();
+    }
+
+    public Page<HoaDon> getPage(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return hoaDonRepository.getPage(pageable);
     }
 
     public List<HoaDon> getAllHoaDonChuaThanhToan() {

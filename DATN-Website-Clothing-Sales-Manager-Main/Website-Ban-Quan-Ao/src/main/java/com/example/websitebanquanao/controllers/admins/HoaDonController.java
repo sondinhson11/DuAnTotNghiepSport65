@@ -29,17 +29,20 @@ public class HoaDonController {
     private HoaDonChiTietService hoaDonChiTietService;
     @Autowired
     private SanPhamChiTietService sanPhamChiTietService;
+
     @Autowired
     private AnhSanPhamService anhSanPhamService;
+
     @Autowired
     private HinhThucThanhToanService hinhThucThanhToanService;
+
     @Autowired
     private HttpSession httpSession;
 
     @GetMapping("/admin/hoa-don")
-    public String index(Model model) {
+    public String index(Model model,@RequestParam(name = "page", defaultValue = "1") int page) {
         model.addAttribute("view", "/views/admin/hoa-don/quan-li-hoa-don.jsp");
-        model.addAttribute("listHoaDon", hoaDonService.getAll());
+        model.addAttribute("listHoaDon", hoaDonService.getPage(page, 10));
         return "admin/layout";
     }
 

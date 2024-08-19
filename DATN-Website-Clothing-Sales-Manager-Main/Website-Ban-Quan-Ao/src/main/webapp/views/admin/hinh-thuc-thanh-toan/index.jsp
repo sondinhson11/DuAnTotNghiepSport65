@@ -23,9 +23,9 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach varStatus="index" items="${giamGiaPage.content}" var="gg">
+        <c:forEach varStatus="index" items="${htttPage.content}" var="gg">
             <tr>
-                <td>${index.index + giamGiaPage.number * giamGiaPage.size + 1}</td>
+                <td>${index.index + htttPage.number * htttPage.size + 1}</td>
                 <td>${gg.ma}</td>
                 <td>${gg.ten}</td>
                 <td>
@@ -106,13 +106,19 @@
 </div>
 <div class="mt-6">
     <div class="text-center">
-        <c:if test="${giamGiaPage.totalPages > 1}">
+        <c:if test="${htttPage.totalPages > 1}">
             <ul class="pagination justify-content-center">
-                <c:forEach var="i" begin="1" end="${giamGiaPage.totalPages}">
-                    <li class="page-item${giamGiaPage.number + 1 == i ? ' active' : ''}">
+                <li class="page-item <c:if test="${htttPage.number == 0}">disabled</c:if>">
+                    <a class="page-link" href="?page=1">First</a>
+                </li>
+                <c:forEach var="i" begin="1" end="${htttPage.totalPages}">
+                    <li class="page-item${htttPage.number + 1 == i ? ' active' : ''}">
                         <a class="page-link" href="?page=${i}">${i}</a>
                     </li>
                 </c:forEach>
+                <li class="page-item <c:if test="${htttPage.number == htttPage.totalPages-1}">disabled</c:if>">
+                    <a class="page-link" href="?page=${htttPage.totalPages}">Last</a>
+                </li>
             </ul>
         </c:if>
     </div>

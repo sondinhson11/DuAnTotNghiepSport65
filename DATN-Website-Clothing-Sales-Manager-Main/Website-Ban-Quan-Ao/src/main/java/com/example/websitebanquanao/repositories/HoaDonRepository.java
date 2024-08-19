@@ -2,6 +2,9 @@ package com.example.websitebanquanao.repositories;
 
 import com.example.websitebanquanao.entities.HoaDon;
 import com.example.websitebanquanao.infrastructures.responses.HoaDonChiTietUserResponse;
+import com.example.websitebanquanao.infrastructures.responses.SanPhamResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +25,9 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query("SELECT hd FROM HoaDon hd order by hd.ma desc ")
     List<HoaDon> findAllHd();
 
+    @Query("select hd FROM HoaDon hd order by hd.ma desc ")
+    public Page<HoaDon> getPage(Pageable pageable);
+
     @Query("SELECT hd FROM HoaDon hd where hd.trangThai = 0 order by hd.ma desc ")
     List<HoaDon> findAllHoaDon();
 
@@ -31,7 +37,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     public void updateDaThanhToanHoaDon(@Param("id") UUID id);
 
     // user
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.HoaDonChiTietUserResponse(hd.ma, hd.trangThai, hd.hinhThucThanhToan, hd.ngayTao, hd.ngayThanhToan, hd.ngayVanChuyen, hd.ngayNhan, hd.nguoiNhan, hd.diaChi, hd.xaPhuong, hd.quanHuyen, hd.tinhThanhPho, hd.email, hd.soDienThoai, hd.maVanChuyen, hd.tenDonViVanChuyen, hd.phiVanChuyen) from HoaDon hd where hd.id = :id order by hd.ma desc")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.HoaDonChiTietUserResponse(hd.ma, hd.trangThai, hd.hinhThucThanhToan, hd.ngayTao, hd.ngayThanhToan, hd.ngayVanChuyen, hd.ngayNhan, hd.nguoiNhan, hd.diaChi, hd.xaPhuong, hd.quanHuyen, hd.tinhThanhPho, hd.email, hd.soDienThoai, hd.maVanChuyen, hd.tenDonViVanChuyen, hd.phiVanChuyen) from HoaDon hd where hd.id = :id")
     public HoaDonChiTietUserResponse findHoaDonUserResponseById(@Param("id") UUID id);
 
     @Query("select hd.idGiamGia.soPhanTramGiam from HoaDon hd where hd.id = :id")
