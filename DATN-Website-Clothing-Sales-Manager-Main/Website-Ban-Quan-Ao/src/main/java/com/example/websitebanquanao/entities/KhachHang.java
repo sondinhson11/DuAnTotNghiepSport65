@@ -60,7 +60,7 @@ public class KhachHang {
     private Integer trangThai;
 
     @OneToMany(mappedBy = "idKhachHang")
-    private Set<GioHangChiTiet> gioHangs = new LinkedHashSet<>();
+    private Set<GioHang> gioHangs = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idKhachHang")
     private Set<HoaDon> hoaDons = new LinkedHashSet<>();

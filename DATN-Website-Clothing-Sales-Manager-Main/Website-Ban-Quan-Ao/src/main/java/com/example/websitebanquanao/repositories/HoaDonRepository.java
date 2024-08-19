@@ -31,7 +31,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     public void updateDaThanhToanHoaDon(@Param("id") UUID id);
 
     // user
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.HoaDonChiTietUserResponse(hd.ma, hd.trangThai, hd.hinhThucThanhToan, hd.ngayTao, hd.ngayThanhToan, hd.ngayVanChuyen, hd.ngayNhan, hd.nguoiNhan, hd.diaChi, hd.xaPhuong, hd.quanHuyen, hd.tinhThanhPho, hd.email, hd.soDienThoai, hd.maVanChuyen, hd.tenDonViVanChuyen, hd.phiVanChuyen) from HoaDon hd where hd.id = :id")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.HoaDonChiTietUserResponse(hd.ma, hd.trangThai, hd.hinhThucThanhToan, hd.ngayTao, hd.ngayThanhToan, hd.ngayVanChuyen, hd.ngayNhan, hd.nguoiNhan, hd.diaChi, hd.xaPhuong, hd.quanHuyen, hd.tinhThanhPho, hd.email, hd.soDienThoai, hd.maVanChuyen, hd.tenDonViVanChuyen, hd.phiVanChuyen) from HoaDon hd where hd.id = :id order by hd.ma desc")
     public HoaDonChiTietUserResponse findHoaDonUserResponseById(@Param("id") UUID id);
 
     @Query("select hd.idGiamGia.soPhanTramGiam from HoaDon hd where hd.id = :id")

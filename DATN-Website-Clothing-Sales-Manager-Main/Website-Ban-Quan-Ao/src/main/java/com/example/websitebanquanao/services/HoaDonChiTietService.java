@@ -28,7 +28,7 @@ public class HoaDonChiTietService {
 
 
     @Autowired
-    private GioHangChiTietService gioHangChiTietService;
+    private GioHangService gioHangService;
 
     @Autowired
     private SanPhamChiTietService sanPhamChiTietService;
@@ -82,7 +82,7 @@ public class HoaDonChiTietService {
 
     // user
     public void addHoaDonChiTietUser(HoaDon hoaDon, UUID idKhachHang) {
-        List<GioHangUserResponse> listSanPhamGioHang = gioHangChiTietService.getListByIdKhachHang(idKhachHang);
+        List<GioHangUserResponse> listSanPhamGioHang = gioHangService.getListByIdKhachHang(idKhachHang);
 
         for (GioHangUserResponse gioHangUserResponse : listSanPhamGioHang) {
             HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
@@ -99,7 +99,7 @@ public class HoaDonChiTietService {
             hoaDonChiTietRepository.save(hoaDonChiTiet);
         }
         createPDF.exportPDFBill(hoaDon, listSanPhamGioHang, sumTongTienByIdHoaDon(hoaDon.getId()).toString());
-        gioHangChiTietService.deleteByIdKhachHang(idKhachHang);
+        gioHangService.deleteByIdKhachHang(idKhachHang);
         System.out.println("HoaDonChiTietService.addHoaDonChiTietUser: " + hoaDon.getMa());
     }
 
