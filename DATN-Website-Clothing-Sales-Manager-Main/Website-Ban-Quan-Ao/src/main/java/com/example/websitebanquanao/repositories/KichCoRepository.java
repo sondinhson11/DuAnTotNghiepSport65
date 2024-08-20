@@ -14,10 +14,10 @@ import java.util.UUID;
 
 @Repository
 public interface KichCoRepository extends JpaRepository<KichCo, Integer> {
-    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.KichCoResponse(k.id, k.ten , k.ngay_tao, k.ngay_sua, k.trang_thai) from KichCo k where k.trang_thai = 1 ORDER BY k.ten")
+    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.KichCoResponse(k.id, k.ten , k.ngay_tao, k.ngay_sua, k.trang_thai) from KichCo k where k.trang_thai = 1 ORDER BY k.ngay_tao desc ")
     public List<KichCoResponse> getAll();
 
-    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.KichCoResponse(k.id, k.ten , k.ngay_tao, k.ngay_sua, k.trang_thai) from KichCo k ORDER BY CASE WHEN k.trang_thai = 1 THEN 0 ELSE 1 END, k.ten")
+    @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.KichCoResponse(k.id, k.ten , k.ngay_tao, k.ngay_sua, k.trang_thai) from KichCo k ORDER BY CASE WHEN k.trang_thai = 1 THEN 0 ELSE 1 END, k.ngay_tao desc ")
     public Page<KichCoResponse> getPage(Pageable pageable);
 
     @Query("SELECT new com.example.websitebanquanao.infrastructures.responses.KichCoResponse(k.id, k.ten , k.ngay_tao, k.ngay_sua, k.trang_thai) FROM KichCo k WHERE k.id = :id")

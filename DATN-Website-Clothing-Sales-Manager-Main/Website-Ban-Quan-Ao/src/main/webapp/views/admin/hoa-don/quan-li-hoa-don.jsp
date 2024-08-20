@@ -78,84 +78,166 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${listHoaDon.content}" var="hoaDon" varStatus="index">
-                        <tr class="show-tabs" data-tab="tabs-${index.count}">
-                            <td>${index.count}</td>
-                            <td>${hoaDon.ma}</td>
-                            <td>${hoaDon.idNhanVien.hoVaTen}</td>
-                            <td>
-                                <c:if test="${hoaDon.idKhachHang != null}">
-                                    ${hoaDon.idKhachHang.hoVaTen}
-                                </c:if>
-                                <c:if test="${hoaDon.idKhachHang == null}">
-                                    ${hoaDon.nguoiNhan  != null ? hoaDon.nguoiNhan : "Khách lẻ"}
-                                </c:if>
-                            </td>
-                            <td>${hoaDon.ngayTao}</td>
-                            <td>
-                                <c:if test="${hoaDon.loaiHoaDon == 0}">
-                                    <span class="text-black">Bán tại quầy</span>
-                                </c:if>
-                                <c:if test="${hoaDon.loaiHoaDon == 1}">
-                                    <span class="text-black">Bán Online</span>
-                                </c:if>
-                                <c:if test="${hoaDon.loaiHoaDon == 2}">
-                                    <span class="text-black">Giao Hàng</span>
-                                </c:if>
+                    <c:if test="${param.trangThai == null}">
+                        <c:forEach items="${listHoaDon.content}" var="hoaDon" varStatus="index">
+                            <tr class="show-tabs" data-tab="tabs-${index.count}">
+                                <td>${index.count}</td>
+                                <td>${hoaDon.ma}</td>
+                                <td>${hoaDon.idNhanVien.hoVaTen}</td>
+                                <td>
+                                    <c:if test="${hoaDon.idKhachHang != null}">
+                                        ${hoaDon.idKhachHang.hoVaTen}
+                                    </c:if>
+                                    <c:if test="${hoaDon.idKhachHang == null}">
+                                        ${hoaDon.nguoiNhan  != null ? hoaDon.nguoiNhan : "Khách lẻ"}
+                                    </c:if>
+                                </td>
+                                <td>${hoaDon.ngayTao}</td>
+                                <td>
+                                    <c:if test="${hoaDon.loaiHoaDon == 0}">
+                                        <span class="text-black">Bán tại quầy</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.loaiHoaDon == 1}">
+                                        <span class="text-black">Bán Online</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.loaiHoaDon == 2}">
+                                        <span class="text-black">Giao Hàng</span>
+                                    </c:if>
 
-                                <c:if test="${hoaDon.loaiHoaDon == null}">
-                                    <span class="text-black">Hóa đơn chờ</span>
-                                </c:if>
-                            </td>
-                            <td>
-                                <p class="text-truncate text-danger" id="tongTien_${hoaDon.ma}"></p>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        var giaSanPhamElement = document.getElementById("tongTien_${hoaDon.ma}");
+                                    <c:if test="${hoaDon.loaiHoaDon == null}">
+                                        <span class="text-black">Hóa đơn chờ</span>
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <p class="text-truncate text-danger" id="tongTien_${hoaDon.ma}"></p>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            var giaSanPhamElement = document.getElementById("tongTien_${hoaDon.ma}");
 
-                                        fetch(`/so-phan-tram-giam-gia/${hoaDon.id}`)
-                                            .then(response => response.json())
-                                            .then(data => {
+                                            fetch(`/so-phan-tram-giam-gia/${hoaDon.id}`)
+                                                .then(response => response.json())
+                                                .then(data => {
 
-                                                var soPhanTramGiam = data;
-                                                var soTienBanDau = ${hoaDon.tongTien};
-                                                var soTienSauGiam = soTienBanDau - (soTienBanDau * (soPhanTramGiam / 100));
-                                                var formattedTienSauGiam = soTienSauGiam.toLocaleString('en-US');
-                                                giaSanPhamElement.innerText = formattedTienSauGiam + " vnđ";
-                                            })
-                                            .catch(error => console.error('Lỗi:', error));
-                                    });
-                                </script>
-                            </td>
-                            <td>
-                                <c:if test="${hoaDon.trangThai == 0}">
-                                    <span class="text-secondary">Chờ thanh toán</span>
-                                </c:if>
-                                <c:if test="${hoaDon.trangThai == 1}">
-                                    <span class="text-success">Đã hoàn thành</span>
-                                </c:if>
-                                <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan ==null}">
-                                    <span class="text-secondary">Chờ xác nhận</span>
-                                </c:if>
-                                <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
-                                    <span class="text-success">Đã thanh toán chuyển khoản</span>
-                                </c:if>
-                                <c:if test="${hoaDon.trangThai == 4}">
-                                    <span class="text-success">Đã xác nhận</span>
-                                </c:if>
-                                <c:if test="${hoaDon.trangThai == 5}">
-                                    <span class="text-danger">Đã huỷ</span>
-                                </c:if>
-                                <c:if test="${hoaDon.trangThai == 10}">
-                                    <span class="text-secondary">Đã huỷ/Chờ hoàn tiền</span>
-                                </c:if>
-                            </td>
-                            <td>
-                                <a href="/admin/hoa-don/${hoaDon.id}" class="btn btn-primary detail-link"
-                                   data-tab="tabs-${index.count}">Chi tiết</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                                                    var soPhanTramGiam = data;
+                                                    var soTienBanDau = ${hoaDon.tongTien};
+                                                    var soTienSauGiam = soTienBanDau - (soTienBanDau * (soPhanTramGiam / 100));
+                                                    var formattedTienSauGiam = soTienSauGiam.toLocaleString('en-US');
+                                                    giaSanPhamElement.innerText = formattedTienSauGiam + " vnđ";
+                                                })
+                                                .catch(error => console.error('Lỗi:', error));
+                                        });
+                                    </script>
+                                </td>
+                                <td>
+                                    <c:if test="${hoaDon.trangThai == 0}">
+                                        <span class="text-secondary">Chờ thanh toán</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 1}">
+                                        <span class="text-success">Đã hoàn thành</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan ==null}">
+                                        <span class="text-secondary">Chờ xác nhận</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
+                                        <span class="text-success">Đã thanh toán chuyển khoản</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 4}">
+                                        <span class="text-success">Đã xác nhận</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 5}">
+                                        <span class="text-danger">Đã huỷ</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 10}">
+                                        <span class="text-secondary">Đã huỷ/Chờ hoàn tiền</span>
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <a href="/admin/hoa-don/${hoaDon.id}" class="btn btn-primary detail-link"
+                                       data-tab="tabs-${index.count}">Chi tiết</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${param.trangThai != null}">
+                        <c:forEach items="${listHoaDon}" var="hoaDon" varStatus="index">
+                            <tr class="show-tabs" data-tab="tabs-${index.count}">
+                                <td>${index.count}</td>
+                                <td>${hoaDon.ma}</td>
+                                <td>${hoaDon.idNhanVien.hoVaTen}</td>
+                                <td>
+                                    <c:if test="${hoaDon.idKhachHang != null}">
+                                        ${hoaDon.idKhachHang.hoVaTen}
+                                    </c:if>
+                                    <c:if test="${hoaDon.idKhachHang == null}">
+                                        ${hoaDon.nguoiNhan  != null ? hoaDon.nguoiNhan : "Khách lẻ"}
+                                    </c:if>
+                                </td>
+                                <td>${hoaDon.ngayTao}</td>
+                                <td>
+                                    <c:if test="${hoaDon.loaiHoaDon == 0}">
+                                        <span class="text-black">Bán tại quầy</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.loaiHoaDon == 1}">
+                                        <span class="text-black">Bán Online</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.loaiHoaDon == 2}">
+                                        <span class="text-black">Giao Hàng</span>
+                                    </c:if>
+
+                                    <c:if test="${hoaDon.loaiHoaDon == null}">
+                                        <span class="text-black">Hóa đơn chờ</span>
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <p class="text-truncate text-danger" id="tongTien_${hoaDon.ma}"></p>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            var giaSanPhamElement = document.getElementById("tongTien_${hoaDon.ma}");
+
+                                            fetch(`/so-phan-tram-giam-gia/${hoaDon.id}`)
+                                                .then(response => response.json())
+                                                .then(data => {
+
+                                                    var soPhanTramGiam = data;
+                                                    var soTienBanDau = ${hoaDon.tongTien};
+                                                    var soTienSauGiam = soTienBanDau - (soTienBanDau * (soPhanTramGiam / 100));
+                                                    var formattedTienSauGiam = soTienSauGiam.toLocaleString('en-US');
+                                                    giaSanPhamElement.innerText = formattedTienSauGiam + " vnđ";
+                                                })
+                                                .catch(error => console.error('Lỗi:', error));
+                                        });
+                                    </script>
+                                </td>
+                                <td>
+                                    <c:if test="${hoaDon.trangThai == 0}">
+                                        <span class="text-secondary">Chờ thanh toán</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 1}">
+                                        <span class="text-success">Đã hoàn thành</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan ==null}">
+                                        <span class="text-secondary">Chờ xác nhận</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 2 && hoaDon.ngayThanhToan !=null}">
+                                        <span class="text-success">Đã thanh toán chuyển khoản</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 4}">
+                                        <span class="text-success">Đã xác nhận</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 5}">
+                                        <span class="text-danger">Đã huỷ</span>
+                                    </c:if>
+                                    <c:if test="${hoaDon.trangThai == 10}">
+                                        <span class="text-secondary">Đã huỷ/Chờ hoàn tiền</span>
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <a href="/admin/hoa-don/${hoaDon.id}" class="btn btn-primary detail-link"
+                                       data-tab="tabs-${index.count}">Chi tiết</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
                     </tbody>
                 </table>
             </div>
@@ -163,20 +245,22 @@
     </div>
     <div class="mt-3">
         <div class="text-center">
-            <c:if test="${listHoaDon.totalPages > 1}">
-                <ul class="pagination">
-                    <li class="page-item <c:if test="${listHoaDon.number == 0}">disabled</c:if>">
-                        <a class="page-link" href="?page=1">First</a>
-                    </li>
-                    <c:forEach var="i" begin="1" end="${listHoaDon.totalPages}">
-                        <li class="page-item <c:if test="${listHoaDon.number + 1 == i}">active</c:if>">
-                            <a class="page-link" href="?page=${i}">${i}</a>
+            <c:if test="${param.trangThai == null}">
+                <c:if test="${listHoaDon.totalPages > 1}">
+                    <ul class="pagination">
+                        <li class="page-item <c:if test="${listHoaDon.number == 0}">disabled</c:if>">
+                            <a class="page-link" href="?page=1">First</a>
                         </li>
-                    </c:forEach>
-                    <li class="page-item <c:if test="${listHoaDon.number == listHoaDon.totalPages-1 }">disabled</c:if>">
-                        <a class="page-link" href="?page=${listHoaDon.totalPages}">Last</a>
-                    </li>
-                </ul>
+                        <c:forEach var="i" begin="1" end="${listHoaDon.totalPages}">
+                            <li class="page-item <c:if test="${listHoaDon.number + 1 == i}">active</c:if>">
+                                <a class="page-link" href="?page=${i}">${i}</a>
+                            </li>
+                        </c:forEach>
+                        <li class="page-item <c:if test="${listHoaDon.number == listHoaDon.totalPages-1 }">disabled</c:if>">
+                            <a class="page-link" href="?page=${listHoaDon.totalPages}">Last</a>
+                        </li>
+                    </ul>
+                </c:if>
             </c:if>
         </div>
     </div>

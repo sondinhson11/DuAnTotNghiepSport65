@@ -14,10 +14,10 @@ import java.util.List;
 
 @Repository
 public interface ThuongHieuRepository extends JpaRepository<ThuongHieu, Integer> {
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.ThuongHieuResponse(m.id, m.ten, m.ngay_tao, m.ngay_sua, m.trang_thai) from ThuongHieu m where m.trang_thai = 1 ORDER BY m.ten")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.ThuongHieuResponse(m.id, m.ten, m.ngay_tao, m.ngay_sua, m.trang_thai) from ThuongHieu m where m.trang_thai = 1 ORDER BY m.ngay_tao desc ")
     public List<ThuongHieuResponse> getAll();
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.ThuongHieuResponse(m.id, m.ten, m.ngay_tao, m.ngay_sua, m.trang_thai) from ThuongHieu m ORDER BY CASE WHEN m.trang_thai = 1 THEN 0 ELSE 1 END, m.ten")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.ThuongHieuResponse(m.id, m.ten, m.ngay_tao, m.ngay_sua, m.trang_thai) from ThuongHieu m ORDER BY CASE WHEN m.trang_thai = 1 THEN 0 ELSE 1 END, m.ngay_tao desc ")
     public Page<ThuongHieuResponse> getPage(Pageable pageable);
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.ThuongHieuResponse(m.id, m.ten ,m.ngay_tao,m.ngay_sua,m.trang_thai) from ThuongHieu m where m.id = :id")

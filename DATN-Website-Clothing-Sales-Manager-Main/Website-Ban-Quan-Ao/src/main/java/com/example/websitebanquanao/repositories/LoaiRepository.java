@@ -15,10 +15,10 @@ import java.util.List;
 @Repository
 public interface LoaiRepository extends JpaRepository<Loai, Integer> {
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.LoaiResponse(m.id, m.ten, m.ngay_tao, m.ngay_sua, m.trang_thai) from Loai m where m.trang_thai = 1 ORDER BY m.ten")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.LoaiResponse(m.id, m.ten, m.ngay_tao, m.ngay_sua, m.trang_thai) from Loai m where m.trang_thai = 1 ORDER BY m.ngay_tao desc ")
     public List<LoaiResponse> getAll();
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.LoaiResponse(m.id, m.ten, m.ngay_tao, m.ngay_sua, m.trang_thai) from Loai m ORDER BY CASE WHEN m.trang_thai = 1 THEN 0 ELSE 1 END, m.ten")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.LoaiResponse(m.id, m.ten, m.ngay_tao, m.ngay_sua, m.trang_thai) from Loai m ORDER BY CASE WHEN m.trang_thai = 1 THEN 0 ELSE 1 END, m.ngay_tao desc ")
     public Page<LoaiResponse> getPage(Pageable pageable);
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.LoaiResponse(m.id, m.ten ,m.ngay_tao,m.ngay_sua,m.trang_thai) from Loai m where m.id = :id")

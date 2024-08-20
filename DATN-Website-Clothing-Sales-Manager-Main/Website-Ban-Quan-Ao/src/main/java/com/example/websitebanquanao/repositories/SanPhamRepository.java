@@ -17,7 +17,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
 
 
     // admin
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamResponse(sp.id,sp.idLoai.id, sp.idThuongHieu.id, sp.idCauLacBo.id, sp.ten, sp.ngay_tao, sp.anh, sp.idLoai.ten,sp.idCauLacBo.ten,sp.idThuongHieu.ten,sp.trang_thai) from SanPham sp ORDER BY sp.ten")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamResponse(sp.id,sp.idLoai.id, sp.idThuongHieu.id, sp.idCauLacBo.id, sp.ten, sp.ngay_tao, sp.anh, sp.idLoai.ten,sp.idCauLacBo.ten,sp.idThuongHieu.ten,sp.trang_thai) from SanPham sp ORDER BY sp.ngay_tao desc ")
     public List<SanPhamResponse> getAll();
 
 
@@ -38,7 +38,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             "                )", nativeQuery = true)
     List<SanPham> getAllKhuyenMai2();
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamResponse(sp.id, sp.idLoai.id, sp.idThuongHieu.id, sp.idCauLacBo.id, sp.ten, sp.ngay_tao, sp.anh, sp.idLoai.ten, sp.idThuongHieu.ten, sp.idCauLacBo.ten, sp.trang_thai) from SanPham sp ORDER BY CASE WHEN sp.trang_thai = 1 THEN 0 ELSE 1 END, sp.ten")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.SanPhamResponse(sp.id, sp.idLoai.id, sp.idThuongHieu.id, sp.idCauLacBo.id, sp.ten, sp.ngay_tao, sp.anh, sp.idLoai.ten, sp.idThuongHieu.ten, sp.idCauLacBo.ten, sp.trang_thai) from SanPham sp ORDER BY CASE WHEN sp.trang_thai = 1 THEN 0 ELSE 1 END, sp.ngay_tao desc ")
     public Page<SanPhamResponse> getPage(Pageable pageable);
 
 

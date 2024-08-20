@@ -47,7 +47,7 @@ public class HoaDonController {
     }
 
     @GetMapping("/view-hoa-don/{id}")
-    public String viewHoaDon(@PathVariable("id") UUID id, @RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "pageSize", defaultValue = "6") int pageSize, Model model) {
+    public String viewHoaDon(@PathVariable("id") UUID id, Model model) {
         // Lấy thông tin hoá đơn chi tiết dựa trên id hoá đơn
         HoaDon hoaDon = hoaDonService.getById(id);
 
@@ -69,7 +69,7 @@ public class HoaDonController {
     }
 
     @GetMapping("/admin/hoa-don/{id}")
-    public String viewHoaDonAdmin(@PathVariable("id") UUID id, @RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "pageSize", defaultValue = "6") int pageSize, Model model) {
+    public String viewHoaDonAdmin(@PathVariable("id") UUID id, Model model) {
         // Lấy thông tin hoá đơn chi tiết dựa trên id hoá đơn
         HoaDon hoaDon = hoaDonService.getById(id);
         List<GioHangResponse> listSanPhamTrongGioHang = hoaDonChiTietService.getHoaDonChiTietByHoaDonId(id);

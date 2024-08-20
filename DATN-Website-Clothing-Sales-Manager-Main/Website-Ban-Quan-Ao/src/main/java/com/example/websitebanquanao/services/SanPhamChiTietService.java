@@ -214,16 +214,19 @@ public class SanPhamChiTietService {
         return sanPhamChiTietRepository.findSanPhamChiTietByIdSanPham(idSanPham);
     }
 
-    public List<SanPhamChiTietResponse> getByStatus(Integer trangThai) {
-        return sanPhamChiTietRepository.getByStatus(trangThai);
+    public Page<SanPhamChiTietResponse> getByStatus(Integer trangThai,int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return sanPhamChiTietRepository.getByStatus(trangThai,pageable);
     }
 
-    public List<SanPhamChiTietResponse> getByTenMauSac(String tenMauSac) {
-        return sanPhamChiTietRepository.getByTenMauSac(tenMauSac);
+    public Page<SanPhamChiTietResponse> getByTenMauSac(String tenMauSac,int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return sanPhamChiTietRepository.getByTenMauSac(tenMauSac,pageable);
     }
 
-    public List<SanPhamChiTietResponse> getByTenKichCo(String tenKichCo) {
-        return sanPhamChiTietRepository.getByTenKichCo(tenKichCo);
+    public Page<SanPhamChiTietResponse> getByTenKichCo(String tenKichCo,int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return sanPhamChiTietRepository.getByTenKichCo(tenKichCo,pageable);
     }
 
     // user
@@ -270,7 +273,8 @@ public class SanPhamChiTietService {
         return sanPhamChiTietRepository.getSoLuongSanPham(idSanPham, idMauSac, idKichCo);
     }
 
-    public List<SanPhamChiTietResponse> searchByTenSanPham(String tenSanPham) {
-        return sanPhamChiTietRepository.getByTenSanPham(tenSanPham);
+    public Page<SanPhamChiTietResponse> searchByTenSanPham(String tenSanPham,int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        return sanPhamChiTietRepository.getByTenSanPham(tenSanPham,pageable);
     }
 }

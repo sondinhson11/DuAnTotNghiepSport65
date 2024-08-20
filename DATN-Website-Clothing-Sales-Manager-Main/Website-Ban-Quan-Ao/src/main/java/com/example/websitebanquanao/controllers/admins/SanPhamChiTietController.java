@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -193,14 +194,14 @@ public class SanPhamChiTietController {
     }
 
     @GetMapping("/filter")
-    public String filter(@RequestParam(name = "status", required = false) Integer status, Model model) {
-        List<SanPhamChiTietResponse> filteredList;
+    public String filter(@RequestParam(name = "status", required = false) Integer status, Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
+        Page<SanPhamChiTietResponse> filteredList;
 
         if (status != null && status != -1) {
-            filteredList = sanPhamChiTietService.getByStatus(status);
+            filteredList = sanPhamChiTietService.getByStatus(status,page,10);
         } else {
             // If no status is selected, show all products.
-            filteredList = sanPhamChiTietService.getAll();
+            filteredList = sanPhamChiTietService.getPage(page,10);
         }
         model.addAttribute("list", sanPhamChiTietService.getAll());
         model.addAttribute("listMauSac", mauSacService.getAll());
@@ -211,14 +212,14 @@ public class SanPhamChiTietController {
     }
 
     @GetMapping("/filter-mau-sac")
-    public String filterMauSac(@RequestParam(name = "tenMauSac", required = false) String tenMauSac, Model model) {
-        List<SanPhamChiTietResponse> filteredList;
+    public String filterMauSac(@RequestParam(name = "tenMauSac", required = false) String tenMauSac, Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
+        Page<SanPhamChiTietResponse> filteredList;
 
         if (tenMauSac != null && !tenMauSac.isEmpty()) {
-            filteredList = sanPhamChiTietService.getByTenMauSac(tenMauSac);
+            filteredList = sanPhamChiTietService.getByTenMauSac(tenMauSac, page, 10);
         } else {
             // If no status is selected, show all products.
-            filteredList = sanPhamChiTietService.getAll();
+            filteredList = sanPhamChiTietService.getPage(page, 10);
         }
         model.addAttribute("list", sanPhamChiTietService.getAll());
         model.addAttribute("listMauSac", mauSacService.getAll());
@@ -229,14 +230,14 @@ public class SanPhamChiTietController {
     }
 
     @GetMapping("/filter-kich-co")
-    public String filterKichCo(@RequestParam(name = "tenKichCo", required = false) String tenKichCo, Model model) {
-        List<SanPhamChiTietResponse> filteredList;
+    public String filterKichCo(@RequestParam(name = "tenKichCo", required = false) String tenKichCo, Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
+        Page<SanPhamChiTietResponse> filteredList;
 
         if (tenKichCo != null && !tenKichCo.isEmpty()) {
-            filteredList = sanPhamChiTietService.getByTenKichCo(tenKichCo);
+            filteredList = sanPhamChiTietService.getByTenKichCo(tenKichCo, page, 10);
         } else {
             // If no status is selected, show all products.
-            filteredList = sanPhamChiTietService.getAll();
+            filteredList = sanPhamChiTietService.getPage(page, 10);
         }
         model.addAttribute("list", sanPhamChiTietService.getAll());
         model.addAttribute("listMauSac", mauSacService.getAll());
@@ -281,8 +282,8 @@ public class SanPhamChiTietController {
     }
 
     @GetMapping("/search")
-    public String searchByName(@RequestParam("name") String tenSanPham, Model model) {
-        List<SanPhamChiTietResponse> list = sanPhamChiTietService.searchByTenSanPham(tenSanPham);
+    public String searchByName(@RequestParam("name") String tenSanPham, Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
+        Page<SanPhamChiTietResponse> list = sanPhamChiTietService.searchByTenSanPham(tenSanPham,page,10);
         model.addAttribute("list", list);
         model.addAttribute("listMauSac", mauSacService.getAll()); // Thêm danh sách màu sắc
         model.addAttribute("listKichCo", kichCoService.getAll()); // Thêm danh sách kích cỡ

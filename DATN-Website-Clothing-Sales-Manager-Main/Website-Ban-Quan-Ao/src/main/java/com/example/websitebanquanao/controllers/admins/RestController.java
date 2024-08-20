@@ -77,7 +77,7 @@ public class RestController {
 
 
     @PostMapping("/send")
-    public String sendEmail(@RequestParam(name = "to", defaultValue = "boykt2k2@gmail.com") String to, @RequestParam(name = "subject", defaultValue = "Cảm ơn bạn đã mua hàng") String subject, @RequestParam(name = "body", defaultValue = "Đây là hóa đơn của bạn") String body, @RequestParam(name = "maHD", defaultValue = "HD0003") String maHD) {
+    public String sendEmail(@RequestParam(name = "to", defaultValue = "xmenrasdra14022003@gmail.com") String to, @RequestParam(name = "subject", defaultValue = "Cảm ơn bạn đã mua hàng") String subject, @RequestParam(name = "body", defaultValue = "Đây là hóa đơn của bạn") String body, @RequestParam(name = "maHD", defaultValue = "HD0003") String maHD) {
         try {
             emailService.sendEmail(to, subject, body, maHD);
             return "Email sent successfully!";

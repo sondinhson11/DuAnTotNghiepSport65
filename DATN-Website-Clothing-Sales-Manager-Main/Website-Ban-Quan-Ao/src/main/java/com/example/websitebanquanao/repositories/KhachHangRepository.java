@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Repository
 public interface KhachHangRepository extends JpaRepository<KhachHang, UUID> {
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho,kh.trangThai) from KhachHang kh")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho,kh.trangThai) from KhachHang kh ORDER BY CASE WHEN kh.trangThai = 0 THEN 0 ELSE 1 END, kh.ngayTao desc ")
     public Page<KhachHangResponse> getPage(Pageable pageable);
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.KhachHangResponse(kh.id, kh.hoVaTen, kh.soDienThoai, kh.email, kh.diaChi, kh.xaPhuong, kh.quanHuyen, kh.tinhThanhPho,kh.trangThai) from KhachHang kh where kh.id = :id")

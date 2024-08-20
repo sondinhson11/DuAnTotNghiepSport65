@@ -15,16 +15,16 @@ import java.util.UUID;
 
 @Repository
 public interface NhanVienRepository extends JpaRepository<NhanVien, UUID> {
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.NhanVienResponse(nv.id, nv.ma, nv.hoVaTen, nv.email, nv.soDienThoai, nv.diaChi, nv.xaPhuong, nv.quanHuyen, nv.tinhThanhPho, nv.ngayVaoLam, nv.chucVu,nv.ngayTao,nv.ngaySua, nv.trangThai) from NhanVien nv")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.NhanVienResponse(nv.id, nv.ma, nv.hoVaTen, nv.email, nv.soDienThoai, nv.diaChi, nv.xaPhuong, nv.quanHuyen, nv.tinhThanhPho, nv.ngayVaoLam, nv.chucVu,nv.ngayTao,nv.ngaySua, nv.trangThai) from NhanVien nv ORDER BY CASE WHEN nv.trangThai = 0 THEN 0 ELSE 1 END,nv.ngayTao desc ")
     public List<NhanVienResponse> getAll();
 
-    @Query("select new com.example.websitebanquanao.infrastructures.responses.NhanVienResponse(nv.id, nv.ma, nv.hoVaTen, nv.email, nv.soDienThoai, nv.diaChi, nv.xaPhuong, nv.quanHuyen, nv.tinhThanhPho, nv.ngayVaoLam, nv.chucVu,nv.ngayTao,nv.ngaySua, nv.trangThai) from NhanVien nv")
+    @Query("select new com.example.websitebanquanao.infrastructures.responses.NhanVienResponse(nv.id, nv.ma, nv.hoVaTen, nv.email, nv.soDienThoai, nv.diaChi, nv.xaPhuong, nv.quanHuyen, nv.tinhThanhPho, nv.ngayVaoLam, nv.chucVu,nv.ngayTao,nv.ngaySua, nv.trangThai) from NhanVien nv ORDER BY CASE WHEN nv.trangThai = 0 THEN 0 ELSE 1 END,nv.ngayTao desc ")
     public Page<NhanVienResponse> getPage(Pageable pageable);
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.NhanVienResponse(nv.id, nv.ma, nv.hoVaTen, nv.email, nv.soDienThoai, nv.diaChi, nv.xaPhuong, nv.quanHuyen, nv.tinhThanhPho, nv.ngayVaoLam, nv.chucVu,nv.ngayTao,nv.ngaySua, nv.trangThai) from NhanVien nv where nv.id = :id")
     public NhanVienResponse getByIdResponse(@Param("id") UUID id);
 
-//    check login
+    //    check login
     @Query("select nv from NhanVien nv where nv.email = :email and nv.matKhau = :matKhau")
     public NhanVien checkLogin(@Param("email") String email, @Param("matKhau") String matKhau);
 
