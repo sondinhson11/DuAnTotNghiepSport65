@@ -210,14 +210,14 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="soDienThoai" class="form-label">Số điện thoại</label>
-                                <form:input type="tel" path="soDienThoai" id="soDienThoai" class="form-control"/>
+                                <form:input type="tel" path="soDienThoai" id="soDienThoaiTK" class="form-control"/>
                                     <%--                                                required="true"/>--%>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
-                                <form:input type="email" path="email" id="email" class="form-control"/>
+                                <form:input type="email" path="email" id="emailTK" class="form-control"/>
                                     <%--                                                required="true"/>--%>
                             </div>
                         </div>
@@ -258,7 +258,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="diaChi" class="form-label">Địa chỉ</label>
-                                <form:input type="text" path="diaChi" id="diaChi" class="form-control"/>
+                                <form:input type="text" path="diaChi" id="diaChiTK" class="form-control"/>
                                     <%--                                                required="true"/>--%>
                             </div>
                         </div>
@@ -395,9 +395,9 @@
             success: function (data) {
                 // Đặt giá trị cho các trường trong modal bằng dữ liệu từ yêu cầu AJAX
                 $("#hoVaTen").val(data.hoVaTen);
-                $("#soDienThoai").val(data.soDienThoai);
-                $("#email").val(data.email);
-                $("#diaChi").val(data.diaChi);
+                $("#soDienThoaiTK").val(data.soDienThoai);
+                $("#emailTK").val(data.email);
+                $("#diaChiTK").val(data.diaChi);
                 $("#xaPhuong").val(data.xaPhuong);
                 $("#quanHuyen").val(data.quanHuyen);
                 $("#tinhThanhPho").val(data.tinhThanhPho);

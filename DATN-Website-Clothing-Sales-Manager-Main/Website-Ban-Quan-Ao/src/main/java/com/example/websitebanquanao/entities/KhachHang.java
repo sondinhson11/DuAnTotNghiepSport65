@@ -1,6 +1,5 @@
 package com.example.websitebanquanao.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +7,6 @@ import org.hibernate.annotations.Nationalized;
 
 import java.sql.Date;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -60,7 +58,7 @@ public class KhachHang {
     private Integer trangThai;
 
     @OneToMany(mappedBy = "idKhachHang")
-    private Set<GioHang> gioHangs = new LinkedHashSet<>();
+    private Set<GioHangChiTiet> gioHangs = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "idKhachHang")
     private Set<HoaDon> hoaDons = new LinkedHashSet<>();

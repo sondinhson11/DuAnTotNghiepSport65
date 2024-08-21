@@ -119,7 +119,7 @@ CREATE TABLE nhan_vien
     trang_thai  INT 
 )
 
-CREATE TABLE gio_hang
+CREATE TABLE gio_hang_chi_tiet
 (
     id                   UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     id_khach_hang          UNIQUEIDENTIFIER,
@@ -255,11 +255,11 @@ ALTER TABLE anh_san_pham
     ADD FOREIGN KEY (id_san_pham) REFERENCES san_pham (id)
 
 -- khach_hang - gio_hang
-ALTER TABLE gio_hang
+ALTER TABLE gio_hang_chi_tiet
     ADD FOREIGN KEY (id_khach_hang) REFERENCES khach_hang (id)
 
 -- san_pham - gio_hang_chi_tiet
-ALTER TABLE gio_hang
+ALTER TABLE gio_hang_chi_tiet
     ADD FOREIGN KEY (id_san_pham_chi_tiet) REFERENCES san_pham_chi_tiet (id)
 
 -- khuyen_mai - khuyen_mai_chi_tiet
@@ -396,7 +396,7 @@ VALUES
     ('NV003', N'Lê G H', N'legh@example.com', N'1122334466', N'password789', N'456 Đường F', N'Phường W', N'Quận V', N'TP. U', '2024-01-01', 1, '2024-01-01', '2024-01-01', 1);
 
 -- Insert data into 'gio_hang' table
-INSERT INTO gio_hang (id_khach_hang, id_san_pham_chi_tiet, gia, so_luong, ngay_tao, ngay_sua, trang_thai)
+INSERT INTO gio_hang_chi_tiet (id_khach_hang, id_san_pham_chi_tiet, gia, so_luong, ngay_tao, ngay_sua, trang_thai)
 VALUES 
     ((SELECT id FROM khach_hang WHERE email = 'sondinhson11@gmail.com'), 
         (SELECT id FROM san_pham_chi_tiet WHERE ma_san_pham = 'SP001'), 
