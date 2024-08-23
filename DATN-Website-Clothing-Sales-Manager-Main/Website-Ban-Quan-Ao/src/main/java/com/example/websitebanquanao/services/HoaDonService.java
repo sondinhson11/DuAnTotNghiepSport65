@@ -209,7 +209,12 @@ public class HoaDonService {
         hoaDon.setIdKhachHang(khachHang);
         hoaDonRepository.save(hoaDon);
         hoaDonChiTietService.addHoaDonChiTietUser(hoaDon, khachHangResponse.getId());
-        emailService.sendEmail(khachHangResponse.getEmail(), "Cảm ơn bạn đã đặt hàng", "Đây là hóa đơn của bạn", hoaDon.getMa());
+        if(diaChiMacDinh == 1){
+            emailService.sendEmail(khachHangResponse.getEmail(), "Cảm ơn bạn đã đặt hàng", "Đây là hóa đơn của bạn", hoaDon.getMa());
+        }else{
+            emailService.sendEmail(formThanhToan.getEmail(), "Cảm ơn bạn đã đặt hàng", "Đây là hóa đơn của bạn", hoaDon.getMa());
+
+        }
         System.out.println("HoaDonService.addHoaDonUser: " + hoaDon.getMa());
         return hoaDon.getId();
     }
