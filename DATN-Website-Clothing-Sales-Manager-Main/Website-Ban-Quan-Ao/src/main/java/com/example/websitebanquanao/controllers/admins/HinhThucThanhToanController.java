@@ -25,6 +25,7 @@ import java.util.UUID;
 public class HinhThucThanhToanController {
     @Autowired
     private HinhThucThanhToanService hinhThucThanhToanService;
+
     @Autowired
     private HinhThucThanhToanRequest hinhThucThanhToanRequest;
 
@@ -77,7 +78,7 @@ public class HinhThucThanhToanController {
             return redirect;
         }
 
-        hinhThucThanhToanService.add(hinhThucThanhToanRequest);
+      hinhThucThanhToanService.add(hinhThucThanhToanRequest);
         redirectAttributes.addFlashAttribute("successMessage", "Thêm hình thức thanh toán thành công");
         return redirect;
     }

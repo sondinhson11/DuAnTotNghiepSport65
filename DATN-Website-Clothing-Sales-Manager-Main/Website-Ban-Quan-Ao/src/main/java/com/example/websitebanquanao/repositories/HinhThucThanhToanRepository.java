@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface HinhThucThanhToanRepository extends JpaRepository<HinhThucThanhToan, Integer> {
+public interface HinhThucThanhToanRepository extends JpaRepository<HinhThucThanhToan,Integer> {
     // admin
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai)from HinhThucThanhToan g ORDER BY CASE WHEN g.trangThai = 1 THEN 0 ELSE 1 END, g.ma desc ")
     public Page<HinhThucThanhToanResponse> getPage(Pageable pageable);
@@ -31,9 +31,6 @@ public interface HinhThucThanhToanRepository extends JpaRepository<HinhThucThanh
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai) from HinhThucThanhToan g where g.ma = :ma")
     public HinhThucThanhToanResponse findByMa(@Param("ma") String ma);
 
-    @Modifying
-    @Query("update GiamGia g set g.soLuong = :soLuong where g.ma = :ma")
-    public void updateSoLuongByMa(@Param("ma") String ma);
 
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai) from HinhThucThanhToan g where g.ma = :ma")
     public HinhThucThanhToanResponse getByMa(@Param("ma") String ma);

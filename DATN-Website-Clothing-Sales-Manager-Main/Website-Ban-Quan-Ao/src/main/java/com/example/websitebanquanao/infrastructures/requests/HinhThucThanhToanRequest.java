@@ -20,7 +20,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-
 public class HinhThucThanhToanRequest {
     @NotBlank(message = "Mã không được để trống")
     private String ma;
