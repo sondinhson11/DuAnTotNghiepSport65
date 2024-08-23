@@ -2,6 +2,7 @@ package com.example.websitebanquanao.repositories;
 
 import com.example.websitebanquanao.entities.HinhThucThanhToan;
 import com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,11 +11,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface HinhThucThanhToanRepository extends JpaRepository<HinhThucThanhToan,Integer> {
+public interface HinhThucThanhToanRepository extends JpaRepository<HinhThucThanhToan, Integer> {
     // admin
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai)from HinhThucThanhToan g ORDER BY CASE WHEN g.trangThai = 1 THEN 0 ELSE 1 END, g.ma desc ")
     public Page<HinhThucThanhToanResponse> getPage(Pageable pageable);
@@ -26,6 +28,11 @@ public interface HinhThucThanhToanRepository extends JpaRepository<HinhThucThanh
     public HinhThucThanhToanResponse getByIdResponse(@Param("id") Integer id);
 
     boolean existsByMa(String ma);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO hinh_thuc_thanh_toan(ma,ten,ngay_tao,ngay_sua,trang_thai) VALUES (?1, ?2,?3,?4,?5)", nativeQuery = true)
+    public void them(String ma,String ten,Date ngay_tao,Date ngay_sua,Integer trang_thai);
 
     // user
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai) from HinhThucThanhToan g where g.ma = :ma")

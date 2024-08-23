@@ -31,23 +31,21 @@ public class HinhThucThanhToanService {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         return hinhThucThanhToanRepository.getPage(pageable);
     }
+
     public boolean isTenValid(String ma) {
-        return ma != null && !ma.trim().isEmpty(); }
+        return ma != null && !ma.trim().isEmpty();
+    }
 
     public void add(HinhThucThanhToanRequest hinhThucThanhToanRequest) {
-            HinhThucThanhToan hinhThucThanhToan = new HinhThucThanhToan();
-            hinhThucThanhToan.setMa(hinhThucThanhToanRequest.getMa());
-            hinhThucThanhToan.setTen(hinhThucThanhToanRequest.getTen());
-            hinhThucThanhToan.setTrangThai(hinhThucThanhToanRequest.getTrangThai());
-            java.util.Date currentDate = new java.util.Date();
-            if (hinhThucThanhToanRequest.getNgayTao() == null) {
-                hinhThucThanhToan.setNgayTao(new Date(currentDate.getTime()));
-            } else {
-                hinhThucThanhToan.setNgayTao(hinhThucThanhToanRequest.getNgayTao());
-            }
-            hinhThucThanhToan.setNgaySua(new Date(currentDate.getTime()));
-            hinhThucThanhToanRepository.save(hinhThucThanhToan);
-            System.out.println("HinhThucThanhToanService.add: " + hinhThucThanhToanRequest.getMa());
+        HinhThucThanhToan hinhThucThanhToan = new HinhThucThanhToan();
+        hinhThucThanhToan.setMa(hinhThucThanhToanRequest.getMa());
+        hinhThucThanhToan.setTen(hinhThucThanhToanRequest.getTen());
+        hinhThucThanhToan.setTrangThai(hinhThucThanhToanRequest.getTrangThai());
+        java.util.Date currentDate = new java.util.Date();
+        hinhThucThanhToan.setNgayTao(new Date(currentDate.getTime()));
+        hinhThucThanhToan.setNgaySua(new Date(currentDate.getTime()));
+        hinhThucThanhToanRepository.them(hinhThucThanhToan.getMa(), hinhThucThanhToan.getTen(), hinhThucThanhToan.getNgayTao(), hinhThucThanhToan.getNgaySua(), hinhThucThanhToan.getTrangThai());
+        System.out.println("HinhThucThanhToanService.add: " + hinhThucThanhToanRequest.getMa());
     }
 
     public void update(HinhThucThanhToanRequest hinhThucThanhToanRequest, Integer id) {
@@ -104,7 +102,8 @@ public class HinhThucThanhToanService {
     }
 
     public boolean isMaValid(String ma) {
-        return ma != null && !ma.trim().isEmpty(); }
+        return ma != null && !ma.trim().isEmpty();
+    }
 
     public HinhThucThanhToanResponse getByMa(String ma) {
         return hinhThucThanhToanRepository.getByMa(ma);
