@@ -52,6 +52,10 @@ public class KhachHangController {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
+        if (khachHangService.existsByEmail(khachHangRequest.getEmail())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Email này đã được sử dụng");
+            return redirect;
+        }
         if (!khachHangService.isEmail(khachHangRequest.getEmail())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Email chưa đúng định dạng, ví dụ: abc@yahoo.com");
             return redirect;
@@ -66,12 +70,6 @@ public class KhachHangController {
             return redirect;
         }
 
-
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/khach-hang/index.jsp");
-            return "admin/layout";
-        }
-
         khachHangService.add(khachHangRequest);
         redirectAttributes.addFlashAttribute("successMessage", "Thêm khách hàng thành công");
         return redirect;
@@ -81,6 +79,10 @@ public class KhachHangController {
     public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("kh") KhachHangRequest khachHangRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (khachHangRequest.validUpdate()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
+            return redirect;
+        }
+        if (khachHangService.existsByEmail(khachHangRequest.getEmail())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Email này đã được sử dụng");
             return redirect;
         }
         if (!khachHangService.isEmail(khachHangRequest.getEmail())) {

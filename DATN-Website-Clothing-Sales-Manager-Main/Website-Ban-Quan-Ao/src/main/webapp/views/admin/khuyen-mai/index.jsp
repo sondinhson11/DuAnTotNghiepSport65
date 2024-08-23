@@ -88,16 +88,6 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="ma" class="form-label">Mã</label>
-                                    <form:input type="text" path="ma" id="ma" class="form-control"
-                                                required="true"/>
-                                    <form:errors path="ma" cssClass="text-danger"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <div class="form-group">
                                     <label for="ten" class="form-label">Tên chương trình</label>
                                     <form:input type="text" path="ten" id="ten" class="form-control"
                                                 required="true"/>

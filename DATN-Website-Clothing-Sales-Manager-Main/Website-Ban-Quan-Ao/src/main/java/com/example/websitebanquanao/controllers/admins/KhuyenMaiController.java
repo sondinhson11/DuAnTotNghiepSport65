@@ -61,22 +61,13 @@ public class KhuyenMaiController {
 
     @PostMapping("store")
     public String store(@ModelAttribute("km") KhuyenMaiRequest khuyenMaiRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/khuyen-mai/index.jsp");
-            return "admin/layout";
+        if (khuyenMaiRequest.validNull()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
+            return redirect;
         }
 
-        if (khuyenMaiRequest.getMa().trim().length() == 0) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng nhập mã.");
-            return redirect;
-        }
-        if (khuyenMaiRequest.getTen().trim().length() == 0) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng nhập tên.");
-            return redirect;
-        }
-        // Kiểm tra xem mã giảm giá đã tồn tại
-        if (khuyenMaiRepository.existsByMa(khuyenMaiRequest.getMa())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Thêm khuyến mãi thất bại");
+        if (!khuyenMaiService.isTenValid(khuyenMaiRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
             return redirect;
         }
 
@@ -85,7 +76,6 @@ public class KhuyenMaiController {
             redirectAttributes.addFlashAttribute("errorMessage", "Phần trăm giảm không hợp lệ");
             return redirect;
         }
-
 
         // Kiểm tra xem ngày kết thúc sau ngày bắt đầu
         if (khuyenMaiRequest.getNgayKetThuc().isBefore(khuyenMaiRequest.getNgayBatDau())) {
@@ -100,38 +90,20 @@ public class KhuyenMaiController {
 
     @PostMapping("update/{id}")
     public String update(@ModelAttribute("km") KhuyenMaiRequest khuyenMaiRequest, @PathVariable("id") UUID id, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/khuyen-mai/index.jsp");
-            return "admin/layout";
-        }
-        String updatedTen = khuyenMaiRequest.getTen().trim();
-        String updatedMa = khuyenMaiRequest.getMa().trim();
-        KhuyenMai existingKhuyenMai = khuyenMaiService.findById(id);
-        
-        if (khuyenMaiRepository.existsByTen(updatedTen) && !updatedTen.equals(existingKhuyenMai.getTen())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Tên thương hiệu đã tồn tại");
-            return redirect;
-        }
-        if (khuyenMaiRepository.existsByTen(updatedTen) && !updatedTen.equals(existingKhuyenMai.getTen())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Tên khuyễn mại đã tồn tại");
+
+        if (khuyenMaiRequest.validNull()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
 
-        if (!khuyenMaiService.isTenValid(updatedTen)) {
+        if (!khuyenMaiService.isTenValid(khuyenMaiRequest.getTen())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
-            return redirect;
-        }
-        if (!khuyenMaiService.isMaValid(updatedMa)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Mã toàn khoảng trắng không hợp lệ");
             return redirect;
         }
 
         if (khuyenMaiRequest.getSoPhanTramGiam() < 1 || khuyenMaiRequest.getSoPhanTramGiam() > 100) {
             redirectAttributes.addFlashAttribute("errorMessage", "Phần trăm giảm không hợp lệ");
             return redirect;
-        }
-        if (updatedTen.equals(existingKhuyenMai.getTen())) {
-            khuyenMaiRequest.setTen(existingKhuyenMai.getTen());
         }
 
         khuyenMaiService.update(khuyenMaiRequest, id);

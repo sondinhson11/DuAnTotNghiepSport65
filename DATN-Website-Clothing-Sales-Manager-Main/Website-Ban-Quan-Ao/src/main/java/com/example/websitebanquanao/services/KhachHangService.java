@@ -128,5 +128,4 @@ public class KhachHangService {
     public boolean isEmail(String email) {
         return email.matches("^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6})*$");
     }
-
 }

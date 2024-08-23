@@ -39,7 +39,7 @@ public class NhanVienService {
             for (NhanVien nv : list) {
                 String ma = nv.getMa();
                 if (ma.length() >= 4) {
-                    int so = Integer.parseInt(ma.substring(3));
+                    int so = Integer.parseInt(ma.substring(2));
                     if (so > max) {
                         max = so;
                     }
@@ -166,4 +166,8 @@ public class NhanVienService {
         return email.matches("^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6})*$");
     }
 
+    public boolean existsByEmail(String email) {
+        System.out.println("NhanVienService.existsByEmail: " + email);
+        return nhanVienRepository.existsByEmail(email);
+    }
 }

@@ -21,7 +21,7 @@ public class NhanVien {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "ma", nullable = false, length = 20)
+    @Column(name = "ma", length = 20)
     private String ma;
 
     @Nationalized
@@ -67,6 +67,7 @@ public class NhanVien {
 
     @Column(name = "ngay_tao")
     private Date ngayTao;
+
     @Column(name = "ngay_sua")
     private Date ngaySua;
 

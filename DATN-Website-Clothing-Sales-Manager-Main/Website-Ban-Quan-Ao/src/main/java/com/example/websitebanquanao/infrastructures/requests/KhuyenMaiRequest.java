@@ -1,6 +1,7 @@
 package com.example.websitebanquanao.infrastructures.requests;
 
 import com.example.websitebanquanao.repositories.KhuyenMaiRepository;
+import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Max;
@@ -43,4 +44,11 @@ public class KhuyenMaiRequest {
 
     private Integer trangThai;
 
+    public boolean validNull() {
+        return
+                StringUtils.isEmpty(ten) ||
+                        StringUtils.isEmpty(soPhanTramGiam.toString()) ||
+                        StringUtils.isEmpty(ngayBatDau.toString()) ||
+                        StringUtils.isEmpty(ngayKetThuc.toString());
+    }
 }

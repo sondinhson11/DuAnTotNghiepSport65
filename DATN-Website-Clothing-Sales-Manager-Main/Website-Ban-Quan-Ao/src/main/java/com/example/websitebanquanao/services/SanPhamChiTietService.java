@@ -59,7 +59,7 @@ public class SanPhamChiTietService {
             for (SanPhamChiTiet sp : list) {
                 String ma = sp.getMaSanPham();
                 if (ma.length() >= 4) {
-                    int so = Integer.parseInt(ma.substring(3));
+                    int so = Integer.parseInt(ma.substring(2));
                     if (so > max) {
                         max = so;
                     }

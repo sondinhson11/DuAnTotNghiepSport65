@@ -51,6 +51,11 @@ public class NhanVienController {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
+        if (nhanVienService.existsByEmail(nhanVienRequest.getEmail())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Email này đã được sử dụng");
+            return redirect;
+        }
+
         if (!nhanVienService.isEmail(nhanVienRequest.getEmail())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Email chưa đúng định dạng, ví dụ: abc@yahoo.com");
             return redirect;
@@ -65,22 +70,22 @@ public class NhanVienController {
             return redirect;
         }
 
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/nhan-vien/index.jsp");
-            return "admin/layout";
-        }
-
         nhanVienService.add(nhanVienRequest);
         redirectAttributes.addFlashAttribute("successMessage", "Thêm nhân viên thành công");
         return redirect;
     }
 
     @PostMapping("update/{id}")
-    public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("nv") NhanVienRequest nhanVienRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("nv") NhanVienRequest nhanVienRequest, RedirectAttributes redirectAttributes) {
         if (nhanVienRequest.validUpdate()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
+        if (nhanVienService.existsByEmail(nhanVienRequest.getEmail())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Email này đã được sử dụng");
+            return redirect;
+        }
+
         if (!nhanVienService.isEmail(nhanVienRequest.getEmail())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Email chưa đúng định dạng, ví dụ: abc@yahoo.com");
             return redirect;

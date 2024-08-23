@@ -85,7 +85,7 @@ public class HoaDonService {
             for (HoaDon hd : list) {
                 String ma = hd.getMa();
                 if (ma.length() >= 4) {
-                    int so = Integer.parseInt(ma.substring(3));
+                    int so = Integer.parseInt(ma.substring(2));
                     if (so > max) {
                         max = so;
                     }

@@ -21,7 +21,7 @@ public class KhuyenMai {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "ma", nullable = false, length = 10)
+    @Column(name = "ma", length = 10)
     private String ma;
 
     @Nationalized

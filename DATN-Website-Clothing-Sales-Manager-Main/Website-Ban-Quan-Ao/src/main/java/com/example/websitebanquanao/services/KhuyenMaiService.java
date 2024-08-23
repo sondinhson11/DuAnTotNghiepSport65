@@ -1,6 +1,7 @@
 package com.example.websitebanquanao.services;
 
 import com.example.websitebanquanao.entities.KhuyenMai;
+import com.example.websitebanquanao.entities.NhanVien;
 import com.example.websitebanquanao.entities.ThuongHieu;
 import com.example.websitebanquanao.infrastructures.requests.KhuyenMaiRequest;
 import com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse;
@@ -44,9 +45,39 @@ public class KhuyenMaiService {
         }
     }
 
+    public String maKMCount() {
+        String code = "";
+        List<KhuyenMai> list = khuyenMaiRepository.findAll();
+        if (list.isEmpty()) {
+            code = "KM0001";
+        } else {
+            int max = 0;
+            for (KhuyenMai nv : list) {
+                String ma = nv.getMa();
+                if (ma.length() >= 4) {
+                    int so = Integer.parseInt(ma.substring(2));
+                    if (so > max) {
+                        max = so;
+                    }
+                }
+            }
+            max++;
+            if (max < 10) {
+                code = "KM000" + max;
+            } else if (max < 100) {
+                code = "KM00" + max;
+            } else if (max < 1000) {
+                code = "KM0" + max;
+            } else {
+                code = "KM" + max;
+            }
+        }
+        return code;
+    }
+
     public void add(KhuyenMaiRequest khuyenMaiRequest) {
         KhuyenMai khuyenMai = new KhuyenMai();
-        khuyenMai.setMa(khuyenMaiRequest.getMa());
+        khuyenMai.setMa(maKMCount());
         khuyenMai.setTen(khuyenMaiRequest.getTen());
         khuyenMai.setSoPhanTramGiam(khuyenMaiRequest.getSoPhanTramGiam());
         khuyenMai.setNgayBatDau(Date.valueOf(khuyenMaiRequest.getNgayBatDau()));
@@ -65,7 +96,6 @@ public class KhuyenMaiService {
     public void update(KhuyenMaiRequest khuyenMaiRequest, UUID id) {
         KhuyenMai khuyenMai = khuyenMaiRepository.findById(id).orElse(null);
         if (khuyenMai != null) {
-            khuyenMai.setMa(khuyenMaiRequest.getMa());
             khuyenMai.setTen(khuyenMaiRequest.getTen());
             khuyenMai.setSoPhanTramGiam(khuyenMaiRequest.getSoPhanTramGiam());
             khuyenMai.setNgayBatDau(Date.valueOf(khuyenMaiRequest.getNgayBatDau()));
@@ -116,10 +146,6 @@ public class KhuyenMaiService {
     public KhuyenMai findById(UUID id) {
         // Trả về đối tượng thương hiệu nếu tìm thấy, hoặc null nếu không tìm thấy
         return khuyenMaiRepository.findById(id).orElse(null);
-    }
-
-    public boolean isMaValid(String ma) {
-        return ma != null && !ma.trim().isEmpty();
     }
 
     public boolean isTenValid(String ten) {
