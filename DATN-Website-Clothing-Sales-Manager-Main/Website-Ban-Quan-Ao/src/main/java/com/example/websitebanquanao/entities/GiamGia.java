@@ -20,7 +20,7 @@ public class GiamGia {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "ma", nullable = false)
+    @Column(name = "ma")
     private String ma;
 
     @Column(name = "so_phan_tram_giam")

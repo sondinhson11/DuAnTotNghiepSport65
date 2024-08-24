@@ -29,11 +29,6 @@ public interface HinhThucThanhToanRepository extends JpaRepository<HinhThucThanh
 
     boolean existsByMa(String ma);
 
-    @Modifying
-    @Transactional
-    @Query(value = "INSERT INTO hinh_thuc_thanh_toan(ma,ten,ngay_tao,ngay_sua,trang_thai) VALUES (?1, ?2,?3,?4,?5)", nativeQuery = true)
-    public void them(String ma,String ten,Date ngay_tao,Date ngay_sua,Integer trang_thai);
-
     // user
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai) from HinhThucThanhToan g where g.ma = :ma")
     public HinhThucThanhToanResponse findByMa(@Param("ma") String ma);

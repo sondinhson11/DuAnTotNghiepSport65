@@ -56,5 +56,12 @@ public class GiamGiaRequest {
     @Temporal(TemporalType.DATE)
     private Date ngay_sua;
 
-
+    public boolean validNull() {
+        return
+                StringUtils.isEmpty(soLuong.toString()) ||
+                        StringUtils.isEmpty(soPhanTramGiam.toString()) ||
+                        StringUtils.isEmpty(ngayBatDau.toString()) ||
+                        StringUtils.isEmpty(ngayKetThuc.toString()) ||
+                        StringUtils.isEmpty(soTienToiThieu.toString());
+    }
 }

@@ -69,16 +69,6 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="ma">Mã</label>
-                                    <form:input type="text" path="ma" id="ma" class="form-control" required="true"
-                                                maxlength="10"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <div class="form-group">
                                     <label for="ten">Tên</label>
                                     <form:input type="text" path="ten" id="ten" class="form-control" required="true"
                                                 maxlength="50"/>

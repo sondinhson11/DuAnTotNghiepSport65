@@ -1,5 +1,6 @@
 package com.example.websitebanquanao.infrastructures.requests;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Max;
@@ -30,4 +31,9 @@ public class HinhThucThanhToanRequest {
     private Date ngaySua;
     private Integer trangThai;
 
+    public boolean validNull() {
+        return
+                StringUtils.isEmpty(ten);
+
+    }
 }

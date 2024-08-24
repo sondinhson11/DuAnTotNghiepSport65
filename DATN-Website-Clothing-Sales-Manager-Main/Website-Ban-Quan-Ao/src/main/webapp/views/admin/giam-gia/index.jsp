@@ -82,13 +82,6 @@
                     <form:form id="edit-form" modelAttribute="gg" method="post" action="/admin/giam-gia/store">
                         <div class="row mb-3">
                             <div class="col">
-                                <div class="form-group">
-                                    <label for="ma">Mã</label>
-                                    <form:input type="text" path="ma" id="ma" class="form-control" required="true"
-                                                maxlength="10"/>
-                                </div>
-                            </div>
-                            <div class="col">
                                 <div a class="form-group">
                                     <label for="soPhanTramGiam">Đơn Hàng Tối Thiểu</label>
                                     <form:input type="number" path="soTienToiThieu" id="soTienToiThieu"
@@ -104,7 +97,7 @@
                                     <label for="soPhanTramGiam">Số phần trăm</label>
                                     <form:input type="number" path="soPhanTramGiam" id="soPhanTramGiam"
                                                 class="form-control"
-                                                min="1" max="99" required="true"/>
+                                                min="1" max="100" required="true"/>
                                 </div>
                             </div>
 

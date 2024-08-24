@@ -54,53 +54,30 @@ public class HinhThucThanhToanController {
     }
 
     @PostMapping("store")
-    public String store(@Valid @ModelAttribute("gg") HinhThucThanhToanRequest hinhThucThanhToanRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-
-        String ten = hinhThucThanhToanRequest.getMa().trim();
-
-        if (ten.isEmpty() || !ten.equals(hinhThucThanhToanRequest.getMa())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
-            return redirect; // Replace with your actual redirect path
+    public String store(@Valid @ModelAttribute("gg") HinhThucThanhToanRequest hinhThucThanhToanRequest, RedirectAttributes redirectAttributes) {
+        if (hinhThucThanhToanRequest.validNull()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
+            return redirect;
         }
-
-        if (!hinhThucThanhToanService.isTenValid(hinhThucThanhToanRequest.getMa())) {
+        if (!hinhThucThanhToanService.isTenValid(hinhThucThanhToanRequest.getTen())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
             return redirect;
         }
-
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/hinh-thuc-thanh-toan/index.jsp");
-            return "admin/layout";
-        }
-
-        if (hinhThucThanhToanRepository.existsByMa(hinhThucThanhToanRequest.getMa())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Thêm hình thức thanh toán không thành công - Mã hình thức thanh toán đã tồn tại");
-            return redirect;
-        }
-
-      hinhThucThanhToanService.add(hinhThucThanhToanRequest);
+        hinhThucThanhToanService.add(hinhThucThanhToanRequest);
         redirectAttributes.addFlashAttribute("successMessage", "Thêm hình thức thanh toán thành công");
         return redirect;
     }
 
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("gg") HinhThucThanhToanRequest hinhThucThanhToanRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (!hinhThucThanhToanService.isMaValid(hinhThucThanhToanRequest.getMa())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Mã toàn khoảng trắng không hợp lệ");
+        if (hinhThucThanhToanRequest.validNull()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
-
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/hinh-thuc-thanh-toan/index.jsp");
-            return "admin/layout"; // Trả về trang index nếu có lỗi
-        }
-
-        HinhThucThanhToanResponse existingGiamgia = hinhThucThanhToanService.getByMa(hinhThucThanhToanRequest.getMa());
-        if (existingGiamgia != null && !existingGiamgia.getId().equals(id)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật hình thức thanh toán thất bại. Mã đã tồn tại.");
+        if (!hinhThucThanhToanService.isTenValid(hinhThucThanhToanRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
             return redirect;
         }
-
         hinhThucThanhToanService.update(hinhThucThanhToanRequest, id);
         // Lưu thông báo cập nhật thành công vào session
         redirectAttributes.addFlashAttribute("successMessage", "Cập nhật hình thức thanh toán thành công");

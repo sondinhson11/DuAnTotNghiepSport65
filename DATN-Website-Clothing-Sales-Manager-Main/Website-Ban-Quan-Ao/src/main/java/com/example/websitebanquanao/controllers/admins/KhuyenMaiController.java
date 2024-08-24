@@ -90,7 +90,6 @@ public class KhuyenMaiController {
 
     @PostMapping("update/{id}")
     public String update(@ModelAttribute("km") KhuyenMaiRequest khuyenMaiRequest, @PathVariable("id") UUID id, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-
         if (khuyenMaiRequest.validNull()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;

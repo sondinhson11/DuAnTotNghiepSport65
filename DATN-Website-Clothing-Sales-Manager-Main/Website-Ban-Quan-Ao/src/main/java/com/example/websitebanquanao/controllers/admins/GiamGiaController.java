@@ -56,26 +56,17 @@ public class GiamGiaController {
 
     @PostMapping("store")
     public String store(@Valid @ModelAttribute("gg") GiamGiaRequest giamGiaRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-
-        String ten = giamGiaRequest.getMa().trim();
-
-        if (ten.isEmpty() || !ten.equals(giamGiaRequest.getMa())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
-            return redirect; // Replace with your actual redirect path
+        if (giamGiaRequest.validNull()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
+            return redirect;
         }
-
-        if (!giamGiaService.isTenValid(giamGiaRequest.getMa())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
+        if (giamGiaRequest.getSoPhanTramGiam() < 1 || giamGiaRequest.getSoPhanTramGiam() > 100) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Phần trăm giảm không hợp lệ");
             return redirect;
         }
 
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/giam-gia/index.jsp");
-            return "admin/layout";
-        }
-
-        if (giamGiaRepository.existsByMa(giamGiaRequest.getMa())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Thêm giảm giá không thành công - Mã giảm giá đã tồn tại");
+        if (giamGiaRequest.getNgayKetThuc().isBefore(giamGiaRequest.getNgayBatDau())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "ngày bắt đầu và ngày kết thúc không hợp lệ");
             return redirect;
         }
 
@@ -86,19 +77,17 @@ public class GiamGiaController {
 
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("gg") GiamGiaRequest giamGiaRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (!giamGiaService.isMaValid(giamGiaRequest.getMa())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Mã toàn khoảng trắng không hợp lệ");
+        if (giamGiaRequest.validNull()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
+            return redirect;
+        }
+        if (giamGiaRequest.getSoPhanTramGiam() < 1 || giamGiaRequest.getSoPhanTramGiam() > 100) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Phần trăm giảm không hợp lệ");
             return redirect;
         }
 
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/giam-gia/index.jsp");
-            return "admin/layout"; // Trả về trang index nếu có lỗi
-        }
-
-        GiamGiaResponse existingGiamgia = giamGiaService.getByMa(giamGiaRequest.getMa());
-        if (existingGiamgia != null && !existingGiamgia.getId().equals(id)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật Giảm Giá thất bại. Mã đã tồn tại.");
+        if (giamGiaRequest.getNgayKetThuc().isBefore(giamGiaRequest.getNgayBatDau())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "ngày bắt đầu và ngày kết thúc không hợp lệ");
             return redirect;
         }
 

@@ -1,6 +1,7 @@
 package com.example.websitebanquanao.services;
 
 import com.example.websitebanquanao.entities.HinhThucThanhToan;
+import com.example.websitebanquanao.entities.KhuyenMai;
 import com.example.websitebanquanao.infrastructures.requests.HinhThucThanhToanRequest;
 import com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse;
 import com.example.websitebanquanao.infrastructures.responses.KichCoResponse;
@@ -36,15 +37,37 @@ public class HinhThucThanhToanService {
         return ma != null && !ma.trim().isEmpty();
     }
 
+    public String maKMCount() {
+        String code = "";
+        List<HinhThucThanhToan> list = hinhThucThanhToanRepository.findAll();
+        if (list.isEmpty()) {
+            code = "1";
+        } else {
+            int max = 0;
+            for (HinhThucThanhToan nv : list) {
+                String ma = nv.getMa();
+                if (ma.length() >= 0) {
+                    int so = Integer.parseInt(ma);
+                    if (so > max) {
+                        max = so;
+                    }
+                }
+            }
+            max++;
+            code = String.valueOf(max);
+        }
+        return code;
+    }
+
     public void add(HinhThucThanhToanRequest hinhThucThanhToanRequest) {
         HinhThucThanhToan hinhThucThanhToan = new HinhThucThanhToan();
-        hinhThucThanhToan.setMa(hinhThucThanhToanRequest.getMa());
+        hinhThucThanhToan.setMa(maKMCount());
         hinhThucThanhToan.setTen(hinhThucThanhToanRequest.getTen());
         hinhThucThanhToan.setTrangThai(hinhThucThanhToanRequest.getTrangThai());
         java.util.Date currentDate = new java.util.Date();
         hinhThucThanhToan.setNgayTao(new Date(currentDate.getTime()));
         hinhThucThanhToan.setNgaySua(new Date(currentDate.getTime()));
-        hinhThucThanhToanRepository.them(hinhThucThanhToan.getMa(), hinhThucThanhToan.getTen(), hinhThucThanhToan.getNgayTao(), hinhThucThanhToan.getNgaySua(), hinhThucThanhToan.getTrangThai());
+        hinhThucThanhToanRepository.save(hinhThucThanhToan);
         System.out.println("HinhThucThanhToanService.add: " + hinhThucThanhToanRequest.getMa());
     }
 

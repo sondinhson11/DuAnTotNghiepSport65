@@ -29,27 +29,59 @@ public class GiamGiaService {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
         return giamGiaRepository.getPage(pageable);
     }
+
     public boolean isTenValid(String ma) {
-        return ma != null && !ma.trim().isEmpty(); }
+        return ma != null && !ma.trim().isEmpty();
+    }
+
+    public String maGGCount() {
+        String code = "";
+        List<GiamGia> list = giamGiaRepository.findAll();
+        if (list.isEmpty()) {
+            code = "GG0001";
+        } else {
+            int max = 0;
+            for (GiamGia nv : list) {
+                String ma = nv.getMa();
+                if (ma.length() >= 4) {
+                    int so = Integer.parseInt(ma.substring(2));
+                    if (so > max) {
+                        max = so;
+                    }
+                }
+            }
+            max++;
+            if (max < 10) {
+                code = "GG000" + max;
+            } else if (max < 100) {
+                code = "GG00" + max;
+            } else if (max < 1000) {
+                code = "GG0" + max;
+            } else {
+                code = "GG" + max;
+            }
+        }
+        return code;
+    }
 
     public void add(GiamGiaRequest giamGiaRequest) {
-            GiamGia giamGia = new GiamGia();
-            giamGia.setMa(giamGiaRequest.getMa());
-            giamGia.setSoPhanTramGiam(giamGiaRequest.getSoPhanTramGiam());
-            giamGia.setSoTienToiThieu(giamGiaRequest.getSoTienToiThieu());
-            giamGia.setSoLuong(giamGiaRequest.getSoLuong());
-            giamGia.setNgayBatDau(giamGiaRequest.getNgayBatDau());
-            giamGia.setNgayKetThuc(giamGiaRequest.getNgayKetThuc());
-            giamGia.setTrang_thai(1);
-            java.util.Date currentDate = new java.util.Date();
-            if (giamGiaRequest.getNgay_tao() == null) {
-                giamGia.setNgay_tao(new java.sql.Date(currentDate.getTime()));
-            } else {
-                giamGia.setNgay_tao(giamGiaRequest.getNgay_tao());
-            }
-            giamGia.setNgay_sua(new java.sql.Date(currentDate.getTime()));
-            giamGiaRepository.save(giamGia);
-            System.out.println("GiamGiaService.add: " + giamGia.getMa());
+        GiamGia giamGia = new GiamGia();
+        giamGia.setMa(maGGCount());
+        giamGia.setSoPhanTramGiam(giamGiaRequest.getSoPhanTramGiam());
+        giamGia.setSoTienToiThieu(giamGiaRequest.getSoTienToiThieu());
+        giamGia.setSoLuong(giamGiaRequest.getSoLuong());
+        giamGia.setNgayBatDau(giamGiaRequest.getNgayBatDau());
+        giamGia.setNgayKetThuc(giamGiaRequest.getNgayKetThuc());
+        giamGia.setTrang_thai(1);
+        java.util.Date currentDate = new java.util.Date();
+        if (giamGiaRequest.getNgay_tao() == null) {
+            giamGia.setNgay_tao(new java.sql.Date(currentDate.getTime()));
+        } else {
+            giamGia.setNgay_tao(giamGiaRequest.getNgay_tao());
+        }
+        giamGia.setNgay_sua(new java.sql.Date(currentDate.getTime()));
+        giamGiaRepository.save(giamGia);
+        System.out.println("GiamGiaService.add: " + giamGia.getMa());
     }
 
     public void update(GiamGiaRequest giamGiaRequest, UUID id) {
@@ -83,13 +115,13 @@ public class GiamGiaService {
 
             // Cập nhật trạng thái dựa trên ngày hiện tại và ngày kết thúc
             if (today.isEqual(ngayKetThuc) || today.isAfter(ngayKetThuc)) {
-                    giamGia.setTrang_thai(0);
-                    System.out.println("Cập nhật trạng thái Giảm Giá thành: Còn hạn " + giamGia.getMa());
-                    System.out.println(giamGia.getTrang_thai());
+                giamGia.setTrang_thai(0);
+                System.out.println("Cập nhật trạng thái Giảm Giá thành: Còn hạn " + giamGia.getMa());
+                System.out.println(giamGia.getTrang_thai());
 
             } else if (today.isBefore(ngayKetThuc)) {
-                    giamGia.setTrang_thai(1);
-                    System.out.println("Cập nhật trạng thái Giảm Giá thành: Hết hạn " + giamGia.getMa());
+                giamGia.setTrang_thai(1);
+                System.out.println("Cập nhật trạng thái Giảm Giá thành: Hết hạn " + giamGia.getMa());
             }
 
             // Lưu giảm giá đã được cập nhật
@@ -100,7 +132,6 @@ public class GiamGiaService {
             System.out.println("GiamGiaService.update: null");
         }
     }
-
 
 
     public void delete(UUID id) {
@@ -126,7 +157,8 @@ public class GiamGiaService {
     }
 
     public boolean isMaValid(String ma) {
-        return ma != null && !ma.trim().isEmpty(); }
+        return ma != null && !ma.trim().isEmpty();
+    }
 
     public GiamGiaResponse getByMa(String ma) {
         return giamGiaRepository.getByMa(ma);
