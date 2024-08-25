@@ -1,7 +1,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<style>
+    .form-select {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #495057;
+    }
 
+    .form-select option {
+        padding: 10px;
+        background-color: #ffffff;
+        color: #333333;
+    }
+
+    .form-select option:hover {
+        background-color: #f1f1f1;
+    }
+
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -181,25 +201,26 @@
             <form action="/ap-dung-voucher" method="post">
                 <div class="row">
                     <div class="col-3">
-                        <select class="form-select" id=ma" name="ma" aria-label="Default select example">
+                        <select class="form-select" id="ma" name="ma" aria-label="Default select example" onchange="this.form.submit()">
                             <!-- Các option được tạo từ danh sách listGG -->
-                            <option value="" >Không sử dụng</option>
+                            <option value="">Giảm giá</option>
                             <c:forEach items="${listGG}" var="lshgg">
                                 <fmt:parseNumber var="tongTienSo" value="${tongTien}"/>
                                 <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}"/>
-                                <c:if test="${lshgg.soLuong >=0}">
+                                <c:if test="${lshgg.soLuong > 0}">
                                     <c:if test="${tongTienSo >= soTienToiThieu}">
-                                        <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}"> ${lshgg.soPhanTramGiam}%</option>
+                                        <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}">
+                                            Giảm ${lshgg.soPhanTramGiam}% với giá trị đơn hàng là
+                                            <fmt:formatNumber value="${lshgg.soTienToiThieu}" type="currency" currencySymbol="đ" minFractionDigits="0" maxFractionDigits="0"/>
+                                        </option>
                                     </c:if>
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <%--                    <input type="text" name="ma" class="form-control" placeholder="Mã giảm giá">--%>
-                    </div>
-                    <div class="col-3">
-                        <button id="ap-dung-btn" type="submit" class="btn btn-dark">Áp dụng</button>
                     </div>
                 </div>
+
+
                 <c:if test="${not empty thongBaoGiamGia}">
                     <div class="alert alert-success col-6 mt-2 text-center">${thongBaoGiamGia}</div>
                 </c:if>
@@ -273,6 +294,9 @@
                 } else {
                     apDungBtn.disabled = false;
                 }
+                document.getElementById("ma").onchange = function() {
+                    document.getElementById("ap-dung-btn").click();
+                };
             </script>
         </div>
     </div>

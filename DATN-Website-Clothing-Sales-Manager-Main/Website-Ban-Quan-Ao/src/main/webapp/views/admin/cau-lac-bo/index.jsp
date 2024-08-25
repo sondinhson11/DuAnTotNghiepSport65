@@ -12,7 +12,7 @@
                 <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Tên Thương Hiệu</th>
+                    <th>Tên Câu Lạc Bộ</th>
                     <th>Trạng thái</th>
                     <th>Thao Tác</th>
                 </tr>

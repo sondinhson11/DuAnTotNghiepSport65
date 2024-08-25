@@ -142,8 +142,8 @@
         }
 
         .product-image {
-            width: 100%; /* Make the image cover the entire width of the card */
-            height: 100%; /* Make the image cover the entire height of the card */
+            width: 244.6px; /* Make the image cover the entire width of the card */
+            height: 240px; /* Make the image cover the entire height of the card */
             object-fit: cover; /* Ensure the image covers the card without distortion */
             border-radius: inherit; /* Maintain card's border radius */
         }
