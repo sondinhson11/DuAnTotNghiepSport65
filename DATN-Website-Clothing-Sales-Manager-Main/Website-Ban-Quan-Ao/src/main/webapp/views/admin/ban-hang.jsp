@@ -356,9 +356,21 @@
                                 <p>${sp.tenSanPham}</p>
                                 <p>${sp.tenMau}/${sp.tenSize}</p>
                             </td>
-                            <td id="formattedGia">${sp.gia}</td>
+                            <td id="formattedGia_${sp.idSanPham}">${sp.gia}</td>
+                            <script>
+                                var giaSanPhamElement = document.getElementById("formattedGia_${sp.idSanPham}");
+                                var giaSanPhamText = giaSanPhamElement.innerText;
+                                var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
+                                giaSanPhamElement.innerText = formattedGia + " vnđ";
+                            </script>
                             <td>${sp.soLuong}</td>
-                            <td id="formattedTotal">${sp.soLuong * sp.gia}</td>
+                            <td id="formattedTotal_${sp.idSanPham}">${sp.soLuong * sp.gia}</td>
+                            <script>
+                                var tongGiaSanPhamElement = document.getElementById("formattedTotal_${sp.idSanPham}");
+                                var tongGiaSanPhamText = tongGiaSanPhamElement.innerText;
+                                var formattedTongGia = parseInt(tongGiaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
+                                tongGiaSanPhamElement.innerText = formattedTongGia + " vnđ";
+                            </script>
                             <input type="hidden" id="quantity" value=""/>
                             <c:set var="tongTien" value="${tongTien + (sp.soLuong * sp.gia)}"/>
                             <td>
@@ -1362,7 +1374,6 @@
 
         // tính tiền
         $(document).ready(function () {
-            giaSanPhamElement.innerText = formattedGia + " vnđ";
             var tongTienInput = $("#tong-tien"); // Lấy ô input của tổng tiền
             var tongTien = parseFloat(tongTienInput.val().replace(/[^\d]/g, '')) || 0;
             tongTienInput.val(tongTien.toLocaleString('vi-VN'));
