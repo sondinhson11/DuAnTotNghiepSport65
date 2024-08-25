@@ -84,7 +84,6 @@ public class HinhThucThanhToanService {
             }
 
             // Cập nhật thông tin giảm giá
-            hinhThucThanhToan.setMa(hinhThucThanhToanRequest.getMa());
             hinhThucThanhToan.setTen(hinhThucThanhToanRequest.getTen());
             hinhThucThanhToan.setTrangThai(hinhThucThanhToanRequest.getTrangThai());
 

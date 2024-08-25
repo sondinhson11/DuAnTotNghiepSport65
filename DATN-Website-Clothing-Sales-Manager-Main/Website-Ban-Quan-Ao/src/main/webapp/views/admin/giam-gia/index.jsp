@@ -34,7 +34,7 @@
             <tr>
                 <td>${index.index + giamGiaPage.number * giamGiaPage.size + 1}</td>
                 <td>${gg.ma}</td>
-                <td>${gg.soPhanTramGiam}</td>
+                <td>${gg.soPhanTramGiam} %</td>
                 <td>
                     <fmt:formatNumber value="${gg.soTienToiThieu}" pattern="#,##0 vnđ"/>
                 </td>
@@ -83,7 +83,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div a class="form-group">
-                                    <label for="soPhanTramGiam">Đơn Hàng Tối Thiểu</label>
+                                    <label for="soPhanTramGiam">Giá Trị Tối Thiểu</label>
                                     <form:input type="number" path="soTienToiThieu" id="soTienToiThieu"
                                                 class="form-control"
                                                 min="1" required="true"/>
