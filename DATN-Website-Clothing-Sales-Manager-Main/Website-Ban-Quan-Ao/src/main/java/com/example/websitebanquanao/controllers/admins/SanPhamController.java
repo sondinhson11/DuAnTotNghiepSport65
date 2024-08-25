@@ -62,12 +62,13 @@ public class SanPhamController {
 
     @PostMapping("store")
     public String store(@Valid @ModelAttribute("sp") SanPhamRequest sanPhamRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes, @RequestParam("anh") MultipartFile anh,
-                        @RequestParam("duongDan[0]") String anh1,@RequestParam("duongDan[1]") String anh2,@RequestParam("duongDan[2]") String anh3,
+                        @RequestParam("duongDan[0]") String anh1, @RequestParam("duongDan[1]") String anh2, @RequestParam("duongDan[2]") String anh3,
                         @RequestParam(name = "page", defaultValue = "1") int page) {
         if (result.hasErrors()) {
             model.addAttribute("view", "/views/admin/san-pham/index.jsp");
             return "admin/layout";
         }
+
         Boolean check = sanPhamService.checkTen(sanPhamRequest.getTen());
         if (check) {
             model.addAttribute("sanPhamPage", sanPhamService.getPage(page, 5));
@@ -78,21 +79,25 @@ public class SanPhamController {
             model.addAttribute("view", "/views/admin/san-pham/index.jsp");
             model.addAttribute("errorMessage", "Tên sản phẩm đã tồn tại");
             return "admin/layout";
-        }else {
+        } else {
             redirectAttributes.addFlashAttribute("successMessage", "Thêm mới sản phẩm thành công");
             List<String> duongDan = new ArrayList<>();
-            duongDan.add(anh1); duongDan.add(anh2); duongDan.add(anh3);
+            duongDan.add(anh1);
+            duongDan.add(anh2);
+            duongDan.add(anh3);
             sanPhamRequest.setDuongDan(duongDan);
 
             sanPhamService.add(sanPhamRequest, anh);
             return redirect;
         }
     }
+
     @GetMapping("get/{id}")
     @ResponseBody
     public ResponseEntity<SanPhamResponse> get(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(sanPhamService.getById(id));
     }
+
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("sp") SanPhamRequest sanPhamRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes, @RequestParam("anh") MultipartFile anh) {
         if (result.hasErrors()) {
@@ -103,13 +108,20 @@ public class SanPhamController {
         sanPhamService.update(sanPhamRequest, id, anh);
         return redirect;
     }
+
     @PostMapping("/them-nhanh")
-    public String themNhanh(@Valid @ModelAttribute("sp") SanPhamRequest sanPhamRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes, @RequestParam("anh") MultipartFile anh) {
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/san-pham/index.jsp");
-            return "admin/layout";
+    public String themNhanh(@Valid @ModelAttribute("sp") SanPhamRequest sanPhamRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes, @RequestParam("anh") MultipartFile anh,
+                            @RequestParam("duongDan[0]") String anh1, @RequestParam("duongDan[1]") String anh2, @RequestParam("duongDan[2]") String anh3) {
+        if (!sanPhamService.isTenValid(sanPhamRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
+            return "redirect:/admin/san-pham-chi-tiet/create";
         }
         redirectAttributes.addFlashAttribute("successMessage", "Thêm mới sản phẩm thành công");
+        List<String> duongDan = new ArrayList<>();
+        duongDan.add(anh1);
+        duongDan.add(anh2);
+        duongDan.add(anh3);
+        sanPhamRequest.setDuongDan(duongDan);
         sanPhamService.add(sanPhamRequest, anh);
         return "redirect:/admin/san-pham-chi-tiet/create";
     }

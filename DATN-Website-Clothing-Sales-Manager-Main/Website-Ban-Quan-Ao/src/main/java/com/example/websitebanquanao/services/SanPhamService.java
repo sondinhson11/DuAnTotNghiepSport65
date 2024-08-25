@@ -36,6 +36,10 @@ public class SanPhamService {
         return sanPhamRepository.getAll();
     }
 
+    public boolean isTenValid(String ten) {
+        return ten != null && !ten.trim().isEmpty();
+    }
+
     public List<KhuyenMaiChiTietResponse> getAllKhuyenMai() {
         return sanPhamRepository.getAllKhuyenMai();
     }
@@ -83,8 +87,11 @@ public class SanPhamService {
             cauLacBo.setId(sanPhamRequest.getIdCauLacBo());
             sanPham.setIdCauLacBo(cauLacBo);
 
-
-            sanPham.setTrang_thai(sanPhamRequest.getTrang_thai());
+            if (sanPhamRequest.getTrang_thai() == null) {
+                sanPham.setTrang_thai(1);
+            } else {
+                sanPham.setTrang_thai(sanPhamRequest.getTrang_thai());
+            }
             sanPhamRepository.save(sanPham);
             System.out.println(sanPhamRequest.getDuongDan());
             anhSanPhamService.add(sanPham, sanPhamRequest.getDuongDan());

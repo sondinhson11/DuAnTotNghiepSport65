@@ -124,30 +124,13 @@ public class KichCoController {
     }
     @PostMapping("/them-nhanh")
     public String themNhanh(@Valid @ModelAttribute("kc") KichCoRequest kichCoRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/kich-co/index.jsp");
-            return "admin/layout";
-        }
-        String ten = kichCoRequest.getTen().trim();
-
-        if (ten.isEmpty() || !ten.equals(kichCoRequest.getTen())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
-            return redirect; // Replace with your actual redirect path
-        }
-
         if (!kichCoService.isTenValid(kichCoRequest.getTen())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
-            return redirect;
+            return "redirect:/admin/san-pham-chi-tiet/create";
         }
-
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/kich-co/index.jsp");
-            return "admin/layout";
-        }
-
         if (kichCoRepository.existsByTen(kichCoRequest.getTen())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Thêm mới không thành công -Kích cỡ đã tồn tại");
-            return redirect;
+            return "redirect:/admin/san-pham-chi-tiet/create";
         }
         kichCoService.add(kichCoRequest);
         redirectAttributes.addFlashAttribute("successMessage", "Thêm kích cỡ thành công");

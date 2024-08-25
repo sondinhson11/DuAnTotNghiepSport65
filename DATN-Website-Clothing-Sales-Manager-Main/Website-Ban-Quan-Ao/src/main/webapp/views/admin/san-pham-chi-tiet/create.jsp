@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -162,6 +163,29 @@
             imageDisplayProduct.style.display = 'none';
             placeholder.style.display = 'block';
         }
+    }
+
+    function displayImage2(index, imageId, placeholderId) {
+        var input = document.getElementById("imageInput" + index);
+        var imageDisplay = document.getElementById(imageId);
+        var placeholder = document.getElementById(placeholderId);
+        var base64ImagesInput = document.getElementById("base64Images" + index);
+
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var base64Image = e.target.result;
+            imageDisplay.style.display = "block";
+            imageDisplay.src = base64Image;
+            placeholder.style.display = "none";
+
+            // Update the hidden input field with base64 data
+            base64ImagesInput.value = base64Image;
+            console.log(base64Image);
+        };
+
+        reader.readAsDataURL(file);
     }
 
     function convertToBase64(file, callback) {
@@ -441,7 +465,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form:form id="edit-form" modelAttribute="sp" method="post" action="/admin/san-pham/them-nhanh" enctype="multipart/form-data">
+                <form:form id="edit-form" modelAttribute="sp" method="post" action="/admin/san-pham/them-nhanh"
+                           enctype="multipart/form-data">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="ten" class="form-label">Tên Sản Phẩm</label>
@@ -476,7 +501,7 @@
                         </div>
                     </div>
                     <div class="mt-3 text-center">
-                        <label class="form-label">Ảnh sản phẩm</label>
+                        <label class="form-label">Ảnh Bìa sản phẩm</label>
                         <div class="text-center">
                             <label for="imageInput" class="image-preview-container">
                                 <img id="imageDisplayProduct" class="image-preview" src="" alt="Image">
@@ -486,7 +511,23 @@
                                         onchange="displayImageProduct()"/>
                         </div>
                     </div>
+                    <div class="mt-3">
+                        <label class="form-label">Ảnh sản phẩm</label>
+                        <div>
+                            <c:forEach var="i" begin="0" end="2">
+                                <label for="imageInput${i}" class="image-preview-container">
+                                    <img id="imageDisplay${i}" class="image-preview" src="" alt="Image ${i + 1}">
+                                    <span class="image-placeholder" id="placeholder${i}">+</span>
+                                </label>
+                                <input type="file" id="imageInput${i}" class="image-input" accept="image/*"
+                                       onchange="displayImage2(${i}, 'imageDisplay${i}', 'placeholder${i}'); convertImageToBase642(${i});"/>
+                                <label class="image-input-label selected" for="imageInput${i}">Chọn ảnh</label>
 
+                                <!-- Thêm hidden input để lưu trữ giá trị base64Images -->
+                                <form:input path="duongDan[${i}]" type="hidden" id="base64Images${i}"/>
+                            </c:forEach>
+                        </div>
+                    </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-success">Lưu</button>
                     </div>

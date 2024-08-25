@@ -122,11 +122,14 @@ public class MauSacController {
 
     @PostMapping("/them-nhanh")
     public String themNhanh(@Valid @ModelAttribute("ms") MauSacRequest mauSacRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/mau-sac/index.jsp");
-            return "admin/layout";
+        if (!mauSacService.isTenValid(mauSacRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
+            return "redirect:/admin/san-pham-chi-tiet/create";
         }
-
+        if (mauSacRepository.existsByTen(mauSacRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Thêm mới không thành công - Màu sắc đã tồn tại");
+            return "redirect:/admin/san-pham-chi-tiet/create";
+        }
         mauSacService.add(mauSacRequest);
         return "redirect:/admin/san-pham-chi-tiet/create";
     }
