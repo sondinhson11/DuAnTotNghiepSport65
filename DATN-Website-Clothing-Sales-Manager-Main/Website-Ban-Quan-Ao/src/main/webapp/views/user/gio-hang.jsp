@@ -210,8 +210,7 @@
                                 <c:if test="${lshgg.soLuong > 0}">
                                     <c:if test="${tongTienSo >= soTienToiThieu}">
                                         <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}">
-                                            Giảm ${lshgg.soPhanTramGiam}% với giá trị đơn hàng là
-                                            <fmt:formatNumber value="${lshgg.soTienToiThieu}" type="currency" currencySymbol="đ" minFractionDigits="0" maxFractionDigits="0"/>
+                                            Giảm ${lshgg.soPhanTramGiam}%
                                         </option>
                                     </c:if>
                                 </c:if>
