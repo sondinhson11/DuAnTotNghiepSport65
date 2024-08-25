@@ -1,5 +1,7 @@
 package com.example.websitebanquanao.controllers.admins;
 
+import com.example.websitebanquanao.entities.CauLacBo;
+import com.example.websitebanquanao.entities.HinhThucThanhToan;
 import com.example.websitebanquanao.infrastructures.requests.GiamGiaRequest;
 import com.example.websitebanquanao.infrastructures.requests.HinhThucThanhToanRequest;
 import com.example.websitebanquanao.infrastructures.responses.GiamGiaResponse;
@@ -63,6 +65,10 @@ public class HinhThucThanhToanController {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
             return redirect;
         }
+        if (hinhThucThanhToanRepository.existsByTen(hinhThucThanhToanRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Thêm không thành công - Tên hình thức thanh toán đã tồn tại");
+            return redirect;
+        }
         hinhThucThanhToanService.add(hinhThucThanhToanRequest);
         redirectAttributes.addFlashAttribute("successMessage", "Thêm hình thức thanh toán thành công");
         return redirect;
@@ -76,6 +82,12 @@ public class HinhThucThanhToanController {
         }
         if (!hinhThucThanhToanService.isTenValid(hinhThucThanhToanRequest.getTen())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
+            return redirect;
+        }
+        HinhThucThanhToan existingCauLacBo = hinhThucThanhToanService.findById(id);
+        String updatedTen = hinhThucThanhToanRequest.getTen().trim();
+        if (hinhThucThanhToanRepository.existsByTen(updatedTen) && !updatedTen.equals(existingCauLacBo.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật không thành công - Tên hình thức thanh toán đã tồn tại");
             return redirect;
         }
         hinhThucThanhToanService.update(hinhThucThanhToanRequest, id);

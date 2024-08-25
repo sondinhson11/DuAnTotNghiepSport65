@@ -59,6 +59,17 @@ public class NhanVienService {
         return code;
     }
 
+    public NhanVien getById1(UUID id) {
+        NhanVien nhanVien = nhanVienRepository.getById(id);
+        if (nhanVien != null) {
+            System.out.println("KhachHangService.findById: " + nhanVien.getHoVaTen());
+            return nhanVien;
+        } else {
+            System.out.println("KhachHangService.findById: null");
+            return null;
+        }
+    }
+
     public void add(NhanVienRequest nhanVienRequest) {
         NhanVien nhanVien = new NhanVien();
         nhanVien.setMa(maNVCount());

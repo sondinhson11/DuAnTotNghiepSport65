@@ -1,7 +1,10 @@
 package com.example.websitebanquanao.controllers.admins;
 
+import com.example.websitebanquanao.entities.KhachHang;
 import com.example.websitebanquanao.infrastructures.requests.NhanVienRequest;
 import com.example.websitebanquanao.infrastructures.responses.NhanVienResponse;
+import com.example.websitebanquanao.repositories.KhachHangRepository;
+import com.example.websitebanquanao.repositories.NhanVienRepository;
 import com.example.websitebanquanao.services.NhanVienService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,11 @@ public class NhanVienController {
     @Autowired
     private NhanVienRequest nhanVienRequest;
 
+    @Autowired
+    private NhanVienRepository nhanVienRepository;
+
     private static final String redirect = "redirect:/admin/nhan-vien/index";
+
 
     @GetMapping("index")
     public String index(@RequestParam(name = "page", defaultValue = "1") int page, Model model, @ModelAttribute("successMessage") String successMessage) {
@@ -81,7 +88,10 @@ public class NhanVienController {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
-        if (nhanVienService.existsByEmail(nhanVienRequest.getEmail())) {
+        String currentEmail = nhanVienRepository.findById(id)
+                .map(nhanVien -> nhanVien.getEmail())
+                .orElse(null);
+        if (nhanVienService.existsByEmail(nhanVienRequest.getEmail()) && currentEmail != null && !currentEmail.equals(nhanVienRequest.getEmail())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Email này đã được sử dụng");
             return redirect;
         }

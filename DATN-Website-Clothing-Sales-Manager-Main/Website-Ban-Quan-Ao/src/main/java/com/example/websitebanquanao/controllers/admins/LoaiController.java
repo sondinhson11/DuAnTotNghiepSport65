@@ -83,7 +83,6 @@ public class LoaiController {
             return redirect;
         }
 
-
         loaiService.add(loaiRequest);
         // Lưu thông báo thêm thành công vào session
         redirectAttributes.addFlashAttribute("successMessage", "Thêm loại thành công");
@@ -101,11 +100,13 @@ public class LoaiController {
             redirectAttributes.addFlashAttribute("errorMessage", "Loại không tồn tại");
             return redirect;
         }
+
         String updatedTen = loaiRequest.getTen().trim();
         if (updatedTen.isEmpty() || !updatedTen.equals(loaiRequest.getTen().trim())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu)");
             return redirect;
         }
+
         if (!loaiService.isTenValid(updatedTen)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
             return redirect;
@@ -114,10 +115,12 @@ public class LoaiController {
             model.addAttribute("view", "/views/admin/loai/index.jsp");
             return "admin/layout";
         }
+
         if (loaiRepository.existsByTen(updatedTen) && !updatedTen.equals(existingThuongHieu.getTen())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật không thành công - Tên thương hiệu đã tồn tại");
+            redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật không thành công - Tên Loại đã tồn tại");
             return redirect;
         }
+
         if (updatedTen.equals(existingThuongHieu.getTen())) {
             loaiRequest.setTen(existingThuongHieu.getTen());
         }

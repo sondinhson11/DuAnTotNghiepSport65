@@ -66,7 +66,7 @@ public class CauLacBoController {
         }
 
         if (cauLacBoRepository.existsByTen(cauLacBoRequest.getTen())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Thêm mới không thành công -Thương hiệu đã tồn tại");
+            redirectAttributes.addFlashAttribute("errorMessage", "Thêm mới không thành công - Câu lạc bộ đã tồn tại");
             return redirect;
         }
 
@@ -97,15 +97,10 @@ public class CauLacBoController {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
             return redirect;
         }
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/cau-lac-bo/index.jsp");
-            return "admin/layout";
-        }
         if (cauLacBoRepository.existsByTen(updatedTen) && !updatedTen.equals(existingCauLacBo.getTen())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Cập nhật không thành công - Tên câu lạc bộ đã tồn tại");
             return redirect;
         }
-
         if (updatedTen.equals(existingCauLacBo.getTen())) {
             cauLacBoRequest.setTen(existingCauLacBo.getTen());
         }

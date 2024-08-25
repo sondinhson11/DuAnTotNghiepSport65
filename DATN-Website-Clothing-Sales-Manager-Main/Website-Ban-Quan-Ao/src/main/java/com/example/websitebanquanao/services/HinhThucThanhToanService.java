@@ -1,5 +1,6 @@
 package com.example.websitebanquanao.services;
 
+import com.example.websitebanquanao.entities.CauLacBo;
 import com.example.websitebanquanao.entities.HinhThucThanhToan;
 import com.example.websitebanquanao.entities.KhuyenMai;
 import com.example.websitebanquanao.infrastructures.requests.HinhThucThanhToanRequest;
@@ -35,6 +36,10 @@ public class HinhThucThanhToanService {
 
     public boolean isTenValid(String ma) {
         return ma != null && !ma.trim().isEmpty();
+    }
+
+    public HinhThucThanhToan findById(Integer id) {
+        return hinhThucThanhToanRepository.findById(id).orElse(null);
     }
 
     public String maKMCount() {

@@ -1,5 +1,6 @@
 package com.example.websitebanquanao.controllers.admins;
 
+import com.example.websitebanquanao.entities.KhachHang;
 import com.example.websitebanquanao.infrastructures.requests.KhachHangRequest;
 import com.example.websitebanquanao.infrastructures.responses.KhachHangResponse;
 import com.example.websitebanquanao.repositories.KhachHangRepository;
@@ -81,7 +82,10 @@ public class KhachHangController {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
-        if (khachHangService.existsByEmail(khachHangRequest.getEmail())) {
+        String currentEmail = khachHangRepository.findById(id)
+                .map(khachHang -> khachHang.getEmail())
+                .orElse(null);
+        if (khachHangService.existsByEmail(khachHangRequest.getEmail()) && currentEmail != null && !currentEmail.equals(khachHangRequest.getEmail())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Email này đã được sử dụng");
             return redirect;
         }

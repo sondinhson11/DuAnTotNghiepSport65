@@ -357,20 +357,8 @@
                                 <p>${sp.tenMau}/${sp.tenSize}</p>
                             </td>
                             <td id="formattedGia">${sp.gia}</td>
-                            <script>
-                                var giaSanPhamElement = document.getElementById("formattedGia");
-                                var giaSanPhamText = giaSanPhamElement.innerText;
-                                var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                                giaSanPhamElement.innerText = formattedGia + " vnđ";
-                            </script>
                             <td>${sp.soLuong}</td>
                             <td id="formattedTotal">${sp.soLuong * sp.gia}</td>
-                            <script>
-                                var giaSanPhamElement = document.getElementById("formattedTotal");
-                                var giaSanPhamText = giaSanPhamElement.innerText;
-                                var formattedGia = parseInt(giaSanPhamText.replace(/[^\d]/g, '')).toLocaleString('en-US');
-                                giaSanPhamElement.innerText = formattedGia + " vnđ";
-                            </script>
                             <input type="hidden" id="quantity" value=""/>
                             <c:set var="tongTien" value="${tongTien + (sp.soLuong * sp.gia)}"/>
                             <td>
@@ -598,7 +586,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Tổng Tiền</label>
-                                <input type="number" class="form-control" id="tong-tien" name="tong-tien"
+                                <input type="text" class="form-control" id="tong-tien" name="tong-tien"
                                        value="${tongTien}" readonly>
                             </div>
                             <div class="col">
@@ -617,7 +605,8 @@
                             </div>
                             <div class="col" id="phi-van-chuyen-div" style="display: none">
                                 <label class="form-label">Phí Vận Chuyển</label>
-                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" value="0" readonly>
+                                <input class="form-control" type="number" id="feeInput" name="phiVanChuyen" value="0"
+                                       readonly>
                             </div>
                         </div>
                         <script>
@@ -667,7 +656,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Tiền Giảm</label>
-                                <input type="number" class="form-control" id="tien-giam" name="tien-giam" value="0"
+                                <input type="text" class="form-control" id="tien-giam" name="tien-giam" value="0"
                                        readonly>
                             </div>
                             <div class="col">
@@ -887,6 +876,7 @@
                                 getDiscountPercentage(product.id);
                             });
                         }
+
                         function loadProductImages(productId) {
                             var idSanPham = productId;
                             $.ajax({
@@ -1372,6 +1362,7 @@
 
         // tính tiền
         $(document).ready(function () {
+            giaSanPhamElement.innerText = formattedGia + " vnđ";
             var tongTienInput = $("#tong-tien"); // Lấy ô input của tổng tiền
             var tongTien = parseFloat(tongTienInput.val().replace(/[^\d]/g, '')) || 0;
             tongTienInput.val(tongTien.toLocaleString('vi-VN'));
@@ -1525,7 +1516,6 @@
     // });
     const emailKhachHang = $('#emailKhachHang').text();
 </script>
-
 </body>
 
 </html>

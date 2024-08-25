@@ -98,10 +98,6 @@ public class ThuongHieuController {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
             return redirect;
         }
-        if (result.hasErrors()) {
-            model.addAttribute("view", "/views/admin/thuong-hieu/index.jsp");
-            return "admin/layout";
-        }
         if (thuongHieuRepository.existsByTen(updatedTen) && !updatedTen.equals(existingThuongHieu.getTen())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên thương hiệu đã tồn tại");
             return redirect;

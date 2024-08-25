@@ -87,7 +87,7 @@ public class KichCoController {
     public String update(@PathVariable("id") Integer id, @Valid @ModelAttribute("l") KichCoRequest kichCoRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         KichCo existingKichCo = kichCoService.findById(id);
         if (existingKichCo == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Thương hiệu không tồn tại");
+            redirectAttributes.addFlashAttribute("errorMessage", "Kích cỡ không tồn tại");
             return redirect;
         }
         String updatedTen = kichCoRequest.getTen().trim();
@@ -122,6 +122,7 @@ public class KichCoController {
     public ResponseEntity<KichCoResponse> getLoai(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(kichCoService.getById(id));
     }
+
     @PostMapping("/them-nhanh")
     public String themNhanh(@Valid @ModelAttribute("kc") KichCoRequest kichCoRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (!kichCoService.isTenValid(kichCoRequest.getTen())) {

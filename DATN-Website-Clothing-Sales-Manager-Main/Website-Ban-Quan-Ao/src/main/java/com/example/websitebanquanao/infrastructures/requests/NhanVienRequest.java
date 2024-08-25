@@ -32,7 +32,6 @@ public class NhanVienRequest {
     @NotBlank(message = "Họ và tên không được trống")
     private String soDienThoai;
 
-    @NotEmpty(message = "Mật Khẩu không được để trống")
     private String matKhau;
 
     @NotBlank(message = "Địa chỉ không được trống")
@@ -48,7 +47,6 @@ public class NhanVienRequest {
     private String tinhThanhPho;
 
     private UUID id;
-    @NotBlank(message = "Mã không được trống")
     private String ma;
     private Integer chucVu;
     private Date ngayTao;

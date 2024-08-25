@@ -27,7 +27,7 @@ public interface HinhThucThanhToanRepository extends JpaRepository<HinhThucThanh
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai) from HinhThucThanhToan g where g.id = :id")
     public HinhThucThanhToanResponse getByIdResponse(@Param("id") Integer id);
 
-    boolean existsByMa(String ma);
+    boolean existsByTen(String ten);
 
     // user
     @Query("select new com.example.websitebanquanao.infrastructures.responses.HinhThucThanhToanResponse(g.id, g.ma, g.ten,g.ngayTao,g.ngaySua, g.trangThai) from HinhThucThanhToan g where g.ma = :ma")
