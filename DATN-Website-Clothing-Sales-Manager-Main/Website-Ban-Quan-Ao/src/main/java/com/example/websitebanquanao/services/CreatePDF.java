@@ -92,7 +92,9 @@ public class CreatePDF {
 
             document.add(table);
             document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
-            document.add(new Paragraph("Tổng tiền : " + dollarFormat.format(BigDecimal.valueOf(Float.valueOf(tongTien))), font2));
+            document.add(new Paragraph("Tổng tiền       : " + dollarFormat.format(hoaDon.getTongTien()), font2));
+            document.add(new Paragraph("Giảm giá        : " + dollarFormat.format(hoaDon.getTienGiam()), font2));
+            document.add(new Paragraph("Tiền thanh toán : " + dollarFormat.format(BigDecimal.valueOf(Float.valueOf(tongTien))), font2));
             if (hoaDon.getPhiVanChuyen() != null) {
                 document.add(new Paragraph("Phí vận chuyển : " + dollarFormat.format(hoaDon.getPhiVanChuyen()), font2));
             }
