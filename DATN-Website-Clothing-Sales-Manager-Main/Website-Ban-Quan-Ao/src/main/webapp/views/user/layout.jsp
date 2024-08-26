@@ -67,7 +67,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark custom-nav">
         <div class="container">
-            <a class="navbar-brand" href="/"><img src="/../views/admin/css/Summer.png" width="70" height="70" alt=""></a>
+            <a class="navbar-brand" href="/"><img src="/../views/admin/css/SPORT65.png"  width="80px" height="40px"  alt=""></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
