@@ -153,13 +153,13 @@
                     </div>
                     <div class="text">
                         <span class="fw-bold money">
-                            ${TongDoanhThu}Vnđ
+                            ${tongTien} Vnđ
                         </span>
                         <p>Tổng tiền bán ra</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-3 col-sm-6">money_2
                 <div class="box">
                     <div class="icon">
                         <i class="fas fa-cart-plus"></i>
@@ -207,7 +207,7 @@
                   </span>
                         </div>
                         <div class="desc">với doanh thu
-                            <span class="money_2">${tongTien}VNĐ</span> và ${soLuong} đơn
+                            <span class="money_2">${tongTien} VNĐ</span> và ${soLuong} đơn
                         </div>
                     </div>
                     <div class="icon">
