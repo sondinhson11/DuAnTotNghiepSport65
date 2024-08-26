@@ -587,7 +587,7 @@
                                         <!-- Vòng lặp để tạo các tùy chọn từ danh sách listHTTT -->
                                         <c:forEach items="${listHTTT}" var="lshttt">
                                             <c:if test="${lshttt.trangThai == 1}">
-                                                <option value=${lshttt.id}>${lshttt.ten}</option>
+                                                <option value=${lshttt.id} selected>${lshttt.ten}</option>
                                             </c:if>
                                         </c:forEach>
                                     </select>
@@ -647,7 +647,7 @@
                                             console.log("tính phí ship: " + feeResponse);
                                             document.getElementById('feeInput').value = feeText;
                                             document.getElementById('ma-van-chuyen').value = "${hoaDon.ma}";
-                                            document.getElementById('ten-don-vi').value = "giao Hàng Nhanh";
+                                            document.getElementById('ten-don-vi').value = "Giao Hàng Nhanh";
                                             // Hiển thị phần phí vận chuyển
                                         } else {
                                             console.error('Lỗi khi gọi API tính phí ship: ', response);
@@ -1494,8 +1494,17 @@
                         // Tiền mặt - ẩn form
                         $('#paymentForm').hide();
                     } else if (selectedValue === '2') {
-                        // Chuyển khoản - hiển thị form và tự động submit form
-                        $('#paymentForm').show().submit();
+                        if (parseFloat(selectedThanhToan.val()) == 0) {
+                            Swal.fire({
+                                title: "Thông Báo!",
+                                text: "Bạn chưa có sản phẩm để thanh toán",
+                                icon: "error"
+                            });
+                        }else{
+                            // Chuyển khoản - hiển thị form và tự động submit form
+                            $('#paymentForm').show().submit();
+                        }
+
                     }
                 }
             });
