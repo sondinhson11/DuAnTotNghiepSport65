@@ -159,7 +159,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">money_2
+            <div class="col-md-3 col-sm-6">
                 <div class="box">
                     <div class="icon">
                         <i class="fas fa-cart-plus"></i>

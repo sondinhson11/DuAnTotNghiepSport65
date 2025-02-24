@@ -172,13 +172,13 @@
                     </div>
                     <div class="col-4">
                         <label for="gia" class="form-label">Giá Bán</label>
-                        <form:input path="gia" id="gia" class="form-control" type="number"
+                        <form:input path="gia" id="gia" class="form-control" type="number" min ="1000"
                                     value="${sanPhamChiTiet.gia}"/>
                     </div>
                     <div class="col-4">
                         <label for="soLuong" class="form-label">Số lượng</label>
                         <form:input path="soLuong" id="soLuong" class="form-control" type="number"
-                                    value="${sanPhamChiTiet.soLuong}" min="0" max="10000" required="true"/>
+                                    value="${sanPhamChiTiet.soLuong}" min="1" max="10000" required="true"/>
                     </div>
                 </div>
                 <div class="mt-3">

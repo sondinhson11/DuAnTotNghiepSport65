@@ -181,4 +181,7 @@ public class NhanVienService {
         System.out.println("NhanVienService.existsByEmail: " + email);
         return nhanVienRepository.existsByEmail(email);
     }
+    public boolean isTenValid(String ten) {
+        return ten != null && !ten.trim().isEmpty();
+    }
 }

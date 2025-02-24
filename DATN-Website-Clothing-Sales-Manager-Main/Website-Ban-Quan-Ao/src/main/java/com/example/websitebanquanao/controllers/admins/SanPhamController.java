@@ -68,6 +68,17 @@ public class SanPhamController {
             model.addAttribute("view", "/views/admin/san-pham/index.jsp");
             return "admin/layout";
         }
+        String ten = sanPhamRequest.getTen().trim();
+
+        if (ten.isEmpty() || !ten.equals(sanPhamRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
+            return redirect; // Replace with your actual redirect path
+        }
+
+        if (!sanPhamService.isTenValid(sanPhamRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
+            return redirect;
+        }
 
         Boolean check = sanPhamService.checkTen(sanPhamRequest.getTen());
         if (check) {
@@ -100,6 +111,18 @@ public class SanPhamController {
 
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") UUID id, @Valid @ModelAttribute("sp") SanPhamRequest sanPhamRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes, @RequestParam("anh") MultipartFile anh) {
+        String ten = sanPhamRequest.getTen().trim();
+
+        if (ten.isEmpty() || !ten.equals(sanPhamRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
+            return redirect; // Replace with your actual redirect path
+        }
+
+        if (!sanPhamService.isTenValid(sanPhamRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
+            return redirect;
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("view", "/views/admin/san-pham/index.jsp");
             return "admin/layout";
@@ -112,10 +135,19 @@ public class SanPhamController {
     @PostMapping("/them-nhanh")
     public String themNhanh(@Valid @ModelAttribute("sp") SanPhamRequest sanPhamRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes, @RequestParam("anh") MultipartFile anh,
                             @RequestParam("duongDan[0]") String anh1, @RequestParam("duongDan[1]") String anh2, @RequestParam("duongDan[2]") String anh3) {
+
+        String ten = sanPhamRequest.getTen().trim();
+
+        if (ten.isEmpty() || !ten.equals(sanPhamRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
+            return redirect; // Replace with your actual redirect path
+        }
+
         if (!sanPhamService.isTenValid(sanPhamRequest.getTen())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
-            return "redirect:/admin/san-pham-chi-tiet/create";
+            return redirect;
         }
+
         redirectAttributes.addFlashAttribute("successMessage", "Thêm mới sản phẩm thành công");
         List<String> duongDan = new ArrayList<>();
         duongDan.add(anh1);

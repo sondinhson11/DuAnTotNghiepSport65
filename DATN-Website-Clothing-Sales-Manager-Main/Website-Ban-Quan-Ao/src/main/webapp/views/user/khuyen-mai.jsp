@@ -13,8 +13,8 @@
             font-weight: bold; /* In đậm */
         }
         .product-image {
-            width: 15rem; /* Match card size */
-            height: 15rem; /* Maintain aspect ratio */
+            width: 246px; /* Match card size */
+            height: 246px ; /* Maintain aspect ratio */
             object-fit: cover; /* Ensure the image covers the card */
             border-radius: 10px 10px 0 0; /* Rounded top corners */
         }

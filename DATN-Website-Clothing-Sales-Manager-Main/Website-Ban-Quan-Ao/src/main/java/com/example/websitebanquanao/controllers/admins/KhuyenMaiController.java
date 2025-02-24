@@ -1,12 +1,14 @@
 package com.example.websitebanquanao.controllers.admins;
 
 import com.example.websitebanquanao.entities.KhuyenMai;
+import com.example.websitebanquanao.entities.SanPhamChiTiet;
 import com.example.websitebanquanao.entities.ThuongHieu;
 import com.example.websitebanquanao.infrastructures.requests.KhuyenMaiRequest;
 import com.example.websitebanquanao.infrastructures.responses.KhuyenMaiResponse;
 import com.example.websitebanquanao.repositories.KhuyenMaiRepository;
 import com.example.websitebanquanao.services.KhuyenMaiChiTietService;
 import com.example.websitebanquanao.services.KhuyenMaiService;
+import com.example.websitebanquanao.services.SanPhamChiTietService;
 import com.example.websitebanquanao.services.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -31,6 +34,8 @@ public class KhuyenMaiController {
 
     @Autowired
     private SanPhamService sanPhamService;
+    @Autowired
+    private SanPhamChiTietService sanPhamChiTietService;
 
     @Autowired
     private KhuyenMaiRequest khuyenMaiRequest;
@@ -66,6 +71,14 @@ public class KhuyenMaiController {
             return redirect;
         }
 
+
+        String ten = khuyenMaiRequest.getTen().trim();
+
+        if (ten.isEmpty() || !ten.equals(khuyenMaiRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
+            return redirect; // Replace with your actual redirect path
+        }
+
         if (!khuyenMaiService.isTenValid(khuyenMaiRequest.getTen())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
             return redirect;
@@ -93,6 +106,14 @@ public class KhuyenMaiController {
         if (khuyenMaiRequest.validNull()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
+        }
+
+
+        String ten = khuyenMaiRequest.getTen().trim();
+
+        if (ten.isEmpty() || !ten.equals(khuyenMaiRequest.getTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
+            return redirect; // Replace with your actual redirect path
         }
 
         if (!khuyenMaiService.isTenValid(khuyenMaiRequest.getTen())) {
@@ -134,8 +155,14 @@ public class KhuyenMaiController {
 
     @GetMapping("/add-chi-tiet/{idKhuyenMai}/{idSanPham}")
     public String addChiTiet(@PathVariable("idKhuyenMai") UUID idKhuyenMai, @PathVariable("idSanPham") UUID idSanPham, RedirectAttributes redirectAttributes) {
-        khuyenMaiChiTietService.save(idKhuyenMai, idSanPham);
-        redirectAttributes.addFlashAttribute("successMessage", "Thêm sản phẩm vào khuyến mãi thành công");
+        List<SanPhamChiTiet> spct = sanPhamChiTietService.findByIdSanPham(idSanPham);
+        System.out.println(spct);
+        if(spct.isEmpty()){
+            redirectAttributes.addFlashAttribute("errorMessage", "Thêm sản phẩm vào khuyến mãi thất bại do không có sản phẩm chi tiết");
+        }else{
+            khuyenMaiChiTietService.save(idKhuyenMai, idSanPham);
+            redirectAttributes.addFlashAttribute("successMessage", "Thêm sản phẩm vào khuyến mãi thành công");
+        }
         return "redirect:/admin/khuyen-mai/chi-tiet/" + idKhuyenMai;
     }
 
