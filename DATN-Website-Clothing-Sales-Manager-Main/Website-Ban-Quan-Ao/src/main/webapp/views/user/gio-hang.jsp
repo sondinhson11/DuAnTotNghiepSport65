@@ -200,17 +200,17 @@
         <div id="anApDungVouCher">
             <form action="/ap-dung-voucher" method="post">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-5">
                         <select class="form-select" id="ma" name="ma" aria-label="Default select example" onchange="this.form.submit()">
                             <!-- Các option được tạo từ danh sách listGG -->
-                            <option value="">Giảm giá</option>
+                            <option value="">Không sử dụng</option>
                             <c:forEach items="${listGG}" var="lshgg">
                                 <fmt:parseNumber var="tongTienSo" value="${tongTien}"/>
                                 <fmt:parseNumber var="soTienToiThieu" value="${lshgg.soTienToiThieu}"/>
                                 <c:if test="${lshgg.soLuong > 0}">
                                     <c:if test="${tongTienSo >= soTienToiThieu}">
                                         <option value="${lshgg.id}" data-soPhanTramGiam="${lshgg.soPhanTramGiam}">
-                                            Giảm ${lshgg.soPhanTramGiam}%
+                                            Giảm ${lshgg.soPhanTramGiam}% - Đơn Tối Thiểu: ${lshgg.soTienToiThieu}VND
                                         </option>
                                     </c:if>
                                 </c:if>

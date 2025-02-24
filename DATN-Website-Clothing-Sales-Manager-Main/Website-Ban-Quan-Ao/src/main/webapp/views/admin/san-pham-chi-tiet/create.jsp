@@ -249,13 +249,13 @@
                         </div>
                         <div class="col-4">
                             <label for="gia" class="form-label">Giá Bán</label>
-                            <form:input path="gia" id="gia" class="form-control" type="number"
+                            <form:input path="gia" id="gia" class="form-control" min = "1000" type="number"
                                         value="${sanPhamChiTiet.gia}"/>
                         </div>
                         <div class="col-4">
                             <label for="soLuong" class="form-label">Số lượng sản phẩm</label>
                             <form:input path="soLuong" id="soLuong" class="form-control" type="number"
-                                        value="${sanPhamChiTiet.soLuong}" min="0" max="10000" required="true"/>
+                                        value="${sanPhamChiTiet.soLuong}" min="1" max="10000" required="true"/>
                         </div>
                     </div>
                     <div class="mt-3">
@@ -382,12 +382,20 @@
                 event.preventDefault();
                 alert('Vui lòng nhập Giá Bán.');
                 return;
+            }else if(giaInput.value.trim() <= 0){
+                event.preventDefault();
+                alert('Giá bán phải lớn hơn 0.');
+                return;
             }
 
             // Check if the "Số lượng" input is empty
             if (soLuongInput.value.trim() === '') {
                 event.preventDefault();
                 alert('Vui lòng nhập Số lượng.');
+                return;
+            }else if(soLuongInput.value.trim() <= 0){
+                event.preventDefault();
+                alert('Giá bán phải lớn hơn 0.');
                 return;
             }
 

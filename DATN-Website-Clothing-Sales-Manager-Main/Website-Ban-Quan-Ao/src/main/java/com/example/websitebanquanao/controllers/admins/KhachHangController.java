@@ -53,6 +53,17 @@ public class KhachHangController {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
         }
+        String ten = khachHangRequest.getHoVaTen().trim();
+
+        if (ten.isEmpty() || !ten.equals(khachHangRequest.getHoVaTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
+            return redirect; // Replace with your actual redirect path
+        }
+
+        if (!khachHangService.isTenValid(khachHangRequest.getHoVaTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
+            return redirect;
+        }
         if (khachHangService.existsByEmail(khachHangRequest.getEmail())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Email này đã được sử dụng");
             return redirect;
