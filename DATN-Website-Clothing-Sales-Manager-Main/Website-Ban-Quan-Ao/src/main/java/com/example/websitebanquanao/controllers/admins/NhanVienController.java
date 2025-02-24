@@ -54,6 +54,21 @@ public class NhanVienController {
 
     @PostMapping("store")
     public String store(@Valid @ModelAttribute("nv") NhanVienRequest nhanVienRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+
+        String ten = nhanVienRequest.getHoVaTen().trim();
+
+        if (ten.isEmpty() || !ten.equals(nhanVienRequest.getHoVaTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên không hợp lệ (không được có khoảng trắng ở đầu )");
+            return redirect; // Replace with your actual redirect path
+        }
+
+        if (!nhanVienService.isTenValid(nhanVienRequest.getHoVaTen())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Tên toàn khoảng trắng không hợp lệ");
+            return redirect;
+        }
+
+
+
         if (nhanVienRequest.validNull()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
@@ -114,4 +129,5 @@ public class NhanVienController {
     public ResponseEntity<NhanVienResponse> getGiamGia(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(nhanVienService.getById(id));
     }
+
 }

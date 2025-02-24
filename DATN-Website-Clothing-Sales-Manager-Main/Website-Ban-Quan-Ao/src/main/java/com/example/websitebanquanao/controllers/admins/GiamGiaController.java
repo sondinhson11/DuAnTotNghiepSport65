@@ -56,6 +56,7 @@ public class GiamGiaController {
 
     @PostMapping("store")
     public String store(@Valid @ModelAttribute("gg") GiamGiaRequest giamGiaRequest, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+
         if (giamGiaRequest.validNull()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return redirect;
